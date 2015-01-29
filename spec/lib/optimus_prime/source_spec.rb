@@ -1,5 +1,4 @@
-require_relative '../lib/optimus_prime.rb'
-
+require 'spec_helper'
 # it should throw exception if columns method is not overridden
 
 # it should throw exception if get_data method is not overridden
@@ -53,7 +52,6 @@ class OptimusPrime::Source::Test < OptimusPrime::Source
     ]
   end
 end
-
 
 describe OptimusPrime::Source::Test, '#columns' do
   it "should return hash as expected" do
