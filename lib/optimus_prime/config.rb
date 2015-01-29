@@ -61,6 +61,5 @@ module OptimusPrime
     def is_identifier_unique?(type, id)
       @unique_ids[type.to_sym][id].nil?
     end
-
   end
 end
