@@ -8,6 +8,8 @@ module OptimusPrime
     def initialize(file_path: nil)
       # add error checking to confirm that file_path is indeed a file
 
+      raise 'file not found' unless File.file?(file_path)
+
       method(__method__).parameters.each do |type, k|
         next unless type == :key
         v = eval(k.to_s)
@@ -15,32 +17,39 @@ module OptimusPrime
       end
 
       @unique_ids = { 
-        sources: {}, 
-        transforms: {}, 
-        destinations: {}
+        source: {}, 
+        transform: {}, 
+        destination: {}
       }
 
-      parse_config
+      @sources = Array.new
+
+      self.parse_config
     end
 
     def parse_config
       yaml = YAML.load_file(self.file_path)
 
-      ['sources', 'transforms', 'destinations'].each do |type|
-        check_for_duplicates(type, yaml)
+      yaml.each do |settings|
+        if settings.has_key?("type")
+          formatted = get_format_by_type(settings['type'])
+          formatted.each do |key|
+            raise "#{key} not found" unless settings.has_key?(key)
+          end
+          @sources.push settings if settings['type'] == 'source'
+        else
+          raise "yaml doesn't contain type" 
+        end
       end
-
-      @sources = yaml['sources']
-      @transforms = yaml['transforms']
-      @destinations = yaml['destinations']
+      self.check_for_duplicates(yaml)
     end
 
-    def check_for_duplicates(type, yaml)
-      if yaml[type].is_a? Array
-        yaml[type].each do |item|
-          raise "#{type} duplicate!" unless is_identifier_unique?(type, item['source']['unique_identifier'])
-          self.mark_as_seen(type, item)
+    def check_for_duplicates(yaml)
+      yaml.each do |item|
+        unless identifier_unique?(item['type'], item['unique_identifier'])
+          raise "#{item['unique_identifier']} of #{item['type']} duplicate!" 
         end
+        self.mark_as_seen(item['type'], item['unique_identifier'])
       end
     end
 
@@ -52,14 +61,30 @@ module OptimusPrime
       @sources.each do |source|
         return source if source['unique_identifier'] == unique_id
       end
+      raise "#{unique_id} not exist"
     end
 
     def mark_as_seen(type, item)
-      @unique_ids[type.to_sym][item['source']['unique_identifier']] = true
+      @unique_ids[type.to_sym][item] = true
     end
 
-    def is_identifier_unique?(type, id)
+    def identifier_unique?(type, id)
       @unique_ids[type.to_sym][id].nil?
     end
+
+    def get_format_by_type(type)
+      case type
+      when 'source' 
+        ['unique_identifier', 'type', 'class', 'file_path', 'columns']
+      when 'transform'
+        ['unique_identifier', 'type', 'class', 'columns']
+      when 'destination'
+        ['unique_identifier', 'type', 'class', 'columns']
+      else
+        raise "type not found"
+      end
+        
+    end
+
   end
 end
