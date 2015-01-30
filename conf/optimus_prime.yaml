@@ -32,3 +32,27 @@ specialDelivery:  >
     Pay no attention to the
     man behind the curtain.
 ...
+
+
+
+# some report
+- identifier: foo
+  type: source
+  class: OptimusPrime::Source::Csv
+  columns: 
+    name: string
+    address: string
+- identifier: multiply_by_100 
+  type: transform
+  class: OptimusPrime::Transform::MultiplyBy100
+  columns: 
+    name: string
+    address: string
+- identifier: analytics_postgresql_db
+  type: destination
+  class: OptimusPrime::Destination::PostgreSQL
+  columns: 
+    name: string
+    address: string
+
+
