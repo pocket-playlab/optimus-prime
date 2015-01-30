@@ -75,7 +75,7 @@ module OptimusPrime
     def get_format_by_type(type)
       case type
       when 'source' 
-        ['unique_identifier', 'type', 'class', 'file_path', 'columns']
+        ['unique_identifier', 'type', 'class', 'columns']
       when 'transform'
         ['unique_identifier', 'type', 'class', 'columns']
       when 'destination'
