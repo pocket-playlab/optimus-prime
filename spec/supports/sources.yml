@@ -110,3 +110,10 @@
   columns:
     id: String
     label: String
+- unique_identifier: sqlite_sample
+  type: source
+  class: OptimusPrime::Source::Sqlite
+  columns:
+    id: Integer
+    name: String
+    price: Float
