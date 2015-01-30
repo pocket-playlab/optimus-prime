@@ -1,75 +1,71 @@
-sources:
-  - source: 
-      unique_identifier: "installs_report"
-      class: "OptimusPrime::Source::CSV"
-      file_path: "datasource/sample.csv"
-      columns:
-        click_time: "Timestamp without time zone"
-        install_time: "Timestamp without time zone"
-        agency: "String"
-        media_source: "String"
-        campaign: "String"
-        site_id: "String"
-        cost_per_install: "Float"
-        country_code: "String"
-        city: "String"
-        ip: "String"
-        wifi: "Boolean"
-        language: "String"
-        apps_flyer_device_id: "String"
-        customer_user_id: "String"
-        idfa: "String"
-        mac: "String"
-        device_name: "String"
-        device_type: "String"
-        os_version: "String"
-        sdk_version: "String"
-        app_version: "String"
-        sub_param1: "String"
-        sub_param2: "String"
-        sub_param3: "String"
-        sub_param4: "String"
-        sub_param5: "String"
-        click_url: "String"
-        contributor1: "String"
-        contributor2: "String"
-        contributor3: "String"
-  - source:
-      unique_identifier: "in_apps_report"
-      class: "OptimusPrime::Source::CSV"
-      file_path: "datasource/sample.csv"
-      columns:
-        click_time: "Timestamp without time zone"
-        install_time: "Timestamp without time zone"
-        agency: "String"
-        media_source: "String"
-        campaign: "String"
-        site_id: "String"
-        cost_per_install: "Float"
-        country_code: "String"
-        city: "String"
-        ip: "String"
-        wifi: "Boolean"
-        language: "String"
-        apps_flyer_device_id: "String"
-        customer_user_id: "String"
-        idfa: "String"
-        mac: "String"
-        device_name: "String"
-        device_type: "String"
-        os_version: "String"
-        sdk_version: "String"
-        app_version: "String"
-        sub_param1: "String"
-        sub_param2: "String"
-        sub_param3: "String"
-        sub_param4: "String"
-        sub_param5: "String"
-        click_url: "String"
-        contributor1: "String"
-        contributor2: "String"
-        contributor3: "String"
-transforms:
-
-destinations:
+- unique_identifier: installs_report
+  type: source
+  class: OptimusPrime::Source::CSV
+  file_path: datasource/install.csv
+  columns:
+    click_time: Timestamp without time zone
+    install_time: "Timestamp without time zone"
+    agency: String
+    media_source: String
+    campaign: String
+    site_id: String
+    cost_per_install: Float
+    country_code: String
+    city: String
+    ip: String
+    wifi: "Boolean"
+    language: String
+    apps_flyer_device_id: String
+    customer_user_id: String
+    idfa: String
+    mac: String
+    device_name: String
+    device_type: String
+    os_version: String
+    sdk_version: String
+    app_version: String
+    sub_param1: String
+    sub_param2: String
+    sub_param3: String
+    sub_param4: String
+    sub_param5: String
+    click_url: String
+    contributor1: String
+    contributor2: String
+    contributor3: String
+- unique_identifier: in_apps_report
+  type: source
+  class: OptimusPrime::Source::CSV
+  file_path: datasource/in_app_event.csv
+  columns:
+    click_time: Timestamp without time zone
+    install_time: Timestamp without time zone
+    agency: String
+    media_source: String
+    campaign: String
+    site_id: String
+    cost_per_install: Float
+    country_code: String
+    city: String
+    ip: String
+    wifi: Boolean
+    language: String
+    apps_flyer_device_id: String
+    customer_user_id: String
+    idfa: String
+    mac: String
+    device_name: String
+    device_type: String
+    os_version: String
+    sdk_version: String
+    app_version: String
+    sub_param1: String
+    sub_param2: String
+    sub_param3: String
+    sub_param4: String
+    sub_param5: String
+    click_url: String
+    contributor1: String
+    contributor2: String
+    contributor3: String
 
