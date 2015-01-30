@@ -20,6 +20,7 @@ class Csv < OptimusPrime::Source
   def retrieve_data
     index = 0
     CSV.foreach(@file_path) do |row|
+      raise "incorrect column number" if row.count != columns.count
       @table_data.push row if index != 0
       index += 1
     end
