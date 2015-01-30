@@ -103,3 +103,10 @@
     contributor1: String
     contributor2: String
     contributor3: String
+- unique_identifier: json_sample
+  type: source
+  class: OptimusPrime::Source::JSON
+  file_path: datasource/sample.json
+  columns:
+    id: String
+    label: String
