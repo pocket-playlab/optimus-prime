@@ -1,5 +1,3 @@
-# json reference file : http://www.sitepoint.com/iphone-menu-json-example/
-
 require 'spec_helper'
 
 describe "Json Source" do
