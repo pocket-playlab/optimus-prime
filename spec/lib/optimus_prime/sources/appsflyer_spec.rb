@@ -115,7 +115,7 @@ describe Appsflyer do
           .to_return(:status => 404, :body => "", :headers => {})
       end
 
-      it 'shuold show error on console' do
+      it 'should show error on console' do
         expect { appsflyer_instance.retrieve_data }.to raise_error
       end
     end
@@ -127,7 +127,7 @@ describe Appsflyer do
           .to_return(:status => 500, :body => "", :headers => {})
       end
 
-      it 'shuold show error on console' do
+      it 'should show error on console' do
         expect { appsflyer_instance.retrieve_data }.to raise_error
       end
     end
