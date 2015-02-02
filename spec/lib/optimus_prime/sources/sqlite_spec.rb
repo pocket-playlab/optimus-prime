@@ -3,29 +3,52 @@ require 'sequel'
 
 describe "SQLite Source" do
   context "#initialize" do
-    it 'should error when column missed' do
-      expect { Sqlite.new }.to raise_error
+
+    context "when missing parameter" do
+      it { expect { Sqlite.new }.to raise_error }
+      it { expect { Sqlite.new(['col1', 'col2'], 'path_to_db') }.to raise_error }
+      it { expect { Sqlite.new(['col1', 'col2'], 'path_to_db', nil) }.to raise_error('columns, db_path and query are required') }
+      it { expect { Sqlite.new(nil, 'path_to_db', '12321') }.to raise_error('columns, db_path and query are required') }
+      it { expect { Sqlite.new(['col1', 'col2'], nil, '12321') }.to raise_error('columns, db_path and query are required') }
     end
+
+    context "when parameters correctly" do
+      it 'should created instance' do 
+        sqlite = Sqlite.new(['col1', 'col2'], 'database.db', 'select * from table')
+        expect(sqlite.columns).to eq(['col1', 'col2'])
+      end
+    end
+
+    context 'instantiate with sources.yml file' do
+
+      let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
+      let(:sqlite_attributes) { config.get_source_by_id('sqlite3_game_level_database') }
+
+      it 'should created instance' do
+        sqlite_object = Sqlite.new(sqlite_attributes['columns'], sqlite_attributes['file_path'], sqlite_attributes['query'])
+        expect(sqlite_object.columns).to eq(sqlite_attributes['columns'])
+        expect(sqlite_object.query).to eq(sqlite_attributes['query'])
+      end
+
+    end
+    
   end
 
   context "#retrieve_data" do
-    let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
 
-    context "when yaml file are correctly" do
+    context "source file correct" do
+      let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
+      let(:sqlite_attributes) { config.get_source_by_id('sqlite3_game_level_database') }
+      let(:sqlite_object) { Sqlite.new(sqlite_attributes['columns'], sqlite_attributes['file_path'], sqlite_attributes['query']) }
 
-      let(:sqlite_attributes) { config.get_source_by_id('sqlite_sample') }
-      let(:sqlite_object) { Sqlite.new(sqlite_attributes['columns']) }
-
-      it 'should found data in file' do
-        expected_data = [1, 'item1', 10000]
-        expect(sqlite_object.retrieve_data[0]).to eq(expected_data)
+      it 'should return array data' do
+        expected_data = [1, 'dragon_cube', 50]
+        expect(sqlite_object.retrieve_data.first).to eq(expected_data)
       end
-
-      it 'should return correct column number' do
-        expect(sqlite_object.retrieve_data[0].count).to eq(sqlite_attributes['columns'].count)
-      end
-
     end
 
+    context "source file incorrect" do
+      
+    end
   end
 end
