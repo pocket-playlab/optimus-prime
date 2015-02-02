@@ -1,32 +1,34 @@
-require_relative '../optimus_init'
-require_relative '../../datasource/sqlite_sample' #init database
+require_relative '../optimus_init.rb'
 
-class Sqlite < OptimusPrime::Source
+class Sqlite < OptimusPrime::Source::RDBMS
 
-  attr_accessor :columns, :table_data, :data
+  attr_accessor :columns, :db
 
-  def initialize(columns)
+  def initialize(columns, db_path, query)
+    raise 'columns, db_path and query are required' unless columns && db_path && query
     @columns = columns
-    @table_data = Array.new
-    self.connect
+    @query = query
+
+    self.connect(db_path)
   end
 
-  def connect
-    @data = DB[:items]
+  def connect(db_path)
+    begin
+      @db = Sequel.connect("sqlite://#{db_path}")
+    rescue => e
+      raise "Can't connect database"
+    end
   end
 
   def columns
     return @columns
   end
 
-  def retrieve_data
-    @data.each do |item|
-      array_item = Array.new
-      columns.each do |key, value|
-        array_item.push item[key.to_sym]
-      end
-      @table_data.push array_item
+  def execute_query
+    begin
+      @db[@query]
+    rescue => e
+      raise e.message
     end
-    @table_data
   end
 end
