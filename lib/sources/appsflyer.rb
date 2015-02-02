@@ -5,21 +5,31 @@ require "uri"
 require 'csv'
 
 class Appsflyer < OptimusPrime::Source
-  attr_accessor :columns, :table_data, :api_token, :url, :data
+  attr_accessor :columns, :table_data, :api_token, :data
 
-  def initialize(columns, report_type, from_date: Date.today, to_date: Date.today)
+  def initialize(columns, report_type, app_id, from_date: Date.today, to_date: Date.today)
+    raise 'columns, report_type and app_id are required' unless columns && report_type && app_id
     @columns = columns
-    @url = "https://hq.appsflyer.com/export/id855124397/"
-    @url += "#{report_type}?api_token=#{ENV['APPSFLYER_API_TOKEN']}"
-    @url += "&from=#{from_date}"
-    @url += "&to=#{to_date}"
-    connect(@url, report_type)
+    url = "https://hq.appsflyer.com/export/#{app_id}/"
+    url += "#{report_type}?api_token=#{ENV['APPSFLYER_API_TOKEN']}"
+    url += "&from=#{from_date}"
+    url += "&to=#{to_date}"
+
+    connect(url)
+
     @table_data = Array.new
   end
 
   def columns
     return @columns
   end
+
+  def retrieve_data
+    @table_data = CSV.parse(@data)
+    @table_data
+  end
+
+  private
 
   def connect(location, limit = 10, ssl: true)
     raise 'too many HTTP redirects' if limit == 0
@@ -45,11 +55,4 @@ class Appsflyer < OptimusPrime::Source
       puts e.message
     end
   end
-
-  def retrieve_data
-    @table_data = CSV.parse(@data)
-    @table_data
-  end
 end
-# ENV['APPSFLYER_API_TOKEN'] = 'a6e04203-565f-4d2c-9413-0d2b4dd04bf7'
-# Appsflyer.new([], 'installs_report', from_date: '2015-01-19', to_date: '2015-01-22')
