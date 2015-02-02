@@ -123,7 +123,7 @@
 - unique_identifier: game_level_db_incorrect
   name: Sqlite3 column incorrect
   type: source
-  query: 'select g.game_id, g.game_name, g.number from game_level g'
+  query: 'select g.game_id, g.game_name, g.empty_column from game_level g'
   class: OptimusPrime::Source::Sqlite
   file_path: datasource/sqlite3_game_level_database.db
   columns:

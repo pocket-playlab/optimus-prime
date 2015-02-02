@@ -36,7 +36,7 @@ describe "SQLite Source" do
 
   context "#retrieve_data" do
 
-    context "source file correct" do
+    context "configuration correct" do
       let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
       let(:sqlite_attributes) { config.get_source_by_id('sqlite3_game_level_database') }
       let(:sqlite_object) { Sqlite.new(sqlite_attributes['columns'], sqlite_attributes['file_path'], sqlite_attributes['query']) }
@@ -47,8 +47,14 @@ describe "SQLite Source" do
       end
     end
 
-    context "source file incorrect" do
-      
+    context "query incorrect" do
+      let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
+      let(:sqlite_attributes) { config.get_source_by_id('game_level_db_incorrect') }
+      let(:sqlite_object) { Sqlite.new(sqlite_attributes['columns'], sqlite_attributes['file_path'], sqlite_attributes['query']) }
+
+      it 'should error' do
+        expect { sqlite_object.retrieve_data }.to raise_error
+      end
     end
   end
 end
