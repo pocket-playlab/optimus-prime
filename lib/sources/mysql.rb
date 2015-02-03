@@ -15,7 +15,12 @@ class MySQL < OptimusPrime::Source::RDBMS
   end
 
   def connect(username, password, host, dbname)
+    begin
       @db = Sequel.connect(:adapter => 'mysql', :user => username, :host => host, :database => dbname,:password => password)
+      self.retrieve_data
+    rescue => e
+      puts e.message
+    end
   end
 
   def columns
