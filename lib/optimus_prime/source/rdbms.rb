@@ -1,6 +1,6 @@
 module OptimusPrime
   class Source::RDBMS
-  	attr_accessor :query
+  	attr_accessor :columns, :query
 
   	def execute_query
       raise "each implementation class should have a way to do this (most likely through ORM of some type)"

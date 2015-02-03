@@ -4,19 +4,18 @@ class MySQL < OptimusPrime::Source::RDBMS
 
   attr_accessor :columns, :db, :query
 
-  def initialize(columns, host, username, password, database, query)
+  def initialize(columns, username, password, host, dbname, query)
     raise 'columns required' unless columns
     raise 'cannot connect database' unless host && username && password && database
     raise 'query requried' unless query
     @columns = columns
     @query = query
 
-    self.connect(db_path)
+    self.connect(username, password, host, dbname)
   end
 
-  def connect(host, username, password, database)
-    begin
-      @db = Sequel.connect(:adapter => 'mysql', :user => username, :host => host, :database => database,:password => password)
+  def connect(username, password, host, dbname)
+      @db = Sequel.connect(:adapter => 'mysql', :user => username, :host => host, :database => dbname,:password => password)
   end
 
   def columns

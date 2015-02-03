@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'sequel'
 
-describe "MySQL Source" do
+describe MySQL do
   context "#initialize" do
 
     context "when missing parameter" do

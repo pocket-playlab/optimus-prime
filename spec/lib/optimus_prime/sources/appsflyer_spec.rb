@@ -84,7 +84,7 @@ describe Appsflyer do
       before do 
           stub_request(:get, "https://hq.appsflyer.com/export/id855124397/installs_report?api_token=#{appsflyer_token}&from=#{Date.today}&to=#{Date.today}")
           .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
-          .to_return(:status => 302, :body => "", :headers => { 'location': 'https://second-link.com' })
+          .to_return(:status => 302, :body => "", :headers => { 'location' => 'https://second-link.com' })
 
           stub_request(:get, "https://second-link.com")
           .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
@@ -115,7 +115,7 @@ describe Appsflyer do
           .to_return(:status => 404, :body => "", :headers => {})
       end
 
-      it 'shuold show error on console' do
+      it 'should show error on console' do
         expect { appsflyer_instance.retrieve_data }.to raise_error
       end
     end
@@ -127,7 +127,7 @@ describe Appsflyer do
           .to_return(:status => 500, :body => "", :headers => {})
       end
 
-      it 'shuold show error on console' do
+      it 'should show error on console' do
         expect { appsflyer_instance.retrieve_data }.to raise_error
       end
     end

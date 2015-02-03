@@ -178,3 +178,42 @@
     item_id: Integer
     item_name: String
     item_price: Float
+- unique_identifier: mysql 
+  type: source
+  class: OptimusPrime::Source::MySQL
+  report_type: installs_report
+  username: someuser 
+  password: somepass
+  dbname: somedb
+  host: somehost
+  columns:
+    click_time: Timestamp without time zone
+    install_time: Timestamp without time zone
+    agency: String
+    media_source: String
+    campaign: String
+    site_id: String
+    cost_per_install: Float
+    country_code: String
+    city: String
+    ip: String
+    wifi: Boolean
+    language: String
+    apps_flyer_device_id: String
+    customer_user_id: String
+    idfa: String
+    mac: String
+    device_name: String
+    device_type: String
+    os_version: String
+    sdk_version: String
+    app_version: String
+    sub_param1: String
+    sub_param2: String
+    sub_param3: String
+    sub_param4: String
+    sub_param5: String
+    click_url: String
+    contributor1: String
+    contributor2: String
+    contributor3: String
