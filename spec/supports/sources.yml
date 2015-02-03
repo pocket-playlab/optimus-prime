@@ -132,7 +132,7 @@
     game_number: Integer
 - unique_identifier: appsflyer
   type: source
-  class: OptimusPrime::Source::Sqlite
+  class: OptimusPrime::Source::Appsflyer
   report_type: installs_report
   app_id: id855124397
   columns:
@@ -166,3 +166,15 @@
     contributor1: String
     contributor2: String
     contributor3: String
+- unique_identifier: mysql_juicecubes
+  type: source
+  class: OptimusPrime::Source::MySQL
+  db_name: item
+  host: localhost
+  db_username: root
+  db_password: root
+  query: 'select * from items'
+  columns:
+    item_id: Integer
+    item_name: String
+    item_price: Float
