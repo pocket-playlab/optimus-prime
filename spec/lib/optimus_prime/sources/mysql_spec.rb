@@ -5,16 +5,19 @@ describe MySQL do
   context "#initialize" do
 
     context "when missing parameter" do
-      it { expect { Mysql.new }.to raise_error }
-      it { expect { Mysql.new(['col1', 'col2'], 'host', 'username', 'password') }.to raise_error }
-      it { expect { Mysql.new(['col1', 'col2'], nil, 'username', 'password', 'db_selected', 'select *') }.to raise_error('cannot connect database') }
-      it { expect { Mysql.new(['col1', 'col2'], 'host', 'username', 'password', nil, 'select *') }.to raise_error('cannot connect database') }
-      it { expect { Mysql.new(['col1', 'col2'], 'host', 'username', 'password', 'db_name', 'select *') }.to raise_error('columns, db_path and query are required') }
-      it { expect { Mysql.new(nil, 'host', 'username', 'password', 'db_name', 'select *') }.to raise_error('columns required') }
-      it { expect { Mysql.new(['col1', 'col2'], 'host', 'username', 'password', 'db_name', nil) }.to raise_error('query required') }
+      it { expect { MySQL.new }.to raise_error }
+      it { expect { MySQL.new(['col1', 'col2'], 'host', 'username', 'password') }.to raise_error }
+      it { expect { MySQL.new(['col1', 'col2'], nil, 'username', 'password', 'db_selected', 'select *') }.to raise_error('cannot connect database') }
+      it { expect { MySQL.new(['col1', 'col2'], 'host', 'username', 'password', nil, 'select *') }.to raise_error('cannot connect database') }
+      it { expect { MySQL.new(['col1', 'col2'], 'host', 'username', nil, 'db_name', 'select *') }.to raise_error('cannot connect database') }
+      it { expect { MySQL.new(nil, 'host', 'username', 'password', 'db_name', 'select *') }.to raise_error('columns required') }
+      it { expect { MySQL.new(['col1', 'col2'], 'host', 'username', 'password', 'db_name', nil) }.to raise_error('query required') }
     end
 
     context "when parameters correctly" do
+      before do
+        # Mysql.should_receive(:)
+      end
       it 'should created instance' do 
         # sqlite = Sqlite.new(['col1', 'col2'], 'database.db', 'select * from table')
         # expect(sqlite.columns).to eq(['col1', 'col2'])
@@ -51,7 +54,7 @@ describe MySQL do
       # it 'should return array data' do
       #   expected_data = [1, 'dragon_cube', 50]
       #   expect(sqlite_object.retrieve_data.first).to eq(expected_data)
-      end
+      # end
     end
 
     context "query incorrect" do
