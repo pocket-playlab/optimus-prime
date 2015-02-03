@@ -3,6 +3,7 @@ gem 'test-unit'
 gem 'sequel'
 gem 'sqlite3'
 gem 'byebug'
+gem 'mysql2'
 
 group :test do
   gem 'rspec'

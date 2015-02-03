@@ -6,8 +6,8 @@ class MySQL < OptimusPrime::Source::RDBMS
 
   def initialize(columns, username, password, host, dbname, query)
     raise 'columns required' unless columns
-    raise 'cannot connect database' unless host && username && password && database
-    raise 'query requried' unless query
+    raise 'cannot connect database' unless host && username && password && dbname
+    raise 'query required' unless query
     @columns = columns
     @query = query
 
@@ -15,7 +15,12 @@ class MySQL < OptimusPrime::Source::RDBMS
   end
 
   def connect(username, password, host, dbname)
+    begin
       @db = Sequel.connect(:adapter => 'mysql', :user => username, :host => host, :database => dbname,:password => password)
+      self.retrieve_data
+    rescue => e
+      puts e.message
+    end
   end
 
   def columns
@@ -29,4 +34,5 @@ class MySQL < OptimusPrime::Source::RDBMS
       raise e.message
     end
   end
+
 end
