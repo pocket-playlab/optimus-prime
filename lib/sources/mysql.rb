@@ -6,7 +6,7 @@ class MySQL < OptimusPrime::Source::RDBMS
 
   def initialize(columns, username, password, host, dbname, query)
     raise 'columns required' unless columns
-    raise 'cannot connect database' unless host && username && password && database
+    raise 'cannot connect database' unless host && username && password && dbname
     raise 'query requried' unless query
     @columns = columns
     @query = query
@@ -29,4 +29,5 @@ class MySQL < OptimusPrime::Source::RDBMS
       raise e.message
     end
   end
+
 end
