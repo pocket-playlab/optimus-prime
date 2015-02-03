@@ -11,7 +11,9 @@ GEM
       safe_yaml (~> 1.0.0)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
+    mysql (2.9.1)
     mysql2 (0.3.17)
+    pg (0.18.1)
     power_assert (0.2.2)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
@@ -42,7 +44,9 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  mysql
   mysql2
+  pg
   rspec
   rspec-deep-matchers
   sequel
