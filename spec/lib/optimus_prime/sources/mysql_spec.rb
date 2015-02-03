@@ -1,134 +1,66 @@
 require 'spec_helper'
+require 'sequel'
 
 describe MySQL do
-
-
-  let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
-
-  let(:mysql_attributes) { config.get_source_by_id('mysql') }
-
-  let(:installs_report) { File.read(File.expand_path '../../../../supports/installs.csv', __FILE__) }
-  let(:installs_second_report) { File.read(File.expand_path '../../../../supports/installs_second.csv', __FILE__) }
-
-  # TODO: mock out mysql db (Sequel)
-
   context "#initialize" do
 
-    context "when response status is 200" do
+    context "when missing parameter" do
+      it { expect { Mysql.new }.to raise_error }
+      it { expect { Mysql.new(['col1', 'col2'], 'host', 'username', 'password') }.to raise_error }
+      it { expect { Mysql.new(['col1', 'col2'], nil, 'username', 'password', 'db_selected', 'select *') }.to raise_error('cannot connect database') }
+      it { expect { Mysql.new(['col1', 'col2'], 'host', 'username', 'password', nil, 'select *') }.to raise_error('cannot connect database') }
+      it { expect { Mysql.new(['col1', 'col2'], 'host', 'username', 'password', 'db_name', 'select *') }.to raise_error('columns, db_path and query are required') }
+      it { expect { Mysql.new(nil, 'host', 'username', 'password', 'db_name', 'select *') }.to raise_error('columns required') }
+      it { expect { Mysql.new(['col1', 'col2'], 'host', 'username', 'password', 'db_name', nil) }.to raise_error('query required') }
+    end
 
-      before do
-          stub_request(:get, "https://hq.appsflyer.com/export/id855124397/installs_report?api_token=#{appsflyer_token}&from=#{Date.today}&to=#{Date.today}")
-          .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
-          .to_return(:status => 200, :body => installs_report, :headers => {})
-
-          stub_request(:get, "https://hq.appsflyer.com/export/id855124397/installs_report?api_token=#{appsflyer_token}&from=#{Date.today - 2}&to=#{Date.today - 1}")
-          .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
-          .to_return(:status => 200, :body => installs_second_report, :headers => {})
-      end
-
-      context "when missing parameter" do
-        it { expect { appsflyer = Appsflyer.new }.to raise_error }
-        it { expect { appsflyer = Appsflyer.new(['col1', 'col2'], 'installs_report') }.to raise_error }
-        it { expect { appsflyer = Appsflyer.new(['col1', 'col2'], nil, '123421') }.to raise_error('columns, report_type and app_id are required') }
-        it { expect { appsflyer = Appsflyer.new(nil, 'installs_report', '12321') }.to raise_error('columns, report_type and app_id are required') }
-      end
-
-      context "default date" do
-        it 'should create instance when all parameter are collect' do
-          appsflyer = Appsflyer.new(['col1', 'col2'], 'installs_report', 'id855124397')
-          expect(appsflyer.columns).to eq(['col1', 'col2'])
-          expect(appsflyer.data).to eq(installs_report)
-        end
-      end
-
-      context "input date" do
-        it 'should create instance with date' do
-          appsflyer = Appsflyer.new(['col1', 'col2'], 'installs_report', 'id855124397', from_date: Date.today - 2, to_date: Date.today - 1 )
-          expect(appsflyer.columns).to eq(['col1', 'col2'])
-          expect(appsflyer.data).to eq(installs_second_report)
-        end
+    context "when parameters correctly" do
+      it 'should created instance' do 
+        # sqlite = Sqlite.new(['col1', 'col2'], 'database.db', 'select * from table')
+        # expect(sqlite.columns).to eq(['col1', 'col2'])
       end
     end
 
-    context 'sources.yml file' do
-      it 'should create instance' do
-        appsflyer = Appsflyer.new(appsflyer_attributes['columns'], appsflyer_attributes['report_type'], appsflyer_attributes['app_id'])
-        expect(appsflyer.columns).to eq(appsflyer_attributes['columns'])
-      end    
+    context 'instantiate with sources.yml file' do
+
+      # let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
+      # let(:sqlite_attributes) { config.get_source_by_id('sqlite3_game_level_database') }
+
+      # it 'should created instance' do
+      #   sqlite_object = Sqlite.new(sqlite_attributes['columns'], sqlite_attributes['file_path'], sqlite_attributes['query'])
+      #   expect(sqlite_object.columns).to eq(sqlite_attributes['columns'])
+      #   expect(sqlite_object.query).to eq(sqlite_attributes['query'])
+      # end
+
     end
 
+    context 'when authentication failed' do
+
+    end
     
   end
 
   context "#retrieve_data" do
 
-    let(:appsflyer_instance) { Appsflyer.new(appsflyer_attributes['columns'], appsflyer_attributes['report_type'], appsflyer_attributes['app_id']) }
+    let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
 
-    context "when response status is 200" do
-      before do 
-          stub_request(:get, "https://hq.appsflyer.com/export/id855124397/installs_report?api_token=#{appsflyer_token}&from=#{Date.today}&to=#{Date.today}")
-          .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
-          .to_return(:status => 200, :body => installs_report, :headers => {})
-      end
+    context "configuration correct" do
+      # let(:sqlite_attributes) { config.get_source_by_id('sqlite3_game_level_database') }
+      # let(:sqlite_object) { Sqlite.new(sqlite_attributes['columns'], sqlite_attributes['file_path'], sqlite_attributes['query']) }
 
-      it 'should return array as an expected_array' do
-        expected_array = CSV.parse(installs_report)
-        expect(appsflyer_instance.retrieve_data).to eq(expected_array)
+      # it 'should return array data' do
+      #   expected_data = [1, 'dragon_cube', 50]
+      #   expect(sqlite_object.retrieve_data.first).to eq(expected_data)
       end
     end
 
-    context "when response status is 302" do
-      before do 
-          stub_request(:get, "https://hq.appsflyer.com/export/id855124397/installs_report?api_token=#{appsflyer_token}&from=#{Date.today}&to=#{Date.today}")
-          .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
-          .to_return(:status => 302, :body => "", :headers => { 'location' => 'https://second-link.com' })
+    context "query incorrect" do
+      # let(:sqlite_attributes) { config.get_source_by_id('game_level_db_incorrect') }
+      # let(:sqlite_object) { Sqlite.new(sqlite_attributes['columns'], sqlite_attributes['file_path'], sqlite_attributes['query']) }
 
-          stub_request(:get, "https://second-link.com")
-          .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
-          .to_return(:status => 200, :body => installs_second_report, :headers => {})
-      end
-      it 'should receive report on second url' do
-        expected_array = CSV.parse(installs_second_report)
-        expect(appsflyer_instance.retrieve_data).to eq(expected_array)
-      end
+      # it 'should error' do
+      #   expect { sqlite_object.retrieve_data }.to raise_error
+      # end
     end
-
-    context "when response status is 400" do
-      before do 
-          stub_request(:get, "https://hq.appsflyer.com/export/id855124397/installs_report?api_token=#{appsflyer_token}&from=#{Date.today}&to=#{Date.today}")
-          .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
-          .to_return(:status => 400, :body => "", :headers => {})
-      end
-
-      it 'should error' do
-        expect { appsflyer_instance.retrieve_data }.to raise_error
-      end
-    end
-
-    context "when response status is 404" do
-      before do 
-          stub_request(:get, "https://hq.appsflyer.com/export/id855124397/installs_report?api_token=#{appsflyer_token}&from=#{Date.today}&to=#{Date.today}")
-          .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
-          .to_return(:status => 404, :body => "", :headers => {})
-      end
-
-      it 'should show error on console' do
-        expect { appsflyer_instance.retrieve_data }.to raise_error
-      end
-    end
-
-    context "when response status is 500" do
-      before do
-          stub_request(:get, "https://hq.appsflyer.com/export/id855124397/installs_report?api_token=#{appsflyer_token}&from=#{Date.today}&to=#{Date.today}")
-          .with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'})
-          .to_return(:status => 500, :body => "", :headers => {})
-      end
-
-      it 'should show error on console' do
-        expect { appsflyer_instance.retrieve_data }.to raise_error
-      end
-    end
-
   end
-
 end

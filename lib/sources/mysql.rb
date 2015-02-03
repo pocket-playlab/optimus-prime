@@ -2,26 +2,20 @@ require_relative '../optimus_init.rb'
 
 class MySQL < OptimusPrime::Source::RDBMS
 
-  attr_accessor :username, :password, :host, :dbname
+  attr_accessor :columns, :db, :query
 
   def initialize(columns, username, password, host, dbname, query)
-    raise 'columns, username, password, host, dbname and query are required' unless columns &&  username && password && host && db_path && query
+    raise 'columns required' unless columns
+    raise 'cannot connect database' unless host && username && password && database
+    raise 'query requried' unless query
     @columns = columns
     @query = query
-    @username = username
-    @password = password
-    @host = host
-    @dbname = dbname
 
-    self.connect
+    self.connect(username, password, host, dbname)
   end
 
-  def connect
-    begin
-      @db = Sequel.connect(@dbname, :user => @username, :password => @password, :host => @host)
-    rescue => e
-      raise "Can't connect database"
-    end
+  def connect(username, password, host, dbname)
+      @db = Sequel.connect(:adapter => 'mysql', :user => username, :host => host, :database => dbname,:password => password)
   end
 
   def columns
