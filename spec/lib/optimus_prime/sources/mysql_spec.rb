@@ -1,19 +1,16 @@
 require 'spec_helper'
 
-describe Appsflyer do
+describe MySQL do
 
-  let(:appsflyer_token) { SecureRandom.hex }
 
   let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
 
-  let(:appsflyer_attributes) { config.get_source_by_id('appsflyer') }
+  let(:mysql_attributes) { config.get_source_by_id('mysql') }
 
   let(:installs_report) { File.read(File.expand_path '../../../../supports/installs.csv', __FILE__) }
   let(:installs_second_report) { File.read(File.expand_path '../../../../supports/installs_second.csv', __FILE__) }
 
-  before do
-    ENV['APPSFLYER_API_TOKEN'] = appsflyer_token
-  end
+  # TODO: mock out mysql db (Sequel)
 
   context "#initialize" do
 
