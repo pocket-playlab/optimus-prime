@@ -2,8 +2,10 @@ require 'spec_helper'
 require 'sequel'
 
 describe MySQL do
-  context "#initialize" do
 
+  let(:expected_data) { [[1, "itemA", 100], [2, "itemB", 200], [3, "itemC", 2990]] }
+
+  context "#initialize" do
     context "when missing parameter" do
       it { expect { MySQL.new }.to raise_error }
       it { expect { MySQL.new(['col1', 'col2'], 'username', 'password', 'host') }.to raise_error }
@@ -16,9 +18,9 @@ describe MySQL do
 
     context "when parameters correctly" do
 
-      it 'should created instance' do 
-        mysql = MySQL.new(['col1', 'col2'], 'root', 'root', 'localhost', 'mysql_juicecubes', 'select * from items')
-        expect(mysql.class).to eq(MySQL)
+      it 'should success to create instance and data should be correct' do 
+        mysql = MySQL.new(['item_id', 'item_name', 'item_price'], 'root', 'root', 'localhost', 'mysql_juicecubes', 'select * from items')
+        expect(mysql.retrieve_data).to eq(expected_data)
       end
 
     end
@@ -45,6 +47,11 @@ describe MySQL do
 
     context 'when authentication failed' do
 
+      it { expect { MySQL.new(['item_id', 'item_name', 'item_price'], 'incorrect_username', 'root', 'localhost', 'mysql_juicecubes', 'select * from items') }.to raise_error }
+      it { expect { MySQL.new(['item_id', 'item_name', 'item_price'], 'root', 'incorrect_password', 'localhost', 'mysql_juicecubes', 'select * from items') }.to raise_error }
+      it { expect { MySQL.new(['item_id', 'item_name', 'item_price'], 'root', 'root', 'fake_host', 'mysql_juicecubes', 'select * from items') }.to raise_error }
+      it { expect { MySQL.new(['item_id', 'item_name', 'item_price'], 'root', 'root', 'localhost', 'nil_db', 'select * from items') }.to raise_error }
+
     end
     
   end
@@ -54,22 +61,21 @@ describe MySQL do
     let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
 
     context "configuration correct" do
-      # let(:sqlite_attributes) { config.get_source_by_id('sqlite3_game_level_database') }
-      # let(:sqlite_object) { Sqlite.new(sqlite_attributes['columns'], sqlite_attributes['file_path'], sqlite_attributes['query']) }
+      let(:mysql_attr) { config.get_source_by_id('mysql_juicecubes') }
+      let(:mysql_instance) { MySQL.new(mysql_attr['columns'], mysql_attr['db_username'], mysql_attr['db_password'], mysql_attr['host'], mysql_attr['db_name'], mysql_attr['query']) }
 
-      # it 'should return array data' do
-      #   expected_data = [1, 'dragon_cube', 50]
-      #   expect(sqlite_object.retrieve_data.first).to eq(expected_data)
-      # end
+      it 'should return array data' do
+        expect(mysql_instance.retrieve_data).to eq(expected_data)
+      end
     end
 
     context "query incorrect" do
-      # let(:sqlite_attributes) { config.get_source_by_id('game_level_db_incorrect') }
-      # let(:sqlite_object) { Sqlite.new(sqlite_attributes['columns'], sqlite_attributes['file_path'], sqlite_attributes['query']) }
+      let(:mysql_attr) { config.get_source_by_id('mysql_juicecubes') }
+      let(:mysql_instance) { MySQL.new(mysql_attr['columns'], mysql_attr['db_username'], mysql_attr['db_password'], mysql_attr['host'], mysql_attr['db_name'], 'select * from nil_table') }
 
-      # it 'should error' do
-      #   expect { sqlite_object.retrieve_data }.to raise_error
-      # end
+      it 'should error' do
+        expect { mysql_instance.retrieve_data }.to raise_error
+      end
     end
   end
 end
