@@ -5,7 +5,7 @@ require "uri"
 require 'csv'
 
 class Appsflyer < OptimusPrime::Source
-  attr_accessor :columns, :table_data, :api_token, :data
+  attr_accessor :columns, :api_token, :response_data
 
   def initialize(columns, report_type, app_id, from_date: Date.today, to_date: Date.today)
     raise 'columns, report_type and app_id are required' unless columns && report_type && app_id
@@ -16,17 +16,12 @@ class Appsflyer < OptimusPrime::Source
     url += "&to=#{to_date}"
 
     connect(url)
-
-    @table_data = Array.new
   end
 
-  def columns
-    return @columns
-  end
+  protected
 
-  def retrieve_data
-    @table_data = CSV.parse(@data)
-    @table_data
+  def implement_retrieve_data
+    @data = CSV.parse(@response_data)
   end
 
   private
@@ -42,7 +37,7 @@ class Appsflyer < OptimusPrime::Source
       response = https.request(request)
       if response.code == '200'
         puts 'success!'
-        @data = response.body.force_encoding('utf-8')
+        @response_data = response.body.force_encoding('utf-8')
         retrieve_data
       elsif response.code == '302'
         puts "redirect to #{response['location']}"
