@@ -2,7 +2,7 @@ require_relative '../optimus_init.rb'
 
 class Sum < OptimusPrime::Transform
 
-    attr_accessor :sources
+    attr_accessor :source_a, :source_b
 
     def initialize(sources)
       raise "sources is required" unless sources
