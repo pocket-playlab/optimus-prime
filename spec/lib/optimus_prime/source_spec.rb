@@ -9,13 +9,13 @@ require 'spec_helper'
 
 describe OptimusPrime::Source, '#columns' do
   it "should raise" do
-    expect{OptimusPrime::Source.columns}.to raise_error()
+    expect{OptimusPrime::Source.columns}.to raise_error
   end
 end
 
 describe OptimusPrime::Source, '#retrieve_data' do
   it "should raise" do
-    expect{OptimusPrime::Source.retrieve_data}.to raise_error()
+    expect{OptimusPrime::Source.retrieve_data}.to raise_error
   end
 end
 
@@ -24,40 +24,34 @@ end
 
 describe OptimusPrime::Source::Test, '#columns' do
   it "should raise" do
-    expect{OptimusPrime::Source::Test.columns}.to raise_error()
+    expect{OptimusPrime::Source::Test.columns}.to raise_error
   end
 end
 
 describe OptimusPrime::Source::Test, '#retrieve_data' do
   it "should raise" do
-    expect{OptimusPrime::Source::Test.retrieve_data}.to raise_error()
+    expect{OptimusPrime::Source::Test.retrieve_data}.to raise_error
   end
 end
 
 class OptimusPrime::Source::Test < OptimusPrime::Source
-  def columns
-    return {
-      id:   "Integer",
-      name: "String",
-      gold: "Integer",
-    }
-  end
- 
-  def get_data
-    return [
+
+  def implement_retrieve_data
+    @data = [
       [ 1, "rick",  100],
       [ 2, "omar",  200],
       [ 3, "em",    300],
       [ 4, "prair", 400],
     ]
   end
+
 end
 
 describe OptimusPrime::Source::Test, '#columns' do
   it "should return hash as expected" do
-    expected = { id: "Integer", name: "String", gold: "Integer" }  
+    expected = [ "id", "name", "gold" ]
 
-    test_src = OptimusPrime::Source::Test.new
+    test_src = OptimusPrime::Source::Test.new(['id', 'name', 'gold'])
     expect(test_src.columns).to eq expected
   end
 end
@@ -71,7 +65,20 @@ describe OptimusPrime::Source::Test, '#get_data' do
       [ 4, "prair", 400],
     ]
 
-    test_src = OptimusPrime::Source::Test.new
-    expect(test_src.get_data).to eq expected
+    test_src = OptimusPrime::Source::Test.new(['id', 'name', 'gold'])
+    expect(test_src.retrieve_data).to eq expected
+  end
+
+  it "should return expected data" do
+    expected = [
+      [ 1, "rick",  100],
+      [ 2, "omar",  200],
+      [ 3, "em",    300],
+      [ 4, "prair", 400],
+    ]
+
+    test_src = OptimusPrime::Source::Test.new(['col'])
+
+    expect { test_src.retrieve_data }.to raise_error
   end
 end

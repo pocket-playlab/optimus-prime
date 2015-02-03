@@ -178,3 +178,14 @@
     item_id: Integer
     item_name: String
     item_price: Float
+- unique_identifier: postgres_cubes
+  type: source
+  class: OptimusPrime::Source::PostgreSQL
+  db_name: postgres_cubes
+  host: localhost
+  db_username: postgres
+  db_password: root
+  query: 'select * from cubes'
+  columns:
+    id: Integer
+    name: String
