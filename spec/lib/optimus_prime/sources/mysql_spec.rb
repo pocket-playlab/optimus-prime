@@ -6,34 +6,40 @@ describe MySQL do
 
     context "when missing parameter" do
       it { expect { MySQL.new }.to raise_error }
-      it { expect { MySQL.new(['col1', 'col2'], 'host', 'username', 'password') }.to raise_error }
+      it { expect { MySQL.new(['col1', 'col2'], 'username', 'password', 'host') }.to raise_error }
       it { expect { MySQL.new(['col1', 'col2'], nil, 'username', 'password', 'db_selected', 'select *') }.to raise_error('cannot connect database') }
-      it { expect { MySQL.new(['col1', 'col2'], 'host', 'username', 'password', nil, 'select *') }.to raise_error('cannot connect database') }
-      it { expect { MySQL.new(['col1', 'col2'], 'host', 'username', nil, 'db_name', 'select *') }.to raise_error('cannot connect database') }
+      it { expect { MySQL.new(['col1', 'col2'], 'username', 'password', 'host', nil, 'select *') }.to raise_error('cannot connect database') }
+      it { expect { MySQL.new(['col1', 'col2'], 'username', 'password', nil, 'db_name', 'select *') }.to raise_error('cannot connect database') }
       it { expect { MySQL.new(nil, 'host', 'username', 'password', 'db_name', 'select *') }.to raise_error('columns required') }
-      it { expect { MySQL.new(['col1', 'col2'], 'host', 'username', 'password', 'db_name', nil) }.to raise_error('query required') }
+      it { expect { MySQL.new(['col1', 'col2'], 'username', 'password', 'host', 'db_name', nil) }.to raise_error('query required') }
     end
 
     context "when parameters correctly" do
-      before do
-        # Mysql.should_receive(:)
-      end
+
       it 'should created instance' do 
-        # sqlite = Sqlite.new(['col1', 'col2'], 'database.db', 'select * from table')
-        # expect(sqlite.columns).to eq(['col1', 'col2'])
+        mysql = MySQL.new(['col1', 'col2'], 'root', 'root', 'localhost', 'mysql_juicecubes', 'select * from items')
+        expect(mysql.class).to eq(MySQL)
       end
+
     end
 
     context 'instantiate with sources.yml file' do
 
-      # let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
-      # let(:sqlite_attributes) { config.get_source_by_id('sqlite3_game_level_database') }
+      let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
+      let(:mysql_attributes) { config.get_source_by_id('mysql_juicecubes') }
 
-      # it 'should created instance' do
-      #   sqlite_object = Sqlite.new(sqlite_attributes['columns'], sqlite_attributes['file_path'], sqlite_attributes['query'])
-      #   expect(sqlite_object.columns).to eq(sqlite_attributes['columns'])
-      #   expect(sqlite_object.query).to eq(sqlite_attributes['query'])
-      # end
+      it 'should created instance' do
+        columns = mysql_attributes['columns']
+        db_username = mysql_attributes['db_username']
+        db_password = mysql_attributes['db_password']
+        host = mysql_attributes['host']
+        query = mysql_attributes['query']
+        db_name = mysql_attributes['db_name']
+
+        mysql_instance = MySQL.new(columns, db_username, db_password, host, db_name, query)
+        expect(mysql_instance.columns).to eq(mysql_attributes['columns'])
+        expect(mysql_instance.query).to eq(mysql_attributes['query'])
+      end
 
     end
 

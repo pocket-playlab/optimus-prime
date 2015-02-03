@@ -169,7 +169,7 @@
 - unique_identifier: mysql_juicecubes
   type: source
   class: OptimusPrime::Source::MySQL
-  db_name: item
+  db_name: mysql_juicecubes
   host: localhost
   db_username: root
   db_password: root
