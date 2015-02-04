@@ -3,10 +3,10 @@ require_relative '../optimus_init.rb'
 require 'csv'
 
 class Csv < OptimusPrime::Source
-  attr_accessor :columns, :file_path
+  attr_accessor :file_path
 
   def initialize(columns, file_path)
-    @columns = columns
+    super columns
     csv_file = File.file?(file_path)
     @file_path = file_path
     @data = Array.new
@@ -23,7 +23,7 @@ class Csv < OptimusPrime::Source
     index = 0
     CSV.foreach(@file_path) do |row|
       raise "incorrect column number" if row.count != columns.count
-      @data.push row if index != 0
+      @data[index - 1] = row if index != 0
       index += 1
     end
     @data
