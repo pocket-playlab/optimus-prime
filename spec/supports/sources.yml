@@ -190,10 +190,11 @@
     id: Integer
     name: String
 - unique_identifier: csv_transform_test
-  type: source
+  type: transform
   class: OptimusPrime::Source::CSV
   file_path: spec/supports/transform.csv
   columns:
+    id: Integer
     click_time: Timestamp without time zone
     install_time: Timestamp without time zone
     event_time: Timestamp without time zone
