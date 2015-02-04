@@ -2,7 +2,7 @@ require_relative '../../optimus_init.rb'
 
 class GroupBy < OptimusPrime::Transform
 
-  attr_accessor :source, :columns, :strategy
+  attr_accessor :source, :key_columns, :strategies, :result
 
   # notes: perhaps strategy should not be global and instead by a column-by-column specified strategy
   # with a default of last seen value.
@@ -16,7 +16,7 @@ class GroupBy < OptimusPrime::Transform
   #   count
   #   first - just take first seen value
   #   last - just take last seen value
-  def initialize(source, key_columns, strategy)
+  def initialize(source, key_columns, strategies)
     raise "source is required" unless source
 
     # validate that source "is a" OptimusPrime::Source OR OptimusPrime::Transform
@@ -31,26 +31,42 @@ class GroupBy < OptimusPrime::Transform
     # validate this
 
     raise "key_columns should be an array" unless key_columns.is_a? Array
-    @columns = key_columns.uniq
+
+    keys = source.column_to_index(key_columns)
+    raise "#{key_columns} are not unique key" if source.retrieve_data.group_by { |arr| arr.values_at(*keys) }.count != source.retrieve_data.count
+    @key_columns = keys
 
     # EM TODO:
     # strategies should be a hash where keys are column names and values are the strategies to use
     # for the group by
 
-    raise "#{strategy} strategy not include" unless operations.include? strategy
-    @strategy = strategy
+    raise "strategies must be hash" unless strategies.is_a? Hash
+
+    strategies.values.each do |value|
+      raise "#{value} not include in strategies" unless operations.include? value
+    end
+
+    strategies.keys.each do |key|
+      raise "#{key} is not column name in Source" unless source.columns
+    end
+    
+    @strategies = strategies
     # validate that strategies is a hash
     # validate that keys of strategies are valid column names in source
-    # validate that values of strajtegies are valid strategies 
+    # validate that values of strajtegies are valid strategies
   end
 
 
   def retrieve_data
-    index = @source.column_to_index(@column)
+    index = @source.column_to_index(@key_columns)
 
     @source.retrieve_data.each do |row|
       row[index].upcase!
     end
+  end
+
+  def result
+    @result
   end
 
   def operations
@@ -61,7 +77,7 @@ class GroupBy < OptimusPrime::Transform
   # NOTE: This is for collapsing all columns, must adjust to do this per column
   # just take first record and delete all other rows with duplicate keys
   def collapse_on_first
-    index = @source.column_to_index(@column)
+    index = @source.column_to_index(@key_columns)
 
     # for keeping track of order of rows
     order = []
@@ -94,7 +110,7 @@ class GroupBy < OptimusPrime::Transform
   # NOTE: This is for collapsing all columns, must adjust to do this per column
   # just take last record and delete all other rows with duplicate keys
   def collapse_on_last
-    index = @source.column_to_index(@column)
+    index = @source.column_to_index(@key_columns)
 
     # for keeping track of order of rows
     order = []
@@ -122,4 +138,30 @@ class GroupBy < OptimusPrime::Transform
 
     return new_set
   end
+
+  def sum
+    col_index = @source.column_to_index(@strategies.keys)
+    index = col_index.first
+
+    data = @source.retrieve_data
+
+    @result = data.map{ |arr| arr[index].to_f }.inject(:+)
+  end
+
+  def max
+    col_index = @source.column_to_index(@strategies.keys)
+    index = col_index.first
+
+    data = @source.retrieve_data
+
+    @result = data.max_by{|i| i[index].to_f}[@key_columns.first]
+  end
+
+  def min
+    find_min_index = @source.column_to_index(@strategies.keys).first
+
+    data = @source.retrieve_data
+    @result = data.min_by{|i| i[find_min_index].to_f}[@key_columns.first]
+  end
+
 end
