@@ -57,4 +57,14 @@ describe GroupBy do
     end
 
   end
+
+   context '#median' do
+
+    let(:group_by) { GroupBy.new(csv_instance, key_columns, {'event_value' => 'median'}) }
+
+    it 'should return median value of event_value' do
+      expect(group_by.median).to eq(44.5)
+    end
+
+  end
 end

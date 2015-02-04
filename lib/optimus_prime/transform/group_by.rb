@@ -149,12 +149,10 @@ class GroupBy < OptimusPrime::Transform
   end
 
   def max
-    col_index = @source.column_to_index(@strategies.keys)
-    index = col_index.first
+    find_max_index = @source.column_to_index(@strategies.keys).first
 
     data = @source.retrieve_data
-
-    @result = data.max_by{|i| i[index].to_f}[@key_columns.first]
+    @result = data.max_by{|i| i[find_max_index].to_f}[@key_columns.first]
   end
 
   def min
@@ -162,6 +160,16 @@ class GroupBy < OptimusPrime::Transform
 
     data = @source.retrieve_data
     @result = data.min_by{|i| i[find_min_index].to_f}[@key_columns.first]
+  end
+
+  def median
+    find_median_index = @source.column_to_index(@strategies.keys).first
+
+    data = @source.retrieve_data
+    sorted = data.map{ |arr| arr[find_median_index].to_f }.sort
+    length = sorted.length
+    
+    @result = (sorted[(length - 1) / 2] + sorted[length / 2]) / 2.0 
   end
 
 end
