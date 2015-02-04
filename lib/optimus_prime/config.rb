@@ -23,6 +23,7 @@ module OptimusPrime
       }
 
       @sources = Array.new
+      @transforms = Array.new
 
       self.parse_config
     end
@@ -37,6 +38,7 @@ module OptimusPrime
             raise "#{key} not found" unless settings.has_key?(key)
           end
           @sources.push settings if settings['type'] == 'source'
+          @transforms.push settings if settings['type'] == 'transform'
         else
           raise "yaml doesn't contain type" 
         end
@@ -60,6 +62,13 @@ module OptimusPrime
     def get_source_by_id(unique_id)
       @sources.each do |source|
         return source if source['unique_identifier'] == unique_id
+      end
+      raise "#{unique_id} not exist"
+    end
+
+    def get_transform_by_id(unique_id)
+      @transforms.each do |transform|
+        return transform if transform['unique_identifier'] == unique_id
       end
       raise "#{unique_id} not exist"
     end
