@@ -172,4 +172,26 @@ class GroupBy < OptimusPrime::Transform
     @result = (sorted[(length - 1) / 2] + sorted[length / 2]) / 2.0 
   end
 
+  def mode
+    find_mode_index = @source.column_to_index(@strategies.keys).first
+
+    data = @source.retrieve_data
+    array_of_number = data.map{ |arr| arr[find_mode_index].to_f }
+    freq = array_of_number.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+    @result = array_of_number.max_by { |v| freq[v] }
+  end
+
+  def average
+    find_avg_index = @source.column_to_index(@strategies.keys).first
+
+    data = @source.retrieve_data
+    array_of_number = data.map{ |arr| arr[find_avg_index].to_f }
+
+    @result = array_of_number.instance_eval{ reduce(:+) / size }
+  end
+
+  def count
+    @result = @source.retrieve_data.count
+  end
+
 end

@@ -67,4 +67,34 @@ describe GroupBy do
     end
 
   end
+
+  context '#mode' do
+
+    let(:group_by) { GroupBy.new(csv_instance, key_columns, {'event_value' => 'mode'}) }
+
+    it 'should return median value of event_value' do
+      expect(group_by.mode).to eq(5)
+    end
+
+  end
+
+  context '#average' do
+
+    let(:group_by) { GroupBy.new(csv_instance, key_columns, {'event_value' => 'average'}) }
+
+    it 'should return average value of event_value' do
+      expect(group_by.average).to eq(44.03125)
+    end
+
+  end
+
+  context '#count' do
+
+    let(:group_by) { GroupBy.new(csv_instance, key_columns, {'event_value' => 'count'}) }
+
+    it 'should return count value of event_value' do
+      expect(group_by.count).to eq(32)
+    end
+
+  end
 end
