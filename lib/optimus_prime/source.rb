@@ -1,20 +1,10 @@
 module OptimusPrime
   class Source
-    attr_accessor :columns, :column_to_index, :data
+    attr_accessor :columns, :index_of_column, :data
     
     def initialize(columns)
-      raise "columns parameter must be an array!" unless columns.is_a? Array
-
-      map = {}
-
-      index = 0
-
-      columns.each do |name|
-        map[name] = index
-        index += 1
-      end
-
-      @column_to_index = map
+      raise "columns parameter must be an Hash!" unless columns.is_a? Hash
+      @index_of_column = columns.keys
       @columns = columns
     end
 
@@ -24,8 +14,14 @@ module OptimusPrime
       @data
     end
 
-    def column_to_index(column)
-      @column_to_index[column]
+    def column_to_index(columns)
+      index_by_request = Array.new
+      hash = Hash[@index_of_column.map.with_index.to_a]
+      columns.each do |column|
+        raise "#{column} not found" if hash[column].nil?
+        index_by_request.push hash[column]
+      end
+      index_by_request
     end
 
     protected
