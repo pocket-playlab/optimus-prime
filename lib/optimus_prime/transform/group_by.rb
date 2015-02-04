@@ -1,8 +1,8 @@
-require_relative '../optimus_init.rb'
+require_relative '../../optimus_init.rb'
 
 class GroupBy < OptimusPrime::Transform
 
-  attr_accessor :source, :column, :strategy
+  attr_accessor :source, :columns, :strategy
 
   # notes: perhaps strategy should not be global and instead by a column-by-column specified strategy
   # with a default of last seen value.
@@ -30,15 +30,15 @@ class GroupBy < OptimusPrime::Transform
     # key_columns should be an array that defines the "unique key for a row"
     # validate this
 
-    raise "key_columns should be an string" unless key_columns.is_a? Array
-    key_columns.group_by{ |unique_key| unique_key } # .select { |key, value| value.size > 1 }.map(&:first)
+    raise "key_columns should be an array" unless key_columns.is_a? Array
+    @columns = key_columns.uniq
 
     # EM TODO:
     # strategies should be a hash where keys are column names and values are the strategies to use
     # for the group by
 
     raise "#{strategy} strategy not include" unless operations.include? strategy
-
+    @strategy = strategy
     # validate that strategies is a hash
     # validate that keys of strategies are valid column names in source
     # validate that values of strajtegies are valid strategies 
