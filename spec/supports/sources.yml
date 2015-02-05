@@ -189,25 +189,3 @@
   columns:
     id: Integer
     name: String
-- unique_identifier: csv_transform_test
-  type: transform
-  class: OptimusPrime::Source::CSV
-  file_path: spec/supports/transform.csv
-  columns:
-    id: Integer
-    click_time: Timestamp without time zone
-    install_time: Timestamp without time zone
-    event_time: Timestamp without time zone
-    event_name: String
-    event_value: Integer
-    currency: String
-    agency: String
-    media_source: String
-    campaign: String
-    site_id: String
-    cost_per_install: String
-    country_code: String
-    city: String
-    ip: String
-    wifi: Boolean
-    language: String
