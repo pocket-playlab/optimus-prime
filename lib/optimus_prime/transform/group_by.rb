@@ -44,6 +44,8 @@ class GroupBy < OptimusPrime::Transform
 
     self.group_by
 
+    @result = {}
+
     strategies.each do |column, strategy|
       self.send(strategy, [column])
     end
@@ -141,7 +143,7 @@ class GroupBy < OptimusPrime::Transform
       end
     end
 
-    @result = game_total
+    @result['sum'] = game_total
   end
 
   def max(column)
@@ -156,7 +158,7 @@ class GroupBy < OptimusPrime::Transform
       end
     end
 
-    @result = max_result
+    @result['max'] = max_result
   end
 
   def min(column)
@@ -171,7 +173,7 @@ class GroupBy < OptimusPrime::Transform
       end
     end
 
-    @result = min_result
+    @result['min'] = min_result
   end
 
   def median(column)
@@ -188,7 +190,7 @@ class GroupBy < OptimusPrime::Transform
       end
     end
 
-    @result = median_result
+    @result['median'] = median_result
   end
 
   def mode(column)
@@ -205,7 +207,7 @@ class GroupBy < OptimusPrime::Transform
       end
     end
 
-    @result = mode_result
+    @result['mode'] = mode_result
   end
 
   def average(column)
@@ -221,7 +223,7 @@ class GroupBy < OptimusPrime::Transform
       end
     end
 
-    @result = average_result
+    @result['average'] = average_result
   end
 
   def count(column)
@@ -235,7 +237,7 @@ class GroupBy < OptimusPrime::Transform
       end
     end
 
-    @result = count_result
+    @result['count'] = count_result
   end
 
   #This method to re-arrange array and groupped

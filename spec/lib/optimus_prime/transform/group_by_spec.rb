@@ -33,22 +33,22 @@ describe GroupBy do
     it 'should return total score from all records' do
       group_by = GroupBy.new(csv_instance, [], {'score' => 'sum'})
 
-      expect(group_by.result[['all']]).to eq(16000)
+      expect(group_by.result['sum'][['all']]).to eq(16000)
     end
 
     it 'should return total score by game_name' do
       game_total_score = GroupBy.new(csv_instance, ['game_name'], {'score' => 'sum'})
 
-      expect(game_total_score.result[['JuiceCubes']]).to eq(15000)
-      expect(game_total_score.result[['DragonCubes']]).to eq(1000)
+      expect(game_total_score.result['sum'][['JuiceCubes']]).to eq(15000)
+      expect(game_total_score.result['sum'][['DragonCubes']]).to eq(1000)
     end
 
     it 'should return total score by game_name and user' do
       game_total_score = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'sum'})
 
-      expect(game_total_score.result[['JuiceCubes', 'M']]).to eq(8000)
-      expect(game_total_score.result[['JuiceCubes', 'Rick']]).to eq(7000)
-      expect(game_total_score.result[['DragonCubes', 'M']]).to eq(1000)
+      expect(game_total_score.result['sum'][['JuiceCubes', 'M']]).to eq(8000)
+      expect(game_total_score.result['sum'][['JuiceCubes', 'Rick']]).to eq(7000)
+      expect(game_total_score.result['sum'][['DragonCubes', 'M']]).to eq(1000)
     end
 
   end
@@ -57,22 +57,22 @@ describe GroupBy do
 
     it 'should return maximum score from all records' do
       groupby_instance = GroupBy.new(csv_instance, [], {'score' => 'max'})
-      expect(groupby_instance.result[["all"]]).to eq(5000)
+      expect(groupby_instance.result['max'][["all"]]).to eq(5000)
     end
 
     it 'should return maximum score by game_name' do
       groupby_instance = GroupBy.new(csv_instance, ['game_name'], {'score' => 'max'})
 
-      expect(groupby_instance.result[['JuiceCubes']]).to eq(5000)
-      expect(groupby_instance.result[['DragonCubes']]).to eq(1000)
+      expect(groupby_instance.result['max'][['JuiceCubes']]).to eq(5000)
+      expect(groupby_instance.result['max'][['DragonCubes']]).to eq(1000)
     end
 
     it 'should return maximum score by game_name and user' do
       groupby_instance = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'max'})
 
-      expect(groupby_instance.result[['JuiceCubes', 'M']]).to eq(5000)
-      expect(groupby_instance.result[['JuiceCubes', 'Rick']]).to eq(5000)
-      expect(groupby_instance.result[['DragonCubes', 'M']]).to eq(1000)
+      expect(groupby_instance.result['max'][['JuiceCubes', 'M']]).to eq(5000)
+      expect(groupby_instance.result['max'][['JuiceCubes', 'Rick']]).to eq(5000)
+      expect(groupby_instance.result['max'][['DragonCubes', 'M']]).to eq(1000)
     end
 
   end
@@ -81,22 +81,22 @@ describe GroupBy do
 
     it 'should return minimum score from all records' do
       groupby_instance = GroupBy.new(csv_instance, [], {'score' => 'min'})
-      expect(groupby_instance.result[["all"]]).to eq(1000)
+      expect(groupby_instance.result['min'][["all"]]).to eq(1000)
     end
 
     it 'should return minimum score by game_name' do
       groupby_instance = GroupBy.new(csv_instance, ['game_name'], {'score' => 'min'})
 
-      expect(groupby_instance.result[['JuiceCubes']]).to eq(1000)
-      expect(groupby_instance.result[['DragonCubes']]).to eq(1000)
+      expect(groupby_instance.result['min'][['JuiceCubes']]).to eq(1000)
+      expect(groupby_instance.result['min'][['DragonCubes']]).to eq(1000)
     end
 
     it 'should return minimum score by game_name and user' do
       groupby_instance = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'min'})
 
-      expect(groupby_instance.result[['JuiceCubes', 'M']]).to eq(1000)
-      expect(groupby_instance.result[['JuiceCubes', 'Rick']]).to eq(1000)
-      expect(groupby_instance.result[['DragonCubes', 'M']]).to eq(1000)
+      expect(groupby_instance.result['min'][['JuiceCubes', 'M']]).to eq(1000)
+      expect(groupby_instance.result['min'][['JuiceCubes', 'Rick']]).to eq(1000)
+      expect(groupby_instance.result['min'][['DragonCubes', 'M']]).to eq(1000)
     end
 
   end
@@ -105,22 +105,22 @@ describe GroupBy do
 
     it 'should return median of score from all records' do
       groupby_instance = GroupBy.new(csv_instance, [], {'score' => 'median'})
-      expect(groupby_instance.result[["all"]]).to eq(1000)
+      expect(groupby_instance.result['median'][["all"]]).to eq(1000)
     end
 
     it 'should return median of score by game_name' do
       groupby_instance = GroupBy.new(csv_instance, ['game_name'], {'score' => 'median'})
 
-      expect(groupby_instance.result[['JuiceCubes']]).to eq(1500)
-      expect(groupby_instance.result[['DragonCubes']]).to eq(1000)
+      expect(groupby_instance.result['median'][['JuiceCubes']]).to eq(1500)
+      expect(groupby_instance.result['median'][['DragonCubes']]).to eq(1000)
     end
 
     it 'should return median of score by game_name and user' do
       groupby_instance = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'median'})
 
-      expect(groupby_instance.result[['JuiceCubes', 'M']]).to eq(2000)
-      expect(groupby_instance.result[['JuiceCubes', 'Rick']]).to eq(1000)
-      expect(groupby_instance.result[['DragonCubes', 'M']]).to eq(1000)
+      expect(groupby_instance.result['median'][['JuiceCubes', 'M']]).to eq(2000)
+      expect(groupby_instance.result['median'][['JuiceCubes', 'Rick']]).to eq(1000)
+      expect(groupby_instance.result['median'][['DragonCubes', 'M']]).to eq(1000)
     end
 
   end
@@ -129,22 +129,22 @@ describe GroupBy do
 
     it 'should return mode of score from all records' do
       groupby_instance = GroupBy.new(csv_instance, [], {'score' => 'mode'})
-      expect(groupby_instance.result[["all"]]).to eq(1000)
+      expect(groupby_instance.result['mode'][["all"]]).to eq(1000)
     end
 
     it 'should return mode of score by game_name' do
       groupby_instance = GroupBy.new(csv_instance, ['game_name'], {'score' => 'mode'})
 
-      expect(groupby_instance.result[['JuiceCubes']]).to eq(1000)
-      expect(groupby_instance.result[['DragonCubes']]).to eq(1000)
+      expect(groupby_instance.result['mode'][['JuiceCubes']]).to eq(1000)
+      expect(groupby_instance.result['mode'][['DragonCubes']]).to eq(1000)
     end
 
     it 'should return mode of score by game_name and user' do
       groupby_instance = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'mode'})
 
-      expect(groupby_instance.result[['JuiceCubes', 'M']]).to eq(2000)
-      expect(groupby_instance.result[['JuiceCubes', 'Rick']]).to eq(1000)
-      expect(groupby_instance.result[['DragonCubes', 'M']]).to eq(1000)
+      expect(groupby_instance.result['mode'][['JuiceCubes', 'M']]).to eq(2000)
+      expect(groupby_instance.result['mode'][['JuiceCubes', 'Rick']]).to eq(1000)
+      expect(groupby_instance.result['mode'][['DragonCubes', 'M']]).to eq(1000)
     end
 
   end
@@ -153,22 +153,22 @@ describe GroupBy do
 
     it 'should return average of score from all records' do
       groupby_instance = GroupBy.new(csv_instance, [], {'score' => 'average'})
-      expect(groupby_instance.result[["all"]]).to eq(2285.714285714286)
+      expect(groupby_instance.result['average'][["all"]]).to eq(2285.714285714286)
     end
 
     it 'should return average of score by game_name' do
       groupby_instance = GroupBy.new(csv_instance, ['game_name'], {'score' => 'average'})
 
-      expect(groupby_instance.result[['JuiceCubes']]).to eq(2500)
-      expect(groupby_instance.result[['DragonCubes']]).to eq(1000)
+      expect(groupby_instance.result['average'][['JuiceCubes']]).to eq(2500)
+      expect(groupby_instance.result['average'][['DragonCubes']]).to eq(1000)
     end
 
     it 'should return average of score by game_name and user' do
       groupby_instance = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'average'})
 
-      expect(groupby_instance.result[['JuiceCubes', 'M']]).to eq(2666.6666666666665)
-      expect(groupby_instance.result[['JuiceCubes', 'Rick']]).to eq(2333.3333333333335)
-      expect(groupby_instance.result[['DragonCubes', 'M']]).to eq(1000)
+      expect(groupby_instance.result['average'][['JuiceCubes', 'M']]).to eq(2666.6666666666665)
+      expect(groupby_instance.result['average'][['JuiceCubes', 'Rick']]).to eq(2333.3333333333335)
+      expect(groupby_instance.result['average'][['DragonCubes', 'M']]).to eq(1000)
     end
 
   end
@@ -177,22 +177,22 @@ describe GroupBy do
 
     it 'should return count of score from all records' do
       groupby_instance = GroupBy.new(csv_instance, [], {'score' => 'count'})
-      expect(groupby_instance.result[["all"]]).to eq(7)
+      expect(groupby_instance.result['count'][["all"]]).to eq(7)
     end
 
     it 'should return count of score by game_name' do
       groupby_instance = GroupBy.new(csv_instance, ['game_name'], {'score' => 'count'})
 
-      expect(groupby_instance.result[['JuiceCubes']]).to eq(6)
-      expect(groupby_instance.result[['DragonCubes']]).to eq(1)
+      expect(groupby_instance.result['count'][['JuiceCubes']]).to eq(6)
+      expect(groupby_instance.result['count'][['DragonCubes']]).to eq(1)
     end
 
     it 'should return count of score by game_name and user' do
       groupby_instance = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'count'})
 
-      expect(groupby_instance.result[['JuiceCubes', 'M']]).to eq(3)
-      expect(groupby_instance.result[['JuiceCubes', 'Rick']]).to eq(3)
-      expect(groupby_instance.result[['DragonCubes', 'M']]).to eq(1)
+      expect(groupby_instance.result['count'][['JuiceCubes', 'M']]).to eq(3)
+      expect(groupby_instance.result['count'][['JuiceCubes', 'Rick']]).to eq(3)
+      expect(groupby_instance.result['count'][['DragonCubes', 'M']]).to eq(1)
     end
 
   end
@@ -242,5 +242,20 @@ describe GroupBy do
   end
 
   context 'complex report' do
+    it 'should gropped data into new array by key_columns parameter' do
+      group_by_instance = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'sum', 'level' => 'average', 'gold' => 'max'})
+
+      expect(group_by_instance.result['max'][['JuiceCubes', 'M']]).to eq(2)
+      expect(group_by_instance.result['max'][['JuiceCubes', 'Rick']]).to eq(5)
+      expect(group_by_instance.result['max'][['DragonCubes', 'M']]).to eq(5)
+
+      expect(group_by_instance.result['average'][['JuiceCubes', 'M']]).to eq(2)
+      expect(group_by_instance.result['average'][['JuiceCubes', 'Rick']]).to eq(2)
+      expect(group_by_instance.result['average'][['DragonCubes', 'M']]).to eq(1)
+
+      expect(group_by_instance.result['sum'][['JuiceCubes', 'M']]).to eq(8000)
+      expect(group_by_instance.result['sum'][['JuiceCubes', 'Rick']]).to eq(7000)
+      expect(group_by_instance.result['sum'][['DragonCubes', 'M']]).to eq(1000)
+    end
   end
 end
