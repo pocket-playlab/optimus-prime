@@ -18,7 +18,7 @@ module OptimusPrime
       index_by_request = Array.new
       hash = Hash[@index_of_column.map.with_index.to_a]
       columns.each do |column|
-        raise "#{column} not found" if hash[column].nil?
+        raise "column #{column} not found" if hash[column].nil?
         index_by_request.push hash[column]
       end
       index_by_request
