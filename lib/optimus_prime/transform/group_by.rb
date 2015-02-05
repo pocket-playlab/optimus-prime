@@ -150,38 +150,62 @@ class GroupBy < OptimusPrime::Transform
 
     @grouped_data.each do |key, value|
       if key.count != 0
-        max_result[key] = value.max_by{|i| i[find_max_index].to_f}
+        max_result[key] = value.max_by{|i| i[find_max_index].to_f}[find_max_index].to_f
       else
-        max_result[['all']] = value.max_by{|i| i[find_max_index].to_f}
+        max_result[['all']] = value.max_by{|i| i[find_max_index].to_f}[find_max_index].to_f
       end
     end
-    
+
     @result = max_result
   end
 
   def min(column)
     find_min_index = @source.column_to_index(column).first
+    min_result = {}
 
-    data = @source.retrieve_data
-    @result = data.min_by{|i| i[find_min_index].to_f}
+    @grouped_data.each do |key, value|
+      if key.count != 0
+        min_result[key] = value.min_by{|i| i[find_min_index].to_f}[find_min_index].to_f
+      else
+        min_result[['all']] = value.min_by{|i| i[find_min_index].to_f}[find_min_index].to_f
+      end
+    end
+
+    @result = min_result
   end
 
   def median(column)
     find_median_index = @source.column_to_index(column).first
-    data = @source.retrieve_data
-    sorted = data.map{ |arr| arr[find_median_index].to_f }.sort
-    length = sorted.length
-    
-    @result = (sorted[(length - 1) / 2] + sorted[length / 2]) / 2.0 
+    median_result = {}
+
+    @grouped_data.each do |key, value|
+      sorted = value.map{ |arr| arr[find_median_index].to_f }.sort
+      length = sorted.length
+      if key.count != 0
+        median_result[key] = (sorted[(length - 1) / 2] + sorted[length / 2]) / 2.0
+      else
+        median_result[['all']] = (sorted[(length - 1) / 2] + sorted[length / 2]) / 2.0 
+      end
+    end
+
+    @result = median_result
   end
 
   def mode(column)
     find_mode_index = @source.column_to_index(column).first
+    mode_result = {}
 
-    data = @source.retrieve_data
-    array_of_number = data.map{ |arr| arr[find_mode_index].to_f }
-    freq = array_of_number.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-    @result = array_of_number.max_by { |v| freq[v] }
+    @grouped_data.each do |key, value|
+      array_of_number = value.map{ |arr| arr[find_mode_index].to_f }
+      freq = array_of_number.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+      if key.count != 0
+        mode_result[key] = array_of_number.max_by { |v| freq[v] }
+      else
+        mode_result[['all']] = array_of_number.max_by { |v| freq[v] }
+      end
+    end
+
+    @result = mode_result
   end
 
   def average(column)
