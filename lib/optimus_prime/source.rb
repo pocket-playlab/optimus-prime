@@ -27,7 +27,7 @@ module OptimusPrime
     protected
 
     def implement_retrieve_data
-      raise "The 'retrieve_data' method is not defined in subclass! Please define before continuing."
+      raise "The 'implement_retrieve_data' method is not defined in subclass! Please define before continuing."
     end
 
     private

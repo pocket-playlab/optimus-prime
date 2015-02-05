@@ -10,12 +10,9 @@ class MySQL < OptimusPrime::Source::RDBMS
     raise 'query required' unless query
     @columns = columns
     @query = query
+    @adapter = 'mysql'
 
-    self.connect(username, password, host, dbname)
-  end
-
-  def connect(username, password, host, dbname)
-    @db = Sequel.connect(:adapter => 'mysql', :user => username, :host => host, :database => dbname,:password => password)
+    self.connect
     self.retrieve_data
   end
 

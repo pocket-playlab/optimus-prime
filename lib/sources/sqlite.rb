@@ -2,7 +2,7 @@ require_relative '../optimus_init.rb'
 
 class Sqlite < OptimusPrime::Source::RDBMS
 
-  attr_accessor :columns, :db
+  attr_accessor :columns, :db, :db_path
 
   def initialize(columns, db_path, query)
     raise 'columns, db_path and query are required' unless columns && db_path && query
@@ -14,7 +14,7 @@ class Sqlite < OptimusPrime::Source::RDBMS
 
   def connect(db_path)
     begin
-      @db = Sequel.connect("sqlite://#{db_path}")
+      @db = Sequel.connect("sqlite://#{@db_path}")
     rescue => e
       raise "Can't connect database"
     end
