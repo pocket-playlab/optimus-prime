@@ -5,7 +5,7 @@ describe GroupBy do
   let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/transforms.yml") }
   let(:csv_source) { config.get_transform_by_id('games_record_sample') }
   let(:csv_instance) { Csv.new(csv_source['columns'], csv_source['file_path']) }
-  let(:key_columns) { [''] }
+  let(:key_columns) { [] }
 
 
   context '#initialize' do
@@ -100,5 +100,48 @@ describe GroupBy do
 
   context '#group_by' do
 
+    context 'empty group' do
+      it 'should return same source.retrieve data but store in 2d-array' do
+        group_by_instance = GroupBy.new(csv_instance, [], {'score' => 'sum'})
+        expect(group_by_instance.grouped_data.first[1]).to eq(csv_instance.retrieve_data)
+      end
+    end
+
+    context 'single key_columns' do
+      it 'should gropped data into new array by key_columns parameter' do
+        group_by_instance = GroupBy.new(csv_instance, ['game_name'], {'score' => 'sum'})
+        
+        expect(group_by_instance.grouped_data.count).to eq(2)
+        expect(group_by_instance.grouped_data.keys).to match_array([['JuiceCubes'], ['DragonCubes']])
+
+        jc_expected_level = ["1", "1", "2", "3", "2", "3"]
+
+        expect(group_by_instance.grouped_data.values[0].map{ |data| data[2] }).to match_array(jc_expected_level)
+        expect(group_by_instance.grouped_data.values[1].map{ |data| data[2] }).to match_array(["1"])
+      end
+    end
+
+    context 'multiple key_columns' do
+      it 'should gropped data into new array by key_columns parameter' do
+        group_by_instance = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'sum'})
+
+        expect(group_by_instance.grouped_data.count).to eq(3)
+
+        keys_expected = [['JuiceCubes', 'M'], ['DragonCubes', 'M'], ['JuiceCubes', 'Rick']]
+        expect(group_by_instance.grouped_data.keys).to match_array(keys_expected)
+
+        p1_jc_expected_score = ["2000", "1000", "5000"]
+        p2_jc_expected_score = ["1000", "1000", "5000"]
+        p1_dc_expected_score = ["1000"]
+
+        expect(group_by_instance.grouped_data.values[0].map{ |data| data[3] }).to match_array(p1_jc_expected_score)
+        expect(group_by_instance.grouped_data.values[1].map{ |data| data[3] }).to match_array(p2_jc_expected_score)
+        expect(group_by_instance.grouped_data.values[2].map{ |data| data[3] }).to match_array(p1_dc_expected_score)
+      end
+    end
+
+  end
+
+  context 'complex report' do
   end
 end
