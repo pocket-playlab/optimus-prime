@@ -242,7 +242,7 @@ describe GroupBy do
   end
 
   context 'complex report' do
-    it 'should gropped data into new array by key_columns parameter' do
+    it 'should return array of multiple report type group by game_name and user' do
       group_by_instance = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'sum', 'level' => 'average', 'gold' => 'max'})
 
       expect(group_by_instance.result['max'][['JuiceCubes', 'M']]).to eq(2)
