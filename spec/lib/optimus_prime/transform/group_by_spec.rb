@@ -33,7 +33,22 @@ describe GroupBy do
     let(:group_by) { GroupBy.new(csv_instance, key_columns, {'score' => 'sum'}) }
 
     it 'should return sum value' do
-      expect(group_by.sum).to eq(16000)
+      expect(group_by.result[['all']]).to eq(16000)
+    end
+
+    it 'should return total score by game_name' do
+      game_total_score = GroupBy.new(csv_instance, ['game_name'], {'score' => 'sum'})
+
+      expect(game_total_score.result[['JuiceCubes']]).to eq(15000)
+      expect(game_total_score.result[['DragonCubes']]).to eq(1000)
+    end
+
+    it 'should return total score by game_name and user' do
+      game_total_score = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'sum'})
+
+      expect(game_total_score.result[['JuiceCubes', 'M']]).to eq(8000)
+      expect(game_total_score.result[['JuiceCubes', 'Rick']]).to eq(7000)
+      expect(game_total_score.result[['DragonCubes', 'M']]).to eq(1000)
     end
 
   end
@@ -42,9 +57,13 @@ describe GroupBy do
 
     let(:group_by) { GroupBy.new(csv_instance, key_columns, {'score' => 'max'}) }
 
-    it 'should return primary key of maximum score' do
-      expect(group_by.max).to eq(["M", "JuiceCubes", "3", "5000", "0"])
+    it 'should return maximum score' do
+      expect(group_by.result).to eq(["M", "JuiceCubes", "3", "5000", "0"])
     end
+
+    it 'should return maximum score'
+
+
 
   end
 
@@ -53,7 +72,7 @@ describe GroupBy do
     let(:group_by) { GroupBy.new(csv_instance, key_columns, {'score' => 'min'}) }
 
     it 'should return primary key of maximum score' do
-      expect(group_by.min).to eq(["Rick", "JuiceCubes", "1", "1000", "5"])
+      expect(group_by.result).to eq(["Rick", "JuiceCubes", "1", "1000", "5"])
     end
 
   end
@@ -63,7 +82,7 @@ describe GroupBy do
     let(:group_by) { GroupBy.new(csv_instance, key_columns, {'score' => 'median'}) }
 
     it 'should return median value of score' do
-      expect(group_by.median).to eq(1000)
+      expect(group_by.result).to eq(1000)
     end
 
   end
@@ -73,7 +92,7 @@ describe GroupBy do
     let(:group_by) { GroupBy.new(csv_instance, key_columns, {'score' => 'mode'}) }
 
     it 'should return median value of score' do
-      expect(group_by.mode).to eq(1000)
+      expect(group_by.result).to eq(1000)
     end
 
   end
@@ -83,7 +102,7 @@ describe GroupBy do
     let(:group_by) { GroupBy.new(csv_instance, key_columns, {'score' => 'average'}) }
 
     it 'should return average value of score' do
-      expect(group_by.average).to eq(2285.714285714286)
+      expect(group_by.result).to eq(2285.714285714286)
     end
 
   end
@@ -93,7 +112,7 @@ describe GroupBy do
     let(:group_by) { GroupBy.new(csv_instance, key_columns, {'score' => 'count'}) }
 
     it 'should return count value of score' do
-      expect(group_by.count).to eq(7)
+      expect(group_by.result).to eq(7)
     end
 
   end
@@ -110,7 +129,7 @@ describe GroupBy do
     context 'single key_columns' do
       it 'should gropped data into new array by key_columns parameter' do
         group_by_instance = GroupBy.new(csv_instance, ['game_name'], {'score' => 'sum'})
-        
+
         expect(group_by_instance.grouped_data.count).to eq(2)
         expect(group_by_instance.grouped_data.keys).to match_array([['JuiceCubes'], ['DragonCubes']])
 
