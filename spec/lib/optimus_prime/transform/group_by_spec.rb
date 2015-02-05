@@ -258,4 +258,16 @@ describe GroupBy do
       expect(group_by_instance.result['sum'][['DragonCubes', 'M']]).to eq(1000)
     end
   end
+
+  context 'check primary key' do
+    it 'should return true when input are primary key' do
+      group_by_instance = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'sum', 'level' => 'average', 'gold' => 'max'})
+      expect(group_by_instance.check_primary_key(['game_name', 'user', 'score', 'level', 'gold'])).to eq(true)
+    end
+
+    it 'should return false when input not primary key' do
+      group_by_instance = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'sum', 'level' => 'average', 'gold' => 'max'})
+      expect(group_by_instance.check_primary_key(['game_name', 'user', 'score'])).to eq(false)
+    end
+  end
 end

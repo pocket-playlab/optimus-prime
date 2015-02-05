@@ -52,6 +52,11 @@ class GroupBy < OptimusPrime::Transform
 
   end
 
+  def check_primary_key(primary_set)
+    keys = @source.column_to_index(primary_set)
+    grouped_data = @source.retrieve_data.group_by { |arr| arr.values_at(*keys) }
+    grouped_data.values.count == @source.retrieve_data.count
+  end
 
   def retrieve_data
     index = @source.column_to_index(@key_columns)
