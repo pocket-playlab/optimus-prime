@@ -3,6 +3,7 @@ require_relative '../../optimus_init.rb'
 class GroupBy < OptimusPrime::Transform
 
   attr_accessor :source, :key_columns, :strategies, :result
+  attr_reader :grouped_data
 
   # notes: perhaps strategy should not be global and instead by a column-by-column specified strategy
   # with a default of last seen value.
@@ -19,24 +20,15 @@ class GroupBy < OptimusPrime::Transform
   def initialize(source, key_columns, strategies)
     raise "source is required" unless source
 
-    # validate that source "is a" OptimusPrime::Source OR OptimusPrime::Transform
     unless (source.is_a? OptimusPrime::Source or source.is_a? OptimusPrime::Transform)
       raise "source must inherit from either OptimusPrime::Source or OptimusPrime::Transform!"
     end
 
     @source = source
 
-    # EM TODO:
-    # key_columns should be an array that defines the "group by" column
-    # validate this
-
     raise "key_columns should be an array" unless key_columns.is_a? Array
 
     @key_columns = key_columns
-
-    # EM TODO:
-    # strategies should be a hash where keys are column names and values are the strategies to use
-    # for the group by
 
     raise "strategies must be hash" unless strategies.is_a? Hash
 
@@ -49,9 +41,9 @@ class GroupBy < OptimusPrime::Transform
     end
     
     @strategies = strategies
-    # validate that strategies is a hash
-    # validate that keys of strategies are valid column names in source
-    # validate that values of strajtegies are valid strategies
+
+    self.group_by
+    
   end
 
 
@@ -194,10 +186,12 @@ class GroupBy < OptimusPrime::Transform
 
   #This method to re-arrange array and groupped
   def group_by
-    group_by_columns = column_to_index(@key_columns)
-    pp group_by_columns
-    #keys column
-    #
+    keys = @source.column_to_index(@key_columns)
+    @grouped_data = @source.retrieve_data.group_by { |arr| arr.values_at(*keys) }
   end
+
+  private
+
+  attr_writer :grouped_data
 
 end
