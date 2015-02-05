@@ -151,20 +151,48 @@ describe GroupBy do
 
   context '#average' do
 
-    let(:group_by) { GroupBy.new(csv_instance, key_columns, {'score' => 'average'}) }
+    it 'should return average of score from all records' do
+      groupby_instance = GroupBy.new(csv_instance, [], {'score' => 'average'})
+      expect(groupby_instance.result[["all"]]).to eq(2285.714285714286)
+    end
 
-    it 'should return average value of score' do
-      expect(group_by.result).to eq(2285.714285714286)
+    it 'should return average of score by game_name' do
+      groupby_instance = GroupBy.new(csv_instance, ['game_name'], {'score' => 'average'})
+
+      expect(groupby_instance.result[['JuiceCubes']]).to eq(2500)
+      expect(groupby_instance.result[['DragonCubes']]).to eq(1000)
+    end
+
+    it 'should return average of score by game_name and user' do
+      groupby_instance = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'average'})
+
+      expect(groupby_instance.result[['JuiceCubes', 'M']]).to eq(2666.6666666666665)
+      expect(groupby_instance.result[['JuiceCubes', 'Rick']]).to eq(2333.3333333333335)
+      expect(groupby_instance.result[['DragonCubes', 'M']]).to eq(1000)
     end
 
   end
 
   context '#count' do
 
-    let(:group_by) { GroupBy.new(csv_instance, key_columns, {'score' => 'count'}) }
+    it 'should return count of score from all records' do
+      groupby_instance = GroupBy.new(csv_instance, [], {'score' => 'count'})
+      expect(groupby_instance.result[["all"]]).to eq(7)
+    end
 
-    it 'should return count value of score' do
-      expect(group_by.result).to eq(7)
+    it 'should return count of score by game_name' do
+      groupby_instance = GroupBy.new(csv_instance, ['game_name'], {'score' => 'count'})
+
+      expect(groupby_instance.result[['JuiceCubes']]).to eq(6)
+      expect(groupby_instance.result[['DragonCubes']]).to eq(1)
+    end
+
+    it 'should return count of score by game_name and user' do
+      groupby_instance = GroupBy.new(csv_instance, ['game_name', 'user'], {'score' => 'count'})
+
+      expect(groupby_instance.result[['JuiceCubes', 'M']]).to eq(3)
+      expect(groupby_instance.result[['JuiceCubes', 'Rick']]).to eq(3)
+      expect(groupby_instance.result[['DragonCubes', 'M']]).to eq(1)
     end
 
   end

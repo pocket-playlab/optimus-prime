@@ -210,17 +210,35 @@ class GroupBy < OptimusPrime::Transform
 
   def average(column)
     find_avg_index = @source.column_to_index(column).first
+    average_result = {}
 
-    data = @source.retrieve_data
-    array_of_number = data.map{ |arr| arr[find_avg_index].to_f }
+    @grouped_data.each do |key, value|
+      array_of_number = value.map{ |arr| arr[find_avg_index].to_f }
+      if key.count != 0
+        average_result[key] = array_of_number.instance_eval{ reduce(:+) / size }
+      else
+        average_result[['all']] = array_of_number.instance_eval{ reduce(:+) / size }
+      end
+    end
 
-    @result = array_of_number.instance_eval{ reduce(:+) / size }
+    @result = average_result
   end
 
   def count(column)
-    @result = @source.retrieve_data.count
+    count_result = {}
+
+    @grouped_data.each do |key, value|
+      if key.count != 0
+        count_result[key] = value.count
+      else
+        count_result[['all']] = value.count
+      end
+    end
+
+    @result = count_result
   end
 
+  #This method to re-arrange array and groupped
   def group_by
     keys = @source.column_to_index(@key_columns)
     @grouped_data = @source.retrieve_data.group_by { |arr| arr.values_at(*keys) }
@@ -229,8 +247,5 @@ class GroupBy < OptimusPrime::Transform
   private
 
   attr_writer :grouped_data
-
-  #This method to re-arrange array and groupped
-  
 
 end
