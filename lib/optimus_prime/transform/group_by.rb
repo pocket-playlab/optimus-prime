@@ -43,7 +43,11 @@ class GroupBy < OptimusPrime::Transform
     @strategies = strategies
 
     self.group_by
-    
+
+    strategies.each do |column, strategy|
+      self.send(strategy, [column])
+    end
+
   end
 
 
@@ -53,10 +57,6 @@ class GroupBy < OptimusPrime::Transform
     @source.retrieve_data.each do |row|
       row[index].upcase!
     end
-  end
-
-  def result
-    @result
   end
 
   def operations
@@ -129,32 +129,45 @@ class GroupBy < OptimusPrime::Transform
     return new_set
   end
 
-  def sum
-    col_index = @source.column_to_index(@strategies.keys)
-    index = col_index.first
+  def sum(column)
+    index = @source.column_to_index(column).first
+    game_total = {}
 
-    data = @source.retrieve_data
+    @grouped_data.each do |key, value|
+      if key.count != 0
+        game_total[key] = value.map{ |arr| arr[index].to_f }.inject(:+)
+      else
+        game_total[['all']] = value.map{ |arr| arr[index].to_f }.inject(:+)
+      end
+    end
 
-    @result = data.map{ |arr| arr[index].to_f }.inject(:+)
+    @result = game_total
   end
 
-  def max
-    find_max_index = @source.column_to_index(@strategies.keys).first
+  def max(column)
+    find_max_index = @source.column_to_index(column).first
+    max_result = {}
 
-    data = @source.retrieve_data
-    @result = data.max_by{|i| i[find_max_index].to_f}
+    @grouped_data.each do |key, value|
+      if key.count != 0
+        max_result[key] = value.max_by{|i| i[find_max_index].to_f}
+      else
+        max_result[['all']] = value.max_by{|i| i[find_max_index].to_f}
+      end
+    end
+    
+    @result = max_result
   end
 
-  def min
-    find_min_index = @source.column_to_index(@strategies.keys).first
+  def min(column)
+    find_min_index = @source.column_to_index(column).first
 
     data = @source.retrieve_data
     @result = data.min_by{|i| i[find_min_index].to_f}
   end
 
-  def median
-    find_median_index = @source.column_to_index(@strategies.keys).first
-
+  def median(column)
+    find_median_index = @source.column_to_index(column).first
     data = @source.retrieve_data
     sorted = data.map{ |arr| arr[find_median_index].to_f }.sort
     length = sorted.length
@@ -162,8 +175,8 @@ class GroupBy < OptimusPrime::Transform
     @result = (sorted[(length - 1) / 2] + sorted[length / 2]) / 2.0 
   end
 
-  def mode
-    find_mode_index = @source.column_to_index(@strategies.keys).first
+  def mode(column)
+    find_mode_index = @source.column_to_index(column).first
 
     data = @source.retrieve_data
     array_of_number = data.map{ |arr| arr[find_mode_index].to_f }
@@ -171,8 +184,8 @@ class GroupBy < OptimusPrime::Transform
     @result = array_of_number.max_by { |v| freq[v] }
   end
 
-  def average
-    find_avg_index = @source.column_to_index(@strategies.keys).first
+  def average(column)
+    find_avg_index = @source.column_to_index(column).first
 
     data = @source.retrieve_data
     array_of_number = data.map{ |arr| arr[find_avg_index].to_f }
@@ -180,11 +193,10 @@ class GroupBy < OptimusPrime::Transform
     @result = array_of_number.instance_eval{ reduce(:+) / size }
   end
 
-  def count
+  def count(column)
     @result = @source.retrieve_data.count
   end
 
-  #This method to re-arrange array and groupped
   def group_by
     keys = @source.column_to_index(@key_columns)
     @grouped_data = @source.retrieve_data.group_by { |arr| arr.values_at(*keys) }
@@ -193,5 +205,8 @@ class GroupBy < OptimusPrime::Transform
   private
 
   attr_writer :grouped_data
+
+  #This method to re-arrange array and groupped
+  
 
 end
