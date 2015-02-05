@@ -27,14 +27,12 @@ class GroupBy < OptimusPrime::Transform
     @source = source
 
     # EM TODO:
-    # key_columns should be an array that defines the "unique key for a row"
+    # key_columns should be an array that defines the "group by" column
     # validate this
 
     raise "key_columns should be an array" unless key_columns.is_a? Array
 
-    keys = source.column_to_index(key_columns)
-    raise "#{key_columns} are not unique key" if source.retrieve_data.group_by { |arr| arr.values_at(*keys) }.count != source.retrieve_data.count
-    @key_columns = keys
+    @key_columns = key_columns
 
     # EM TODO:
     # strategies should be a hash where keys are column names and values are the strategies to use
@@ -47,7 +45,7 @@ class GroupBy < OptimusPrime::Transform
     end
 
     strategies.keys.each do |key|
-      raise "#{key} is not column name in Source" unless source.columns
+      raise "#{key} is not column name in Source" unless source.columns.include? key
     end
     
     @strategies = strategies
@@ -152,14 +150,14 @@ class GroupBy < OptimusPrime::Transform
     find_max_index = @source.column_to_index(@strategies.keys).first
 
     data = @source.retrieve_data
-    @result = data.max_by{|i| i[find_max_index].to_f}[@key_columns.first]
+    @result = data.max_by{|i| i[find_max_index].to_f}
   end
 
   def min
     find_min_index = @source.column_to_index(@strategies.keys).first
 
     data = @source.retrieve_data
-    @result = data.min_by{|i| i[find_min_index].to_f}[@key_columns.first]
+    @result = data.min_by{|i| i[find_min_index].to_f}
   end
 
   def median
@@ -192,6 +190,14 @@ class GroupBy < OptimusPrime::Transform
 
   def count
     @result = @source.retrieve_data.count
+  end
+
+  #This method to re-arrange array and groupped
+  def group_by
+    group_by_columns = column_to_index(@key_columns)
+    pp group_by_columns
+    #keys column
+    #
   end
 
 end
