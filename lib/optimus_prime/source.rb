@@ -10,7 +10,7 @@ module OptimusPrime
 
     def retrieve_data
       implement_retrieve_data
-      check_column
+      check_columns
       @data
     end
 
@@ -32,7 +32,7 @@ module OptimusPrime
 
     private
 
-    def check_column
+    def check_columns
       raise "expect #{@columns.count} columns, but received #{@data.first.count}" if @columns.count != @data.first.count
     end
 
