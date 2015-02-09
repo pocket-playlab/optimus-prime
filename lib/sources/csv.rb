@@ -13,10 +13,6 @@ class Csv < OptimusPrime::Source
     raise "file not found" unless csv_file
   end
 
-  def columns
-    return @columns
-  end
-
   protected
 
   def implement_retrieve_data

@@ -7,13 +7,12 @@ module OptimusPrime
     end
 
     def connect
-      @db = Sequel.connect(:adapter => @adapter, :user => @username, :host => @host, :database => @dbname,:password => @password)
+      Sequel.connect(:adapter => @adapter, :user => @username, :host => @host, :database => @dbname,:password => @password)
     end
 
     protected
 
   	def implement_retrieve_data
-
       array_data = Array.new
   	  self.execute_query.each do |row|
         row_data = Array.new
