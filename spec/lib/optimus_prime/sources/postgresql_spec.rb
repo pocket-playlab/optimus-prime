@@ -2,22 +2,25 @@ require 'spec_helper'
 require 'sequel'
 
 describe PostgreSQL do
+
+  let(:columns_test) { { 'col1': 'String', 'col2': 'String' } }
+
   context "#initialize" do
 
     context "when missing parameter" do
       it { expect { PostgreSQL.new }.to raise_error }
-      it { expect { PostgreSQL.new(['col1', 'col2'], 'username', 'password', 'host') }.to raise_error }
-      it { expect { PostgreSQL.new(['col1', 'col2'], nil, 'username', 'password', 'db_selected', 'select *') }.to raise_error('cannot connect database') }
-      it { expect { PostgreSQL.new(['col1', 'col2'], 'username', 'password', 'host', nil, 'select *') }.to raise_error('cannot connect database') }
-      it { expect { PostgreSQL.new(['col1', 'col2'], 'username', 'password', nil, 'db_name', 'select *') }.to raise_error('cannot connect database') }
+      it { expect { PostgreSQL.new(columns_test, 'username', 'password', 'host') }.to raise_error }
+      it { expect { PostgreSQL.new(columns_test, nil, 'username', 'password', 'db_selected', 'select *') }.to raise_error('cannot connect database') }
+      it { expect { PostgreSQL.new(columns_test, 'username', 'password', 'host', nil, 'select *') }.to raise_error('cannot connect database') }
+      it { expect { PostgreSQL.new(columns_test, 'username', 'password', nil, 'db_name', 'select *') }.to raise_error('cannot connect database') }
       it { expect { PostgreSQL.new(nil, 'host', 'username', 'password', 'db_name', 'select *') }.to raise_error('columns required') }
-      it { expect { PostgreSQL.new(['col1', 'col2'], 'username', 'password', 'host', 'db_name', nil) }.to raise_error('query required') }
+      it { expect { PostgreSQL.new(columns_test, 'username', 'password', 'host', 'db_name', nil) }.to raise_error('query required') }
     end
 
     context "when parameters correctly" do
 
       it 'should created instance' do 
-        postgres = PostgreSQL.new(['col1', 'col2'], 'postgres', 'root', 'localhost', 'postgres_cubes', 'select * from cubes')
+        postgres = PostgreSQL.new(columns_test, 'postgres', 'root', 'localhost', 'postgres_cubes', 'select * from cubes')
         expect(postgres.class).to eq(PostgreSQL)
       end
 
@@ -25,10 +28,10 @@ describe PostgreSQL do
 
     context 'when authentication failed' do
 
-      it { expect { PostgreSQL.new(['col'], 'incorrect_username', 'root', 'localhost', 'postgres_cubes', 'select * from items') }.to raise_error }
-      it { expect { PostgreSQL.new(['col'], 'postgres', 'incorrect_password', 'localhost', 'postgres_cubes', 'select * from items') }.to raise_error }
-      it { expect { PostgreSQL.new(['col'], 'postgres', 'root', 'fake_host', 'postgres_cubes', 'select * from items') }.to raise_error }
-      it { expect { PostgreSQL.new(['col'], 'postgres', 'root', 'localhost', 'nil_db', 'select * from items') }.to raise_error }
+      it { expect { PostgreSQL.new(columns_test, 'incorrect_username', 'root', 'localhost', 'postgres_cubes', 'select * from items') }.to raise_error }
+      it { expect { PostgreSQL.new(columns_test, 'postgres', 'incorrect_password', 'localhost', 'postgres_cubes', 'select * from items') }.to raise_error }
+      it { expect { PostgreSQL.new(columns_test, 'postgres', 'root', 'fake_host', 'postgres_cubes', 'select * from items') }.to raise_error }
+      it { expect { PostgreSQL.new(columns_test, 'postgres', 'root', 'localhost', 'nil_db', 'select * from items') }.to raise_error }
 
     end
 

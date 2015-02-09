@@ -49,9 +49,9 @@ end
 
 describe OptimusPrime::Source::Test, '#columns' do
   it "should return hash as expected" do
-    expected = [ "id", "name", "gold" ]
+    expected = { 'id': 'Integer', 'name': 'String', 'gold': 'Integer' }
 
-    test_src = OptimusPrime::Source::Test.new(['id', 'name', 'gold'])
+    test_src = OptimusPrime::Source::Test.new({ 'id': 'Integer', 'name': 'String', 'gold': 'Integer' })
     expect(test_src.columns).to eq expected
   end
 end
@@ -65,7 +65,7 @@ describe OptimusPrime::Source::Test, '#get_data' do
       [ 4, "prair", 400],
     ]
 
-    test_src = OptimusPrime::Source::Test.new(['id', 'name', 'gold'])
+    test_src = OptimusPrime::Source::Test.new({ 'id': 'Integer', 'name': 'String', 'gold': 'Integer' })
     expect(test_src.retrieve_data).to eq expected
   end
 
@@ -77,7 +77,7 @@ describe OptimusPrime::Source::Test, '#get_data' do
       [ 4, "prair", 400],
     ]
 
-    test_src = OptimusPrime::Source::Test.new(['col'])
+    test_src = OptimusPrime::Source::Test.new({'col': nil})
 
     expect { test_src.retrieve_data }.to raise_error
   end

@@ -2,20 +2,23 @@ require 'spec_helper'
 require 'sequel'
 
 describe "SQLite Source" do
+
+  let(:columns) { { 'col1': 'String', 'col2': 'String' } }
+
   context "#initialize" do
 
     context "when missing parameter" do
       it { expect { Sqlite.new }.to raise_error }
-      it { expect { Sqlite.new(['col1', 'col2'], 'path_to_db') }.to raise_error }
-      it { expect { Sqlite.new(['col1', 'col2'], 'path_to_db', nil) }.to raise_error('columns, db_path and query are required') }
+      it { expect { Sqlite.new(columns, 'path_to_db') }.to raise_error }
+      it { expect { Sqlite.new(columns, 'path_to_db', nil) }.to raise_error('columns, db_path and query are required') }
       it { expect { Sqlite.new(nil, 'path_to_db', '12321') }.to raise_error('columns, db_path and query are required') }
-      it { expect { Sqlite.new(['col1', 'col2'], nil, '12321') }.to raise_error('columns, db_path and query are required') }
+      it { expect { Sqlite.new(columns, nil, '12321') }.to raise_error('columns, db_path and query are required') }
     end
 
     context "when parameters correctly" do
       it 'should created instance' do 
-        sqlite = Sqlite.new(['col1', 'col2'], 'database.db', 'select * from table')
-        expect(sqlite.columns).to eq(['col1', 'col2'])
+        sqlite = Sqlite.new(columns, 'database.db', 'select * from table')
+        expect(sqlite.columns).to eq({ 'col1': 'String', 'col2': 'String'})
       end
     end
 
