@@ -8,7 +8,7 @@ class PostgreSQL < OptimusPrime::Source::RDBMS
     raise 'columns required' unless columns
     raise 'cannot connect database' unless host && username && password && dbname
     raise 'query required' unless query
-    @columns = columns
+    super columns
     @query = query
 
     self.connect(username, password, host, dbname)

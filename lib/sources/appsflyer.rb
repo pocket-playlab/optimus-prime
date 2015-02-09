@@ -9,7 +9,7 @@ class Appsflyer < OptimusPrime::Source
 
   def initialize(columns, report_type, app_id, from_date: Date.today, to_date: Date.today)
     raise 'columns, report_type and app_id are required' unless columns && report_type && app_id
-    @columns = columns
+    super columns
     url = "https://hq.appsflyer.com/export/#{app_id}/"
     url += "#{report_type}?api_token=#{ENV['APPSFLYER_API_TOKEN']}"
     url += "&from=#{from_date}"

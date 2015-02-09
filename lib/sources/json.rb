@@ -7,7 +7,7 @@ class Json < OptimusPrime::Source
   attr_accessor :columns, :file_path
 
   def initialize(columns, file_path)
-    @columns = columns
+    super columns
     json_file = File.file?(file_path)
     @file_path = file_path
     @data = Array.new
