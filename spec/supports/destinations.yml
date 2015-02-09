@@ -1,0 +1,7 @@
+- unique_identifier: json_sample_to_csv
+  type: destination
+  class: OptimusPrime::Source::CSV
+  file_path: spec/supports/json_to_csv.csv
+  columns_map:
+    id: id
+    label: label
