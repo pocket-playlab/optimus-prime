@@ -24,6 +24,7 @@ module OptimusPrime
 
       @sources = Array.new
       @transforms = Array.new
+      @destinations = Array.new
 
       self.parse_config
     end
@@ -39,6 +40,7 @@ module OptimusPrime
           end
           @sources.push settings if settings['type'] == 'source'
           @transforms.push settings if settings['type'] == 'transform'
+          @destinations.push settings if settings['type'] == 'destination'
         else
           raise "yaml doesn't contain type" 
         end
@@ -69,6 +71,13 @@ module OptimusPrime
     def get_transform_by_id(unique_id)
       @transforms.each do |transform|
         return transform if transform['unique_identifier'] == unique_id
+      end
+      raise "#{unique_id} not exist"
+    end
+
+    def get_destination_by_id(unique_id)
+      @destinations.each do |destination|
+        return destination if destination['unique_identifier'] == unique_id
       end
       raise "#{unique_id} not exist"
     end
