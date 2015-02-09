@@ -6,5 +6,6 @@ module OptimusPrime
   require 'optimus_prime/source/rdbms'
 
   class Loader
+    
   end
 end
