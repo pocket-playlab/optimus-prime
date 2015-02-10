@@ -4,7 +4,7 @@ set -e
 
 # Install packages
 sudo apt-get update --quiet
-sudo -E apt-get install --quiet --assume-yes curl git libpq-dev
+sudo -E apt-get install --quiet --assume-yes curl git libpq-dev libmysqlclient-dev
 
 # Install rvm and ruby
 if ! rvm use ruby-2.2.0; then
