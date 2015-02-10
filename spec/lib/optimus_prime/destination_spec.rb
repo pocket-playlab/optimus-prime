@@ -5,7 +5,7 @@ require 'spec_helper'
 
 # it should have columns attribute which returns hash where keys are column names and values are types
 
-# it should have a retrieve_data method which returns data in array of arrays format
+# it should have a get_data method which returns data in array of arrays format
 
 describe OptimusPrime::Destination, '#columns' do
   it "should raise" do

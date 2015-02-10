@@ -13,7 +13,7 @@ module OptimusPrime
 
     def put_data
       raise "columns not found on source" if columns_incorrect?
-      implement_put_data(@source.retrieve_data)
+      implement_put_data(@source.get_data)
     end
 
     def column_to_index(columns)

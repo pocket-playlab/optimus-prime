@@ -20,7 +20,7 @@ class Json < OptimusPrime::Source
 
   protected
 
-  def implement_retrieve_data
+  def implement_get_data
     file = File.read(@file_path)
     content = JSON.parse(file)
     content.each do |item|

@@ -20,7 +20,7 @@ class Appsflyer < OptimusPrime::Source
 
   protected
 
-  def implement_retrieve_data
+  def implement_get_data
     @data = CSV.parse(@response_data)
   end
 
@@ -38,7 +38,7 @@ class Appsflyer < OptimusPrime::Source
       if response.code == '200'
         puts 'success!'
         @response_data = response.body.force_encoding('utf-8')
-        retrieve_data
+        get_data
       elsif response.code == '302'
         puts "redirect to #{response['location']}"
         connect(response['location'], 9)

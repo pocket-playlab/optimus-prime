@@ -202,7 +202,7 @@ describe GroupBy do
     context 'empty group' do
       it 'should return same source.retrieve data but store in 2d-array' do
         group_by_instance = GroupBy.new(csv_instance, [], {'score' => 'sum'})
-        expect(group_by_instance.grouped_data.first[1]).to eq(csv_instance.retrieve_data)
+        expect(group_by_instance.grouped_data.first[1]).to eq(csv_instance.get_data)
       end
     end
 

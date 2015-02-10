@@ -18,7 +18,7 @@ module OptimusPrime
         local_connect
       end
 
-      retrieve_data
+      get_data
     end
 
   	def execute_query
@@ -35,7 +35,7 @@ module OptimusPrime
 
     protected
 
-  	def implement_retrieve_data
+  	def implement_get_data
       array_data = Array.new
   	  self.execute_query.each do |row|
         row_data = Array.new

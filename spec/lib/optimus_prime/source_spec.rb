@@ -5,7 +5,7 @@ require 'spec_helper'
 
 # it should have columns attribute which returns hash where keys are column names and values are types
 
-# it should have a retrieve_data method which returns data in array of arrays format
+# it should have a get_data method which returns data in array of arrays format
 
 describe OptimusPrime::Source, '#columns' do
   it "should raise" do
@@ -13,9 +13,9 @@ describe OptimusPrime::Source, '#columns' do
   end
 end
 
-describe OptimusPrime::Source, '#retrieve_data' do
+describe OptimusPrime::Source, '#get_data' do
   it "should raise" do
-    expect{OptimusPrime::Source.retrieve_data}.to raise_error
+    expect{OptimusPrime::Source.get_data}.to raise_error
   end
 end
 
@@ -28,15 +28,15 @@ describe OptimusPrime::Source::Test, '#columns' do
   end
 end
 
-describe OptimusPrime::Source::Test, '#retrieve_data' do
+describe OptimusPrime::Source::Test, '#get_data' do
   it "should raise" do
-    expect{OptimusPrime::Source::Test.retrieve_data}.to raise_error
+    expect{OptimusPrime::Source::Test.get_data}.to raise_error
   end
 end
 
 class OptimusPrime::Source::Test < OptimusPrime::Source
 
-  def implement_retrieve_data
+  def implement_get_data
     @data = [
       [ 1, "rick",  100],
       [ 2, "omar",  200],
@@ -66,7 +66,7 @@ describe OptimusPrime::Source::Test, '#get_data' do
     ]
 
     test_src = OptimusPrime::Source::Test.new({ 'id': 'Integer', 'name': 'String', 'gold': 'Integer' })
-    expect(test_src.retrieve_data).to eq expected
+    expect(test_src.get_data).to eq expected
   end
 
   it "should return expected data" do
@@ -79,6 +79,6 @@ describe OptimusPrime::Source::Test, '#get_data' do
 
     test_src = OptimusPrime::Source::Test.new({'col': nil})
 
-    expect { test_src.retrieve_data }.to raise_error
+    expect { test_src.get_data }.to raise_error
   end
 end

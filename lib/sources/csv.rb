@@ -15,7 +15,7 @@ class Csv < OptimusPrime::Source
 
   protected
 
-  def implement_retrieve_data
+  def implement_get_data
     index = 0
     CSV.foreach(@file_path) do |row|
       raise "incorrect column number" if row.count != columns.count

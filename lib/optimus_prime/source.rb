@@ -8,8 +8,8 @@ module OptimusPrime
       @columns = columns
     end
 
-    def retrieve_data
-      implement_retrieve_data
+    def get_data
+      implement_get_data
       check_columns
       @data
     end
@@ -26,8 +26,8 @@ module OptimusPrime
 
     protected
 
-    def implement_retrieve_data
-      raise "The 'implement_retrieve_data' method is not defined in subclass! Please define before continuing."
+    def implement_get_data
+      raise "The 'implement_get_data' method is not defined in subclass! Please define before continuing."
     end
 
     private

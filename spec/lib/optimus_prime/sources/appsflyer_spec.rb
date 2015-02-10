@@ -47,7 +47,7 @@ describe Appsflyer do
 
         it 'should raise_error when columns mismatched' do
           appsflyer = Appsflyer.new(columns_test, 'installs_report', 'id855124397')
-          expect { appsflyer.retrieve_data }.to raise_error
+          expect { appsflyer.get_data }.to raise_error
         end
       end
 
@@ -70,7 +70,7 @@ describe Appsflyer do
     
   end
 
-  context "#retrieve_data" do
+  context "#get_data" do
 
     let(:appsflyer_instance) { Appsflyer.new(appsflyer_attributes['columns'], appsflyer_attributes['report_type'], appsflyer_attributes['app_id']) }
 
@@ -83,8 +83,8 @@ describe Appsflyer do
 
       it 'should return array as an expected_array' do
         expected_array = CSV.parse(installs_report)
-        appsflyer_instance.retrieve_data
-        expect(appsflyer_instance.retrieve_data).to eq(expected_array)
+        appsflyer_instance.get_data
+        expect(appsflyer_instance.get_data).to eq(expected_array)
       end
     end
 
@@ -100,7 +100,7 @@ describe Appsflyer do
       end
       it 'should receive report on second url' do
         expected_array = CSV.parse(installs_second_report)
-        expect(appsflyer_instance.retrieve_data).to eq(expected_array)
+        expect(appsflyer_instance.get_data).to eq(expected_array)
       end
     end
 
@@ -112,7 +112,7 @@ describe Appsflyer do
       end
 
       it 'should error' do
-        expect { appsflyer_instance.retrieve_data }.to raise_error
+        expect { appsflyer_instance.get_data }.to raise_error
       end
     end
 
@@ -124,7 +124,7 @@ describe Appsflyer do
       end
 
       it 'should show error on console' do
-        expect { appsflyer_instance.retrieve_data }.to raise_error
+        expect { appsflyer_instance.get_data }.to raise_error
       end
     end
 
@@ -136,7 +136,7 @@ describe Appsflyer do
       end
 
       it 'should show error on console' do
-        expect { appsflyer_instance.retrieve_data }.to raise_error
+        expect { appsflyer_instance.get_data }.to raise_error
       end
     end
 

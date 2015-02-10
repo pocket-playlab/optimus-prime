@@ -54,14 +54,14 @@ class GroupBy < OptimusPrime::Transform
 
   def check_primary_key(primary_set)
     keys = @source.column_to_index(primary_set)
-    grouped_data = @source.retrieve_data.group_by { |arr| arr.values_at(*keys) }
-    grouped_data.values.count == @source.retrieve_data.count
+    grouped_data = @source.get_data.group_by { |arr| arr.values_at(*keys) }
+    grouped_data.values.count == @source.get_data.count
   end
 
-  def retrieve_data
+  def get_data
     index = @source.column_to_index(@key_columns)
 
-    @source.retrieve_data.each do |row|
+    @source.get_data.each do |row|
       row[index].upcase!
     end
   end
@@ -82,7 +82,7 @@ class GroupBy < OptimusPrime::Transform
     # for keeping track of data and making sure that keys are unique
     unique_rows_by_key = {}
 
-    @source.retrieve_data.each do |row|
+    @source.get_data.each do |row|
       key = row[index]
 
       unless unique_rows_by_key.has_key?(key)
@@ -115,7 +115,7 @@ class GroupBy < OptimusPrime::Transform
     # for keeping track of data and making sure that keys are unique
     unique_rows_by_key = {}
 
-    @source.retrieve_data.reverse_each do |row|
+    @source.get_data.reverse_each do |row|
       key = row[index]
 
       unless unique_rows_by_key.has_key?(key)
@@ -248,7 +248,7 @@ class GroupBy < OptimusPrime::Transform
   #This method to re-arrange array and groupped
   def group_by
     keys = @source.column_to_index(@key_columns)
-    @grouped_data = @source.retrieve_data.group_by { |arr| arr.values_at(*keys) }
+    @grouped_data = @source.get_data.group_by { |arr| arr.values_at(*keys) }
   end
 
   private

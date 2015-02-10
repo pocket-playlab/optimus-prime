@@ -16,10 +16,10 @@ class UpperCase < OptimusPrime::Transform
     @column = column
   end
 
-  def retrieve_data
+  def get_data
     index = @source.column_to_index(@column)
 
-    @source.retrieve_data.each do |row|
+    @source.get_data.each do |row|
       row[index].upcase!
     end
   end

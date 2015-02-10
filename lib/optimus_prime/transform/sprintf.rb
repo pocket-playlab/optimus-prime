@@ -16,10 +16,10 @@ class Sprintf < OptimusPrime::Transform
     @column = column
   end
 
-  def retrieve_data
+  def get_data
     index = @source.column_to_index(@column)
 
-    @source.retrieve_data.each do |row|
+    @source.get_data.each do |row|
       # TODO: find efficient way to convert to float (sprintf?)
       new_value = sprintf("#{@format}", row[index])
       row[index] = new_value

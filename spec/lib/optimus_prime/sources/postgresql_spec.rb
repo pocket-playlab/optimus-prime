@@ -62,7 +62,7 @@ describe PostgreSQL do
     
   end
 
-  context "#retrieve_data" do
+  context "#get_data" do
 
     let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
 
@@ -72,7 +72,7 @@ describe PostgreSQL do
 
       it 'should return array data' do
         expected_data = [1, 'jungle']
-        expect(postgres_instance.retrieve_data.first).to eq(expected_data)
+        expect(postgres_instance.get_data.first).to eq(expected_data)
       end
     end
 
@@ -81,7 +81,7 @@ describe PostgreSQL do
       let(:postgres_instance) { postgres.new(postgres_attr['columns'], postgres_attr['db_username'], postgres_attr['db_password'], postgres_attr['host'], postgres_attr['db_name'], 'select * from nil_table') }
 
       it 'should error' do
-        expect { postgres_instance.retrieve_data }.to raise_error
+        expect { postgres_instance.get_data }.to raise_error
       end
     end
 

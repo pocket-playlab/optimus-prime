@@ -37,7 +37,7 @@ describe "SQLite Source" do
     
   end
 
-  context "#retrieve_data" do
+  context "#get_data" do
 
     let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
 
@@ -47,7 +47,7 @@ describe "SQLite Source" do
 
       it 'should return array data' do
         expected_data = [1, 'dragon_cube', 50]
-        expect(sqlite_object.retrieve_data.first).to eq(expected_data)
+        expect(sqlite_object.get_data.first).to eq(expected_data)
       end
     end
 
@@ -56,7 +56,7 @@ describe "SQLite Source" do
       let(:sqlite_object) { Sqlite.new(sqlite_attributes['columns'], sqlite_attributes['file_path'], sqlite_attributes['query']) }
 
       it 'should error' do
-        expect { sqlite_object.retrieve_data }.to raise_error
+        expect { sqlite_object.get_data }.to raise_error
       end
     end
   end

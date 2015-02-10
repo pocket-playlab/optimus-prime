@@ -11,7 +11,7 @@ describe "CSV Source" do
     end
   end
 
-  context "#retrieve_data" do
+  context "#get_data" do
     let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
 
     context "when yaml file are correctly" do
@@ -27,15 +27,15 @@ describe "CSV Source" do
           'Ranch Run - iOS - NOV15(TH)',nil,nil,'TH','Chon Buri','223.204.249.6','Yes','th-TH',
           '1421529619000-9924854',nil,'29083437-69C7-452D-B61A-CC138F709AF0',nil,'iPad','iPad mini 1G',
           '8.1','2.5.2.5.3.11','1.0.17.2',nil,nil,nil,nil,nil,nil,nil,nil,nil]
-        expect(csv_installs.retrieve_data[2]).to eq(expected_data)
+        expect(csv_installs.get_data[2]).to eq(expected_data)
       end
 
       it 'should return correct column number' do
-        expect(csv_installs.retrieve_data[0].count).to eq(install_attributes['columns'].count)
+        expect(csv_installs.get_data[0].count).to eq(install_attributes['columns'].count)
       end
 
       it 'should error when incorrect column number' do
-        expect { csv_incorrect.retrieve_data }.to raise_error('incorrect column number')
+        expect { csv_incorrect.get_data }.to raise_error('incorrect column number')
       end
 
     end

@@ -27,7 +27,7 @@ describe MySQL do
 
       it 'should success to create instance and data should be correct' do 
         mysql = MySQL.new(columns_for_test, 'root', 'root', 'localhost', 'mysql_juicecubes', 'select * from items')
-        expect(mysql.retrieve_data).to eq(expected_data)
+        expect(mysql.get_data).to eq(expected_data)
       end
 
     end
@@ -63,7 +63,7 @@ describe MySQL do
     
   end
 
-  context "#retrieve_data" do
+  context "#get_data" do
 
     let(:config) { OptimusPrime::Config.new(file_path: "spec/supports/sources.yml") }
 
@@ -72,7 +72,7 @@ describe MySQL do
       let(:mysql_instance) { MySQL.new(mysql_attr['columns'], mysql_attr['db_username'], mysql_attr['db_password'], mysql_attr['host'], mysql_attr['db_name'], mysql_attr['query']) }
 
       it 'should return array data' do
-        expect(mysql_instance.retrieve_data).to eq(expected_data)
+        expect(mysql_instance.get_data).to eq(expected_data)
       end
     end
 
@@ -81,7 +81,7 @@ describe MySQL do
       let(:mysql_instance) { MySQL.new(mysql_attr['columns'], mysql_attr['db_username'], mysql_attr['db_password'], mysql_attr['host'], mysql_attr['db_name'], 'select * from nil_table') }
 
       it 'should error' do
-        expect { mysql_instance.retrieve_data }.to raise_error
+        expect { mysql_instance.get_data }.to raise_error
       end
     end
   end
