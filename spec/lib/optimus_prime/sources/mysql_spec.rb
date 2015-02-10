@@ -4,22 +4,23 @@ require 'sequel'
 describe MySQL do
 
   let(:expected_data) { [[1, "itemA", 100], [2, "itemB", 200], [3, "itemC", 2990]] }
+  let(:columns_for_test) { {'item_id': 'Integer', 'item_name': 'String', 'item_price': 'Integer'} }
 
   context "#initialize" do
     context "when missing parameter" do
       it { expect { MySQL.new }.to raise_error }
-      it { expect { MySQL.new(['col1', 'col2'], 'username', 'password', 'host') }.to raise_error }
-      it { expect { MySQL.new(['col1', 'col2'], nil, 'username', 'password', 'db_selected', 'select *') }.to raise_error('cannot connect database') }
-      it { expect { MySQL.new(['col1', 'col2'], 'username', 'password', 'host', nil, 'select *') }.to raise_error('cannot connect database') }
-      it { expect { MySQL.new(['col1', 'col2'], 'username', 'password', nil, 'db_name', 'select *') }.to raise_error('cannot connect database') }
-      it { expect { MySQL.new(nil, 'host', 'username', 'password', 'db_name', 'select *') }.to raise_error('columns required') }
-      it { expect { MySQL.new(['col1', 'col2'], 'username', 'password', 'host', 'db_name', nil) }.to raise_error('query required') }
+      it { expect { MySQL.new(columns_for_test, 'username', 'password', 'host') }.to raise_error }
+      it { expect { MySQL.new(columns_for_test, 'username', 'password', nil, 'db_selected', 'select *') }.to raise_error }
+      it { expect { MySQL.new(columns_for_test, 'username', 'password', 'host', nil, 'select *') }.to raise_error }
+      it { expect { MySQL.new(columns_for_test, 'username', 'password', nil, 'db_name', 'select *') }.to raise_error }
+      it { expect { MySQL.new(nil, 'username', 'password', 'host', 'db_name', 'select *') }.to raise_error('columns required') }
+      it { expect { MySQL.new(columns_for_test, 'username', 'password', 'host', 'db_name', nil) }.to raise_error('query required') }
     end
 
     context "when parameters correctly" do
 
       it 'should success to create instance and data should be correct' do 
-        mysql = MySQL.new(['item_id', 'item_name', 'item_price'], 'root', 'root', 'localhost', 'mysql_juicecubes', 'select * from items')
+        mysql = MySQL.new(columns_for_test, 'root', 'root', 'localhost', 'mysql_juicecubes', 'select * from items')
         expect(mysql.retrieve_data).to eq(expected_data)
       end
 
@@ -47,10 +48,10 @@ describe MySQL do
 
     context 'when authentication failed' do
 
-      it { expect { MySQL.new(['item_id', 'item_name', 'item_price'], 'incorrect_username', 'root', 'localhost', 'mysql_juicecubes', 'select * from items') }.to raise_error }
-      it { expect { MySQL.new(['item_id', 'item_name', 'item_price'], 'root', 'incorrect_password', 'localhost', 'mysql_juicecubes', 'select * from items') }.to raise_error }
-      it { expect { MySQL.new(['item_id', 'item_name', 'item_price'], 'root', 'root', 'fake_host', 'mysql_juicecubes', 'select * from items') }.to raise_error }
-      it { expect { MySQL.new(['item_id', 'item_name', 'item_price'], 'root', 'root', 'localhost', 'nil_db', 'select * from items') }.to raise_error }
+      it { expect { MySQL.new(columns_for_test, 'incorrect_username', 'root', 'localhost', 'mysql_juicecubes', 'select * from items') }.to raise_error }
+      it { expect { MySQL.new(columns_for_test, 'root', 'incorrect_password', 'localhost', 'mysql_juicecubes', 'select * from items') }.to raise_error }
+      it { expect { MySQL.new(columns_for_test, 'root', 'root', 'fake_host', 'mysql_juicecubes', 'select * from items') }.to raise_error }
+      it { expect { MySQL.new(columns_for_test, 'root', 'root', 'localhost', 'nil_db', 'select * from items') }.to raise_error }
 
     end
     
