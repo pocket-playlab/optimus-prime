@@ -5,6 +5,12 @@ describe MySQL do
 
   let(:expected_data) { [[1, "itemA", 100], [2, "itemB", 200], [3, "itemC", 2990]] }
 
+  before :each do
+    db = Sequel.connect(:adapter => 'mysql', :user => 'root', :host => 'localhost', :database => 'mysql_juicecubes',:password => 'root')
+    db.execute 'DROP TABLE IF EXISTS items'
+    File.open('mysql_juicecubes.sql') { |f| db.execute f.read }
+  end
+
   context "#initialize" do
     context "when missing parameter" do
       it { expect { MySQL.new }.to raise_error }
