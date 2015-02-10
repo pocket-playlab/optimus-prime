@@ -5,6 +5,12 @@ describe PostgreSQL do
 
   let(:columns_test) { { 'id': 'Integer', 'name': 'String' } }
 
+  before :each do
+    db = Sequel.connect(:adapter => 'postgres', :user => 'postgres', :host => 'localhost', :database => 'postgres_cubes',:password => 'root')
+    db.execute 'DROP TABLE IF EXISTS cubes'
+    File.open('postgres_cubes.sql') { |f| db.execute f.read }
+  end
+
   context "#initialize" do
     context "when missing parameter" do
       it { expect { PostgreSQL.new }.to raise_error }

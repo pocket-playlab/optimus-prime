@@ -1,35 +1,4 @@
 --
--- PostgreSQL database dump
---
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
-SET search_path = public, pg_catalog;
-
-SET default_tablespace = '';
-
-SET default_with_oids = false;
-
---
 -- Name: cubes; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -73,9 +42,7 @@ ALTER TABLE ONLY cubes ALTER COLUMN id SET DEFAULT nextval('cubes_id_seq'::regcl
 -- Data for Name: cubes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY cubes (id, name) FROM stdin;
-1	jungle
-\.
+INSERT INTO cubes (id, name) VALUES (1, 'jungle');
 
 
 --
@@ -83,19 +50,3 @@ COPY cubes (id, name) FROM stdin;
 --
 
 SELECT pg_catalog.setval('cubes_id_seq', 1, true);
-
-
---
--- Name: public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
---
--- PostgreSQL database dump complete
---
-
