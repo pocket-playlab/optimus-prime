@@ -3,7 +3,7 @@ require 'sequel'
 
 describe PostgreSQL do
 
-  let(:columns_test) { { 'col1': 'String', 'col2': 'String' } }
+  let(:columns_test) { { 'id': 'Integer', 'name': 'String' } }
 
   before :each do
     db = Sequel.connect(:adapter => 'postgres', :user => 'postgres', :host => 'localhost', :database => 'postgres_cubes',:password => 'root')
@@ -12,15 +12,14 @@ describe PostgreSQL do
   end
 
   context "#initialize" do
-
     context "when missing parameter" do
       it { expect { PostgreSQL.new }.to raise_error }
       it { expect { PostgreSQL.new(columns_test, 'username', 'password', 'host') }.to raise_error }
-      it { expect { PostgreSQL.new(columns_test, nil, 'username', 'password', 'db_selected', 'select *') }.to raise_error('cannot connect database') }
-      it { expect { PostgreSQL.new(columns_test, 'username', 'password', 'host', nil, 'select *') }.to raise_error('cannot connect database') }
-      it { expect { PostgreSQL.new(columns_test, 'username', 'password', nil, 'db_name', 'select *') }.to raise_error('cannot connect database') }
-      it { expect { PostgreSQL.new(nil, 'host', 'username', 'password', 'db_name', 'select *') }.to raise_error('columns required') }
-      it { expect { PostgreSQL.new(columns_test, 'username', 'password', 'host', 'db_name', nil) }.to raise_error('query required') }
+      it { expect { PostgreSQL.new(columns_test, nil, 'username', 'password', 'db_selected', 'select *') }.to raise_error }
+      it { expect { PostgreSQL.new(columns_test, 'username', 'password', 'host', nil, 'select *') }.to raise_error }
+      it { expect { PostgreSQL.new(columns_test, 'username', 'password', nil, 'db_name', 'select *') }.to raise_error }
+      it { expect { PostgreSQL.new(nil, 'host', 'username', 'password', 'db_name', 'select *') }.to raise_error }
+      it { expect { PostgreSQL.new(columns_test, 'username', 'password', 'host', 'db_name', nil) }.to raise_error }
     end
 
     context "when parameters correctly" do

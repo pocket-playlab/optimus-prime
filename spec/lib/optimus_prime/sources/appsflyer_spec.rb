@@ -11,6 +11,8 @@ describe Appsflyer do
   let(:installs_report) { File.read(File.expand_path '../../../../supports/installs.csv', __FILE__) }
   let(:installs_second_report) { File.read(File.expand_path '../../../../supports/installs_second.csv', __FILE__) }
 
+  let(:columns_test) { { 'col1': 'String', 'col2': 'String' } }
+
   before do
     ENV['APPSFLYER_API_TOKEN'] = appsflyer_token
   end
@@ -31,36 +33,29 @@ describe Appsflyer do
 
       context "when missing parameter" do
         it { expect { appsflyer = Appsflyer.new }.to raise_error }
-        it { expect { appsflyer = Appsflyer.new(['col1', 'col2'], 'installs_report') }.to raise_error }
-        it { expect { appsflyer = Appsflyer.new(['col1', 'col2'], nil, '123421') }.to raise_error('columns, report_type and app_id are required') }
+        it { expect { appsflyer = Appsflyer.new(columns_test, 'installs_report') }.to raise_error }
+        it { expect { appsflyer = Appsflyer.new(columns_test, nil, '123421') }.to raise_error('columns, report_type and app_id are required') }
         it { expect { appsflyer = Appsflyer.new(nil, 'installs_report', '12321') }.to raise_error('columns, report_type and app_id are required') }
       end
 
       context "default date" do
         it 'should create instance when all parameter are collect' do
-          cols = ['click_time', 'install_time', 'agency', 'media_source', 'campaign', 'site_id',
-           'cost_per_install', 'country_code', 'city', 'ip', 'wifi', 'language',
-           'apps_flyer_device_id', 'customer_user_id', 'idfa', 'mac', 'device_name',
-           'device_type', 'os_version', 'sdk_version', 'app_version', 'sub_param1',
-           'sub_param2', 'sub_param3', 'sub_param4', 'sub_param5', 'click_url',
-           'contributor1', 'contributor2', 'contributor3'
-          ]
-          appsflyer = Appsflyer.new(cols, 'installs_report', 'id855124397')
-          expect(appsflyer.columns).to eq(cols)
+          appsflyer = Appsflyer.new(appsflyer_attributes['columns'], 'installs_report', 'id855124397')
+          expect(appsflyer.columns).to eq(appsflyer_attributes['columns'])
           expect(appsflyer.data).to eq CSV.parse(installs_report)
         end
 
         it 'should raise_error when columns mismatched' do
-          appsflyer = Appsflyer.new(['col1', 'col2'], 'installs_report', 'id855124397')
+          appsflyer = Appsflyer.new(columns_test, 'installs_report', 'id855124397')
           expect { appsflyer.retrieve_data }.to raise_error
         end
       end
 
       context "input date" do
         it 'should create instance with date' do
-          # appsflyer = Appsflyer.new(['col1', 'col2'], 'installs_report', 'id855124397', from_date: Date.today - 2, to_date: Date.today - 1 )
-          # expect(appsflyer.columns).to eq(['col1', 'col2'])
-          # expect(appsflyer.data).to eq(installs_second_report)
+          appsflyer = Appsflyer.new(appsflyer_attributes['columns'], 'installs_report', 'id855124397', from_date: Date.today - 2, to_date: Date.today - 1 )
+          expect(appsflyer.columns).to eq(appsflyer_attributes['columns'])
+          expect(appsflyer.data).to eq CSV.parse(installs_second_report)
         end
       end
     end
