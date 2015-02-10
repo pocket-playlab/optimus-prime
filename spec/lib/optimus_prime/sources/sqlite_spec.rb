@@ -3,7 +3,7 @@ require 'sequel'
 
 describe "SQLite Source" do
 
-  let(:columns) { { 'col1': 'String', 'col2': 'String' } }
+  let(:columns) { { 'game_id': 'Integer', 'game_name': 'String', 'number_of_levels': 'Integer' } }
 
   context "#initialize" do
 
@@ -16,9 +16,9 @@ describe "SQLite Source" do
     end
 
     context "when parameters correctly" do
-      it 'should created instance' do 
-        sqlite = Sqlite.new(columns, 'database.db', 'select * from table')
-        expect(sqlite.columns).to eq({ 'col1': 'String', 'col2': 'String'})
+      it 'should created instance' do
+        sqlite = Sqlite.new(columns, 'datasource/sqlite3_game_level_database.db', 'select g.game_id, g.game_name, g.number from game_level g')
+        expect(sqlite.columns).to eq({ 'game_id': 'Integer', 'game_name': 'String', 'number_of_levels': 'Integer' })
       end
     end
 
