@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem 'test-unit'
+gem 'aws-sdk'
 gem 'sequel'
 gem 'sqlite3'
 gem 'byebug'
