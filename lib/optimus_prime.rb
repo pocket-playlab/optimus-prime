@@ -1,11 +1,8 @@
 module OptimusPrime
-  require 'optimus_prime/config'
-  require 'optimus_prime/source'
-  require 'optimus_prime/transform'
-  require 'optimus_prime/destination'
-  require 'optimus_prime/source/rdbms'
+  require_relative 'optimus_prime/config'
+  require_relative 'optimus_prime/source'
+  require_relative 'optimus_prime/transform'
+  require_relative 'optimus_prime/destination'
 
-  class Loader
-    
-  end
+  require_relative 'sources/events_collector'
 end

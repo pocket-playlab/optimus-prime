@@ -2,6 +2,16 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.3.6)
+    aws-sdk (2.0.23)
+      aws-sdk-resources (= 2.0.23)
+    aws-sdk-core (2.0.23)
+      builder (~> 3.0)
+      jmespath (~> 1.0)
+      multi_json (~> 1.0)
+      multi_xml (~> 0.5)
+    aws-sdk-resources (2.0.23)
+      aws-sdk-core (= 2.0.23)
+    builder (3.2.2)
     byebug (3.5.1)
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
@@ -11,10 +21,13 @@ GEM
       safe_yaml (~> 1.0.0)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
+    jmespath (1.0.2)
+      multi_json (~> 1.0)
+    multi_json (1.10.1)
+    multi_xml (0.5.5)
     mysql (2.9.1)
     mysql2 (0.3.17)
     pg (0.18.1)
-    power_assert (0.2.2)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -33,8 +46,6 @@ GEM
     sequel (4.18.0)
     slop (3.6.0)
     sqlite3 (1.3.10)
-    test-unit (3.0.8)
-      power_assert
     webmock (1.20.4)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -43,6 +54,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk
   byebug
   mysql
   mysql2
@@ -51,5 +63,4 @@ DEPENDENCIES
   rspec-deep-matchers
   sequel
   sqlite3
-  test-unit
   webmock
