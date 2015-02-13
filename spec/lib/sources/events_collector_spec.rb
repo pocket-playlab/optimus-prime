@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-RSpec.describe EventsCollectorReader do
+RSpec.describe EventsCollectorSource do
 
   let!(:source) do
-    EventsCollectorReader.new bucket: 'ppl-events',
+    EventsCollectorSource.new bucket: 'ppl-events',
                               from: Time.utc(2015, 2, 1),
                               to:   Time.utc(2015, 2, 2)
   end
