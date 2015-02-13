@@ -3,7 +3,7 @@ require 'stringio'
 require 'zlib'
 require 'aws-sdk'
 
-class EventsCollectorReader < OptimusPrime::Source
+class EventsCollectorSource < OptimusPrime::Source
 
   def initialize(bucket:, from:, to:)
     @s3 = Aws::S3::Client.new
