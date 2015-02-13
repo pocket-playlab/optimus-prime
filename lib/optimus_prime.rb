@@ -5,4 +5,5 @@ module OptimusPrime
   require_relative 'optimus_prime/destination'
 
   require_relative 'sources/events_collector'
+  require_relative 'sources/appsflyer'
 end
