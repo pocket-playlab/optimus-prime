@@ -11,6 +11,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'fakes3'
   gem 'rspec'
   gem 'rspec-deep-matchers'
   gem 'webmock'
