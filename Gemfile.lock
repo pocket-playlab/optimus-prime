@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/pocket-playlab/fake-s3.git
+  revision: fcea80b57eb5014f0737ee8a96b606ad3ab94c01
+  specs:
+    fakes3 (0.1.7)
+      builder
+      thor
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -22,9 +30,6 @@ GEM
       safe_yaml (~> 1.0.0)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
-    fakes3 (0.1.7)
-      builder
-      thor
     jmespath (1.0.2)
       multi_json (~> 1.0)
     method_source (0.8.2)
@@ -36,6 +41,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.0.1)
+      byebug (~> 3.4)
+      pry (~> 0.10)
     rest-client (1.7.2)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
@@ -65,9 +73,8 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk
-  byebug
-  fakes3
-  pry
+  fakes3!
+  pry-byebug
   rest-client
   rspec
   rspec-deep-matchers
