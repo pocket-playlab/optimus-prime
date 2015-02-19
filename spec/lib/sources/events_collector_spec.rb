@@ -2,12 +2,15 @@ require 'spec_helper'
 
 RSpec.describe EventsCollectorSource do
 
+  bucket = 'ppl-events'
+
   files = [
     '2015-01-30T04:46:03.232Z.gz',
     '2015-02-01T00:00:00.000Z.gz',
     '2015-02-01T13:21:46.143Z.gz',
     '2015-02-02T01:32:01.312Z.gz',
   ]
+
   events = files.map do
     100.times.map do
       { 'event_uuid'   => SecureRandom.uuid,
@@ -16,12 +19,11 @@ RSpec.describe EventsCollectorSource do
         'app_env'      => 'test' }
     end
   end
-  bucket = files.zip(events).to_h
 
   aws_params = { endpoint: 'http://localhost:10001/', force_path_style: true }
 
   let(:source) do
-    EventsCollectorSource.new bucket: 'ppl-events',
+    EventsCollectorSource.new bucket: bucket,
                               from: Time.utc(2015, 2, 1),
                               to:   Time.utc(2015, 2, 2),
                               **aws_params
@@ -29,13 +31,13 @@ RSpec.describe EventsCollectorSource do
 
   before :all do
     client = Aws::S3::Client.new aws_params
-    client.create_bucket bucket: 'ppl-events'
-    bucket.each do |key, evts|
+    client.create_bucket bucket: bucket
+    files.zip(events).each do |key, evts|
       io = StringIO.new
       gz = Zlib::GzipWriter.new io
       evts.each { |e| gz.write(JSON.dump(e) + "\n") }
       gz.close
-      client.put_object bucket: 'ppl-events', key: key, body: io.string
+      client.put_object bucket: bucket, key: key, body: io.string
     end
   end
 
@@ -46,7 +48,7 @@ RSpec.describe EventsCollectorSource do
   end
 
   it 'should exclude files outside the given date range' do
-    expect(source.to_a).to match_array bucket.values[1..2].flatten
+    expect(source.to_a).to match_array events[1..2].flatten
   end
 
 end
