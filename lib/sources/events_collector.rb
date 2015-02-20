@@ -5,8 +5,8 @@ require 'aws-sdk'
 
 class EventsCollectorSource < OptimusPrime::Source
 
-  def initialize(bucket:, from:, to:)
-    @s3 = Aws::S3::Client.new
+  def initialize(bucket:, from:, to:, **options)
+    @s3 = Aws::S3::Client.new(**options)
     @bucket = bucket
     @from = from
     @to = to
