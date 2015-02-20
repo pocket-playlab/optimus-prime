@@ -1,9 +1,9 @@
-module OptimusPrime
-  require_relative 'optimus_prime/config'
-  require_relative 'optimus_prime/source'
-  require_relative 'optimus_prime/transform'
-  require_relative 'optimus_prime/destination'
+require 'optimus_prime/pipeline'
+require 'optimus_prime/step'
 
-  require_relative 'sources/events_collector'
-  require_relative 'sources/appsflyer'
-end
+require 'optimus_prime/source'
+require 'optimus_prime/transform'
+require 'optimus_prime/destination'
+
+require_relative 'sources/events_collector'
+require_relative 'sources/appsflyer'
