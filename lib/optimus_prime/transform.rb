@@ -1,9 +1,7 @@
 module OptimusPrime
-  class Transform
-    extend Step
-    include Enumerable
+  class Transform < Step
 
-    def each
+    def transform(data)
       raise 'Not implemented'
     end
 

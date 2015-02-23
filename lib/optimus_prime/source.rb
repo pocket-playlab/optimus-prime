@@ -1,6 +1,5 @@
 module OptimusPrime
-  class Source
-    extend Step
+  class Source < Step
     include Enumerable
 
     def each

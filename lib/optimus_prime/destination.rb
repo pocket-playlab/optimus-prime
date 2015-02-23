@@ -1,6 +1,5 @@
 module OptimusPrime
-  class Destination
-    extend Step
+  class Destination < Step
 
     def write(record)
       raise 'Not implemented'

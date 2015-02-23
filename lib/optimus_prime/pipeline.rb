@@ -7,34 +7,34 @@ module OptimusPrime
       @graph = graph
     end
 
-    private
+    def steps
+      @steps ||= @graph.map { |key, step| [key, instantiate(step)] }.to_h
+    end
 
     def sources
       @sources ||= begin
-        tail = graph.values.flat_map { |step| step['next'] }.compact.to_set
-        graph
-          .reject { |key, step| tail.include? key }
-          .map    { |key, step| [key, Source.find(step.fetch('class')).new(step.fetch('params'))] }
-          .to_h
+        tail = graph.values
+          .flat_map { |step| step[:next] }
+          .compact
+          .map(&:to_sym)
+          .to_set
+        steps.reject { |key, step| tail.include? key }
       end
     end
 
     def destinations
       @destinations ||= graph
-        .select { |key, step| not step['next'] or step['next'].empty? }
-        .map    { |key, step| [key, Destination.find(step.fetch('class')).new(step.fetch('params'))] }
+        .select { |key, step| not step[:next] or step[:next].empty? }
+        .keys
+        .map { |key| [key, steps[key]] }
         .to_h
     end
 
     def transforms
-      @transforms ||= graph
-        .select { |key, step| not (sources.keys + destinations.keys).include? key }
-        .map    { |key, step| [key, Transform.find(step.fetch('class')).new(step.fetch('params'))] }
-        .to_h
-    end
-
-    def steps
-      @steps ||= sources.merge(transforms).merge(destinations)
+      @transforms ||= begin
+        keys = (sources.keys + destinations.keys).to_set
+        steps.reject { |key, step| keys.include? key }
+      end
     end
 
     def edges
@@ -46,11 +46,21 @@ module OptimusPrime
       end
     end
 
+    private
+
     def walk(from, visited)
-      (graph.fetch(from)['next'] || []).flat_map do |to|
+      (graph.fetch(from)[:next] || []).lazy.map(&:to_sym).flat_map do |to|
         visited.include?(to) ? [[from, to]]
                              : [[from, to]] + walk(to, visited.add(to))
       end
+    end
+
+    def instantiate(step)
+      name = step.fetch :class
+      type = Step.find name
+      raise "Not found: #{name}" unless type
+      step[:params] ? type.new(**step[:params])
+                    : type.new
     end
 
   end
