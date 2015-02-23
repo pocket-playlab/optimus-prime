@@ -5,5 +5,8 @@ module OptimusPrime
       raise 'Not implemented'
     end
 
+    def close
+    end
+
   end
 end

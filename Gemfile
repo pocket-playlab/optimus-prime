@@ -6,11 +6,11 @@ gem 'aws-sdk'
 gem 'rest-client'
 
 group :development, :test do
-  gem 'byebug'
-  gem 'pry'
+  gem 'pry-byebug'
 end
 
 group :test do
+  gem 'fakes3', github: 'pocket-playlab/fake-s3'
   gem 'rspec'
   gem 'rspec-deep-matchers'
   gem 'webmock'
