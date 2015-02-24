@@ -10,8 +10,8 @@ module OptimusPrime
       @poll_interval = poll_interval
       @queues = edges.map do |from, to|
         queue = SizedQueue.new BUFFER_SIZE
-        from.pipe queue
-        to.listen queue
+        from.output << queue
+        to.input    << queue
         queue
       end
     end

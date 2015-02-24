@@ -34,33 +34,12 @@ module OptimusPrime
 
     end
 
-    def pipe(queue)
-      raise 'Already started' if started?
-      output.add queue
-    end
-
-    def listen(queue)
-      raise 'Already started' if started?
-      input.add queue
-    end
-
     def start
       raise 'Already started' if started?
       raise 'No input or output' if input.empty? and output.empty?
-      return if input.empty?
-      consumers = input.map do |queue|
-        background do
-          loop do
-            message = queue.pop
-            break unless message
-            process message
-          end
-        end
-      end
-      background do
-        consumers.each(&:join)
-        close
-      end
+      input.freeze
+      output.freeze
+      listen unless input.empty?
     end
 
     def join
@@ -80,7 +59,31 @@ module OptimusPrime
       started? and threads.none?(&:status)
     end
 
+    def input
+      @input ||= Set.new
+    end
+
+    def output
+      @output ||= Set.new
+    end
+
     private
+
+    def listen
+      consumers = input.map do |queue|
+        background do
+          loop do
+            message = queue.pop
+            break unless message
+            process message
+          end
+        end
+      end
+      background do
+        consumers.each(&:join)
+        close
+      end
+    end
 
     def close
       @closed = true
@@ -89,14 +92,6 @@ module OptimusPrime
 
     def send(message)
       output.each { |queue| queue << message }
-    end
-
-    def input
-      @input ||= Set.new
-    end
-
-    def output
-      @output ||= Set.new
     end
 
     def threads
