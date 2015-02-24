@@ -7,11 +7,17 @@ module OptimusPrime
       @graph = graph
     end
 
-    # TODO: error handling
     def start
-      @queues ||= edges.map do |from, to|
+      queues = edges.map do |from, to|
         from.pipe to
       end
+      @monitor = Thread.new do
+        sleep 1 until sources.values.all?(&:finished?) and queues.all?(&:empty?)
+      end
+    end
+
+    def join
+      @monitor.join
     end
 
     def steps

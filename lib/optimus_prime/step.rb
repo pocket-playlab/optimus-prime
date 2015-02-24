@@ -33,16 +33,18 @@ module OptimusPrime
     BUFFER_SIZE = 100
 
     def pipe(to)
+      raise 'Already piped' if @output
       @output = SizedQueue.new BUFFER_SIZE
       to.listen @output
       @output
     end
 
     def listen(queue)
-      consumer = Thread.new do
+      raise 'Already listening' if @listener
+      @listener = Thread.new do
         loop { write queue.pop }
       end
-      consumer.abort_on_exception = true
+      @listener.abort_on_exception = true
     end
 
   end

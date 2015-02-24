@@ -87,10 +87,15 @@ describe OptimusPrime::Pipeline do
 
   describe '#start' do
 
-    it 'should start the pipeline' do
+    it 'should run the pipeline' do
       pipeline.start
-      sleep 1
+      pipeline.join
       expect(pipeline.destinations[:c].written).to eq (2..11).to_a
+    end
+
+    it 'should fail when called twice' do
+      pipeline.start
+      expect { pipeline.start }.to raise_error
     end
 
   end

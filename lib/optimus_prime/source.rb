@@ -9,10 +9,18 @@ module OptimusPrime
     def pipe(*)
       super
       producer = Thread.new do
-        each { |record| @output << record }
+        begin
+          each { |record| @output << record }
+        ensure
+          @finished = true
+        end
       end
       producer.abort_on_exception = true
       @output
+    end
+
+    def finished?
+      @finished || false
     end
 
   end
