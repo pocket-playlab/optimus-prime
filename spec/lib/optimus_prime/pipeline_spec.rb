@@ -10,15 +10,15 @@ class TestSource < OptimusPrime::Source
   end
 end
 
-class IncrementTransform < OptimusPrime::Transform
-  def transform(data)
+class IncrementStep < OptimusPrime::Destination
+  def write(data)
     sleep 0.1
     send data + 1
   end
 end
 
-class DoubleTransform < OptimusPrime::Transform
-  def transform(data)
+class DoubleStep < OptimusPrime::Destination
+  def write(data)
     send data * 2
   end
 end
@@ -58,15 +58,15 @@ describe OptimusPrime::Pipeline do
         next: ['d']
       },
       c: {
-        class: 'DoubleTransform',
+        class: 'DoubleStep',
         next: ['e']
       },
       d: {
-        class: 'IncrementTransform',
+        class: 'IncrementStep',
         next: ['e']
       },
       e: {
-        class: 'DoubleTransform',
+        class: 'DoubleStep',
         next: ['f', 'g']
       },
       f: {
@@ -75,7 +75,7 @@ describe OptimusPrime::Pipeline do
       g: {
         class: 'TestDestination'
       }
-    }, poll_interval: 0.05)
+    })
   end
 
   describe '#sources' do
@@ -112,9 +112,9 @@ describe OptimusPrime::Pipeline do
       expect(pipeline.transforms.keys).to match_array [:c, :d, :e]
     end
 
-    it 'should instantiate a Transform instance for each transform' do
+    it 'should instantiate a Destination instance for each transform' do
       pipeline.transforms.values.each do |transform|
-        expect(transform).to be_a OptimusPrime::Transform
+        expect(transform).to be_a OptimusPrime::Destination
       end
     end
 

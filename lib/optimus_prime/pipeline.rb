@@ -5,9 +5,8 @@ module OptimusPrime
 
     BUFFER_SIZE = 100
 
-    def initialize(graph, poll_interval: 1)
+    def initialize(graph)
       @graph = graph
-      @poll_interval = poll_interval
       @queues = edges.map do |from, to|
         queue = SizedQueue.new BUFFER_SIZE
         from.output << queue
