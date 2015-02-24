@@ -1,8 +1,14 @@
 module OptimusPrime
   class Transform < Step
 
-    def transform(data)
-      raise 'Not implemented'
+    def write(record)
+      push record
+    end
+
+    private
+
+    def push(transformed)
+      @output << transformed
     end
 
   end

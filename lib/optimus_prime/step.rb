@@ -1,5 +1,6 @@
 module OptimusPrime
   class Step
+
     class << self
 
       def inherited(subclass)
@@ -28,5 +29,21 @@ module OptimusPrime
       end
 
     end
+
+    BUFFER_SIZE = 100
+
+    def pipe(to)
+      @output = SizedQueue.new BUFFER_SIZE
+      to.listen @output
+      @output
+    end
+
+    def listen(queue)
+      consumer = Thread.new do
+        loop { write queue.pop }
+      end
+      consumer.abort_on_exception = true
+    end
+
   end
 end

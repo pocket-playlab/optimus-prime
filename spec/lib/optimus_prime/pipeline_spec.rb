@@ -6,13 +6,13 @@ class TestSource < OptimusPrime::Source
   end
 
   def each
-    @data.each
+    @data.each { |i| yield i }
   end
 end
 
 class TestTransform < OptimusPrime::Transform
-  def transform(data)
-    data + 1
+  def write(data)
+    push data + 1
   end
 end
 
@@ -77,10 +77,20 @@ describe OptimusPrime::Pipeline do
       expect(pipeline.transforms.keys).to eq [:b]
     end
 
-    it 'should instantiate a Transforms instance for each transforms' do
+    it 'should instantiate a Transform instance for each transform' do
       pipeline.transforms.values.each do |transform|
         expect(transform).to be_a OptimusPrime::Transform
       end
+    end
+
+  end
+
+  describe '#start' do
+
+    it 'should start the pipeline' do
+      pipeline.start
+      sleep 1
+      expect(pipeline.destinations[:c].written).to eq (2..11).to_a
     end
 
   end

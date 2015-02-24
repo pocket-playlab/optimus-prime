@@ -7,6 +7,13 @@ module OptimusPrime
       @graph = graph
     end
 
+    # TODO: error handling
+    def start
+      @queues ||= edges.map do |from, to|
+        from.pipe to
+      end
+    end
+
     def steps
       @steps ||= @graph.map { |key, step| [key, instantiate(step)] }.to_h
     end
@@ -37,6 +44,8 @@ module OptimusPrime
       end
     end
 
+    private
+
     def edges
       @edges ||= begin
         visited = Set.new
@@ -46,10 +55,8 @@ module OptimusPrime
       end
     end
 
-    private
-
     def walk(from, visited)
-      (graph.fetch(from)[:next] || []).lazy.map(&:to_sym).flat_map do |to|
+      (graph.fetch(from)[:next] || []).map(&:to_sym).flat_map do |to|
         visited.include?(to) ? [[from, to]]
                              : [[from, to]] + walk(to, visited.add(to))
       end
