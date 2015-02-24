@@ -25,8 +25,12 @@ end
 class TestDestination < OptimusPrime::Destination
   attr_reader :written
   def write(record)
-    @written ||= []
-    @written << record
+    @received ||= []
+    @received << record
+  end
+
+  def close
+    @written = @received
   end
 end
 
