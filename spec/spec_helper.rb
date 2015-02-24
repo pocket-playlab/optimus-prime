@@ -12,7 +12,7 @@ RSpec.configure do |config|
 
   config.before :suite do
     system 'rm -r /tmp/s3'
-    s3 = spawn 'fakes3 --port 10001 --root /tmp/s3'
+    s3 = spawn 'fakes3 --port 10001 --root /tmp/s3', err: '/dev/null'
     sleep 1
   end
 
