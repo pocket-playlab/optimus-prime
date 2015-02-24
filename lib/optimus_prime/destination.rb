@@ -5,12 +5,10 @@ module OptimusPrime
       raise 'Not implemented'
     end
 
-    def close
-    end
-
-    protected
+    private
 
     def process(record)
+      raise 'Closed' if closed?
       write record
     end
 

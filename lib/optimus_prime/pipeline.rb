@@ -17,17 +17,12 @@ module OptimusPrime
     end
 
     def start
-      raise 'Already started' if running?
-      @started = true
-      @monitor = Thread.new do
-        # TODO: queues empty but downstream still working
-        sleep @poll_interval until finished?
-      end
+      raise 'Already started' if started?
       steps.values.each(&:start)
     end
 
-    def running?
-      @started || false
+    def started?
+      steps.values.any?(&:started?)
     end
 
     def finished?
@@ -35,8 +30,7 @@ module OptimusPrime
     end
 
     def join
-      @monitor.join
-      destinations.values.each(&:close)
+      steps.values.each(&:join)
     end
 
     def steps

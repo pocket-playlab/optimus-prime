@@ -13,13 +13,13 @@ end
 class IncrementTransform < OptimusPrime::Transform
   def transform(data)
     sleep 0.1
-    push data + 1
+    send data + 1
   end
 end
 
 class DoubleTransform < OptimusPrime::Transform
   def transform(data)
-    push data * 2
+    send data * 2
   end
 end
 
@@ -124,7 +124,10 @@ describe OptimusPrime::Pipeline do
 
     it 'should run the pipeline' do
       pipeline.start
+      expect(pipeline.started?).to be true
+      expect(pipeline.finished?).to be false
       pipeline.join
+      expect(pipeline.finished?).to be true
       expected = (4..40).step(4).to_a + (202..222).step(2).to_a
       pipeline.destinations.values.each do |destination|
         expect(destination.written).to match_array expected

@@ -13,8 +13,12 @@ module OptimusPrime
 
       def find(name)
         subclasses.find do |subclass|
-          subclass.name.split('::').last == name
+          subclass.display_name == name
         end
+      end
+
+      def display_name
+        name.split('::').last
       end
 
       protected
@@ -31,36 +35,61 @@ module OptimusPrime
     end
 
     def pipe(queue)
-      raise 'Already started' if running?
+      raise 'Already started' if started?
       output.add queue
     end
 
     def listen(queue)
-      raise 'Already started' if running?
+      raise 'Already started' if started?
       input.add queue
     end
 
     def start
-      raise 'Already started' if running?
+      raise 'Already started' if started?
       raise 'No input or output' if input.empty? and output.empty?
-      @started = true
-      input.each do |queue|
-        consumer = Thread.new do
-          loop { process queue.pop }
+      return if input.empty?
+      consumers = input.map do |queue|
+        background do
+          loop do
+            message = queue.pop
+            break unless message
+            process message
+          end
         end
-        consumer.abort_on_exception = true
+      end
+      background do
+        consumers.each(&:join)
+        close
       end
     end
 
-    def running?
-      @started || false
+    def join
+      raise 'Not yet started' unless started?
+      threads.each(&:join)
+    end
+
+    def started?
+      not threads.empty?
+    end
+
+    def closed?
+      @closed || false
     end
 
     def finished?
-      input.all?(&:empty?)
+      started? and threads.none?(&:status)
     end
 
     private
+
+    def close
+      @closed = true
+      send nil
+    end
+
+    def send(message)
+      output.each { |queue| queue << message }
+    end
 
     def input
       @input ||= Set.new
@@ -68,6 +97,19 @@ module OptimusPrime
 
     def output
       @output ||= Set.new
+    end
+
+    def threads
+      @threads ||= []
+    end
+
+    def background
+      thread = Thread.new do
+        yield
+      end
+      thread.abort_on_exception = true
+      threads << thread
+      thread
     end
 
   end

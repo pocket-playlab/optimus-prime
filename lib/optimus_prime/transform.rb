@@ -1,22 +1,15 @@
 module OptimusPrime
   class Transform < Step
 
-    def transform(record)
-      push record
+    def transform(message)
+      send message
     end
 
     protected
 
-    def process(record)
-      transform record
-    end
-
-    private
-
-    def push(transformed)
-      output.each do |queue|
-        queue << transformed
-      end
+    def process(message)
+      raise 'Closed' if closed?
+      transform message
     end
 
   end

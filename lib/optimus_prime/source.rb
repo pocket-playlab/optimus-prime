@@ -8,20 +8,13 @@ module OptimusPrime
 
     def start
       super
-      producer = Thread.new do
-        begin
-          each do |record|
-            output.each { |queue| queue << record }
-          end
-        ensure
-          @finished = true
+      background do
+        each do |message|
+          raise "#{self.class.display_name} returned null value" unless message
+          send message
         end
+        close
       end
-      producer.abort_on_exception = true
-    end
-
-    def finished?
-      @finished || false
     end
 
   end
