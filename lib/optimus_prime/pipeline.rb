@@ -1,17 +1,16 @@
 module OptimusPrime
   class Pipeline
 
-    attr_reader :graph, :queues
+    attr_reader :graph
 
     BUFFER_SIZE = 100
 
     def initialize(graph)
       @graph = graph
-      @queues = edges.map do |from, to|
+      edges.each do |from, to|
         queue = SizedQueue.new BUFFER_SIZE
         from.output << queue
         to.input    << queue
-        queue
       end
     end
 
@@ -36,8 +35,6 @@ module OptimusPrime
       @steps ||= @graph.map { |key, step| [key, instantiate(step)] }.to_h
     end
 
-    private
-
     def edges
       @edges ||= begin
         visited = Set.new
@@ -46,6 +43,8 @@ module OptimusPrime
         end
       end
     end
+
+    private
 
     def sources
       graph.keys - graph.values
