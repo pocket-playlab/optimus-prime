@@ -12,6 +12,7 @@ end
 
 class IncrementTransform < OptimusPrime::Transform
   def transform(data)
+    sleep 0.1
     push data + 1
   end
 end
@@ -74,7 +75,7 @@ describe OptimusPrime::Pipeline do
       g: {
         class: 'TestDestination'
       }
-    })
+    }, poll_interval: 0.05)
   end
 
   describe '#sources' do

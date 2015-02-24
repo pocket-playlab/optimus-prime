@@ -56,6 +56,10 @@ module OptimusPrime
       @started || false
     end
 
+    def finished?
+      input.all?(&:empty?)
+    end
+
     private
 
     def input

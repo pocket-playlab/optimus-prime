@@ -5,8 +5,9 @@ module OptimusPrime
 
     BUFFER_SIZE = 100
 
-    def initialize(graph)
+    def initialize(graph, poll_interval: 1)
       @graph = graph
+      @poll_interval = poll_interval
       @queues = edges.map do |from, to|
         queue = SizedQueue.new BUFFER_SIZE
         from.pipe queue
@@ -20,13 +21,17 @@ module OptimusPrime
       @started = true
       @monitor = Thread.new do
         # TODO: queues empty but downstream still working
-        sleep 1 until sources.values.all?(&:finished?) and queues.all?(&:empty?)
+        sleep @poll_interval until finished?
       end
       steps.values.each(&:start)
     end
 
     def running?
       @started || false
+    end
+
+    def finished?
+      steps.values.all?(&:finished?)
     end
 
     def join
