@@ -32,22 +32,19 @@ module OptimusPrime
 
     def pipe(queue)
       raise 'Already started' if running?
-      @output ||= Set.new
-      @output.add queue
+      output.add queue
     end
 
     def listen(queue)
       raise 'Already started' if running?
-      @input ||= Set.new
-      @input.add queue
+      input.add queue
     end
 
     def start
       raise 'Already started' if running?
-      raise 'No input or output' unless @input or @output
+      raise 'No input or output' if input.empty? and output.empty?
       @started = true
-      return unless @input
-      @input.each do |queue|
+      input.each do |queue|
         consumer = Thread.new do
           loop { process queue.pop }
         end
@@ -57,6 +54,16 @@ module OptimusPrime
 
     def running?
       @started || false
+    end
+
+    private
+
+    def input
+      @input ||= Set.new
+    end
+
+    def output
+      @output ||= Set.new
     end
 
   end

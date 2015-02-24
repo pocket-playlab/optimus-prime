@@ -11,7 +11,7 @@ module OptimusPrime
       producer = Thread.new do
         begin
           each do |record|
-            @output.each { |queue| queue << record }
+            output.each { |queue| queue << record }
           end
         ensure
           @finished = true

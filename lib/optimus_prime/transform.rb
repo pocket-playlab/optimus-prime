@@ -14,7 +14,7 @@ module OptimusPrime
     private
 
     def push(transformed)
-      @output.each do |queue|
+      output.each do |queue|
         queue << transformed
       end
     end
