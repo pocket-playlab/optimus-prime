@@ -10,9 +10,15 @@ class TestSource < OptimusPrime::Source
   end
 end
 
-class TestTransform < OptimusPrime::Transform
-  def write(data)
+class IncrementTransform < OptimusPrime::Transform
+  def transform(data)
     push data + 1
+  end
+end
+
+class DoubleTransform < OptimusPrime::Transform
+  def transform(data)
+    push data * 2
   end
 end
 
@@ -26,18 +32,42 @@ end
 
 describe OptimusPrime::Pipeline do
 
+  #     a   b
+  #     |   |
+  #     c   d
+  #      \ /
+  #       e
+  #      / \
+  #     f   g
+
   let(:pipeline) do
     OptimusPrime::Pipeline.new({
       a: {
         class: 'TestSource',
         params: { data: (1..10).to_a },
-        next: ['b']
-      },
-      b: {
-        class: 'TestTransform',
         next: ['c']
       },
+      b: {
+        class: 'TestSource',
+        params: { data: (100..110).to_a },
+        next: ['d']
+      },
       c: {
+        class: 'DoubleTransform',
+        next: ['e']
+      },
+      d: {
+        class: 'IncrementTransform',
+        next: ['e']
+      },
+      e: {
+        class: 'DoubleTransform',
+        next: ['f', 'g']
+      },
+      f: {
+        class: 'TestDestination'
+      },
+      g: {
         class: 'TestDestination'
       }
     })
@@ -46,7 +76,7 @@ describe OptimusPrime::Pipeline do
   describe '#sources' do
 
     it 'should only include sources' do
-      expect(pipeline.sources.keys).to eq [:a]
+      expect(pipeline.sources.keys).to match_array [:a, :b]
     end
 
     it 'should instantiate a Source instance for each source' do
@@ -60,7 +90,7 @@ describe OptimusPrime::Pipeline do
   describe '#destinations' do
 
     it 'should only include destinations' do
-      expect(pipeline.destinations.keys).to eq [:c]
+      expect(pipeline.destinations.keys).to match_array [:f, :g]
     end
 
     it 'should instantiate a Destination instance for each destination' do
@@ -74,7 +104,7 @@ describe OptimusPrime::Pipeline do
   describe '#transforms' do
 
     it 'should only include transforms' do
-      expect(pipeline.transforms.keys).to eq [:b]
+      expect(pipeline.transforms.keys).to match_array [:c, :d, :e]
     end
 
     it 'should instantiate a Transform instance for each transform' do
@@ -90,7 +120,10 @@ describe OptimusPrime::Pipeline do
     it 'should run the pipeline' do
       pipeline.start
       pipeline.join
-      expect(pipeline.destinations[:c].written).to eq (2..11).to_a
+      expected = (4..40).step(4).to_a + (202..222).step(2).to_a
+      pipeline.destinations.values.each do |destination|
+        expect(destination.written).to match_array expected
+      end
     end
 
     it 'should fail when called twice' do

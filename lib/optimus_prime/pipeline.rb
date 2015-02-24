@@ -1,23 +1,37 @@
 module OptimusPrime
   class Pipeline
 
-    attr_reader :graph
+    attr_reader :graph, :queues
+
+    BUFFER_SIZE = 100
 
     def initialize(graph)
       @graph = graph
+      @queues = edges.map do |from, to|
+        queue = SizedQueue.new BUFFER_SIZE
+        from.pipe queue
+        to.listen queue
+        queue
+      end
     end
 
     def start
-      queues = edges.map do |from, to|
-        from.pipe to
-      end
+      raise 'Already started' if running?
+      @started = true
       @monitor = Thread.new do
+        # TODO: queues empty but downstream still working
         sleep 1 until sources.values.all?(&:finished?) and queues.all?(&:empty?)
       end
+      steps.values.each(&:start)
+    end
+
+    def running?
+      @started || false
     end
 
     def join
       @monitor.join
+      destinations.values.each(&:close)
     end
 
     def steps

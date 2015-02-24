@@ -1,14 +1,22 @@
 module OptimusPrime
   class Transform < Step
 
-    def write(record)
+    def transform(record)
       push record
+    end
+
+    protected
+
+    def process(record)
+      transform record
     end
 
     private
 
     def push(transformed)
-      @output << transformed
+      @output.each do |queue|
+        queue << transformed
+      end
     end
 
   end

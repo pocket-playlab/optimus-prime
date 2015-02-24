@@ -6,17 +6,18 @@ module OptimusPrime
       raise 'Not implemented'
     end
 
-    def pipe(*)
+    def start
       super
       producer = Thread.new do
         begin
-          each { |record| @output << record }
+          each do |record|
+            @output.each { |queue| queue << record }
+          end
         ensure
           @finished = true
         end
       end
       producer.abort_on_exception = true
-      @output
     end
 
     def finished?

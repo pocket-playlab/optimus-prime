@@ -30,21 +30,33 @@ module OptimusPrime
 
     end
 
-    BUFFER_SIZE = 100
-
-    def pipe(to)
-      raise 'Already piped' if @output
-      @output = SizedQueue.new BUFFER_SIZE
-      to.listen @output
-      @output
+    def pipe(queue)
+      raise 'Already started' if running?
+      @output ||= Set.new
+      @output.add queue
     end
 
     def listen(queue)
-      raise 'Already listening' if @listener
-      @listener = Thread.new do
-        loop { write queue.pop }
+      raise 'Already started' if running?
+      @input ||= Set.new
+      @input.add queue
+    end
+
+    def start
+      raise 'Already started' if running?
+      raise 'No input or output' unless @input or @output
+      @started = true
+      return unless @input
+      @input.each do |queue|
+        consumer = Thread.new do
+          loop { process queue.pop }
+        end
+        consumer.abort_on_exception = true
       end
-      @listener.abort_on_exception = true
+    end
+
+    def running?
+      @started || false
     end
 
   end

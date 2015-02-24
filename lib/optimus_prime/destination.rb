@@ -8,5 +8,11 @@ module OptimusPrime
     def close
     end
 
+    protected
+
+    def process(record)
+      write record
+    end
+
   end
 end
