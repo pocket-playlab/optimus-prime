@@ -36,41 +36,22 @@ module OptimusPrime
       @steps ||= @graph.map { |key, step| [key, instantiate(step)] }.to_h
     end
 
-    def sources
-      @sources ||= begin
-        tail = graph.values
-          .flat_map { |step| step[:next] }
-          .compact
-          .map(&:to_sym)
-          .to_set
-        steps.reject { |key, step| tail.include? key }
-      end
-    end
-
-    def destinations
-      @destinations ||= graph
-        .select { |key, step| not step[:next] or step[:next].empty? }
-        .keys
-        .map { |key| [key, steps[key]] }
-        .to_h
-    end
-
-    def transforms
-      @transforms ||= begin
-        keys = (sources.keys + destinations.keys).to_set
-        steps.reject { |key, step| keys.include? key }
-      end
-    end
-
     private
 
     def edges
       @edges ||= begin
         visited = Set.new
-        sources.keys.flat_map do |key|
+        sources.flat_map do |key|
           walk(key, visited).map { |from, to| [steps[from], steps[to]]  }
         end
       end
+    end
+
+    def sources
+      graph.keys - graph.values
+        .flat_map { |step| step[:next] }
+        .compact
+        .map(&:to_sym)
     end
 
     def walk(from, visited)

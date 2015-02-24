@@ -78,48 +78,6 @@ describe OptimusPrime::Pipeline do
     })
   end
 
-  describe '#sources' do
-
-    it 'should only include sources' do
-      expect(pipeline.sources.keys).to match_array [:a, :b]
-    end
-
-    it 'should instantiate a Source instance for each source' do
-      pipeline.sources.values.each do |source|
-        expect(source).to be_a OptimusPrime::Source
-      end
-    end
-
-  end
-
-  describe '#destinations' do
-
-    it 'should only include destinations' do
-      expect(pipeline.destinations.keys).to match_array [:f, :g]
-    end
-
-    it 'should instantiate a Destination instance for each destination' do
-      pipeline.destinations.values.each do |destination|
-        expect(destination).to be_a OptimusPrime::Destination
-      end
-    end
-
-  end
-
-  describe '#transforms' do
-
-    it 'should only include transforms' do
-      expect(pipeline.transforms.keys).to match_array [:c, :d, :e]
-    end
-
-    it 'should instantiate a Destination instance for each transform' do
-      pipeline.transforms.values.each do |transform|
-        expect(transform).to be_a OptimusPrime::Destination
-      end
-    end
-
-  end
-
   describe '#start' do
 
     it 'should run the pipeline' do
@@ -129,7 +87,7 @@ describe OptimusPrime::Pipeline do
       pipeline.join
       expect(pipeline.finished?).to be true
       expected = (4..40).step(4).to_a + (202..222).step(2).to_a
-      pipeline.destinations.values.each do |destination|
+      pipeline.steps.values_at(:f, :g).each do |destination|
         expect(destination.written).to match_array expected
       end
     end
