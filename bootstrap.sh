@@ -29,6 +29,13 @@ fi
 # Install ruby dependencies
 bundle install
 
+# Set mysql root password
+mysqladmin -u root password root || echo 'mysql password already set'
+
+# Set postgres user password
+echo "ALTER USER postgres WITH password 'root';" |
+  sudo -u postgres psql || echo 'postgres password already set'
+
 # Configure mysql to use utf-8
 sudo tee /etc/mysql/conf.d/mysqld_unicode.cnf << 'EOF'
 [client]
@@ -43,19 +50,13 @@ character-set-server = utf8
 init-connect = 'SET NAMES utf8'
 EOF
 
-# Set mysql root password
-mysqladmin -u root password root || echo 'mysql password already set'
-
-# Create databases
-mysqladmin -u root --password=root create mysql_juicecubes || echo 'dev database already created'
-sudo -u postgres createdb -E utf-8 -T template0 postgres_cubes
-
-# Set postgres user password
-echo "ALTER USER postgres WITH password 'root';" | sudo -u postgres psql
-
 # Allow postgres login with password
 sudo tee /etc/postgresql/9.3/main/pg_hba.conf << 'EOF'
 local   all             all                                     md5
 host    all             all             127.0.0.1/32            md5
 host    all             all             ::1/128                 md5
 EOF
+
+# Restart databases
+sudo service mysql restart
+sudo service postgresql restart
