@@ -32,7 +32,7 @@ module OptimusPrime
     end
 
     def steps
-      @steps ||= @graph.map { |key, step| [key, instantiate(step)] }.to_h
+      @steps ||= graph.map { |key, step| [key, instantiate(step)] }.to_h
     end
 
     def edges
