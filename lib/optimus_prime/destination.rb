@@ -1,11 +1,15 @@
 module OptimusPrime
-  class Destination
+  class Destination < Step
 
-    def write(record)
+    def write(message)
       raise 'Not implemented'
     end
 
-    def close
+    private
+
+    def process(message)
+      raise 'Closed' if closed?
+      write message
     end
 
   end
