@@ -3,12 +3,13 @@ module OptimusPrime
 
     attr_reader :graph
 
-    BUFFER_SIZE = 100
+    # TODO: configurable queue size
+    QUEUE_SIZE = 100
 
-    def initialize(graph)
+    def initialize(**graph)
       @graph = graph
       edges.each do |from, to|
-        queue = SizedQueue.new BUFFER_SIZE
+        queue = SizedQueue.new QUEUE_SIZE
         from.output << queue
         to.input    << queue
       end
