@@ -73,12 +73,17 @@ To wait for a pipeline to finish, call
 
 ### Writing processing steps
 
-Processing steps work in a similar way to [nodejs streams][2].
+Processing steps work in a similar way to [nodejs streams][2]. See the existing
+implementations and the tests for examples.
+
+#### Sources
 
 To write a new data source, subclass `OptimusPrime::Source` and implement the
 `#each` method. `#each` should yield arbitrary ruby objects. It should never
 yield `nil` as that is used to signal the end of the stream, and will be sent
 automatically once all data has been consumed.
+
+#### Destinations
 
 To write a new destination or transform step, subclass
 `OptimusPrime::Destination` and implement the `#write` method. This method takes
@@ -86,8 +91,6 @@ a ruby object as input (it is assumed that you know what kind of object it will
 be). It can transform the input, write it to an external data store if needed,
 and send it down the pipeline by passing it to the `#send` method. Never pass
 `nil` to the `#send` method, as that is used to signal the end of the stream.
-
-See the existing implementations and the tests for examples.
 
 
 [1]: http://upload.wikimedia.org/wikipedia/en/1/19/Optimus10108pieces.jpg
