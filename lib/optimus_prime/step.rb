@@ -2,7 +2,6 @@ module OptimusPrime
   class Step
 
     class << self
-
       def inherited(subclass)
         descendants << subclass
       end
@@ -32,6 +31,10 @@ module OptimusPrime
         end
       end
 
+    end
+
+    def logger
+      @logger ||= Logger.new
     end
 
     def start
