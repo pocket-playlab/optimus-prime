@@ -6,7 +6,7 @@ gemspec
 
 group :development, :test do
   gem 'pry-byebug'
-  gem 'rubocop'
+  gem 'pronto-rubocop', require: false
 end
 
 group :test do
