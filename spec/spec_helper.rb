@@ -1,5 +1,5 @@
 require 'webmock/rspec'
-require './lib/optimus_prime'
+require 'optimus_prime'
 
 WebMock.disable_net_connect! allow_localhost: true
 ENV['AWS_ACCESS_KEY_ID'] = SecureRandom.hex

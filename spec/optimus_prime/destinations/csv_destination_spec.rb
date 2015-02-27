@@ -1,6 +1,7 @@
 require 'spec_helper'
+require 'optimus_prime/destinations/csv'
 
-RSpec.describe CsvDestination do
+RSpec.describe OptimusPrime::Destinations::Csv do
 
   aws_params = { endpoint: 'http://localhost:10001/', force_path_style: true }
 
@@ -31,19 +32,19 @@ RSpec.describe CsvDestination do
   end
 
   it 'should upload csv to s3' do
-    destination = CsvDestination.new fields: ['name', 'age'],
-                                     bucket: bucket,
-                                     key: 'people.csv',
-                                     **aws_params
+    destination = OptimusPrime::Destinations::Csv.new fields: ['name', 'age'],
+                                                      bucket: bucket,
+                                                      key: 'people.csv',
+                                                      **aws_params
     test_upload destination
   end
 
   it 'should upload csv to s3 in chunks' do
-    destination = CsvDestination.new fields: ['name', 'age'],
-                                     bucket: bucket,
-                                     key: 'people-chunks.csv',
-                                     chunk_size: 5,
-                                     **aws_params
+    destination = OptimusPrime::Destinations::Csv.new fields: ['name', 'age'],
+                                                      bucket: bucket,
+                                                      key: 'people-chunks.csv',
+                                                      chunk_size: 5,
+                                                      **aws_params
     test_upload destination
   end
 

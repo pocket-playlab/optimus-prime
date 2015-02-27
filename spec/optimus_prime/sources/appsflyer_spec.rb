@@ -1,6 +1,7 @@
 require 'spec_helper'
+require 'optimus_prime/sources/appsflyer'
 
-describe AppsflyerSource do
+describe OptimusPrime::Sources::Appsflyer do
 
   let(:app_id) { SecureRandom.hex }
   let(:api_token) { SecureRandom.hex }
@@ -8,11 +9,11 @@ describe AppsflyerSource do
   let(:installs_report) { File.read 'spec/supports/appsflyer/installs.csv' }
 
   let(:source) do
-    AppsflyerSource.new app_id: app_id,
-                        api_token: api_token,
-                        report_type: 'installs',
-                        from: Time.utc(2015, 1, 12),
-                        to: Time.utc(2015, 1, 19)
+    OptimusPrime::Sources::Appsflyer.new app_id: app_id,
+                                         api_token: api_token,
+                                         report_type: 'installs',
+                                         from: Time.utc(2015, 1, 12),
+                                         to: Time.utc(2015, 1, 19)
   end
 
   before do

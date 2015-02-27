@@ -1,6 +1,7 @@
 require 'spec_helper'
+require 'optimus_prime/sources/events_collector'
 
-RSpec.describe EventsCollectorSource do
+RSpec.describe OptimusPrime::Sources::EventsCollector do
 
   bucket = 'ppl-events'
 
@@ -23,10 +24,10 @@ RSpec.describe EventsCollectorSource do
   aws_params = { endpoint: 'http://localhost:10001/', force_path_style: true }
 
   let(:source) do
-    EventsCollectorSource.new bucket: bucket,
-                              from: Time.utc(2015, 2, 1),
-                              to:   Time.utc(2015, 2, 2),
-                              **aws_params
+    OptimusPrime::Sources::EventsCollector.new bucket: bucket,
+                                               from: Time.utc(2015, 2, 1),
+                                               to:   Time.utc(2015, 2, 2),
+                                               **aws_params
   end
 
   before :all do
