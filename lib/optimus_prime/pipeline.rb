@@ -1,6 +1,5 @@
 module OptimusPrime
   class Pipeline
-
     attr_reader :graph
     attr_reader :logger
 
@@ -69,6 +68,5 @@ module OptimusPrime
       step[:params] ? type.new(**step[:params])
                     : type.new
     end
-
   end
 end

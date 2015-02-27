@@ -1,6 +1,5 @@
 module OptimusPrime
   class Step
-
     class << self
       def inherited(subclass)
         descendants << subclass
@@ -30,7 +29,6 @@ module OptimusPrime
           end
         end
       end
-
     end
 
     require 'logger'
@@ -85,15 +83,19 @@ module OptimusPrime
           end
         end
       end
-      background do
-        consumers.each(&:join)
-        close
-      end
+      close_after consumers
     end
 
     def close
       @closed = true
       send nil
+    end
+
+    def close_after(threads)
+      background do
+        threads.each(&:join)
+        close
+      end
     end
 
     def send(message)
@@ -112,6 +114,5 @@ module OptimusPrime
       threads << thread
       thread
     end
-
   end
 end

@@ -6,7 +6,6 @@ require 'aws-sdk'
 module OptimusPrime
   module Sources
     class EventsCollector < OptimusPrime::Source
-
       def initialize(bucket:, from:, to:, **options)
         @s3 = Aws::S3::Client.new(**options)
         @bucket = bucket
@@ -41,7 +40,6 @@ module OptimusPrime
         end
         keys.sort!
       end
-
     end
   end
 end
