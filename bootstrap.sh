@@ -13,7 +13,8 @@ export DEBIAN_FRONTEND=noninteractive
 
 # Install packages
 sudo apt-get update --quiet
-sudo -E apt-get install --quiet --assume-yes curl git postgresql mysql-server libpq-dev libmysqlclient-dev
+sudo -E apt-get install --quiet --assume-yes \
+  curl git postgresql mysql-server libpq-dev libmysqlclient-dev cmake
 
 # Install rvm and ruby
 if ! rvm use ruby-2.2.0; then
