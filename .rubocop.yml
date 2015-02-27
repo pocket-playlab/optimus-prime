@@ -22,6 +22,9 @@ Style/TrailingComma:
 Style/WordArray:
   Enabled: false
 
+Metrics/AbcSize:
+  Max: 20
+
 Metrics/LineLength:
   Max: 100
 
