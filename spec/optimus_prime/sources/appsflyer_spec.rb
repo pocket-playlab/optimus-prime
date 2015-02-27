@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'optimus_prime/sources/appsflyer'
 
 describe OptimusPrime::Sources::Appsflyer do
-
   let(:app_id) { SecureRandom.hex }
   let(:api_token) { SecureRandom.hex }
 
@@ -58,5 +57,4 @@ describe OptimusPrime::Sources::Appsflyer do
       ]
     end
   end
-
 end

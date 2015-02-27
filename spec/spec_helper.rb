@@ -7,7 +7,6 @@ ENV['AWS_SECRET_ACCESS_KEY'] = SecureRandom.hex
 ENV['AWS_REGION'] = 'us-east-1'
 
 RSpec.configure do |config|
-
   s3 = nil
 
   config.before :suite do
@@ -20,5 +19,4 @@ RSpec.configure do |config|
     Process.kill 'INT', s3
     Process.wait s3
   end
-
 end
