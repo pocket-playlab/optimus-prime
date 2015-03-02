@@ -4,7 +4,6 @@ require 'stringio'
 module OptimusPrime
   module Destinations
     class Csv < Destination
-
       attr_reader :fields, :bucket, :key, :chunk_size
 
       def initialize(fields:, bucket:, key:, chunk_size: 1024 * 1024 * 10, **options)
@@ -82,7 +81,6 @@ module OptimusPrime
                        key: key,
                        body: @buffer
       end
-
     end
   end
 end

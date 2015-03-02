@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'optimus_prime/sources/events_collector'
 
 RSpec.describe OptimusPrime::Sources::EventsCollector do
-
   bucket = 'ppl-events'
 
   files = [
@@ -51,5 +50,4 @@ RSpec.describe OptimusPrime::Sources::EventsCollector do
   it 'should exclude files outside the given date range' do
     expect(source.to_a).to match_array events[1..2].flatten
   end
-
 end

@@ -16,6 +16,5 @@ module OptimusPrime
         close
       end
     end
-
   end
 end
