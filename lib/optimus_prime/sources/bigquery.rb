@@ -34,7 +34,7 @@ module OptimusPrime
       end
 
       def query(sql)
-        result = GoogleBigquery::Jobs.query @project_id, { 'query' => sql }
+        result = GoogleBigquery::Jobs.query @project_id, 'query' => sql
         if result['jobComplete'] && result['pageToken'].nil?
           map_result_into_rows result['schema']['fields'], result['rows']
         end
@@ -44,18 +44,16 @@ module OptimusPrime
 
       def get_query_results(job_id)
         rows = []
-        request_opt = {}
-        begin
-          result = GoogleBigquery::Jobs.getQueryResults(@project_id, job_id, request_opt)
+        loop do
+          result = GoogleBigquery::Jobs.getQueryResults(@project_id, job_id, request_opt || {})
           if result['jobComplete']
-            rows.concat(map_result_into_rows(result['schema']['fields'], result['rows']))
-            rows.uniq! # Sometimes, the next page contains duplicate rows.
+            rows.concat(map_result_into_rows(result['schema']['fields'], result['rows'])).uniq!
             request_opt = { 'pageToken' => result['pageToken'] } unless result['pageToken'].nil?
           else
             sleep 3
           end
-        end until result['totalRows'].to_i == rows.count
-
+          break if result['totalRows'].to_i == rows.count
+        end
         rows
       end
 
@@ -64,18 +62,17 @@ module OptimusPrime
       def map_result_into_rows(fields, rows)
         rows.map do |row|
           Hash[row['f'].map.with_index do |field, index|
-            current_field = fields[index]
-            value = case current_field['type']
-            when 'INTEGER'
-              field['v'].to_i
-            when 'FLOAT'
-              field['v'].to_f
-            when 'BOOLEAN'
-              field['v'] == 'true'
-            else
-              field['v']
-            end
-            [current_field['name'].to_sym, value]
+            value = case fields[index]['type']
+                    when 'INTEGER'
+                      field['v'].to_i
+                    when 'FLOAT'
+                      field['v'].to_f
+                    when 'BOOLEAN'
+                      field['v'] == 'true'
+                    else
+                      field['v']
+                    end
+            [fields[index]['name'].to_sym, value]
           end]
         end
       end
