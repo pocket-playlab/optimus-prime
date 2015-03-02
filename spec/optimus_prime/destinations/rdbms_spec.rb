@@ -30,10 +30,6 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
     end
   end
 
-  #after(:all) do
-  #  system 'rm test.db'
-  #end
-
   def insert_records_into(destination)
     input.each { |record| destination.write record }
     destination.close
@@ -41,8 +37,7 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
 
   def get_records_from_db
     db = Sequel.connect(dsn)
-    data = db[table.to_sym].all
-    #puts data.inspect
+    db[table.to_sym].all
   end
 
   def test(destination)
@@ -50,9 +45,6 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
     data = get_records_from_db
 
     expect(data).to eq(input)
-
-    #expect(csv.map { |row| header.zip(row).to_h })
-    #    .to eq input.map { |row| row.select { |k, v| header.include? k } }
   end
 
   it 'should upload insert records into database' do
