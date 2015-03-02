@@ -1,5 +1,5 @@
 module OptimusPrime
-  class Source < Step
+  class Source < OptimusPrime::Step
     include Enumerable
 
     def each
