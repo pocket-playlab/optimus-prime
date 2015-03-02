@@ -20,8 +20,8 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
 
   before(:all) do
     db = Sequel.connect('sqlite://test.db')
-    #db.loggers << Logger.new($stdout)
-    #db.sql_log_level = :debug
+    # db.loggers << Logger.new($stdout)
+    # db.sql_log_level = :debug
     db.drop_table :developer_cars
     db.create_table :developer_cars do
       String :name
