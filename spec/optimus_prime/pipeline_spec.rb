@@ -36,7 +36,6 @@ class TestDestination < OptimusPrime::Destination
 end
 
 describe OptimusPrime::Pipeline do
-
   #     a   b
   #     |   |
   #     c   d
@@ -46,7 +45,7 @@ describe OptimusPrime::Pipeline do
   #     f   g
 
   let(:pipeline) do
-    OptimusPrime::Pipeline.new({
+    OptimusPrime::Pipeline.new(
       a: {
         class: 'TestSource',
         params: { data: (1..10).to_a },
@@ -75,11 +74,10 @@ describe OptimusPrime::Pipeline do
       g: {
         class: 'TestDestination'
       }
-    })
+    )
   end
 
   describe '#start' do
-
     it 'should run the pipeline' do
       pipeline.start
       expect(pipeline.started?).to be true
@@ -96,7 +94,5 @@ describe OptimusPrime::Pipeline do
       pipeline.start
       expect { pipeline.start }.to raise_error
     end
-
   end
-
 end

@@ -1,6 +1,5 @@
 module OptimusPrime
   class Pipeline
-
     attr_reader :graph
 
     # TODO: configurable queue size
@@ -68,6 +67,5 @@ module OptimusPrime
       step[:params] ? type.new(**step[:params])
                     : type.new
     end
-
   end
 end
