@@ -12,3 +12,8 @@
 *.o
 *.a
 mkmf.log
+# ignore RubyMine IDE related files
+/.idea
+/projectFilesBackup
+# ignore vagrant related files
+/.vagrant
