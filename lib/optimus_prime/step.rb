@@ -33,8 +33,11 @@ module OptimusPrime
 
     end
 
+    require 'logger'
+    attr_accessor :logger
+
     def logger
-      @logger ||= Logger.new
+      @logger ||= Logger.new(STDERR)
     end
 
     def start
