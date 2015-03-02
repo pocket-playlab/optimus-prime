@@ -18,7 +18,7 @@ module OptimusPrime
       end
 
       def each
-        query_result.each { |record| yield record }
+        query_result.each { |row| yield row }
       end
 
       private
@@ -34,7 +34,7 @@ module OptimusPrime
       end
 
       def query(sql)
-        result = GoogleBigquery::Jobs.query @project_id, 'query' => sql
+        result = GoogleBigquery::Jobs.query @project_id, query: sql
         if result['jobComplete'] && result['pageToken'].nil?
           map_result_into_rows result['schema']['fields'], result['rows']
         end
