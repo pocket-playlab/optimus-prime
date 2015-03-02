@@ -20,6 +20,7 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
 
   before(:all) do
     db = Sequel.connect('sqlite://test.db')
+    # if you need to debug or trace sql, uncomment following lines
     # db.loggers << Logger.new($stdout)
     # db.sql_log_level = :debug
     db.drop_table? :developer_cars
