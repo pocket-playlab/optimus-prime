@@ -7,11 +7,11 @@ Gem::Specification.new do |spec|
   spec.name          = 'optimus_prime'
   spec.version       = OptimusPrime::VERSION
   spec.authors       = ['Prair Pusanasurapant', 'M Lertvanasirikul', 'Rick Apichairuk', 'Omar Khan']
-  spec.summary       = %q{Playlab ETL library}
+  spec.summary       = 'Playlab ETL library'
 
   spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.executables   = spec.files.grep(/^bin\//) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(/^(test|spec|features)\//)
   spec.require_paths = ['lib']
 
   spec.add_dependency 'aws-sdk',     '~> 2.0.23'
