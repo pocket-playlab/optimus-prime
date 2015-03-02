@@ -1,5 +1,5 @@
+require 'google_bigquery'
 require 'json'
-require 'bigquery'
 
 module OptimusPrime
   module Sources
