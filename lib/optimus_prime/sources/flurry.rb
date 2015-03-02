@@ -1,5 +1,6 @@
 require 'csv'
 require 'rest_client'
+# using yajl
 require 'yajl'
 
 module OptimusPrime
@@ -7,23 +8,19 @@ module OptimusPrime
     class Flurry < OptimusPrime::Source
       attr_accessor :start_date, :end_date
 
-      def initialize(
-          api_access_code:,
-          api_key:,
-          end_date: Time.now.utc.to_date,
-          start_date: nil,
-          poll_interval: 10,
-          number_of_days: 1
-      )
+      def initialize(api_access_code:,
+                     api_key:,
+                     end_date: Time.now.utc.to_date,
+                     start_date: nil,
+                     poll_interval: 10,
+                     number_of_days: 1)
         @api_access_code        = api_access_code
         @api_key                = api_key
 
         if end_date.nil?
           @end_date             = end_date
         else
-          end_date_obj          = Date.parse(end_date)
-
-          @end_date             = end_date_obj
+          @end_date             = Date.parse(end_date)
         end
 
         @poll_interval          = poll_interval.to_i
@@ -32,14 +29,12 @@ module OptimusPrime
         if start_date.nil?
           @start_date           = @end_date.to_date - @number_of_days
         else
-          start_date_obj        = Date.parse(start_date)
+          @start_date           = Date.parse(start_date)
 
           # validate that start date is before end date
-          if start_date_obj <= @end_date
-            raise "Start date (#{start_date_obj}) must be before the end date (#{@end_date})"
+          if @start_date <= @end_date
+            raise "Start date (#{@start_date}) must be before the end date (#{@end_date})"
           end
-
-          @start_date           = start_date
         end
       end
 
@@ -53,8 +48,8 @@ module OptimusPrime
         params = {
           apiAccessCode: @api_access_code,
           apiKey:        @api_key,
-          startTime:     convert_date_to_unix_ts(@start_date) * 1000,
-          endTime:       convert_date_to_unix_ts(@end_date) * 1000,
+          startTime:     @start_date.to_time.to_i * 1000,
+          endTime:       @end_date.to_time.to_i * 1000,
         }
 
         query_string = params.map { |k, v| "#{k}=#{v}" }.join('&')
@@ -79,8 +74,8 @@ module OptimusPrime
       # and keep on trying to retrieve_report
       # parse the thing and turn it into a Enumerable type object
       def get_data
-        start_time = convert_to_utc_time @start_date
-        end_time   = convert_to_utc_time @end_date
+        start_time = @start_date.to_time.utc
+        end_time   = @end_date.to_time.utc
 
         report = request_report(start_time, end_time)
         unless report.key? 'report'
@@ -165,7 +160,7 @@ module OptimusPrime
           # Retry 3 times before we let it die
           if retries <= 3
             # Make sure to sleep if we are being rate limited.
-            sleep POLL_INTERVAL
+            sleep @poll_interval
             get_report_data(report_uri, retries+1)
           else
             nil
@@ -207,16 +202,6 @@ module OptimusPrime
       #
       # Convienence methods
       #
-
-      def convert_to_utc_time(date)
-        Time.utc(date.year, date.month, date.day)
-      end
-
-      def convert_date_to_unix_ts(date)
-        epoch = Date.new(1970, 1, 1)
-        date - epoch
-        date.to_time.to_i
-      end
 
       def format_timing(timing)
         if timing < 1
