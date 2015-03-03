@@ -17,4 +17,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'aws-sdk',           '~> 2.0.23'
   spec.add_dependency 'google-api-client', '~> 0.8.2'
   spec.add_dependency 'rest-client',       '~> 1.7.2'
+  spec.add_dependency 'sequel'
+  spec.add_dependency 'sqlite3'
+  spec.add_dependency 'yajl-ruby'
 end

@@ -1,6 +1,7 @@
 module OptimusPrime
   class Pipeline
     attr_reader :graph
+    attr_reader :logger
 
     # TODO: configurable queue size
     QUEUE_SIZE = 100
