@@ -16,15 +16,15 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
   end
 
   let(:dsn) { 'sqlite://test.db' }
-  let(:table) { 'developer_cars' }
+  let(:table) { :developer_cars }
 
-  before(:all) do
-    db = Sequel.connect('sqlite://test.db')
+  before do
+    db = Sequel.connect(dsn)
     # if you need to debug or trace sql, uncomment following lines
     # db.loggers << Logger.new($stdout)
     # db.sql_log_level = :debug
-    db.drop_table? :developer_cars
-    db.create_table :developer_cars do
+    db.drop_table? table
+    db.create_table table do
       String :name
       String :car
       Integer :horsepower
@@ -36,16 +36,14 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
     destination.close
   end
 
-  def get_records_from_db
+  def records_from_db
     db = Sequel.connect(dsn)
-    db[table.to_sym].all
+    db[table].all
   end
 
   def test(destination)
     insert_records_into destination
-    data = get_records_from_db
-
-    expect(data).to eq(input)
+    expect(records_from_db).to eq(input)
   end
 
   it 'should upload insert records into database' do
