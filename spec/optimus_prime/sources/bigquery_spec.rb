@@ -10,25 +10,26 @@ describe OptimusPrime::Sources::Bigquery do
                      {'f'=> [{'v'=>'b'}, {'v'=>'android'}, {'v'=>'2.15'}, {'v'=>nil}, {'v'=>'false'}]},
                      {'f'=> [{'v'=>'b'}, {'v'=>'android'}, {'v'=>'42.9'}, {'v'=>'128175'}, {'v'=>nil}]}]
 
-    project_id = 'project-id'
-    job_id = 'job-id'
-
-    query_response = {
-      'kind'=>'bigquery#queryResponse',
-      'schema'=>
-      {'fields'=>
-        [{'name'=>'Game', 'type'=>'STRING', 'mode'=>'NULLABLE'},
-         {'name'=>'Platform', 'type'=>'STRING', 'mode'=>'NULLABLE'},
-         {'name'=>'PercentComplete', 'type'=>'FLOAT', 'mode'=>'NULLABLE'},
-         {'name'=>'MinScore', 'type'=>'INTEGER', 'mode'=>'NULLABLE'},
-         {'name'=>'IsTester', 'type'=>'BOOLEAN', 'mode'=>'NULLABLE'}]},
-      'jobReference'=>{'projectId'=>project_id, 'jobId'=>job_id},
-      'totalRows'=>response_rows.count.to_s,
-      'rows'=>response_rows,
-      'totalBytesProcessed'=> '1200',
-      'jobComplete'=> true,
-      'cacheHit'=> false
-    }
+    let(:project_id) { 'project-id' }
+    let(:job_id) { 'job-id' }
+    let(:query_response) do
+      {
+        'kind'=>'bigquery#queryResponse',
+        'schema'=>
+        {'fields'=>
+          [{'name'=>'Game', 'type'=>'STRING', 'mode'=>'NULLABLE'},
+           {'name'=>'Platform', 'type'=>'STRING', 'mode'=>'NULLABLE'},
+           {'name'=>'PercentComplete', 'type'=>'FLOAT', 'mode'=>'NULLABLE'},
+           {'name'=>'MinScore', 'type'=>'INTEGER', 'mode'=>'NULLABLE'},
+           {'name'=>'IsTester', 'type'=>'BOOLEAN', 'mode'=>'NULLABLE'}]},
+        'jobReference'=>{'projectId'=>project_id, 'jobId'=>job_id},
+        'totalRows'=>response_rows.count.to_s,
+        'rows'=>response_rows,
+        'totalBytesProcessed'=> '1200',
+        'jobComplete'=> true,
+        'cacheHit'=> false
+      }
+    end
 
     results = [{ :Game => nil, :Platform => 'android', :PercentComplete => 0.0, :MinScore => 88550, :IsTester => true },
                { :Game => 'a', :Platform => nil, :PercentComplete => 4.2, :MinScore => 28200, :IsTester => false },
@@ -39,6 +40,15 @@ describe OptimusPrime::Sources::Bigquery do
     sql = %{ SELECT Game, Platform, PercentComplete, MIN(Score) AS MinScore, IsTester
             FROM [dataset.table];
           }
+
+    def get_query_results_response(rows, request_page_token, next_page_token=nil)
+      response = query_response.clone
+      response['rows'] = rows
+      response['pageToken'] = next_page_token
+      page_token =  request_page_token.nil? ? {} : { pageToken: request_page_token }
+      allow(GoogleBigquery::Jobs).to receive(:getQueryResults).with(project_id, job_id, page_token)
+                                                              .and_return(response)
+    end
 
     let(:source) do
       OptimusPrime::Sources::Bigquery.new project_id: project_id,
@@ -61,32 +71,15 @@ describe OptimusPrime::Sources::Bigquery do
       end
     end
 
-    def fake_response
-      
-    end
-
     context 'multiple pages result' do
       it 'should yield all results' do
         incomplete_query_response = query_response.select { |k, v| ['kind', 'jobReference', 'jobComplete'].include? k }
         incomplete_query_response['jobComplete'] = false
         allow(GoogleBigquery::Jobs).to receive(:query).and_return(incomplete_query_response)
 
-        first_response = query_response.clone
-        first_response['rows'] = response_rows.take 2
-        first_response['pageToken'] = '2'
-        allow(GoogleBigquery::Jobs).to receive(:getQueryResults).with(project_id, job_id, {})
-                                                                .and_return(first_response)
-        second_response = first_response.clone
-        second_response['rows'] = response_rows[2,2]
-        second_response['pageToken'] = '3'
-        allow(GoogleBigquery::Jobs).to receive(:getQueryResults).with(project_id, job_id, { pageToken: first_response['pageToken'] })
-                                                                .and_return(second_response)
-
-        third_response = second_response.clone
-        third_response['rows'] = [response_rows.last]
-        third_response.delete 'pageToken'
-        allow(GoogleBigquery::Jobs).to receive(:getQueryResults).with(project_id, job_id, { pageToken: second_response['pageToken'] })
-                                                                .and_return(third_response)
+        get_query_results_response response_rows.take(2), nil, '2'
+        get_query_results_response response_rows[2,2], '2', '3'
+        get_query_results_response [response_rows.last], '3'
 
         rows = []
         source.each { |row| rows << row }
