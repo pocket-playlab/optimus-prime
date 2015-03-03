@@ -30,7 +30,7 @@ module OptimusPrime
       def query(sql)
         result = GoogleBigquery::Jobs.query @project_id, query: sql
         if result['jobComplete'] && result['pageToken'].nil?
-          map_result_into_rows result['schema']['fields'], result['rows']
+          return map_result_into_rows result['schema']['fields'], result['rows']
         end
 
         get_query_results result['jobReference']['jobId']
