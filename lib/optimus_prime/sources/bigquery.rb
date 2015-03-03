@@ -66,19 +66,19 @@ module OptimusPrime
         rows.map do |row|
           Hash[row['f'].map.with_index do |field, index|
             value = if field['v'].nil?
-              field['v']
-            else
-              case fields[index]['type']
-              when 'INTEGER'
-                field['v'].to_i
-              when 'FLOAT'
-                field['v'].to_f
-              when 'BOOLEAN'
-                field['v'] == 'true'
-              else
-                field['v']
-              end
-            end
+                      field['v']
+                    else
+                      case fields[index]['type']
+                      when 'INTEGER'
+                        field['v'].to_i
+                      when 'FLOAT'
+                        field['v'].to_f
+                      when 'BOOLEAN'
+                        field['v'] == 'true'
+                      else
+                        field['v']
+                      end
+                    end
             [fields[index]['name'].to_sym, value]
           end]
         end
