@@ -47,7 +47,7 @@ module OptimusPrime
           begin
             result = GoogleBigquery::Jobs.getQueryResults @project_id, job_id, request_opt
           rescue => e
-            raise_error "Bigquery#get_query_results - #{e}", "#@project_id = #{@project_id} | job_id = #{job_id} | request_opt = #{request_opt}"
+            raise_error "Bigquery#get_query_results - #{e}", "@project_id = #{@project_id} | job_id = #{job_id} | request_opt = #{request_opt}"
           end
           if result['jobComplete']
             rows.concat(map_result_into_rows(result['schema']['fields'], result['rows'])).uniq!
