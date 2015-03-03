@@ -1,0 +1,104 @@
+require 'google/api_client'
+
+module OptimusPrime
+  module Destinations
+    class Bigquery < OptimusPrime::Destination
+      attr_reader :project_id, :dataset_id, :client_email, :private_key, :table, :chunk_size
+
+      def initialize(project_id:, dataset_id:, client_email:, private_key:, table:, chunk_size: 100)
+        @project_id   = project_id
+        @dataset_id   = dataset_id
+        @client_email = client_email
+        @private_key  = OpenSSL::PKey::RSA.new private_key
+        @table        = table  # https://cloud.google.com/bigquery/docs/reference/v2/tables
+        @chunk_size   = chunk_size
+      end
+
+      def write(record)
+        create_table unless table_exists?
+        insert record
+      end
+
+      private
+
+      def client
+        @client ||= begin
+          client = Google::APIClient.new application_name:    'Optimus Prime',
+                                         application_version: '1',
+                                         auto_refresh_token:  true
+          scope = 'https://www.googleapis.com/auth/bigquery'
+          asserter = Google::APIClient::JWTAsserter.new(client_email, scope, private_key)
+          client.authorization = asserter.authorize
+          client
+        end
+      end
+
+      def bigquery
+        @bigquery ||= client.discovered_api 'bigquery', 'v2'
+      end
+
+      def insert(record)
+        buffer << record
+        upload if buffer.length >= chunk_size
+      end
+
+      def upload
+        response = stream buffer
+        body = JSON.parse response.body
+        raise body['error']['message'] unless response.status == 200
+        failed = body.fetch('insertErrors', []).map { |e| e['index'] }.uniq.length
+        raise "Failed to insert #{failed} row(s)" if failed > 0
+        buffer.clear
+      end
+
+      def stream(rows)
+        execute bigquery.tabledata.insert_all,
+                params: { 'tableId' => table['id'] },
+                body:   { 'kind' => 'bigquery#tableDataInsertAllRequest',
+                          'rows' => rows.map { |row| { 'json' => row } } }
+      end
+
+      def close
+        upload unless buffer.empty?
+        super
+      end
+
+      def buffer
+        @buffer ||= []
+      end
+
+      def create_table
+        response = execute bigquery.tables.insert, body: table
+        unless response.status == 200
+          body = JSON.parse response.body
+          raise body['error']['message']
+        end
+        @table_exists = true
+        response
+      end
+
+      def table_exists?
+        return @table_exists unless @table_exists.nil?
+        response = fetch_table
+        return @table_exists = false if response.status == 404
+        body = JSON.parse response.body
+        if response.status == 200
+          raise 'Schema does not match' unless table['schema'] == body['schema']
+          return @table_exists = true
+        end
+        raise body['error']['message']
+      end
+
+      def fetch_table
+        execute bigquery.tables.get, params: { 'tableId' => table['id'] }
+      end
+
+      def execute(method, params: {}, body: nil)
+        client.execute api_method:  method,
+                       parameters:  params.merge('projectId' => project_id,
+                                                 'datasetId' => dataset_id),
+                       body_object: body
+      end
+    end
+  end
+end
