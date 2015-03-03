@@ -12,7 +12,7 @@ module OptimusPrime
       end
 
       def each
-        query(@sql).each { |row| yield row }
+        query.each { |row| yield row }
       end
 
       private
