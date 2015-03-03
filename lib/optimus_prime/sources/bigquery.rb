@@ -4,21 +4,15 @@ require 'json'
 module OptimusPrime
   module Sources
     class Bigquery < OptimusPrime::Source
-      attr_reader :query_result
-
-      def initialize(project_id:, **config_params)
-        @query_result = []
+      def initialize(project_id:, sql:, **config_params)
         @project_id = project_id
+        @sql = sql
         setup **config_params
         GoogleBigquery::Auth.new.authorize
       end
 
-      def run_query(sql)
-        @query_result = query(sql)
-      end
-
       def each
-        query_result.each { |row| yield row }
+        query(@sql).each { |row| yield row }
       end
 
       private
