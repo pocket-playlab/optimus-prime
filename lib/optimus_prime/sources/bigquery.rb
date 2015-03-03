@@ -43,6 +43,7 @@ module OptimusPrime
       def get_query_results(job_id)
         rows = []
         request_opt = {}
+        sleep_duration = 3
         loop do
           begin
             result = GoogleBigquery::Jobs.getQueryResults @project_id, job_id, request_opt
@@ -51,11 +52,12 @@ module OptimusPrime
           end
           if result['jobComplete']
             rows.concat(map_result_into_rows(result['schema']['fields'], result['rows'])).uniq!
+            break if result['totalRows'].to_i == rows.count
             request_opt = { pageToken: result['pageToken'] } unless result['pageToken'].nil?
           else
-            sleep 3
+            sleep sleep_duration
+            sleep_duration *= 2
           end
-          break if result['totalRows'].to_i == rows.count
         end
         rows
       end
