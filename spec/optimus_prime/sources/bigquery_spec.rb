@@ -41,7 +41,7 @@ describe OptimusPrime::Sources::Bigquery do
             FROM [dataset.table];
           }
 
-    def get_query_results_response(rows, request_page_token, next_page_token=nil)
+    def stub_get_query_results(rows, request_page_token, next_page_token=nil)
       response = query_response.clone
       response['rows'] = rows
       response['pageToken'] = next_page_token
@@ -77,9 +77,9 @@ describe OptimusPrime::Sources::Bigquery do
         incomplete_query_response['jobComplete'] = false
         allow(GoogleBigquery::Jobs).to receive(:query).and_return(incomplete_query_response)
 
-        get_query_results_response response_rows.take(2), nil, '2'
-        get_query_results_response response_rows[2,2], '2', '3'
-        get_query_results_response [response_rows.last], '3'
+        stub_get_query_results response_rows.take(2), nil, '2'
+        stub_get_query_results response_rows[2,2], '2', '3'
+        stub_get_query_results [response_rows.last], '3'
 
         rows = []
         source.each { |row| rows << row }
