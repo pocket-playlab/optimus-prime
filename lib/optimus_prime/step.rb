@@ -1,3 +1,5 @@
+require 'logger'
+
 module OptimusPrime
   class Step
     class << self
@@ -30,9 +32,6 @@ module OptimusPrime
         end
       end
     end
-
-    require 'logger'
-    attr_accessor :logger
 
     def logger
       @logger ||= Logger.new(STDERR)
