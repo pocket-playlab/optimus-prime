@@ -13,12 +13,12 @@ module OptimusPrime
 
       def find(name)
         subclasses.find do |subclass|
-          subclass.display_name == name
+          subclass.name == name || subclass.display_name == name
         end
       end
 
       def display_name
-        name.split('::').last
+        name.sub(/^OptimusPrime::/, '')
       end
 
       protected
