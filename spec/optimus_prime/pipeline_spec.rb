@@ -1,37 +1,43 @@
 require 'spec_helper'
 
-class TestSource < OptimusPrime::Source
-  def initialize(data:)
-    @data = data
+module OptimusPrime
+  module Sources
+    class Test < OptimusPrime::Source
+      def initialize(data:)
+        @data = data
+      end
+
+      def each
+        @data.each { |i| yield i }
+      end
+    end
   end
 
-  def each
-    @data.each { |i| yield i }
+  module Destinations
+    class Test < OptimusPrime::Destination
+      attr_reader :written
+      def write(record)
+        @received ||= []
+        @received << record
+      end
+
+      def finish
+        @written = @received
+      end
+    end
   end
 end
 
 class IncrementStep < OptimusPrime::Destination
   def write(data)
     sleep 0.1
-    send data + 1
+    push data + 1
   end
 end
 
 class DoubleStep < OptimusPrime::Destination
   def write(data)
-    send data * 2
-  end
-end
-
-class TestDestination < OptimusPrime::Destination
-  attr_reader :written
-  def write(record)
-    @received ||= []
-    @received << record
-  end
-
-  def close
-    @written = @received
+    push data * 2
   end
 end
 
@@ -47,12 +53,12 @@ describe OptimusPrime::Pipeline do
   let(:pipeline) do
     OptimusPrime::Pipeline.new(
       a: {
-        class: 'TestSource',
+        class: 'OptimusPrime::Sources::Test',
         params: { data: (1..10).to_a },
         next: ['c']
       },
       b: {
-        class: 'TestSource',
+        class: 'OptimusPrime::Sources::Test',
         params: { data: (100..110).to_a },
         next: ['d']
       },
@@ -69,10 +75,10 @@ describe OptimusPrime::Pipeline do
         next: ['f', 'g']
       },
       f: {
-        class: 'TestDestination'
+        class: 'OptimusPrime::Destinations::Test'
       },
       g: {
-        class: 'TestDestination'
+        class: 'OptimusPrime::Destinations::Test'
       }
     )
   end
@@ -82,7 +88,7 @@ describe OptimusPrime::Pipeline do
       pipeline.start
       expect(pipeline.started?).to be true
       expect(pipeline.finished?).to be false
-      pipeline.join
+      pipeline.wait
       expect(pipeline.finished?).to be true
       expected = (4..40).step(4).to_a + (202..222).step(2).to_a
       pipeline.steps.values_at(:f, :g).each do |destination|

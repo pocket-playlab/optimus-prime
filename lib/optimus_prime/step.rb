@@ -1,3 +1,5 @@
+require 'logger'
+
 module OptimusPrime
   class Step
     class << self
@@ -11,12 +13,8 @@ module OptimusPrime
 
       def find(name)
         subclasses.find do |subclass|
-          subclass.display_name == name
+          subclass.name == name
         end
-      end
-
-      def display_name
-        name.split('::').last
       end
 
       protected
@@ -30,9 +28,6 @@ module OptimusPrime
         end
       end
     end
-
-    require 'logger'
-    attr_accessor :logger
 
     def logger
       @logger ||= Logger.new(STDERR)
@@ -49,6 +44,13 @@ module OptimusPrime
     def join
       raise 'Not yet started' unless started?
       threads.each(&:join)
+    end
+    alias_method :wait, :join
+
+    def close
+      @closed = true
+      finish
+      push nil
     end
 
     def started?
@@ -86,9 +88,8 @@ module OptimusPrime
       close_after consumers
     end
 
-    def close
-      @closed = true
-      send nil
+    def finish
+      # Override this in subclasses if needed
     end
 
     def close_after(threads)
@@ -98,7 +99,7 @@ module OptimusPrime
       end
     end
 
-    def send(message)
+    def push(message)
       output.each { |queue| queue << message }
     end
 
