@@ -49,8 +49,8 @@ module OptimusPrime
 
     def close
       @closed = true
-      push nil
       finish
+      push nil
     end
 
     def started?
