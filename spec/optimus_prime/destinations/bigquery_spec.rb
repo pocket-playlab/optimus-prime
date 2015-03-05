@@ -22,8 +22,8 @@ RSpec.describe OptimusPrime::Destinations::Bigquery do
 
   let(:input) do
     [
-      { 'name' => 'Bob',   'age' => 28 },
-      { 'name' => 'Alice', 'age' => 34 },
+      { 'name' => 'Bob',   'age' => 28, 'likes' => 'cheese' },
+      { 'name' => 'Alice', 'age' => 34, 'likes' => 'durian' },
     ]
   end
 
@@ -62,7 +62,10 @@ RSpec.describe OptimusPrime::Destinations::Bigquery do
     upload destination
     # sleep 60  # Needed when running on the real bigquery
     rows = download destination
-    expect(rows).to match_array input
+    expected = input.map do |row|
+      row.select { |k, v| ['name', 'age'].include? k }
+    end
+    expect(rows).to match_array expected
   end
 
   context 'table does not exist' do

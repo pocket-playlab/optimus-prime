@@ -5,7 +5,7 @@ http_interactions:
     uri: https://accounts.google.com/o/oauth2/token
     body:
       encoding: ASCII-8BIT
-      string: grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiIxMDc5MjM4Mjc2MDQtb29sYjNqZDdrMG9mZGYyaXNxaTlkMmZvNjEzcXRuZ3RAZGV2ZWxvcGVyLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvYmlncXVlcnkiLCJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE0MjU1NDg0NTMsImlhdCI6MTQyNTU0ODMzM30.XEIaM92YaCfmqjdt-FhY58s2kKxcA9t8RxkaqAde0S4237vUqCS2hu13WmFvBPV3Z4DqVOvUWLjUnvDeHbi3DPKf2pNc3sHCeChJfkS4F_-m_MbdOs2jxCSzyagXZIEwZusx59IjlHbeh5oks5LS082CRIR8dVxAxJt8QEkdbyE
+      string: grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiIxMDc5MjM4Mjc2MDQtb29sYjNqZDdrMG9mZGYyaXNxaTlkMmZvNjEzcXRuZ3RAZGV2ZWxvcGVyLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvYmlncXVlcnkiLCJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE0MjU1NTA3NzEsImlhdCI6MTQyNTU1MDY1MX0.tUVslOPJuMZRz6X7ZxO0dnlkKtvkaYiVHDOfwgXehGxNWpqGH7Ag4CyAJZ81tDv7rn5NbhZVZRPE7nIxuJhYPMM9WoTNNheKGIH_o209pQnMSfeEZhv1RPnJXAJZp_EyL5boVatDviiWvCd9U9anj4X_CFJB3lYtRahfRzoukEk
     headers:
       Cache-Control:
       - no-store
@@ -31,7 +31,7 @@ http_interactions:
       Expires:
       - Fri, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Thu, 05 Mar 2015 09:39:59 GMT
+      - Thu, 05 Mar 2015 10:18:37 GMT
       Content-Disposition:
       - attachment; filename="json.txt"; filename*=UTF-8''json.txt
       X-Content-Type-Options:
@@ -54,12 +54,12 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "access_token" : "ya29.LQFhNEm3RSMo8yzm0S-jIb8-B2rPJPnyw5nNI9THygr-q6Asa9ysZMh0cWI2QXmNZyZlCwRmudsPSg",
+          "access_token" : "ya29.LQF5d9AFVVsd6SI091sBwOaUyqAtyalsJBCVpUVNCDEo2eOl96agM6iD-NCo4g0UVQAK9xwJTx46RQ",
           "token_type" : "Bearer",
           "expires_in" : 3600
         }
     http_version: 
-  recorded_at: Thu, 05 Mar 2015 09:39:59 GMT
+  recorded_at: Thu, 05 Mar 2015 10:18:36 GMT
 - request:
     method: get
     uri: https://www.googleapis.com/discovery/v1/apis/bigquery/v2/rest
@@ -83,9 +83,9 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Thu, 05 Mar 2015 09:44:59 GMT
+      - Thu, 05 Mar 2015 10:23:37 GMT
       Date:
-      - Thu, 05 Mar 2015 09:39:59 GMT
+      - Thu, 05 Mar 2015 10:18:37 GMT
       Cache-Control:
       - public, max-age=300, must-revalidate, no-transform
       Etag:
@@ -372,7 +372,7 @@ http_interactions:
         NcTuBA+z64Cx0N268Ielv9wJkHfi5+gBwPuyUf4YeteqvghuQ+G7Z3AbtUl4
         0OztkXE9Mi7vkXG1+qJV1OgJ/Pfbk/8DyeHgi0EgAQA=
     http_version: 
-  recorded_at: Thu, 05 Mar 2015 09:39:59 GMT
+  recorded_at: Thu, 05 Mar 2015 10:18:37 GMT
 - request:
     method: delete
     uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/test
@@ -389,50 +389,38 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.LQFhNEm3RSMo8yzm0S-jIb8-B2rPJPnyw5nNI9THygr-q6Asa9ysZMh0cWI2QXmNZyZlCwRmudsPSg
+      - Bearer ya29.LQF5d9AFVVsd6SI091sBwOaUyqAtyalsJBCVpUVNCDEo2eOl96agM6iD-NCo4g0UVQAK9xwJTx46RQ
       Cache-Control:
       - no-store
       Accept:
       - "*/*"
   response:
     status:
-      code: 404
-      message: Not Found
+      code: 204
+      message: No Content
     headers:
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Thu, 05 Mar 2015 10:18:37 GMT
+      Etag:
+      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/vyGp6PvFo4RvsFtPoIWeCReyIC8"'
       Vary:
       - Origin
       - X-Origin
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Encoding:
-      - gzip
-      Date:
-      - Thu, 05 Mar 2015 09:40:00 GMT
-      Expires:
-      - Thu, 05 Mar 2015 09:40:00 GMT
-      Cache-Control:
-      - private, max-age=0
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Xss-Protection:
-      - 1; mode=block
       Server:
       - GSE
       Alternate-Protocol:
       - 443:quic,p=0.08
-      Transfer-Encoding:
-      - chunked
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAAJ2MMQ7CMAxF95zC8gyIoVMOwMjEhhjcxqoqpXEVmwFVuTtJ
-        gAuwfOm9r/93B8g5S0YPu4MvaKV7pa6qDLLSkqrEOcpIEQ8fn5lUuk9iF3mm
-        8GtWVqWZW3UVg955uNEYGbYtHilRfNkyqTdWO7XAtiw1Hu0DJwltPpyHjv8d
-        FlfcGzHcexHjAAAA
+      encoding: UTF-8
+      string: ''
     http_version: 
-  recorded_at: Thu, 05 Mar 2015 09:40:00 GMT
+  recorded_at: Thu, 05 Mar 2015 10:18:37 GMT
 - request:
     method: get
     uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/test
@@ -449,7 +437,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.LQFhNEm3RSMo8yzm0S-jIb8-B2rPJPnyw5nNI9THygr-q6Asa9ysZMh0cWI2QXmNZyZlCwRmudsPSg
+      - Bearer ya29.LQF5d9AFVVsd6SI091sBwOaUyqAtyalsJBCVpUVNCDEo2eOl96agM6iD-NCo4g0UVQAK9xwJTx46RQ
       Cache-Control:
       - no-store
       Accept:
@@ -467,9 +455,9 @@ http_interactions:
       Content-Encoding:
       - gzip
       Date:
-      - Thu, 05 Mar 2015 09:40:00 GMT
+      - Thu, 05 Mar 2015 10:18:38 GMT
       Expires:
-      - Thu, 05 Mar 2015 09:40:00 GMT
+      - Thu, 05 Mar 2015 10:18:38 GMT
       Cache-Control:
       - private, max-age=0
       X-Content-Type-Options:
@@ -492,7 +480,7 @@ http_interactions:
         8GtWVqWZW3UVg955uNEYGbYtHilRfNkyqTdWO7XAtiw1Hu0DJwltPpyHjv8d
         FlfcGzHcexHjAAAA
     http_version: 
-  recorded_at: Thu, 05 Mar 2015 09:40:00 GMT
+  recorded_at: Thu, 05 Mar 2015 10:18:38 GMT
 - request:
     method: post
     uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables
@@ -509,7 +497,7 @@ http_interactions:
       Accept-Encoding:
       - gzip
       Authorization:
-      - Bearer ya29.LQFhNEm3RSMo8yzm0S-jIb8-B2rPJPnyw5nNI9THygr-q6Asa9ysZMh0cWI2QXmNZyZlCwRmudsPSg
+      - Bearer ya29.LQF5d9AFVVsd6SI091sBwOaUyqAtyalsJBCVpUVNCDEo2eOl96agM6iD-NCo4g0UVQAK9xwJTx46RQ
       Cache-Control:
       - no-store
       Accept:
@@ -526,9 +514,9 @@ http_interactions:
       Expires:
       - Fri, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Thu, 05 Mar 2015 09:40:01 GMT
+      - Thu, 05 Mar 2015 10:18:38 GMT
       Etag:
-      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/JnpUhsGNFiXfmEO-loU2Sc8o-IQ"'
+      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/zkq32_A2qk7AQArOZtbvaPo50ww"'
       Vary:
       - Origin
       - X-Origin
@@ -551,15 +539,15 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAG1P0U6DMBR95ytIfd3WuGhi9iYJLpiJyFiyxPnQwQXqStut
-        1YUs/LttgUQzX257z7nn3HMvno8OlBdo4aM9rY5fcGpvNNkzQBNDgSaVpXao
-        PmakSNNt0iT3/DYJAsFfin1wKOs7/MzlplbL+IluyyZ8nTKxma/zBzGN3nbI
-        +VC3QEo2JZywVtNcLTQoPbPFTShg5Yryg52rtZZqgfH5fJ5VQlQMiKRqlosG
-        jxnx9xzLk/iEXCv8xxcXRBMFBrbe2N3S/90e16dQwgl4DmbbxfNNst4quo5p
-        RT4aPHt+9BrMfoGe37lb8hoaMnqXFFihTPduOgcZkJPGLu/fSY/pVjpsnaVR
-        vEQW7Cb/aEh1JYniLFyGaa8x5WNIMvLZY7AKkdd5P114iGXwAQAA
+        H4sIAAAAAAAAAG1PXU+DMBR951eQ+jpXRRcT3iAhC8mciDwYnTEFLlCB8tE6
+        Mpf997UFEs18ue09555zzz0aJiopS5Ftopjm3Tf0hytB4grQQlIgSK6oHSq6
+        iKRh+BrUwYrdBq7bsMc0dsusuMc/ZXdnfTpWVz44z07/9CbiPQma1c0w7JD2
+        oXpB21bXhJHqIGjCbQFcLFXRExyqbENZqeYKIVpuYzwMwzJvmrwC0lK+TJoa
+        zxnx3sJt33xBIjj+44tTIggHCStvrG8Z/3qP7kPIoAeWgNx2NEyZbLTyL2Mq
+        kYkmz5GfvSazX6BhnvQtSQE1mb0zClXKZfcuOw1JkJFaLR/fxYiJQ6uxlyj0
+        t2ukwNPiHw3JLyT+NvLWXjhqZPmYksx85LgbDxkn4wwzj18r8AEAAA==
     http_version: 
-  recorded_at: Thu, 05 Mar 2015 09:40:01 GMT
+  recorded_at: Thu, 05 Mar 2015 10:18:38 GMT
 - request:
     method: post
     uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/test/insertAll
@@ -576,7 +564,7 @@ http_interactions:
       Accept-Encoding:
       - gzip
       Authorization:
-      - Bearer ya29.LQFhNEm3RSMo8yzm0S-jIb8-B2rPJPnyw5nNI9THygr-q6Asa9ysZMh0cWI2QXmNZyZlCwRmudsPSg
+      - Bearer ya29.LQF5d9AFVVsd6SI091sBwOaUyqAtyalsJBCVpUVNCDEo2eOl96agM6iD-NCo4g0UVQAK9xwJTx46RQ
       Cache-Control:
       - no-store
       Accept:
@@ -593,7 +581,7 @@ http_interactions:
       Expires:
       - Fri, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Thu, 05 Mar 2015 09:40:02 GMT
+      - Thu, 05 Mar 2015 10:18:39 GMT
       Etag:
       - '"hqTadRRXPmP5n1PBBonMdbBkfh4/vyGp6PvFo4RvsFtPoIWeCReyIC8"'
       Vary:
@@ -621,7 +609,7 @@ http_interactions:
         H4sIAAAAAAAAAKvmUlDKzsxLUbJSUErKTC8sTS2qVC5JTMpJdUksSfTMK04t
         KnHMyQlKLS7IB3KUuGq5AH1Qqg4zAAAA
     http_version: 
-  recorded_at: Thu, 05 Mar 2015 09:40:02 GMT
+  recorded_at: Thu, 05 Mar 2015 10:18:39 GMT
 - request:
     method: get
     uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/test/data
@@ -638,7 +626,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.LQFhNEm3RSMo8yzm0S-jIb8-B2rPJPnyw5nNI9THygr-q6Asa9ysZMh0cWI2QXmNZyZlCwRmudsPSg
+      - Bearer ya29.LQF5d9AFVVsd6SI091sBwOaUyqAtyalsJBCVpUVNCDEo2eOl96agM6iD-NCo4g0UVQAK9xwJTx46RQ
       Cache-Control:
       - no-store
       Accept:
@@ -649,9 +637,9 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Thu, 05 Mar 2015 09:41:03 GMT
+      - Thu, 05 Mar 2015 10:19:40 GMT
       Date:
-      - Thu, 05 Mar 2015 09:41:03 GMT
+      - Thu, 05 Mar 2015 10:19:40 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
@@ -684,5 +672,5 @@ http_interactions:
         KFIGsscxJzM5VQksUquDKW1sApUDkbFcUEV4TXTKT8JtnpEFunlcQKqWCwB0
         tVSsHgEAAA==
     http_version: 
-  recorded_at: Thu, 05 Mar 2015 09:41:03 GMT
+  recorded_at: Thu, 05 Mar 2015 10:19:40 GMT
 recorded_with: VCR 2.9.3

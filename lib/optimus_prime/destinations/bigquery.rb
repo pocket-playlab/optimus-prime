@@ -36,8 +36,12 @@ module OptimusPrime
       end
 
       def insert(record)
-        buffer << record
+        buffer << clean(record)
         upload if buffer.length >= chunk_size
+      end
+
+      def clean(record)
+        record.select { |k, v| fields.include? k }
       end
 
       def upload
@@ -103,6 +107,10 @@ module OptimusPrime
 
       def dataset_id
         table['tableReference']['datasetId']
+      end
+
+      def fields
+        @fields ||= table['schema']['fields'].map { |f| f['name'] }.to_set
       end
     end
   end
