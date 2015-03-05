@@ -21,7 +21,7 @@ module OptimusPrime
         @received << record
       end
 
-      def close
+      def finish
         @written = @received
       end
     end
@@ -31,13 +31,13 @@ end
 class IncrementStep < OptimusPrime::Destination
   def write(data)
     sleep 0.1
-    send data + 1
+    push data + 1
   end
 end
 
 class DoubleStep < OptimusPrime::Destination
   def write(data)
-    send data * 2
+    push data * 2
   end
 end
 
@@ -88,7 +88,7 @@ describe OptimusPrime::Pipeline do
       pipeline.start
       expect(pipeline.started?).to be true
       expect(pipeline.finished?).to be false
-      pipeline.join
+      pipeline.wait
       expect(pipeline.finished?).to be true
       expected = (4..40).step(4).to_a + (202..222).step(2).to_a
       pipeline.steps.values_at(:f, :g).each do |destination|

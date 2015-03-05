@@ -11,7 +11,7 @@ module OptimusPrime
       background do
         each do |message|
           raise "#{self.class.name} returned null value" unless message
-          send message
+          push message
         end
         close
       end

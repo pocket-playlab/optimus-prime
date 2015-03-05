@@ -45,6 +45,13 @@ module OptimusPrime
       raise 'Not yet started' unless started?
       threads.each(&:join)
     end
+    alias_method :wait, :join
+
+    def close
+      @closed = true
+      finish
+      push nil
+    end
 
     def started?
       not threads.empty?
@@ -81,9 +88,8 @@ module OptimusPrime
       close_after consumers
     end
 
-    def close
-      @closed = true
-      send nil
+    def finish
+      # Override this in subclasses if needed
     end
 
     def close_after(threads)
@@ -93,7 +99,7 @@ module OptimusPrime
       end
     end
 
-    def send(message)
+    def push(message)
       output.each { |queue| queue << message }
     end
 
