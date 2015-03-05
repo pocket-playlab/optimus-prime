@@ -1,12 +1,30 @@
 require 'spec_helper'
 
-class TestSource < OptimusPrime::Source
-  def initialize(data:)
-    @data = data
+module OptimusPrime
+  module Sources
+    class Test < OptimusPrime::Source
+      def initialize(data:)
+        @data = data
+      end
+
+      def each
+        @data.each { |i| yield i }
+      end
+    end
   end
 
-  def each
-    @data.each { |i| yield i }
+  module Destinations
+    class Test < OptimusPrime::Destination
+      attr_reader :written
+      def write(record)
+        @received ||= []
+        @received << record
+      end
+
+      def close
+        @written = @received
+      end
+    end
   end
 end
 
@@ -23,18 +41,6 @@ class DoubleStep < OptimusPrime::Destination
   end
 end
 
-class TestDestination < OptimusPrime::Destination
-  attr_reader :written
-  def write(record)
-    @received ||= []
-    @received << record
-  end
-
-  def close
-    @written = @received
-  end
-end
-
 describe OptimusPrime::Pipeline do
   #     a   b
   #     |   |
@@ -47,12 +53,12 @@ describe OptimusPrime::Pipeline do
   let(:pipeline) do
     OptimusPrime::Pipeline.new(
       a: {
-        class: 'TestSource',
+        class: 'OptimusPrime::Sources::Test',
         params: { data: (1..10).to_a },
         next: ['c']
       },
       b: {
-        class: 'TestSource',
+        class: 'OptimusPrime::Sources::Test',
         params: { data: (100..110).to_a },
         next: ['d']
       },
@@ -69,10 +75,10 @@ describe OptimusPrime::Pipeline do
         next: ['f', 'g']
       },
       f: {
-        class: 'TestDestination'
+        class: 'OptimusPrime::Destinations::Test'
       },
       g: {
-        class: 'TestDestination'
+        class: 'OptimusPrime::Destinations::Test'
       }
     )
   end

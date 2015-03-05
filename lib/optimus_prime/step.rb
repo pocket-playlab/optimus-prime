@@ -1,3 +1,5 @@
+require 'logger'
+
 module OptimusPrime
   class Step
     class << self
@@ -11,12 +13,8 @@ module OptimusPrime
 
       def find(name)
         subclasses.find do |subclass|
-          subclass.display_name == name
+          subclass.name == name
         end
-      end
-
-      def display_name
-        name.split('::').last
       end
 
       protected
@@ -30,9 +28,6 @@ module OptimusPrime
         end
       end
     end
-
-    require 'logger'
-    attr_accessor :logger
 
     def logger
       @logger ||= Logger.new(STDERR)
