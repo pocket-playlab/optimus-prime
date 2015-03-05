@@ -183,13 +183,12 @@ module OptimusPrime
         Enumerator.new do |enum|
           report_data['sessionEvents'].lazy.map(&expand_keys).each do |session|
             session['logs'].each do |event|
-              timestamp = session['startTimestamp'] + event['offsetTimestamp']
               data = {
                 'Session'   => session['uniqueId'],
                 'Version'   => session['version'],
                 'Device'    => session['device'],
                 'Event'     => event['eventName'],
-                'Timestamp' => Time.strptime(timestamp.to_s, '%Q').utc.to_i,
+                'Timestamp' => (session['startTimestamp'] + event['offsetTimestamp']) / 1000,
               }
               data.merge!(event['parameters']) if event['parameters']
               enum.yield(data)
