@@ -3,11 +3,13 @@ require 'spec_helper'
 module OptimusPrime
   module Sources
     class Test < OptimusPrime::Source
-      def initialize(data:)
+      def initialize(data:, delay: 0)
         @data = data
+        @delay = delay
       end
 
       def each
+        sleep @delay
         @data.each { |i| yield i }
       end
     end
@@ -54,7 +56,7 @@ describe OptimusPrime::Pipeline do
     OptimusPrime::Pipeline.new(
       a: {
         class: 'OptimusPrime::Sources::Test',
-        params: { data: (1..10).to_a },
+        params: { data: (1..10).to_a, delay: 1 },
         next: ['c']
       },
       b: {
