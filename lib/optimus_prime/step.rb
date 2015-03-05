@@ -45,6 +45,7 @@ module OptimusPrime
       raise 'Not yet started' unless started?
       threads.each(&:join)
     end
+    alias_method :wait, :join
 
     def started?
       not threads.empty?

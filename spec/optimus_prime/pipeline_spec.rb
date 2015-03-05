@@ -88,7 +88,7 @@ describe OptimusPrime::Pipeline do
       pipeline.start
       expect(pipeline.started?).to be true
       expect(pipeline.finished?).to be false
-      pipeline.join
+      pipeline.wait
       expect(pipeline.finished?).to be true
       expected = (4..40).step(4).to_a + (202..222).step(2).to_a
       pipeline.steps.values_at(:f, :g).each do |destination|
