@@ -3,11 +3,9 @@ require 'google/api_client'
 module OptimusPrime
   module Destinations
     class Bigquery < OptimusPrime::Destination
-      attr_reader :project_id, :dataset_id, :client_email, :private_key, :table, :chunk_size
+      attr_reader :client_email, :private_key, :table, :chunk_size
 
-      def initialize(project_id:, dataset_id:, client_email:, private_key:, table:, chunk_size: 100)
-        @project_id   = project_id
-        @dataset_id   = dataset_id
+      def initialize(client_email:, private_key:, table:, chunk_size: 100)
         @client_email = client_email
         @private_key  = OpenSSL::PKey::RSA.new private_key
         @table        = table  # https://cloud.google.com/bigquery/docs/reference/v2/tables
@@ -58,9 +56,8 @@ module OptimusPrime
                           'rows' => rows.map { |row| { 'json' => row } } }
       end
 
-      def close
+      def finish
         upload unless buffer.empty?
-        super
       end
 
       def buffer
@@ -98,6 +95,14 @@ module OptimusPrime
                        parameters:  params.merge('projectId' => project_id,
                                                  'datasetId' => dataset_id),
                        body_object: body
+      end
+
+      def project_id
+        table['tableReference']['projectId']
+      end
+
+      def dataset_id
+        table['tableReference']['datasetId']
       end
     end
   end
