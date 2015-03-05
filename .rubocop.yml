@@ -28,9 +28,6 @@ Metrics/AbcSize:
 Metrics/LineLength:
   Max: 100
 
-Metrics/ParameterLists:
-  Max: 10
-
 Lint/UnusedBlockArgument:
   Enabled: false
 
