@@ -4,30 +4,30 @@ require 'optimus_prime/sources/bigquery'
 describe OptimusPrime::Sources::Bigquery do
   describe '#each' do
 
-    response_rows = [{'f'=> [{'v'=>nil}, {'v'=>'android'}, {'v'=>'0.0'}, {'v'=>'88550'}, {'v'=>'true'}]},
-                     {'f'=> [{'v'=>'a'}, {'v'=>nil}, {'v'=>'4.2'}, {'v'=>'28200'}, {'v'=>'false'}]},
-                     {'f'=> [{'v'=>'b'}, {'v'=>'android'}, {'v'=>nil}, {'v'=>'47325'}, {'v'=>'true'}]},
-                     {'f'=> [{'v'=>'b'}, {'v'=>'android'}, {'v'=>'2.15'}, {'v'=>nil}, {'v'=>'false'}]},
-                     {'f'=> [{'v'=>'b'}, {'v'=>'android'}, {'v'=>'42.9'}, {'v'=>'128175'}, {'v'=>nil}]}]
+    response_rows = [{ 'f'=> [{ 'v' => nil }, { 'v' => 'android' }, { 'v' => '0.0' }, { 'v' => '88550' }, { 'v' => 'true' }] },
+                     { 'f'=> [{ 'v' => 'a' }, { 'v' => nil }, { 'v' => '4.2' }, { 'v' => '28200' }, { 'v' => 'false' }] },
+                     { 'f'=> [{ 'v' => 'b' }, { 'v' => 'android' }, { 'v' => nil }, { 'v' => '47325' }, { 'v' => 'true' }] },
+                     { 'f'=> [{ 'v' => 'b' }, { 'v' => 'android' }, { 'v' => '2.15' }, { 'v' => nil }, { 'v' => 'false' }] },
+                     { 'f'=> [{ 'v' => 'b' }, { 'v' => 'android' }, { 'v' => '42.9' }, { 'v' => '128175' }, { 'v' => nil }] }]
 
     let(:project_id) { 'project-id' }
     let(:job_id) { 'job-id' }
     let(:query_response) do
       {
-        'kind'=>'bigquery#queryResponse',
-        'schema'=>
-        {'fields'=>
-          [{'name'=>'Game', 'type'=>'STRING', 'mode'=>'NULLABLE'},
-           {'name'=>'Platform', 'type'=>'STRING', 'mode'=>'NULLABLE'},
-           {'name'=>'PercentComplete', 'type'=>'FLOAT', 'mode'=>'NULLABLE'},
-           {'name'=>'MinScore', 'type'=>'INTEGER', 'mode'=>'NULLABLE'},
-           {'name'=>'IsTester', 'type'=>'BOOLEAN', 'mode'=>'NULLABLE'}]},
-        'jobReference'=>{'projectId'=>project_id, 'jobId'=>job_id},
-        'totalRows'=>response_rows.count.to_s,
-        'rows'=>response_rows,
-        'totalBytesProcessed'=> '1200',
-        'jobComplete'=> true,
-        'cacheHit'=> false
+        'kind' => 'bigquery#queryResponse',
+        'schema' => {
+          'fields' => [{ 'name' => 'Game', 'type' => 'STRING', 'mode' => 'NULLABLE'},
+                       { 'name' => 'Platform', 'type' => 'STRING', 'mode' => 'NULLABLE'},
+                       { 'name' => 'PercentComplete', 'type' => 'FLOAT', 'mode' => 'NULLABLE'},
+                       { 'name' => 'MinScore', 'type' => 'INTEGER', 'mode' => 'NULLABLE'},
+                       { 'name' => 'IsTester', 'type' => 'BOOLEAN', 'mode' => 'NULLABLE'}]
+        },
+        'jobReference' => { 'projectId' => project_id, 'jobId' => job_id },
+        'totalRows' => response_rows.count.to_s,
+        'rows' => response_rows,
+        'totalBytesProcessed' => '1200',
+        'jobComplete' => true,
+        'cacheHit' => false
       }
     end
 
