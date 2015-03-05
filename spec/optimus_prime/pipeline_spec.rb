@@ -21,7 +21,7 @@ module OptimusPrime
         @received << record
       end
 
-      def close
+      def finish
         @written = @received
       end
     end

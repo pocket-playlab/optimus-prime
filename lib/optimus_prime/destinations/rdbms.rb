@@ -26,7 +26,7 @@ module OptimusPrime
         @table.insert record
       end
 
-      def close
+      def finish
         @db.disconnect
       end
     end

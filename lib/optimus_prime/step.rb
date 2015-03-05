@@ -47,6 +47,12 @@ module OptimusPrime
     end
     alias_method :wait, :join
 
+    def close
+      @closed = true
+      push nil
+      finish
+    end
+
     def started?
       not threads.empty?
     end
@@ -82,9 +88,8 @@ module OptimusPrime
       close_after consumers
     end
 
-    def close
-      @closed = true
-      push nil
+    def finish
+      # Override this in subclasses if needed
     end
 
     def close_after(threads)

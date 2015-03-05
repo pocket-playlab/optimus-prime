@@ -22,7 +22,7 @@ module OptimusPrime
         upload_chunk if @buffer.bytesize > chunk_size
       end
 
-      def close
+      def finish
         if @upload
           upload_chunk if @buffer.bytesize > 0
           complete_upload
