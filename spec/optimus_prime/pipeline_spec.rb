@@ -53,12 +53,12 @@ describe OptimusPrime::Pipeline do
   let(:pipeline) do
     OptimusPrime::Pipeline.new(
       a: {
-        class: 'Sources::Test',
+        class: 'OptimusPrime::Sources::Test',
         params: { data: (1..10).to_a },
         next: ['c']
       },
       b: {
-        class: 'Sources::Test',
+        class: 'OptimusPrime::Sources::Test',
         params: { data: (100..110).to_a },
         next: ['d']
       },
@@ -75,10 +75,10 @@ describe OptimusPrime::Pipeline do
         next: ['f', 'g']
       },
       f: {
-        class: 'Destinations::Test'
+        class: 'OptimusPrime::Destinations::Test'
       },
       g: {
-        class: 'Destinations::Test'
+        class: 'OptimusPrime::Destinations::Test'
       }
     )
   end
