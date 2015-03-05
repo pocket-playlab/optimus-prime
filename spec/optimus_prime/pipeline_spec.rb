@@ -31,13 +31,13 @@ end
 class IncrementStep < OptimusPrime::Destination
   def write(data)
     sleep 0.1
-    send data + 1
+    push data + 1
   end
 end
 
 class DoubleStep < OptimusPrime::Destination
   def write(data)
-    send data * 2
+    push data * 2
   end
 end
 

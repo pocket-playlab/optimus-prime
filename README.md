@@ -89,8 +89,8 @@ To write a new destination or transform step, subclass
 `OptimusPrime::Destination` and implement the `#write` method. This method takes
 a ruby object as input (it is assumed that you know what kind of object it will
 be). It can transform the input, write it to an external data store if needed,
-and send it down the pipeline by passing it to the `#send` method. Never pass
-`nil` to the `#send` method, as that is used to signal the end of the stream.
+and send it down the pipeline by passing it to the `#push` method. Never pass
+`nil` to the `#push` method, as that is used to signal the end of the stream.
 
 
 [1]: http://upload.wikimedia.org/wikipedia/en/1/19/Optimus10108pieces.jpg

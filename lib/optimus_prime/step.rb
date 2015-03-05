@@ -84,7 +84,7 @@ module OptimusPrime
 
     def close
       @closed = true
-      send nil
+      push nil
     end
 
     def close_after(threads)
@@ -94,7 +94,7 @@ module OptimusPrime
       end
     end
 
-    def send(message)
+    def push(message)
       output.each { |queue| queue << message }
     end
 
