@@ -65,9 +65,7 @@ describe OptimusPrime::Sources::Bigquery do
     context 'one page result' do
       it 'should yield all results' do
         allow(GoogleBigquery::Jobs).to receive(:query).and_return(query_response)
-        rows = []
-        source.each { |row| rows << row }
-        expect(rows).to eq(results)
+        expect(source.to_a).to eq(results)
       end
     end
 
@@ -81,9 +79,7 @@ describe OptimusPrime::Sources::Bigquery do
         stub_get_query_results response_rows[2,2], '2', '3'
         stub_get_query_results [response_rows.last], '3'
 
-        rows = []
-        source.each { |row| rows << row }
-        expect(rows).to eq(results)
+        expect(source.to_a).to eq(results)
       end
     end
   end
