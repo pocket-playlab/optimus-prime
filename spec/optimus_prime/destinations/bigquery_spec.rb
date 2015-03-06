@@ -24,6 +24,7 @@ RSpec.describe OptimusPrime::Destinations::Bigquery do
     [
       { 'name' => 'Bob',   'age' => 28, 'likes' => 'cheese' },
       { 'name' => 'Alice', 'age' => 34, 'likes' => 'durian' },
+      { 'name' => 'Bob',   'age' => 28, 'likes' => 'cheese' },  # duplicate
     ]
   end
 
@@ -32,6 +33,7 @@ RSpec.describe OptimusPrime::Destinations::Bigquery do
       client_email: ENV.fetch('GOOGLE_CLIENT_EMAIL', 'test@developer.gserviceaccount.com'),
       private_key: ENV.fetch('GOOGLE_PRIVATE_KEY', File.open('spec/supports/key') { |f| f.read }),
       table: table,
+      id_field: 'name',
     )
   end
 
@@ -62,7 +64,7 @@ RSpec.describe OptimusPrime::Destinations::Bigquery do
     upload destination
     # sleep 60  # Needed when running on the real bigquery
     rows = download destination
-    expected = input.map do |row|
+    expected = input.take(2).map do |row|
       row.select { |k, v| ['name', 'age'].include? k }
     end
     expect(rows).to match_array expected

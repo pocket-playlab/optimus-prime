@@ -5,10 +5,11 @@ module OptimusPrime
     class Bigquery < OptimusPrime::Destination
       attr_reader :client_email, :private_key, :table, :chunk_size
 
-      def initialize(client_email:, private_key:, table:, chunk_size: 100)
+      def initialize(client_email:, private_key:, table:, id_field: nil, chunk_size: 100)
         @client_email = client_email
         @private_key  = OpenSSL::PKey::RSA.new private_key
-        @table        = table  # https://cloud.google.com/bigquery/docs/reference/v2/tables
+        @table        = table       # https://cloud.google.com/bigquery/docs/reference/v2/tables
+        @id_field     = id_field    # optional - used for deduplication
         @chunk_size   = chunk_size
       end
 
@@ -36,16 +37,19 @@ module OptimusPrime
       end
 
       def insert(record)
-        buffer << clean(record)
+        buffer << format(record)
         upload if buffer.length >= chunk_size
       end
 
-      def clean(record)
-        record.select { |k, v| fields.include? k }
+      def format(record)
+        row = { 'json' => record.select { |k, v| fields.include? k } }
+        id = @id_field && record[@id_field]
+        row['insertId'] = id if id
+        row
       end
 
       def upload
-        response = stream buffer
+        response = insert_all
         body = JSON.parse response.body
         raise body['error']['message'] unless response.status == 200
         failed = body.fetch('insertErrors', []).map { |e| e['index'] }.uniq.length
@@ -53,11 +57,11 @@ module OptimusPrime
         buffer.clear
       end
 
-      def stream(rows)
+      def insert_all
         execute bigquery.tabledata.insert_all,
                 params: { 'tableId' => table['id'] },
                 body:   { 'kind' => 'bigquery#tableDataInsertAllRequest',
-                          'rows' => rows.map { |row| { 'json' => row } } }
+                          'rows' => buffer }
       end
 
       def finish
