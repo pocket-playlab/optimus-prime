@@ -6,17 +6,23 @@ module OptimusPrime
     class LocalCsv < Destination
       attr_reader :fields, :append_mode, :file_path
 
-      def initialize(fields:, file_path:, append_mode: false, **options)
+      def initialize(fields:, file_path:, append_mode: false, should_write_header: true, **options)
         @fields = fields
         @file_path = file_path
         @append_mode = append_mode
-        @header_written = false
         @options = options
+        @should_write_header = should_write_header
+
+        # always assume that we should not write header if the file already exists and we are appending it
+        if @append_mode && File.exist?(@file_path)
+          @should_write_header = false
+        end
+
         reset
       end
 
       def write(record)
-        write_header unless @header_written
+        write_header if @should_write_header
         write_row format record
       end
 
@@ -33,7 +39,7 @@ module OptimusPrime
 
       def write_header
         write_row fields
-        @header_written = true
+        @should_write_header = false
       end
 
       def write_row(row)
