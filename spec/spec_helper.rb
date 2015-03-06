@@ -1,4 +1,5 @@
 require 'webmock/rspec'
+require 'vcr'
 require 'optimus_prime'
 
 WebMock.disable_net_connect! allow_localhost: true
@@ -19,4 +20,11 @@ RSpec.configure do |config|
     Process.kill 'INT', s3
     Process.wait s3
   end
+end
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/supports'
+  config.hook_into :webmock
+  config.ignore_localhost = true
+  config.default_cassette_options = { record: :none } if ENV['CI']
 end
