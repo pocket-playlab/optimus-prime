@@ -13,10 +13,9 @@ module OptimusPrime
         @options = options
         @should_write_header = should_write_header
 
-        # always assume that we should not write header if the file already exists and we are appending it
-        if @append_mode && File.exist?(@file_path)
-          @should_write_header = false
-        end
+        # always assume that we should not write header if the file already
+        # exists and we are appending it
+        @should_write_header = false if @append_mode && File.exist?(@file_path)
 
         open_file
       end
