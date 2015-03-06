@@ -10,8 +10,8 @@ module OptimusPrime
       super
       background do
         each do |message|
-          raise "#{self.class.display_name} returned null value" unless message
-          send message
+          raise "#{self.class.name} returned null value" unless message
+          push message
         end
         close
       end

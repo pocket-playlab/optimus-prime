@@ -89,8 +89,13 @@ To write a new destination or transform step, subclass
 `OptimusPrime::Destination` and implement the `#write` method. This method takes
 a ruby object as input (it is assumed that you know what kind of object it will
 be). It can transform the input, write it to an external data store if needed,
-and send it down the pipeline by passing it to the `#send` method. Never pass
-`nil` to the `#send` method, as that is used to signal the end of the stream.
+and send it down the pipeline by passing it to the `#push` method. Never pass
+`nil` to the `#push` method, as that is used to signal the end of the stream.
+
+If you need to do any processing when the stream closes, you can override the
+`#finish` method. This is a callback that will be called when all the input data
+has been processed. If you are buffering output and uploading it in chunks to a
+data source, you can use it to make sure that the last chunk gets uploaded.
 
 
 [1]: http://upload.wikimedia.org/wikipedia/en/1/19/Optimus10108pieces.jpg

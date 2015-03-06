@@ -188,7 +188,7 @@ module OptimusPrime
                 'Version'   => session['version'],
                 'Device'    => session['device'],
                 'Event'     => event['eventName'],
-                'Timestamp' => session['startTimestamp'] + event['offsetTimestamp'],
+                'Timestamp' => (session['startTimestamp'] + event['offsetTimestamp']) / 1000,
               }
               data.merge!(event['parameters']) if event['parameters']
               enum.yield(data)

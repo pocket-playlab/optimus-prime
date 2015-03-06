@@ -31,6 +31,7 @@ module OptimusPrime
     def join
       steps.values.each(&:join)
     end
+    alias_method :wait, :join
 
     def steps
       @steps ||= graph.map { |key, step| [key, instantiate(step)] }.to_h

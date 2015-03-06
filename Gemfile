@@ -7,10 +7,13 @@ gemspec
 group :development, :test do
   gem 'pry-byebug'
   gem 'pronto-rubocop', require: false
+  gem 'pronto-reek', require: false
 end
 
 group :test do
+  gem 'fakefs', require: 'fakefs/safe'
   gem 'fakes3', github: 'pocket-playlab/fake-s3'
   gem 'rspec', '~> 3.1.0'
+  gem 'vcr'
   gem 'webmock'
 end
