@@ -12,7 +12,9 @@ module OptimusPrime
       end
 
       def each
-        query.each { |row| yield row }
+        query.each do |row|
+          row.is_a?(Array) ? row.each { |r| yield r } : yield(row)
+        end
       end
 
       private
@@ -40,26 +42,26 @@ module OptimusPrime
         get_query_results result['jobReference']['jobId']
       end
 
-      def get_query_results(job_id)
-        rows = []
-        request_opt = {}
+      def get_query_results(job_id, request_opt={})
         sleep_duration = 3
-        loop do
-          begin
-            result = GoogleBigquery::Jobs.getQueryResults @project_id, job_id, request_opt
-          rescue => e
-            raise_error "Bigquery#get_query_results - #{e}", "@project_id = #{@project_id} | job_id = #{job_id} | request_opt = #{request_opt}"
-          end
-          if result['jobComplete']
-            rows.concat(map_result_into_rows(result['schema']['fields'], result['rows'])).uniq!
-            break if result['totalRows'].to_i == rows.count
-            request_opt = { pageToken: result['pageToken'] } unless result['pageToken'].nil?
-          else
-            sleep sleep_duration
-            sleep_duration *= 2
+        Enumerator.new do |enum|
+          loop do
+            begin
+              result = GoogleBigquery::Jobs.getQueryResults @project_id, job_id, request_opt
+            rescue => e
+              raise_error "Bigquery#get_query_results - #{e}", "@project_id = #{@project_id} | job_id = #{job_id} | request_opt = #{request_opt}"
+            end
+            if result['jobComplete']
+              enum << map_result_into_rows(result['schema']['fields'], result['rows'])
+              
+              break if result['pageToken'].nil?
+              request_opt[:pageToken] = result['pageToken']
+            else
+              sleep sleep_duration
+              sleep_duration *= 2
+            end
           end
         end
-        rows
       end
 
       # This can be used to map an array of fields and an array of rows
