@@ -4,11 +4,13 @@ require 'optimus_prime/sources/bigquery'
 describe OptimusPrime::Sources::Bigquery do
   describe '#each' do
 
-    response_rows = [{ 'f'=> [{ 'v' => nil }, { 'v' => 'android' }, { 'v' => '0.0' }, { 'v' => '88550' }, { 'v' => 'true' }] },
-                     { 'f'=> [{ 'v' => 'a' }, { 'v' => nil }, { 'v' => '4.2' }, { 'v' => '28200' }, { 'v' => 'false' }] },
-                     { 'f'=> [{ 'v' => 'b' }, { 'v' => 'android' }, { 'v' => nil }, { 'v' => '47325' }, { 'v' => 'true' }] },
-                     { 'f'=> [{ 'v' => 'b' }, { 'v' => 'android' }, { 'v' => '2.15' }, { 'v' => nil }, { 'v' => 'false' }] },
-                     { 'f'=> [{ 'v' => 'b' }, { 'v' => 'android' }, { 'v' => '42.9' }, { 'v' => '128175' }, { 'v' => nil }] }]
+    let(:response_rows) do
+      [{ 'f'=> [{ 'v' => nil }, { 'v' => 'android' }, { 'v' => '0.0' }, { 'v' => '88550' }, { 'v' => 'true' }] },
+       { 'f'=> [{ 'v' => 'a' }, { 'v' => nil }, { 'v' => '4.2' }, { 'v' => '28200' }, { 'v' => 'false' }] },
+       { 'f'=> [{ 'v' => 'b' }, { 'v' => 'android' }, { 'v' => nil }, { 'v' => '47325' }, { 'v' => 'true' }] },
+       { 'f'=> [{ 'v' => 'b' }, { 'v' => 'android' }, { 'v' => '2.15' }, { 'v' => nil }, { 'v' => 'false' }] },
+       { 'f'=> [{ 'v' => 'b' }, { 'v' => 'android' }, { 'v' => '42.9' }, { 'v' => '128175' }, { 'v' => nil }] }]
+    end
 
     let(:project_id) { 'project-id' }
     let(:job_id) { 'job-id' }
@@ -31,15 +33,19 @@ describe OptimusPrime::Sources::Bigquery do
       }
     end
 
-    results = [{ :Game => nil, :Platform => 'android', :PercentComplete => 0.0, :MinScore => 88550, :IsTester => true },
-               { :Game => 'a', :Platform => nil, :PercentComplete => 4.2, :MinScore => 28200, :IsTester => false },
-               { :Game => 'b', :Platform => 'android', :PercentComplete => nil, :MinScore => 47325, :IsTester => true },
-               { :Game => 'b', :Platform => 'android', :PercentComplete => 2.15, :MinScore => nil, :IsTester => false },
-               { :Game => 'b', :Platform => 'android', :PercentComplete => 42.9, :MinScore => 128175, :IsTester => nil }]
+    let(:results) do
+      [{ :Game => nil, :Platform => 'android', :PercentComplete => 0.0, :MinScore => 88550, :IsTester => true },
+       { :Game => 'a', :Platform => nil, :PercentComplete => 4.2, :MinScore => 28200, :IsTester => false },
+       { :Game => 'b', :Platform => 'android', :PercentComplete => nil, :MinScore => 47325, :IsTester => true },
+       { :Game => 'b', :Platform => 'android', :PercentComplete => 2.15, :MinScore => nil, :IsTester => false },
+       { :Game => 'b', :Platform => 'android', :PercentComplete => 42.9, :MinScore => 128175, :IsTester => nil }]
+    end
 
-    sql = %{ SELECT Game, Platform, PercentComplete, MIN(Score) AS MinScore, IsTester
-            FROM [dataset.table];
-          }
+    let(:sql) do
+      %{ SELECT Game, Platform, PercentComplete, MIN(Score) AS MinScore, IsTester
+         FROM [dataset.table];
+      }
+    end
 
     def stub_get_query_results(rows, request_page_token, next_page_token=nil)
       response = query_response.clone
