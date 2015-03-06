@@ -18,7 +18,7 @@ module OptimusPrime
           @should_write_header = false
         end
 
-        reset
+        open_file
       end
 
       def write(record)
@@ -27,12 +27,12 @@ module OptimusPrime
       end
 
       def close
-        @csv.close()
+        @csv.close
       end
 
       private
 
-      def reset
+      def open_file
         mode = @append_mode ? 'ab' : 'wb'
         @csv = CSV.open(@file_path, mode, @options)
       end
@@ -49,7 +49,6 @@ module OptimusPrime
       def format(record)
         fields.map { |key| record[key] }
       end
-
     end
   end
 end
