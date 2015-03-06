@@ -13,6 +13,9 @@ Style/AndOr:
 Style/PercentLiteralDelimiters:
   Enabled: false
 
+Style/RaiseArgs:
+  EnforcedStyle: compact
+
 Style/SignalException:
   EnforcedStyle: only_raise
 
