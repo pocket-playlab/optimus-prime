@@ -22,7 +22,7 @@ module OptimusPrime
       def client
         @client ||= begin
           client = Google::APIClient.new application_name:    'Optimus Prime',
-                                         application_version: '1',
+                                         application_version: OptimusPrime::VERSION,
                                          auto_refresh_token:  true
           scope = 'https://www.googleapis.com/auth/bigquery'
           asserter = Google::APIClient::JWTAsserter.new(client_email, scope, private_key)
