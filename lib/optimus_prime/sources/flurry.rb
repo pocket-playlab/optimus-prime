@@ -16,15 +16,23 @@ module OptimusPrime
         raise ArgumentError.new 'start time >= end time' if @start_time >= @end_time
       end
 
-      # Request the report, and poll until it's ready
       def each
-        report = request_report
-        report_uri = report.fetch('report').fetch('@reportUri')
-        report_data = poll report_uri
-        process_events(report_data) { |event| yield event }
+        report.each do |session|
+          session.each do |event|
+            yield event
+          end
+        end
       end
 
       private
+
+      # Request the report, and poll until it's ready
+      def report
+        report = request_report
+        report_uri = report.fetch('report').fetch('@reportUri')
+        report_data = poll report_uri
+        FlurryReport.new report_data
+      end
 
       # This makes the initial request for the report. The data is not
       # returned. Only a json response is returned. The response should have
@@ -83,35 +91,48 @@ module OptimusPrime
         logger.info 'Parsing report'
         Yajl::Parser.parse Zlib::GzipReader.new(StringIO.new(data)).read
       end
+    end
 
-      # Given an events report, yield a hash containing session and event data
-      # for each event in the report.
-      def process_events(report_data)
-        meta = report_data['meta']
+    class FlurryReport
+      include Enumerable
 
+      def initialize(report)
+        @report = report
+      end
+
+      def each
+        @report['sessionEvents'].lazy.map do |session|
+          FlurrySession.new session, meta: @report['meta']
+        end
+      end
+    end
+
+    class FlurrySession
+      include Enumerable
+
+      def initialize(session, meta:)
         # Expand hash keys into their full names for readability
-        sessions = report_data['sessionEvents'].lazy.map(&expand_keys = lambda do |hash|
+        expand_keys = lambda do |hash|
           hash.map { |k, v| [meta[k], v.is_a?(Array) ? v.map(&expand_keys) : v] }.to_h
-        end)
+        end
+        @session = expand_keys.call session
+      end
 
-        sessions.each do |session|
-          extract_events(session) { |event| yield event }
+      def each
+        @session['logs'].each do |event|
+          yield format event
         end
       end
 
-      def extract_events(session)
-        session['logs'].each do |event|
-          yield format(session, event)
-        end
-      end
+      private
 
-      def format(session, event)
+      def format(event)
         normalized = {
-          'Session'   => session['uniqueId'],
-          'Version'   => session['version'],
-          'Device'    => session['device'],
+          'Session'   => @session['uniqueId'],
+          'Version'   => @session['version'],
+          'Device'    => @session['device'],
           'Event'     => event['eventName'],
-          'Timestamp' => (session['startTimestamp'] + event['offsetTimestamp']) / 1000,
+          'Timestamp' => (@session['startTimestamp'] + event['offsetTimestamp']) / 1000,
         }
         normalized.merge! event['parameters'] if event['parameters']
         normalized

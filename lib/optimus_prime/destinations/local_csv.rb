@@ -4,45 +4,38 @@ require 'stringio'
 module OptimusPrime
   module Destinations
     class LocalCsv < Destination
-      attr_reader :fields, :append_mode, :file_path
+      attr_reader :fields, :file_path
 
-      def initialize(fields:, file_path:, append_mode: false, should_write_header: true, **options)
+      def initialize(fields:, file_path:)
         @fields = fields
         @file_path = file_path
-        @append_mode = append_mode
-        @options = options
-        @should_write_header = should_write_header
-
-        # always assume that we should not write header if the file already
-        # exists and we are appending it
-        @should_write_header = false if @append_mode && File.exist?(@file_path)
-
-        open_file
       end
 
       def write(record)
-        write_header if @should_write_header
-        write_row format record
+        open_file unless @csv
+        write_header unless @header_written
+        write_row record
       end
 
-      def close
+      def finish
         @csv.close
       end
 
       private
 
       def open_file
-        mode = @append_mode ? 'ab' : 'wb'
-        @csv = CSV.open(@file_path, mode, @options)
+        mode = File.exist?(file_path) ? 'a' : 'w'
+        @header_written = mode == 'a'
+        @csv = CSV.open(file_path, mode)
       end
 
       def write_header
-        write_row fields
-        @should_write_header = false
+        @csv << fields
+        @header_written = true
       end
 
-      def write_row(row)
-        @csv << row
+      def write_row(record)
+        @csv << format(record)
       end
 
       def format(record)
