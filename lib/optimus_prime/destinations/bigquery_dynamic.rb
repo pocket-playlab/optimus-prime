@@ -52,6 +52,7 @@ module OptimusPrime
 
       def finish
         upload unless @total.zero?
+        @tables.clear
       end
 
       class BigQueryTable
@@ -63,6 +64,7 @@ module OptimusPrime
           @resource['tableReference']['tableId'] = id
           @schema = @resource['schema']['fields']
           @id_field = id_field
+          @type_detective = type_detective
           @buffer = []
           @client = client
           @exists = nil
