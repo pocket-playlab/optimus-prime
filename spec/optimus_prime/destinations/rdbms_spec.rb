@@ -1,7 +1,5 @@
 require 'spec_helper'
 require 'optimus_prime/destinations/rdbms'
-require 'sequel'
-require 'sqlite3'
 
 RSpec.describe OptimusPrime::Destinations::Rdbms do
   let(:input) do
