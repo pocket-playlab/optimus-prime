@@ -1,0 +1,61 @@
+---
+test_source_defaults: &test_source_defaults
+  class: 'OptimusPrime::Sources::Test'
+  params:
+    data:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+    delay: 1
+  next:
+    - c
+double_step_defaults: &double_step_defaults
+  class: 'DoubleStep'
+increment_step_defaults: &increment_step_defaults
+  class: 'IncrementStep'
+test_destination_defaults: &test_destination_defaults
+  class: 'OptimusPrime::Destinations::Test'
+test_pipeline:
+  graph:
+    a:
+      <<: *test_source_defaults
+    b:
+      <<: *test_source_defaults
+      params:
+        data:
+          - 100
+          - 101
+          - 103
+          - 104
+          - 105
+          - 106
+          - 107
+          - 108
+          - 109
+          - 110
+      next:
+        - d
+    c:
+      <<: *double_step_defaults
+      next:
+        - e
+    d:
+      <<: *increment_step_defaults
+      next:
+        - e
+    e:
+      <<: *double_step_defaults
+      next:
+        - f
+        - g
+    f:
+      <<: *test_destination_defaults
+    g:
+      <<: *test_destination_defaults
