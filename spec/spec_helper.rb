@@ -7,6 +7,8 @@ ENV['AWS_ACCESS_KEY_ID'] = SecureRandom.hex
 ENV['AWS_SECRET_ACCESS_KEY'] = SecureRandom.hex
 ENV['AWS_REGION'] = 'us-east-1'
 
+Dir.glob(::File.expand_path('../support/*.rb', __FILE__)).each { |f| require_relative f }
+
 RSpec.configure do |config|
   s3 = nil
 
@@ -28,3 +30,4 @@ VCR.configure do |config|
   config.ignore_localhost = true
   config.default_cassette_options = { record: :none } if ENV['CI']
 end
+
