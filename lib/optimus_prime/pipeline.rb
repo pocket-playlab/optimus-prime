@@ -34,7 +34,7 @@ module OptimusPrime
     alias_method :wait, :join
 
     def steps
-      @steps ||= graph.map { |key, step| [key, instantiate(step)] }.to_h
+      @steps ||= graph.map { |key, step| [key, Step.create(step)] }.to_h
     end
 
     def edges
@@ -60,14 +60,6 @@ module OptimusPrime
         visited.include?(to) ? [[from, to]]
                              : [[from, to]] + walk(to, visited.add(to))
       end
-    end
-
-    def instantiate(step)
-      name = step.fetch :class
-      type = Step.find name
-      raise "Not found: #{name}" unless type
-      step[:params] ? type.new(**step[:params])
-                    : type.new
     end
   end
 end

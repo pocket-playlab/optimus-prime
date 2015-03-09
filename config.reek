@@ -12,7 +12,7 @@ DataClump:
   min_clump_size: 2
 DuplicateMethodCall:
   enabled: true
-  max_calls: 1
+  max_calls: 2
 FeatureEnvy:
   enabled: true
 IrresponsibleModule:
