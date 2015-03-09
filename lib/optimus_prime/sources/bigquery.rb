@@ -12,9 +12,7 @@ module OptimusPrime
       end
 
       def each
-        query.each do |row|
-          row.is_a?(Array) ? row.each { |r| yield r } : yield(row)
-        end
+        query.each { |row| yield row }
       end
 
       private
@@ -36,7 +34,7 @@ module OptimusPrime
           raise_error "Bigquery#query - #{e}", "@project_id = #{@project_id} | @sql = #{@sql}"
         end
         if result['jobComplete'] && result['pageToken'].nil?
-          return map_result_into_rows result['schema']['fields'], result['rows']
+          return map_result_into_hashes result['schema']['fields'], result['rows']
         end
 
         get_query_results result['jobReference']['jobId']
@@ -52,7 +50,9 @@ module OptimusPrime
               raise_error "Bigquery#get_query_results - #{e}", "@project_id = #{@project_id} | job_id = #{job_id} | request_opt = #{request_opt}"
             end
             if result['jobComplete']
-              enum << map_result_into_rows(result['schema']['fields'], result['rows'])
+              map_result_into_hashes(result['schema']['fields'], result['rows']).each do |row|
+                enum << row
+              end
               
               break if result['pageToken'].nil?
               request_opt[:pageToken] = result['pageToken']
@@ -66,7 +66,7 @@ module OptimusPrime
 
       # This can be used to map an array of fields and an array of rows
       # into an array of hash. [{ 'field' => 'value' }]
-      def map_result_into_rows(fields, rows)
+      def map_result_into_hashes(fields, rows)
         rows.map do |row|
           Hash[row['f'].map.with_index do |field, index|
             value = if field['v'].nil?
