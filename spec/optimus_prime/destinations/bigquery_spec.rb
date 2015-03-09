@@ -41,6 +41,8 @@ RSpec.describe OptimusPrime::Destinations::Bigquery do
 
   def delete_table(destination)
     destination.send :execute, bigquery.tables.delete, params: { 'tableId' => 'test' }
+  rescue
+    false  # already deleted
   end
 
   def create_table(destination)
