@@ -18,7 +18,7 @@ module OptimusPrime
 
       def write(record)
         write_header unless @header_written
-        write_row format record
+        write_row record
         upload_chunk if @buffer.bytesize > chunk_size
       end
 
@@ -39,12 +39,12 @@ module OptimusPrime
       end
 
       def write_header
-        write_row fields
+        @csv << fields
         @header_written = true
       end
 
-      def write_row(row)
-        @csv << row
+      def write_row(record)
+        @csv << format(record)
       end
 
       def format(record)
