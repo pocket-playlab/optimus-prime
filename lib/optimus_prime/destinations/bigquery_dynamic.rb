@@ -3,7 +3,6 @@ require 'google/api_client'
 module OptimusPrime
   module Destinations
     class BigqueryDynamic < OptimusPrime::Destination
-
       attr_reader :client_email, :private_key, :chunk_size
 
       def initialize(client_email:, private_key:, resource_template:, table_id:, type_detective:, id_field: nil, chunk_size: 100)
@@ -11,6 +10,7 @@ module OptimusPrime
         @private_key  = OpenSSL::PKey::RSA.new private_key
         @template     = resource_template # https://cloud.google.com/bigquery/docs/reference/v2/tables
         @table_id     = table_id
+        @type_detective = type_detective
         @id_field     = id_field    # optional - used for deduplication
         @chunk_size   = chunk_size
         @tables       = {}
@@ -19,7 +19,9 @@ module OptimusPrime
 
       def write(record)
         tid = table_id(record)
-        @tables[tid] = BigQueryTable.new(tid,@template,@type_detective,client,@id_field) unless @tables.has_key? tid
+        unless @tables.key? tid
+          @tables[tid] = BigQueryTable.new(tid, @template, @type_detective, client, @id_field)
+        end
         @tables[tid] << record
         @total += 1
         upload if @total >= chunk_size
@@ -44,7 +46,7 @@ module OptimusPrime
       end
 
       def upload
-        @tables.each { |t| t.upload }
+        @tables.each(&:upload)
         @total = 0
       end
 
@@ -53,7 +55,6 @@ module OptimusPrime
       end
 
       class BigQueryTable
-
         attr_reader :id
 
         def initialize(id, resource_template, type_detective, client, id_field: nil)
@@ -61,6 +62,7 @@ module OptimusPrime
           @resource = resource_template.clone
           @resource['tableReference']['tableId'] = id
           @schema = @resource['schema']['fields']
+          @id_field = id_field
           @buffer = []
           @client = client
           @exists = nil
@@ -73,15 +75,14 @@ module OptimusPrime
         end
 
         def upload
-          unless @buffer.empty?
-            create_or_update_table
-            response = insert_all
-            body = JSON.parse response.body
-            raise body['error']['message'] unless response.status == 200
-            failed = body.fetch('insertErrors', []).map { |e| e['index'] }.uniq.length
-            raise "Failed to insert #{failed} row(s)" if failed > 0
-            @buffer.clear
-          end
+          return if @buffer.empty?
+          create_or_update_table
+          response = insert_all
+          body = JSON.parse response.body
+          raise body['error']['message'] unless response.status == 200
+          failed = body.fetch('insertErrors', []).map { |e| e['index'] }.uniq.length
+          raise "Failed to insert #{failed} row(s)" if failed > 0
+          @buffer.clear
         end
 
         private
@@ -94,7 +95,7 @@ module OptimusPrime
         end
 
         def build_schema(record)
-          fields = record.collect do |k,v|
+          fields = record.collect do |k, v|
             {
               'name' => k,
               'type' => type_detective(k)
@@ -102,7 +103,7 @@ module OptimusPrime
           end
           existing_schema_keys = @schema.keys
           fields.keys.each do |k|
-            unless @existing_schema_keys.include? k
+            unless existing_schema_keys.include? k
               @schema.concat(fields).uniq!
               @schema_synced = false
               break
@@ -173,9 +174,7 @@ module OptimusPrime
         def dataset_id
           @resource['tableReference']['datasetId']
         end
-
       end
-
     end
   end
 end
