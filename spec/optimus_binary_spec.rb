@@ -3,8 +3,6 @@ require 'aruba'
 require 'aruba/api'
 require 'pathname'
 
-include Aruba::Api
-
 root = Pathname.new(__FILE__).parent.parent
 
 # Allows us to run commands directly, without worrying about the CWD
@@ -54,23 +52,27 @@ class DoubleStep < OptimusPrime::Destination
 end
 
 describe 'optimus.rb' do
+  include Aruba::Api
+
   let(:help_message) do
-    'FUCK'
-    # <<-eos
-    # Missing options: file, pipeline
-    # Usage: optimus.rb --file /path/to/config.yml --p pipeline_identifier
-    #      -f, --file FILE                  Path to YAML config file
-    #      -p, --pipeline PIPELINE          Identifier string of pipeline to run
-    #      -h, --help                       Show this message
-    # eos
+    <<-eos
+Missing options: file, pipeline
+Usage: optimus.rb --file /path/to/config.yml --pipeline pipeline_identifier
+    -f, --file FILE                  Path to YAML config file
+    -p, --pipeline PIPELINE          Identifier string of pipeline to run
+    -h, --help                       Show this message
+    eos
+  end
+
+  it 'should run' do
+    run_simple 'optimus.rb -p test_pipeline -f ../../spec/supports/config/test-config.yml', false
+    # all_output.should eq 'something'
   end
 
   describe 'Help output' do
     it 'should print out help message if no arguements are given' do
-      # run_simple "optimus.rb"
-      run_simple 'ls -l'
-
-      expect(all_output).to eq help_message
+      run_simple 'optimus.rb', false
+      all_output.should eq help_message
     end
   end
 end

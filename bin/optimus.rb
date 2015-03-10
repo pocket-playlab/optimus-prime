@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'yaml'
 require 'awesome_print'
 require 'optparse'
@@ -7,7 +9,7 @@ require 'pry'
 $options = {}
 
 optparse = OptionParser.new do |opts|
-  opts.banner = 'Usage: optimus.rb --file /path/to/config.yml --p pipeline_identifier'
+  opts.banner = 'Usage: optimus.rb --file /path/to/config.yml --pipeline pipeline_identifier'
 
   opts.on_tail('-h', '--help', 'Show this message') do
     puts opts
