@@ -1,0 +1,9 @@
+---
+game: STRING
+version: FLOAT
+event: STRING
+amount: INTEGER
+levelno: INTEGER
+reason: STRING
+bonus: BOOLEAN
+farm: STRING

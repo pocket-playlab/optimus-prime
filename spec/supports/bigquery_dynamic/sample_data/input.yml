@@ -1,0 +1,25 @@
+---
+- game: joisecubes
+  version: 1.1
+  event: addgold
+  amount: 28
+- game: gunjlecubes
+  version: 1.1
+  event: uplevel
+  levelno: 23
+- game: wormcubes
+  version: 1.1
+  event: faillevel
+  reason: err
+- game: joisecubes
+  version: 1.1
+  event: losegold
+  amount: 35
+- game: gunjlecubes
+  version: 1.1
+  event: unlocklevel
+  bonus: true
+- game: wormcubes
+  version: 1.1
+  event: harvestdone
+  farm: Rome
