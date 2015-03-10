@@ -17,5 +17,4 @@ group :test do
   gem 'fakes3', github: 'pocket-playlab/fake-s3'
   gem 'vcr'
   gem 'webmock'
-  gem 'aruba'
 end

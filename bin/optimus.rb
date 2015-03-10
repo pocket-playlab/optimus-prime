@@ -4,10 +4,8 @@
 # bundle exec optimus.rb -f spec/supports/config/test-config.yml -p test_pipeline
 
 require 'yaml'
-require 'awesome_print'
 require 'optparse'
 require 'optimus_prime'
-require 'pry'
 
 options = {}
 
@@ -50,7 +48,7 @@ def load_yaml(options)
 end
 
 def symbolize_nested_keys(h)
-  if Hash == h.class
+  if h.is_a? Hash
     Hash[h.map { |k, v| [k.respond_to?(:to_sym) ? k.to_sym : k, symbolize_nested_keys(v)] }]
   else
     h
@@ -68,7 +66,5 @@ graph = load_graph(options)
 pipeline = OptimusPrime::Pipeline.new(graph)
 pipeline.start
 pipeline.wait
-
-pp graph
 
 pipeline.finished? ? puts('Pipeline finished.') : raise('Pipeline failed to finish!')
