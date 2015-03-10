@@ -46,7 +46,7 @@ module OptimusPrime
       end
 
       def upload
-        @tables.each(&:upload)
+        @tables.each { |name, obj| obj.upload }
         @total = 0
       end
 
@@ -58,9 +58,9 @@ module OptimusPrime
       class BigQueryTable
         attr_reader :id
 
-        def initialize(id, resource_template, type_detective, client, id_field: nil)
+        def initialize(id, resource_template, type_detective, client, id_field = nil)
           @id = id
-          @resource = resource_template.clone
+          @resource = Marshal.load(Marshal.dump(resource_template)) # deep copy for the nested hash
           @resource['tableReference']['tableId'] = id
           @schema = @resource['schema']['fields']
           @id_field = id_field
@@ -83,7 +83,7 @@ module OptimusPrime
           body = JSON.parse response.body
           raise body['error']['message'] unless response.status == 200
           failed = body.fetch('insertErrors', []).map { |e| e['index'] }.uniq.length
-          raise "Failed to insert #{failed} row(s)" if failed > 0
+          raise "Failed to insert #{failed} row(s) to table #{id}" if failed > 0
           @buffer.clear
         end
 
@@ -100,11 +100,11 @@ module OptimusPrime
           fields = record.collect do |k, v|
             {
               'name' => k,
-              'type' => type_detective(k)
+              'type' => @type_detective.call(k)
             }
           end
-          existing_schema_keys = @schema.keys
-          fields.keys.each do |k|
+          existing_schema_keys = @schema.collect { |column| column['name'] }
+          record.keys.each do |k|
             unless existing_schema_keys.include? k
               @schema.concat(fields).uniq!
               @schema_synced = false
@@ -126,9 +126,9 @@ module OptimusPrime
         end
 
         def update_table
-          response = execute bigquery.tables.patch, params: { 'tableId' => id }, body: @schema
+          response = execute bigquery.tables.patch, params: { 'tableId' => id }, body: @resource
           unless response.status == 200
-            body = JSOn.parse response.body
+            body = JSON.parse response.body
             raise body['error']['message']
           end
           @schema_synced = true
@@ -136,7 +136,7 @@ module OptimusPrime
         end
 
         def create_table
-          response = execute bigquery.tables.insert, body: @schema
+          response = execute bigquery.tables.insert, body: @resource
           unless response.status == 200
             body = JSON.parse response.body
             raise body['error']['message']
@@ -159,7 +159,7 @@ module OptimusPrime
         end
 
         def bigquery
-          @bigquery ||= client.discovered_api 'bigquery', 'v2'
+          @bigquery ||= @client.discovered_api 'bigquery', 'v2'
         end
 
         def execute(method, params: {}, body: nil)
