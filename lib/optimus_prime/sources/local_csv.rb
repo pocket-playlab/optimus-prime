@@ -1,5 +1,4 @@
 require 'csv'
-require 'stringio'
 
 module OptimusPrime
   module Sources
