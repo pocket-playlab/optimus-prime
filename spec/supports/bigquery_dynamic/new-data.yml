@@ -16,7 +16,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.MgFzGNm2XmCU3_DOZldmgK6JEoVijb9WXaQnCnYomGykiufUPyjz2aAHOJ-m25914TP2aqmNdylSKQ
+      - Bearer ya29.MgEJ0KU6dTMcaurAzYxXqsDodkR0wxFeLQSrm3N7qeTLIw5Xc33b7yp9wiq1-_AOI-DmUsOVlbgg6A
       Cache-Control:
       - no-store
       Accept:
@@ -27,9 +27,9 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Tue, 10 Mar 2015 05:33:07 GMT
+      - Tue, 10 Mar 2015 08:27:51 GMT
       Date:
-      - Tue, 10 Mar 2015 05:33:07 GMT
+      - Tue, 10 Mar 2015 08:27:51 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
@@ -63,5 +63,72 @@ http_interactions:
         oacRp0rbukndtFr/aH3/JCN019Q51p1oHLdG/CPXDYMUDXKEX7mJH1fyDdAs
         KRHqAQAA
     http_version: 
-  recorded_at: Tue, 10 Mar 2015 05:33:07 GMT
+  recorded_at: Tue, 10 Mar 2015 08:27:51 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/wormcubes_1_1
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.MgEJ0KU6dTMcaurAzYxXqsDodkR0wxFeLQSrm3N7qeTLIw5Xc33b7yp9wiq1-_AOI-DmUsOVlbgg6A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 10 Mar 2015 08:27:51 GMT
+      Date:
+      - Tue, 10 Mar 2015 08:27:51 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/MTQyNTk3NTcwOTE1Ng"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=0.08
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJWRy27CMBBF9/mKyN1STHgKdkSiFRIESr2oVCpkkknikjgh
+        NkSo4t9rO7Cg6UPd2Jo7c+fM2B+WjXaMB2hkoy2L9gcoTneSbhNADZUCSSOd
+        WqN4T2iwWr0s02WPO0vXzfg82Lq7MO7iOXk6eWTX8YhfLsjE8aI1MnZm+uZ5
+        ck85TU6S+WIkQchmmRWpf9iC2Dgbx5QKSMIZ4zttiKXMxQjjsiybUZZFCdCc
+        iaafpfg6Iz62cV5k7+BLgW8AOKCSClCyJmGzi8B1oEmsIIQCuA8K+2HZataq
+        57Q+uDbZ6NK8ymtAJZtmlXhLsuyz2c6PIaVXSMggCYSKXlVkJCVymuopUKTv
+        RqXJU260Z7Kaeo9Ii+fGN54jFIJl/KvtYbYYk59dcAQu/4sqgIo66S9XSIv0
+        N4863i5P5SuCVMsQVlmdbrs3HPQGrc6w3zI/l1Ah51nA1DMGtaqh0+tX/3vB
+        kLE7myDrbH0CbyXoZesCAAA=
+    http_version: 
+  recorded_at: Tue, 10 Mar 2015 08:27:51 GMT
 recorded_with: VCR 2.9.3

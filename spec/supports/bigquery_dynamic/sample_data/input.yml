@@ -10,7 +10,7 @@
 - game: wormcubes
   version: 1.1
   event: faillevel
-  reason: err
+  reason: timout
 - game: joisecubes
   version: 1.1
   event: losegold
@@ -22,4 +22,4 @@
 - game: wormcubes
   version: 1.1
   event: harvestdone
-  farm: Rome
+  farm: canada

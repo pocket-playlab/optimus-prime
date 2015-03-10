@@ -16,7 +16,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.MgFzGNm2XmCU3_DOZldmgK6JEoVijb9WXaQnCnYomGykiufUPyjz2aAHOJ-m25914TP2aqmNdylSKQ
+      - Bearer ya29.MgEJ0KU6dTMcaurAzYxXqsDodkR0wxFeLQSrm3N7qeTLIw5Xc33b7yp9wiq1-_AOI-DmUsOVlbgg6A
       Cache-Control:
       - no-store
       Accept:
@@ -27,13 +27,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Tue, 10 Mar 2015 05:31:05 GMT
+      - Tue, 10 Mar 2015 08:25:48 GMT
       Date:
-      - Tue, 10 Mar 2015 05:31:05 GMT
+      - Tue, 10 Mar 2015 08:25:48 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/ZmyTawnNwtG7DOa1Wx-jFHVz6fE"'
+      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/sz5IkhVqSsvouKfcTHqyt27ozNk"'
       Vary:
       - Origin
       - X-Origin
@@ -57,10 +57,77 @@ http_interactions:
       encoding: ASCII-8BIT
       string: !binary |-
         H4sIAAAAAAAAAKvmUlDKzsxLUbJSUErKTC8sTS2qVC5JTMpJdUksSfTJLC5R
-        0gEqSS1JTAcpiVHKKAxJTAkKigjIDTDNMwxwcsrP801JcspOyzDRj8qtDEks
-        z/MrL3E3d/FPNAyv0M1y8wirMktzjVECm1OUX14MNCeaS0GhGogVlNKgPCgf
-        KFIGsie9NC8rJzW5NCm1WAksXquDqchQzxC3ZGleTn5ydk5qWWoOTkV5pTk5
-        OA0oKSpNheoEkbFcUGW0dncBfjcrGRkT4R+4i7mAVC0XAPsxUvTmAQAA
+        0gEqSS1JTAcpiVHKKAxJTAkKigjIDTDNMwxwcsrP801JcspOyzDRL64y9czO
+        CCsMLi7LL/VOSw7xKKwsMTLPr/LLjlECm1OUX14MNCeaS0GhGogVlNKgPCgf
+        KFIGsie9NC8rJzW5NCm1WAksXquDqchQzxC3ZGlBTmpZag5uBUbGOOXySnNy
+        IHIgMpYLqojWLs7LyU/Oxu9qhMuwGFBSVJqqhOZuLiBVywUA9roOPOYBAAA=
     http_version: 
-  recorded_at: Tue, 10 Mar 2015 05:31:05 GMT
+  recorded_at: Tue, 10 Mar 2015 08:25:48 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/gunjlecubes_1_1
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.MgEJ0KU6dTMcaurAzYxXqsDodkR0wxFeLQSrm3N7qeTLIw5Xc33b7yp9wiq1-_AOI-DmUsOVlbgg6A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 10 Mar 2015 08:25:49 GMT
+      Date:
+      - Tue, 10 Mar 2015 08:25:49 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/MTQyNTk3NTc1MDIwOQ"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=0.08
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJWRwU/CMBTG7/srlnpF6pCJcGMRDQkMmD2YiDHd9hiV0o61
+        QAjhf7fr4ODEg5c2/V5/3/dee3RctGIiRT0XxSzbbKE43Ggac0ANUwJNs7I0
+        R8sNoWkUvU3XU1940yCQYpzGwWqxbOMxmR1CsroPSeKNn4b7yWyOLM6sb57z
+        WyooP2iWqJ4GpZvZVnxxSLYxqE/v07OXFfDFiIlViSy1zlUP4/1+38ykzDjQ
+        nKlmItf40iXetXBeyC9ItMI/InBKNVVg5DIL22kUvhZpSxEsoACRgAk+Oq7p
+        t3Id/m6+hFx0tq/qZUQlW7NKrGc57slOmCxhTS8xCwY8Veb0bk5WMqKga7AO
+        5d6oNH3IrfZKomH4gkrx1LjC7KBQTIo69jya9MnfFOxA6P9GcUNxIevYMCSD
+        l0H0NxdLsVV1KphMRoN+WFFm+Tg/V1IA1WYgwirYa7f8bsd/6D76nZb9P06V
+        HsuUmadMa7c6/l3rrlv98jmH9IPRADkn5xvG4RO09QIAAA==
+    http_version: 
+  recorded_at: Tue, 10 Mar 2015 08:25:49 GMT
 recorded_with: VCR 2.9.3
