@@ -8,6 +8,12 @@ module OptimusPrime
 
     def start
       super
+      stream
+    end
+
+    private
+
+    def stream
       background do
         each do |message|
           raise "#{self.class.name} returned null value" unless message

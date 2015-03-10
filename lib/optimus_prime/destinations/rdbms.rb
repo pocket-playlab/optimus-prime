@@ -4,14 +4,8 @@ require 'pry-byebug'
 module OptimusPrime
   module Destinations
     class Rdbms < Destination
-      def initialize(dsn:, table:, sql_trace: false, **options)
+      def initialize(dsn:, table:, **options)
         @db = Sequel.connect(dsn, **options)
-
-        if sql_trace
-          @db.loggers << Logger.new($stdout)
-          @db.sql_log_level = :debug
-        end
-
         @table = @db[table.to_sym]
       end
 
