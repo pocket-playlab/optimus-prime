@@ -3,13 +3,13 @@ test_pipeline:
     a:
       class: 'OptimusPrime::Sources::LocalCsv'
       params:
-        file_path: 'spec/supports/csv/local_csv_source_sample.csv'
+        file_path: '../../spec/supports/csv/local_csv_source_sample.csv'
       next:
         - c
     b:
       class: 'OptimusPrime::Sources::LocalCsv'
       params:
-        file_path: 'spec/supports/csv/local_csv_source_pipe.csv'
+        file_path: '../../spec/supports/csv/local_csv_source_pipe.csv'
         col_sep: '|'
       next:
         - c
@@ -17,4 +17,4 @@ test_pipeline:
       class: 'OptimusPrime::Destinations::LocalCsv'
       params:
         fields: ['FirstName', 'LastName', 'Title', 'ReportsTo.Email', 'Birthdate', 'Description']
-        file_path: 'spec/supports/csv/destination.csv'
+        file_path: '../../spec/supports/csv/destination.csv'

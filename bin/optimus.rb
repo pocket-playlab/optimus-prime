@@ -57,9 +57,11 @@ def get_graph
 end
 
 graph = get_graph
-ap graph
 pipeline = OptimusPrime::Pipeline.new(graph)
 
 pipeline.start
 pipeline.wait
-pipeline.finished? or raise 'Pipeline failed to finish!'
+
+pp graph
+
+pipeline.finished? ? puts('Pipeline finished.') : raise('Pipeline failed to finish!')

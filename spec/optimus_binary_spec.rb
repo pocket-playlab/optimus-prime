@@ -8,49 +8,6 @@ root = Pathname.new(__FILE__).parent.parent
 # Allows us to run commands directly, without worrying about the CWD
 ENV['PATH'] = "#{root.join('bin')}#{File::PATH_SEPARATOR}#{ENV['PATH']}"
 
-module OptimusPrime
-  module Sources
-    class Test < OptimusPrime::Source
-      def initialize(data:, delay: 0)
-        @data = data
-        @delay = delay
-      end
-
-      def each
-        sleep @delay
-        @data.each { |i| yield i }
-      end
-    end
-  end
-
-  module Destinations
-    class Test < OptimusPrime::Destination
-      attr_reader :written
-      def write(record)
-        @received ||= []
-        @received << record
-      end
-
-      def finish
-        @written = @received
-      end
-    end
-  end
-end
-
-class IncrementStep < OptimusPrime::Destination
-  def write(data)
-    sleep 0.1
-    push data + 1
-  end
-end
-
-class DoubleStep < OptimusPrime::Destination
-  def write(data)
-    push data * 2
-  end
-end
-
 describe 'optimus.rb' do
   include Aruba::Api
 
@@ -64,13 +21,46 @@ Usage: optimus.rb --file /path/to/config.yml --pipeline pipeline_identifier
     eos
   end
 
+  let(:finished) do
+    <<-eos
+{:a=>
+  {:class=>"OptimusPrime::Sources::LocalCsv",
+   :params=>
+    {:file_path=>"../../spec/supports/csv/local_csv_source_sample.csv"},
+   :next=>["c"]},
+ :b=>
+  {:class=>"OptimusPrime::Sources::LocalCsv",
+   :params=>
+    {:file_path=>"../../spec/supports/csv/local_csv_source_pipe.csv",
+     :col_sep=>"|"},
+   :next=>["c"]},
+ :c=>
+  {:class=>"OptimusPrime::Destinations::LocalCsv",
+   :params=>
+    {:fields=>
+      ["FirstName",
+       "LastName",
+       "Title",
+       "ReportsTo.Email",
+       "Birthdate",
+       "Description"],
+     :file_path=>"../../spec/supports/csv/destination.csv"}}}
+Pipeline finished.
+    eos
+  end
+
+  after(:each) do
+    File.open('spec/supports/csv/destination.csv', 'w') { |file| file.truncate(0) }
+  end
+
   it 'should run' do
-    run_simple 'optimus.rb -p test_pipeline -f ../../spec/supports/config/test-config.yml', false
-    # all_output.should eq 'something'
+    run_simple 'optimus.rb -p test_pipeline -f ../../spec/supports/config/aruba-test-config.yml',
+               false
+    all_output.should eq finished
   end
 
   describe 'Help output' do
-    it 'should print out help message if no arguements are given' do
+    it 'should print out help message if no arguments are given' do
       run_simple 'optimus.rb', false
       all_output.should eq help_message
     end
