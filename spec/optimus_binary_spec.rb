@@ -1,7 +1,6 @@
 require 'spec_helper'
 require 'aruba'
 require 'aruba/api'
-require 'pathname'
 
 root = Pathname.new(__FILE__).parent.parent
 
@@ -49,20 +48,47 @@ Pipeline finished.
     eos
   end
 
-  after(:each) do
+  let(:aruba_config_path) { '../../spec/supports/config/aruba-test-config.yml' }
+
+  def truncate_destination
     File.open('spec/supports/csv/destination.csv', 'w') { |file| file.truncate(0) }
   end
 
-  it 'should run' do
-    run_simple 'optimus.rb -p test_pipeline -f ../../spec/supports/config/aruba-test-config.yml',
-               false
-    all_output.should eq finished
+  before(:all) do
+    truncate_destination
+  end
+
+  after(:each) do
+    truncate_destination
+  end
+
+  describe 'Finished output' do
+    before(:each) do
+      run_simple "optimus.rb -p test_pipeline -f #{aruba_config_path}",
+                 false
+    end
+
+    it 'should print out the finished output when arguments are given ' do
+      all_output.should eq finished
+    end
+
+    it 'should write in the destination csv' do
+      destination = File.open('spec/supports/csv/destination.csv', 'r')
+      destination.readlines.size.should_not eq 0
+    end
   end
 
   describe 'Help output' do
     it 'should print out help message if no arguments are given' do
       run_simple 'optimus.rb', false
       all_output.should eq help_message
+    end
+  end
+
+  describe 'Missing Pipeline' do
+    it 'should raise a Pipeline not found exception when the specified pipeline is not found' do
+      run_simple "optimus.rb  -p inexistent_pipeline -f #{aruba_config_path}", false
+      all_output.should include('Pipeline not found (RuntimeError)')
     end
   end
 end
