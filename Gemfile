@@ -7,7 +7,7 @@ gemspec
 group :development, :test do
   gem 'pry-byebug'
   gem 'pronto-rubocop', require: false
-  gem 'pronto-reek', require: false 
+  gem 'pronto-reek', require: false
   gem 'awesome_print'
 end
 

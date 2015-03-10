@@ -2,7 +2,6 @@ require 'aruba'
 require 'aruba/api'
 require 'aruba/reporting'
 
-
 RSpec.configure do |config|
   config.include Aruba::Api
 

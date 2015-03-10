@@ -30,4 +30,3 @@ VCR.configure do |config|
   config.ignore_localhost = true
   config.default_cassette_options = { record: :none } if ENV['CI']
 end
-
