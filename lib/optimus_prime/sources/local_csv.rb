@@ -23,7 +23,6 @@ module OptimusPrime
       private
 
       def open_file
-        raise 'File Not Existing' unless File.exist?(@file_path)
         @csv = CSV.new(open(@file_path), headers: :first_row, col_sep: @col_sep)
       end
     end
