@@ -4,8 +4,9 @@ require 'stringio'
 module OptimusPrime
   module Sources
     class LocalCsv < Source
-      def initialize(file_path:)
+      def initialize(file_path:, col_sep: ',')
         @file_path = file_path
+        @col_sep = col_sep
       end
 
       def each
@@ -23,7 +24,7 @@ module OptimusPrime
 
       def open_file
         raise 'File Not Existing' unless File.exist?(@file_path)
-        @csv = CSV.new(open(@file_path), headers: :first_row)
+        @csv = CSV.new(open(@file_path), headers: :first_row, col_sep: @col_sep)
       end
     end
   end
