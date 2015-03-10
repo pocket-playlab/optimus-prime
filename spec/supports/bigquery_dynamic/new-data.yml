@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/wormcubes_1_1/data
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.MgFzGNm2XmCU3_DOZldmgK6JEoVijb9WXaQnCnYomGykiufUPyjz2aAHOJ-m25914TP2aqmNdylSKQ
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 10 Mar 2015 05:33:07 GMT
+      Date:
+      - Tue, 10 Mar 2015 05:33:07 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/ih6C2ZogU0PMgoODHqiLkXKPTmg"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=0.08
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAALWOMWvDMBCFd/0KcV1DWockQ0fHQ6EJESEF06bD2ZJlYVnC
+        tuxQQv57ZddTG0OXDHfH3ft49y6EQqEMh2cKiZJVK+qvB4eJFhE63KrGwcwj
+        wqHskRPk1RH54RCzkq1MwMLQmh1PwiLLl48qX28W71a+PbGdtPvopVLbIn5l
+        x1KeYPCp7bnxPh+E0osvCtm4jbu/dP2fs63LtE1EA8P1OvuLBPNgWsxQaS06
+        oacRp0rbukndtFr/aH3/JCN019Q51p1oHLdG/CPXDYMUDXKEX7mJH1fyDdAs
+        KRHqAQAA
+    http_version: 
+  recorded_at: Tue, 10 Mar 2015 05:33:07 GMT
+recorded_with: VCR 2.9.3

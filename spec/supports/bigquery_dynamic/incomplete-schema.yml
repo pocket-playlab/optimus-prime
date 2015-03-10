@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/gunjlecubes_1_1
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.MgFzGNm2XmCU3_DOZldmgK6JEoVijb9WXaQnCnYomGykiufUPyjz2aAHOJ-m25914TP2aqmNdylSKQ
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 10 Mar 2015 05:30:04 GMT
+      Date:
+      - Tue, 10 Mar 2015 05:30:04 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/MTQyNTk2NTI3MzM4OA"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=0.08
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJWRzW7CMBCE73mKyL1SrPDXlhuRKEIigaY+VCoVcpIlGIyd
+        xgZEEe9exymHpnDoJZZn95vZdU6OizZMpKjvophlnzsojneaxhxQw5RA06ws
+        zdHqk9A0it5m21lXeDPflyJIY3+zXHVwQF6OIdm0QjJuB19BZzqYI4sz65vn
+        /J4Kyo+aJaqvQelmthNrDskuBrXwFp5tVsCXEyY2JbLSOld9jA+HQzOTMuNA
+        c6aaidziy5R438J5IdeQaIV/ReCUaqrAyGUWttsofC3SliJYQgEiARN8clwz
+        b+U6/jt8Cbnox76qlxGVbM0qsZ7luGe7YbKCLb3ELBnwVJnbu7lZyYiCbsE6
+        lGej0vQxt9oricbhCJXiuXGF2UOhmBR17HkyHZDbFOxB6P9GcUNxIevYOCTD
+        0TC6zcVS7FSd8qfTyXAQVpT5fPw8V1IA1WYhwirY67S6T71uy+v1eo/2/3Gq
+        dCBTZp4yrXc9tNuPVdclhwz8yRA5Z+cbLPgTUfUCAAA=
+    http_version: 
+  recorded_at: Tue, 10 Mar 2015 05:30:04 GMT
+recorded_with: VCR 2.9.3
