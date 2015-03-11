@@ -1,5 +1,11 @@
 require 'spec_helper'
 
+root = Pathname.new(__FILE__).parent.parent
+bin_folder = root.join('bin').to_s
+path_separator = File::PATH_SEPARATOR
+path = ENV['PATH']
+ENV['PATH'] = "#{bin_folder}#{path_separator}#{path}"
+
 describe 'optimus.rb' do
   let(:finished) do
     <<-eos
@@ -23,7 +29,7 @@ Pipeline finished.
 
   describe 'Finished output' do
     before(:each) do
-      @output = `bundle exec optimus.rb -p test_pipeline -f #{config_path}`
+      @output = `optimus.rb -p test_pipeline -f #{config_path}`
     end
 
     it 'should print out the finished output when arguments are given ' do
@@ -38,14 +44,14 @@ Pipeline finished.
 
   describe 'Help output' do
     it 'should print out help message if no arguments are given' do
-      output = `bundle exec optimus.rb`
+      output = `optimus.rb`
       expect(output).to include('Missing options')
     end
   end
 
   describe 'Missing Pipeline' do
     it 'should raise a Pipeline not found exception when the specified pipeline is not found' do
-      output = `bundle exec optimus.rb  -p inexistent_pipeline -f #{config_path} 2>&1`
+      output = `optimus.rb  -p inexistent_pipeline -f #{config_path} 2>&1`
       expect(output).to include('Pipeline not found (RuntimeError)')
     end
   end
