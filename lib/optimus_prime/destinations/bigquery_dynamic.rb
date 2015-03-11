@@ -5,12 +5,23 @@ module OptimusPrime
     class BigqueryDynamic < OptimusPrime::Destination
       attr_reader :client_email, :private_key, :chunk_size
 
-      def initialize(client_email:, private_key:, resource_template:, table_id:, type_detective:, id_field: nil, chunk_size: 100)
+      # Legends:
+      # table_id should be something like this (optionally omit any key/value pair):
+      # { 'prefix' => 'generic_preifx',
+      #   'suffix' => 'generic_suffix',
+      #   'fields' => ['fields','to','be','used']
+      # }
+      #
+      # type_map should be a hash of key/value pairs
+      #
+      def initialize(client_email:, private_key:,
+                     resource_template:, table_id:, type_map:,
+                     id_field: nil, chunk_size: 100)
         @client_email = client_email
         @private_key  = OpenSSL::PKey::RSA.new private_key
         @template     = resource_template # https://cloud.google.com/bigquery/docs/reference/v2/tables
         @table_id     = table_id
-        @type_detective = type_detective
+        @type_map     = type_map
         @id_field     = id_field    # optional - used for deduplication
         @chunk_size   = chunk_size
         @tables       = {}
@@ -18,9 +29,9 @@ module OptimusPrime
       end
 
       def write(record)
-        tid = table_id(record)
+        tid = determine_table_of(record)
         unless @tables.key? tid
-          @tables[tid] = BigQueryTable.new(tid, @template, @type_detective, client, @id_field)
+          @tables[tid] = BigQueryTable.new(tid, @template, @type_map, client, @id_field)
         end
         @tables[tid] << record
         @total += 1
@@ -41,8 +52,13 @@ module OptimusPrime
         end
       end
 
-      def table_id(record)
-        @table_id.is_a?(Proc) ? @table_id.call(record) : @table_id
+      def determine_table_of(record)
+        res = (@table_id['prefix'].nil? ? "" : @table_id['prefix'] + '_')
+        res += record.collect do |field, value|
+          value if @table_id['fields'].include? field.to_s
+        end.compact.join('_').to_s
+        res += ('_' + @table_id['suffix']) unless @table_id['suffix'].nil?
+        res.downcase.gsub('.', '_')
       end
 
       def upload
@@ -58,13 +74,13 @@ module OptimusPrime
       class BigQueryTable
         attr_reader :id
 
-        def initialize(id, resource_template, type_detective, client, id_field = nil)
+        def initialize(id, resource_template, type_map, client, id_field = nil)
           @id = id
           @resource = Marshal.load(Marshal.dump(resource_template)) # deep copy for the nested hash
           @resource['tableReference']['tableId'] = id
           @schema = @resource['schema']['fields']
           @id_field = id_field
-          @type_detective = type_detective
+          @type_map = type_map
           @buffer = []
           @client = client
           @exists = nil
@@ -97,20 +113,20 @@ module OptimusPrime
         end
 
         def build_schema(record)
-          fields = record.collect do |k, v|
-            {
-              'name' => k,
-              'type' => @type_detective.call(k)
-            }
+          existing_fields = @schema.collect { |column| column['name'] }
+          fields = record.reject { |field, value| existing_fields.include? field }
+                         .collect do |field, value|
+                            { 'name' => field,
+                              'type' => determine_type_of(field) }
+                          end
+          unless fields.empty?
+            @schema.concat(fields)
+            @schema_synced = false
           end
-          existing_schema_keys = @schema.collect { |column| column['name'] }
-          record.keys.each do |k|
-            unless existing_schema_keys.include? k
-              @schema.concat(fields).uniq!
-              @schema_synced = false
-              break
-            end
-          end
+        end
+
+        def determine_type_of(field)
+          @type_map[field]
         end
 
         def insert_all
