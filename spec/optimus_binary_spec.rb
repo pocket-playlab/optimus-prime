@@ -23,7 +23,7 @@ Pipeline finished.
 
   describe 'Finished output' do
     before(:each) do
-      @output = `optimus.rb -p test_pipeline -f #{config_path}`
+      @output = `bundle exec optimus.rb -p test_pipeline -f #{config_path}`
     end
 
     it 'should print out the finished output when arguments are given ' do
@@ -38,14 +38,14 @@ Pipeline finished.
 
   describe 'Help output' do
     it 'should print out help message if no arguments are given' do
-      output = `optimus.rb`
+      output = `bundle exec optimus.rb`
       expect(output).to include('Missing options')
     end
   end
 
   describe 'Missing Pipeline' do
     it 'should raise a Pipeline not found exception when the specified pipeline is not found' do
-      output = `optimus.rb  -p inexistent_pipeline -f #{config_path} 2>&1`
+      output = `bundle exec optimus.rb  -p inexistent_pipeline -f #{config_path} 2>&1`
       expect(output).to include('Pipeline not found (RuntimeError)')
     end
   end
