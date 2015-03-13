@@ -13,7 +13,7 @@ Pipeline finished.
   let(:config_path) { 'spec/supports/config/test-config.yml' }
 
   def tmp_destination
-    @tmp_destination ||= 'tmp/spec/destination.csv'
+    @tmp_destination ||= 'tmp/destination.csv'
   end
 
   def delete_destination

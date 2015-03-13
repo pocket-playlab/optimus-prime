@@ -1,7 +1,7 @@
 # Using Ruby to set yaml values with a string and a lambda
 source1: &csv_source <%= 'spec/supports/csv/local_csv_source_sample.csv' %>
 source2: &pipe_source <%= -> { 'spec/supports/csv/local_csv_source_pipe.csv' }.call %>
-destination: &destination 'tmp/spec/destination.csv'
+destination: &destination 'tmp/destination.csv'
 test_pipeline:
   graph:
     a:
