@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'fileutils'
 
 root = Pathname.new(__FILE__).parent.parent
-ENV['PATH'] = "#{root.join('bin')}#{File::PATH_SEPARATOR}#{ENV['PATH']}"
+ENV['PATH'] = "#{root.join('bin')}:#{ENV['PATH']}"
 
 describe 'optimus.rb' do
   let(:finished) do
