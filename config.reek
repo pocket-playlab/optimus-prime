@@ -11,8 +11,9 @@ DataClump:
   max_copies: 2
   min_clump_size: 2
 DuplicateMethodCall:
-  enabled: true
-  max_calls: 2
+  enabled: false
+RepeatedConditional:
+  enabled: false
 FeatureEnvy:
   enabled: true
 IrresponsibleModule:
