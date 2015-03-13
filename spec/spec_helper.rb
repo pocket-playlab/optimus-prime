@@ -10,10 +10,6 @@ ENV['AWS_REGION'] = 'us-east-1'
 RSpec.configure do |config|
   s3 = nil
 
-  config.expect_with :rspec do |c|
-    c.syntax = [:should, :expect]
-  end
-
   config.before :suite do
     system 'rm -r /tmp/s3'
     s3 = spawn 'fakes3 --port 10001 --root /tmp/s3', err: '/dev/null'
