@@ -1,10 +1,7 @@
 require 'spec_helper'
 
 root = Pathname.new(__FILE__).parent.parent
-bin_folder = root.join('bin').to_s
-path_separator = File::PATH_SEPARATOR
-path = ENV['PATH']
-ENV['PATH'] = "#{bin_folder}#{path_separator}#{path}"
+ENV['PATH'] = "#{root.join('bin')}#{File::PATH_SEPARATOR}#{ENV['PATH']}"
 
 describe 'optimus.rb' do
   let(:finished) do
