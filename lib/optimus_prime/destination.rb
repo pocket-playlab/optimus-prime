@@ -1,5 +1,5 @@
 module OptimusPrime
-  class Destination < Step
+  class Destination < OptimusPrime::Step
     def write(message)
       raise 'Not implemented'
     end
