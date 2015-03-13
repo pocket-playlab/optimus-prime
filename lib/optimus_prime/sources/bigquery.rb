@@ -7,7 +7,7 @@ module OptimusPrime
       def initialize(project_id:, sql:, **config_params)
         @project_id = project_id
         @sql = sql
-        setup **config_params
+        setup(**config_params)
         GoogleBigquery::Auth.new.authorize
       end
 
@@ -31,36 +31,59 @@ module OptimusPrime
         begin
           result = GoogleBigquery::Jobs.query @project_id, query: @sql
         rescue => e
-          raise_error "Bigquery#query - #{e}", "@project_id = #{@project_id} | @sql = #{@sql}"
+          logger.error "Bigquery#query - #{e} | ProjectID: #{@project_id} | sql: #{@sql}"
+          raise error
         end
         if result['jobComplete'] && result['pageToken'].nil?
           return map_result_into_hashes result['schema']['fields'], result['rows']
         end
 
-        get_query_results result['jobReference']['jobId']
+        query_job result['jobReference']['jobId']
       end
 
-      def get_query_results(job_id, request_opt={})
-        sleep_duration = 3
+      def get_query_results(job_id, request_opt: {})
+        GoogleBigquery::Jobs.getQueryResults @project_id, job_id, request_opt
+      rescue => e
+        error_message = "Bigquery#get_query_results - #{e}"
+        error_params = "ProjectID: #{@project_id} | JobID: #{job_id} | Options: #{request_opt}"
+        logger.error "#{error_message} | #{error_params}"
+        raise e
+      end
+
+      def query_job(job_id, request_opt: {}, sleep_period: 3)
         Enumerator.new do |enum|
           loop do
-            begin
-              result = GoogleBigquery::Jobs.getQueryResults @project_id, job_id, request_opt
-            rescue => e
-              raise_error "Bigquery#get_query_results - #{e}", "@project_id = #{@project_id} | job_id = #{job_id} | request_opt = #{request_opt}"
-            end
-            if result['jobComplete']
-              map_result_into_hashes(result['schema']['fields'], result['rows']).each do |row|
-                enum << row
-              end
-              
+            result = get_query_results job_id, request_opt: request_opt
+            if process_job(enum, result, sleep_period)
               break if result['pageToken'].nil?
               request_opt[:pageToken] = result['pageToken']
-            else
-              sleep sleep_duration
-              sleep_duration *= 2
             end
           end
+        end
+      end
+
+      def process_job(enum, result, sleep_period)
+        if result['jobComplete']
+          map_result_into_hashes(result['schema']['fields'], result['rows']).each do |row|
+            enum << row
+          end
+          true
+        else
+          sleep sleep_period
+          false
+        end
+      end
+
+      def convert_value(field_type, value)
+        case field_type
+        when 'INTEGER'
+          value.to_i
+        when 'FLOAT'
+          value.to_f
+        when 'BOOLEAN'
+          value == 'true'
+        else
+          value
         end
       end
 
@@ -72,25 +95,11 @@ module OptimusPrime
             value = if field['v'].nil?
                       field['v']
                     else
-                      case fields[index]['type']
-                      when 'INTEGER'
-                        field['v'].to_i
-                      when 'FLOAT'
-                        field['v'].to_f
-                      when 'BOOLEAN'
-                        field['v'] == 'true'
-                      else
-                        field['v']
-                      end
+                      convert_value fields[index]['type'], field['v']
                     end
             [fields[index]['name'].to_sym, value]
           end]
         end
-      end
-
-      def raise_error(error, params)
-        logger.error "#{error} | #{params}"
-        raise error
       end
     end
   end
