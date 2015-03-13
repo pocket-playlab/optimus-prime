@@ -1,7 +1,6 @@
 module OptimusPrime
   class Pipeline
-    attr_reader :graph
-    attr_reader :logger
+    attr_reader :graph, :logger
 
     # TODO: configurable queue size
     QUEUE_SIZE = 100
@@ -13,6 +12,7 @@ module OptimusPrime
         from.output << queue
         to.input    << queue
       end
+      @logger = Logger.new(STDERR)
     end
 
     def start
@@ -35,6 +35,10 @@ module OptimusPrime
 
     def steps
       @steps ||= graph.map { |key, step| [key, Step.create(step)] }.to_h
+                      .each do |key, step|
+                        step.logger=@logger
+                      end
+      @steps
     end
 
     def edges

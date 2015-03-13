@@ -35,8 +35,10 @@ module OptimusPrime
       end
     end
 
-    def logger
-      @logger ||= Logger.new(STDERR)
+    attr_reader :logger
+
+    def logger=(logger)
+      @logger = logger
     end
 
     def start
