@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'fileutils'
 
 root = Pathname.new(__FILE__).parent.parent
 ENV['PATH'] = "#{root.join('bin')}:#{ENV['PATH']}"
@@ -14,15 +13,14 @@ Pipeline finished.
   let(:config_path) { 'spec/supports/config/test-config.yml' }
 
   def tmp_destination
-    @tmp_destination ||= 'spec/tmp/destination.csv'
+    @tmp_destination ||= 'tmp/destination.csv'
   end
 
   def delete_destination
     File.delete(tmp_destination) if File.exist?(tmp_destination)
   end
 
-  before(:all) { Dir.mkdir('spec/tmp') unless Dir.exist?('spec/tmp') }
-  after(:all) { FileUtils.rm_r('spec/tmp') }
+  before(:all) { Dir.mkdir('tmp') unless Dir.exist?('tmp') }
 
   describe 'Finished output' do
     before(:each) { @output = `optimus.rb -p test_pipeline -f #{config_path}` }
