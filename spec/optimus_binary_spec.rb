@@ -12,16 +12,16 @@ Pipeline finished.
 
   let(:config_path) { 'spec/supports/config/test-config.yml' }
 
-  def truncate_destination
-    File.open('spec/supports/csv/destination.csv', 'w') { |file| file.truncate(0) }
+  def tmp_destination
+    @tmp_destination ||= 'tmp/spec/destination.csv'
   end
 
-  before(:all) do
-    truncate_destination
+  def delete_destination
+    File.delete(tmp_destination) if File.exist?(tmp_destination)
   end
 
   after(:each) do
-    truncate_destination
+    delete_destination
   end
 
   describe 'Finished output' do
@@ -34,8 +34,9 @@ Pipeline finished.
     end
 
     it 'should write in the destination csv' do
-      destination = File.open('spec/supports/csv/destination.csv', 'r')
+      destination = File.open(tmp_destination, 'r')
       expect(destination.readlines.size).to_not eq 0
+      destination.close
     end
   end
 
