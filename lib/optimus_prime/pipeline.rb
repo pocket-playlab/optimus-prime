@@ -1,3 +1,5 @@
+require 'logger'
+
 module OptimusPrime
   class Pipeline
     attr_reader :graph, :logger
