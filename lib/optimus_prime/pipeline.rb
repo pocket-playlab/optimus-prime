@@ -36,7 +36,7 @@ module OptimusPrime
     def steps
       @steps ||= graph.map { |key, step| [key, Step.create(step)] }.to_h
                       .each do |key, step|
-                        step.logger=@logger
+                        step.logger = @logger
                       end
       @steps
     end
