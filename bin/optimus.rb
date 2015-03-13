@@ -5,6 +5,7 @@
 
 require 'yaml'
 require 'optparse'
+require 'erb'
 require 'optimus_prime'
 
 options = {}
@@ -42,7 +43,7 @@ rescue OptionParser::InvalidOption, OptionParser::MissingArgument  #
 end
 
 def load_yaml(options)
-  config = YAML.load_file(options[:file])
+  config = YAML.load(ERB.new(File.read(options[:file])).result)
   raise 'Pipeline not found' unless config[options[:pipeline]]
   config
 end
