@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'fileutils'
 
 root = Pathname.new(__FILE__).parent.parent
 ENV['PATH'] = "#{root.join('bin')}#{File::PATH_SEPARATOR}#{ENV['PATH']}"
@@ -13,21 +14,19 @@ Pipeline finished.
   let(:config_path) { 'spec/supports/config/test-config.yml' }
 
   def tmp_destination
-    @tmp_destination ||= 'tmp/destination.csv'
+    @tmp_destination ||= 'spec/tmp/destination.csv'
   end
 
   def delete_destination
     File.delete(tmp_destination) if File.exist?(tmp_destination)
   end
 
-  after(:each) do
-    delete_destination
-  end
+  before(:all) { Dir.mkdir('spec/tmp') unless Dir.exist?('spec/tmp') }
+  after(:all) { FileUtils.rm_r('spec/tmp') }
 
   describe 'Finished output' do
-    before(:each) do
-      @output = `optimus.rb -p test_pipeline -f #{config_path}`
-    end
+    before(:each) { @output = `optimus.rb -p test_pipeline -f #{config_path}` }
+    after(:each) { delete_destination }
 
     it 'should print out the finished output when arguments are given ' do
       expect(@output).to eq finished
