@@ -9,7 +9,6 @@ module OptimusPrime
       # in the initializer.
 
       def initialize(mapper:)
-        @fields = mapper.keys # Caching for faster performance
         @mapper = mapper
       end
 
@@ -21,7 +20,7 @@ module OptimusPrime
 
       def transform(record)
         record.keys.each do |field|
-          next unless @fields.include?(field)
+          next unless @mapper.include?(field)
           record[@mapper[field]] ||= record[field]
           record.delete field
         end

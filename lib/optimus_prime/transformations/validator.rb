@@ -10,7 +10,6 @@ module OptimusPrime
 
       def initialize(constraints:)
         @constraints = constraints
-        @fields = @constraints.keys # caching for performance
       end
 
       def write(record)
@@ -21,7 +20,7 @@ module OptimusPrime
 
       def valid?(record)
         record.each do |field, value|
-          next unless @fields.include? field
+          next unless @constraints.include? field
           valid = self.send(@constraints[field]["type"] + '_validator',
                           value,
                           @constraints[field]["values"])

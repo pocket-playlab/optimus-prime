@@ -10,7 +10,6 @@ module OptimusPrime
 
       def initialize(type_map:)
         @type_map = type_map
-        @fields = @type_map.keys # caching for performance
       end
 
       def write(record)
@@ -22,7 +21,7 @@ module OptimusPrime
 
       def transform(record)
         record.keys.each do |field|
-          next unless @fields.include? field
+          next unless @type_map.include? field
           case @type_map[field].downcase
           when 'integer'
             record[field] = Integer(record[field], 10)
