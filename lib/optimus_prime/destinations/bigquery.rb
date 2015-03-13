@@ -3,7 +3,7 @@ require 'google/api_client'
 module OptimusPrime
   module Destinations
     class Bigquery < OptimusPrime::Destination
-      attr_reader :client_email, :private_key, :table, :chunk_size
+      attr_reader :client_email, :private_key, :table, :id_field, :chunk_size
 
       def initialize(client_email:, private_key:, table:, id_field: nil, chunk_size: 100)
         @client_email = client_email
@@ -43,25 +43,24 @@ module OptimusPrime
 
       def format(record)
         row = { 'json' => record.select { |k, v| fields.include? k } }
-        id = @id_field && record[@id_field]
+        id = id_field && record[id_field]
         row['insertId'] = id if id
         row
       end
 
       def upload
-        response = insert_all
-        body = JSON.parse response.body
-        raise body['error']['message'] unless response.status == 200
-        failed = body.fetch('insertErrors', []).map { |e| e['index'] }.uniq.length
-        raise "Failed to insert #{failed} row(s)" if failed > 0
+        insert_all
         buffer.clear
       end
 
       def insert_all
-        execute bigquery.tabledata.insert_all,
-                params: { 'tableId' => table['id'] },
-                body:   { 'kind' => 'bigquery#tableDataInsertAllRequest',
-                          'rows' => buffer }
+        response = execute bigquery.tabledata.insert_all,
+                           params: { 'tableId' => table['id'] },
+                           body:   { 'kind' => 'bigquery#tableDataInsertAllRequest',
+                                     'rows' => buffer }
+        body = JSON.parse response.body
+        failed = body.fetch('insertErrors', []).map { |e| e['index'] }.uniq.length
+        raise "Failed to insert #{failed} row(s)" if failed > 0
       end
 
       def finish
@@ -73,25 +72,12 @@ module OptimusPrime
       end
 
       def create_table
-        response = execute bigquery.tables.insert, body: table
-        unless response.status == 200
-          body = JSON.parse response.body
-          raise body['error']['message']
-        end
+        execute bigquery.tables.insert, body: table
         @table_exists = true
-        response
       end
 
       def table_exists?
-        return @table_exists unless @table_exists.nil?
-        response = fetch_table
-        return @table_exists = false if response.status == 404
-        body = JSON.parse response.body
-        if response.status == 200
-          raise 'Schema does not match' unless table['schema'] == body['schema']
-          return @table_exists = true
-        end
-        raise body['error']['message']
+        @table_exists ||= (fetch_table.status == 200)
       end
 
       def fetch_table
@@ -99,10 +85,15 @@ module OptimusPrime
       end
 
       def execute(method, params: {}, body: nil)
-        client.execute api_method:  method,
-                       parameters:  params.merge('projectId' => project_id,
-                                                 'datasetId' => dataset_id),
-                       body_object: body
+        response = client.execute(
+          api_method:  method,
+          parameters:  params.merge('projectId' => project_id, 'datasetId' => dataset_id),
+          body_object: body
+        )
+        unless [200, 404].include? response.status
+          raise JSON.parse(response.body)['error']['message']
+        end
+        response
       end
 
       def project_id

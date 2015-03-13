@@ -1,7 +1,5 @@
 require 'spec_helper'
 require 'optimus_prime/destinations/rdbms'
-require 'sequel'
-require 'sqlite3'
 
 RSpec.describe OptimusPrime::Destinations::Rdbms do
   let(:input) do
@@ -18,6 +16,10 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
   let(:dsn) { 'sqlite://test.db' }
   let(:table) { :developer_cars }
 
+  let(:destination) do
+    OptimusPrime::Destinations::Rdbms.new dsn: dsn, table: table, sql_trace: false
+  end
+
   before do
     db = Sequel.connect(dsn)
     # if you need to debug or trace sql, uncomment following lines
@@ -31,7 +33,7 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
     end
   end
 
-  def insert_records_into(destination)
+  def insert_records
     input.each { |record| destination.write record }
     destination.close
   end
@@ -41,12 +43,8 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
     db[table].all
   end
 
-  def test(destination)
-    insert_records_into destination
-    expect(records_from_db).to eq(input)
-  end
-
   it 'should upload insert records into database' do
-    test OptimusPrime::Destinations::Rdbms.new dsn: dsn, table: table, sql_trace: false
+    insert_records
+    expect(records_from_db).to eq(input)
   end
 end

@@ -31,7 +31,6 @@ module OptimusPrime
       end
 
       def keys
-        pages = @s3.list_objects bucket: @bucket
         keys = pages.flat_map do |page|
           page.contents.map(&:key).select do |key|
             time = Time.parse key
@@ -39,6 +38,10 @@ module OptimusPrime
           end
         end
         keys.sort!
+      end
+
+      def pages
+        @s3.list_objects bucket: @bucket
       end
     end
   end
