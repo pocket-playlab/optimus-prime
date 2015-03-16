@@ -44,9 +44,8 @@ module OptimusPrime
       def get_query_results(job_id, request_opt: {})
         GoogleBigquery::Jobs.getQueryResults @project_id, job_id, request_opt
       rescue => e
-        error_message = "Bigquery#get_query_results - #{e}"
         error_params = "ProjectID: #{@project_id} | JobID: #{job_id} | Options: #{request_opt}"
-        logger.error "#{error_message} | #{error_params}"
+        logger.error "Bigquery#get_query_results - #{e} | #{error_params}"
         raise e
       end
 
