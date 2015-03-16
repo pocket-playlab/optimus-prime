@@ -3,41 +3,46 @@ require 'optimus_prime/destinations/merge_record'
 
 module OptimusPrime
   module Sources
-    class MySource < OptimusPrime::Source
-      def initialize(events:); @events = events; end
-      def each; @events.each { |event| yield event }; end
+    class MySource < Source
+      def initialize(events:)
+        @events = events
+      end
+
+      def each
+        @events.each { |event| yield event }
+      end
     end
   end
 
   module Destinations
-    class MyDestination < OptimusPrime::Destination
+    class MyDestination < Destination
       attr_reader :written
-      def write(record)
-        @received = record
-      end
 
-      def finish; @written = @received; end
+      def write(record)
+        @written = record
+      end
     end
   end
 end
 
 describe OptimusPrime::Destinations::MergeRecord do
   let(:inputs) do
-    [[{ Platform: 'android', Level: 1, Percent: 0.0 },
-     { Platform: 'ios', Level: 1, Percent: 19.2 },
-     { Platform: 'android', Level: 2, Percent: 4.2 },
-     { Platform: 'android', Level: 3, Percent: 2.9 }],
-    [{ Platform: 'android', Level: 1, MinScore: 2034 },
-     { Platform: 'ios', Level: 1, MinScore: 1000 },
-     { Platform: 'android', Level: 1, HighScore: 55555 }],
-    [{ Platform: 'ios', Level: 1, Fail: 2 }]]
+    [
+      [{ Platform: 'android', Level: 1, Percent: 0.0 },
+       { Platform: 'ios', Level: 1, Percent: 19.2 },
+       { Platform: 'android', Level: 2, Percent: 4.2 },
+       { Platform: 'android', Level: 3, Percent: 2.9 }],
+      [{ Platform: 'android', Level: 1, MinScore: 2_034 },
+       { Platform: 'ios', Level: 1, MinScore: 1_000 },
+       { Platform: 'android', Level: 1, HighScore: 55_555 }],
+      [{ Platform: 'ios', Level: 1, Fail: 2 }]]
   end
 
   let(:output) do
-    [{ Platform: 'android', Level: 1, Percent: 0.0, MinScore: 2034, HighScore: 55555 },
+    [{ Platform: 'android', Level: 1, Percent: 0.0, MinScore: 2_034, HighScore: 55_555 },
      { Platform: 'android', Level: 2, Percent: 4.2 },
      { Platform: 'android', Level: 3, Percent: 2.9 },
-     { Platform: 'ios', Level: 1, Percent: 19.2, MinScore: 1000, Fail: 2 }]
+     { Platform: 'ios', Level: 1, Percent: 19.2, MinScore: 1_000, Fail: 2 }]
   end
 
   let(:sources) do
