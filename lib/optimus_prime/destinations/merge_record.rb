@@ -9,7 +9,7 @@ module OptimusPrime
       end
 
       def write(record)
-        merge(record)
+        merge record
       end
 
       private
@@ -24,10 +24,10 @@ module OptimusPrime
 
       def merge(record)
         key = generate_key record
-        if @records[key].nil?
-          @records[key] = record
-        else
+        if @records[key]
           @records[key].merge! record
+        else
+          @records[key] = record
         end
       end
     end
