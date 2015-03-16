@@ -78,11 +78,12 @@ describe OptimusPrime::Sources::Bigquery do
       }
     end
 
-    def stub_get_query_results(rows, request_page_token, next_page_token = nil)
+    def stub_get_query_results(rows, request_page_token, next_page_token)
       response = query_response.clone
       response['rows'] = rows
-      response['pageToken'] = next_page_token
-      allow(GoogleBigquery::Jobs).to receive(:getQueryResults).with(project_id, job_id, request_page_token)
+      response['pageToken'] = next_page_token if next_page_token
+      allow(GoogleBigquery::Jobs).to receive(:getQueryResults)
+        .with(project_id, job_id, request_page_token)
         .and_return(response)
     end
 

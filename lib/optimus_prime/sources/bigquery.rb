@@ -35,7 +35,7 @@ module OptimusPrime
           logger.error "Bigquery#query - #{e} | ProjectID: #{@project_id} | sql: #{@sql}"
           raise error
         end
-        if @query_response['jobComplete'] && @query_response['pageToken'].nil?
+        if @query_response['jobComplete'] && !@query_response.key?('pageToken')
           return map_query_response_into_hashes
         end
 
@@ -55,7 +55,7 @@ module OptimusPrime
           loop do
             @query_response = get_query_results job_id, request_opt: request_opt
             if process_job(enum, sleep_period)
-              break if @query_response['pageToken'].nil?
+              break unless @query_response.key? 'pageToken'
               request_opt[:pageToken] = @query_response['pageToken']
             end
           end
