@@ -39,20 +39,22 @@ RSpec.describe OptimusPrime::Destinations::Bigquery do
 
   let(:bigquery) { destination.send :bigquery }
 
-  def delete_table(destination)
+  def delete_table
     destination.send :execute, bigquery.tables.delete, params: { 'tableId' => 'test' }
+  rescue
+    false  # already deleted
   end
 
-  def create_table(destination)
+  def create_table
     destination.send :create_table
   end
 
-  def upload(destination)
+  def upload
     input.each { |obj| destination.write obj }
     destination.close
   end
 
-  def download(destination)
+  def download
     response = destination.send :execute, bigquery.tabledata.list, params: { 'tableId' => 'test' }
     json = JSON.parse response.body
     json['rows'].map do |row|
@@ -60,21 +62,24 @@ RSpec.describe OptimusPrime::Destinations::Bigquery do
     end
   end
 
-  def test(destination)
-    upload destination
-    # sleep 60  # Needed when running on the real bigquery
-    rows = download destination
-    expected = input.take(2).map do |row|
+  def expected
+    input.take(2).map do |row|
       row.select { |k, v| ['name', 'age'].include? k }
     end
+  end
+
+  def test
+    upload
+    # sleep 60  # Needed when running on the real bigquery
+    rows = download
     expect(rows).to match_array expected
   end
 
   context 'table does not exist' do
     it 'should create a table and stream data to it' do
       VCR.use_cassette('bigquery/new-table') do
-        delete_table destination
-        test destination
+        delete_table
+        test
       end
     end
   end
@@ -82,9 +87,9 @@ RSpec.describe OptimusPrime::Destinations::Bigquery do
   context 'table already exists' do
     it 'should stream data to the existing table' do
       VCR.use_cassette('bigquery/table-exists') do
-        delete_table destination
-        create_table destination
-        test destination
+        delete_table
+        create_table
+        test
       end
     end
   end

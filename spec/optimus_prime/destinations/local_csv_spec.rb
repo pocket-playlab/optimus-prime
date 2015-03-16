@@ -11,8 +11,6 @@ RSpec.describe OptimusPrime::Destinations::LocalCsv do
     FakeFS.deactivate!
   end
 
-  let(:file_path) { './test.csv' }
-
   let(:input) do
     [
       { 'userid' => 'rick', 'game' => 'juice cubes', 'version' => 1.03 },
@@ -33,26 +31,26 @@ RSpec.describe OptimusPrime::Destinations::LocalCsv do
 
   let(:fields) { input.first.keys }
 
-  def write_out_csv_file
+  def write_out_csv_file(path)
     dest = OptimusPrime::Destinations::LocalCsv.new fields: fields,
-                                                    file_path: file_path
+                                                    file_path: path
 
     input.each { |record| dest.write record }
     dest.close
   end
 
-  def append_csv_file
+  def append_csv_file(path)
     dest = OptimusPrime::Destinations::LocalCsv.new fields: fields,
-                                                    file_path: file_path,
-                                                    append_mode: true
+                                                    file_path: path
 
     append_data.each { |record| dest.write record }
     dest.close
   end
 
   it 'should write out a csv file' do
-    write_out_csv_file
-    data = CSV.read file_path, converters: :all
+    path = 'test.csv'
+    write_out_csv_file path
+    data = CSV.read path, converters: :all
     header = data.shift
     expect(header).to eq fields
     expect(data.map { |row| header.zip(row).to_h })
@@ -60,9 +58,10 @@ RSpec.describe OptimusPrime::Destinations::LocalCsv do
   end
 
   it 'should not write header when appending to existing file' do
-    write_out_csv_file
-    append_csv_file
-    data = CSV.read file_path, converters: :all
+    path = 'test-append.csv'
+    write_out_csv_file path
+    append_csv_file path
+    data = CSV.read path, converters: :all
     header = data.shift
     expect(header).to eq fields
 

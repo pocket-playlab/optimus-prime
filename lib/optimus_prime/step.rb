@@ -12,19 +12,25 @@ module OptimusPrime
       end
 
       def find(name)
-        subclasses.find do |subclass|
-          subclass.name == name
+        subclasses do |subclass|
+          return subclass if subclass.name == name
         end
+        raise "Not found: #{name}"
+      end
+
+      def create(**config)
+        name = config.fetch :class
+        type = find name
+        params = config[:params]
+        params ? type.new(**params) : type.new
       end
 
       protected
 
       def subclasses
-        Enumerator.new do |enum|
-          descendants.each do |subclass|
-            subclass.subclasses.each { |s| enum << s }
-            enum << subclass
-          end
+        descendants.each do |subclass|
+          subclass.subclasses { |s| yield s }
+          yield subclass
         end
       end
     end
@@ -77,15 +83,19 @@ module OptimusPrime
 
     def listen
       consumers = input.map do |queue|
-        background do
-          loop do
-            message = queue.pop
-            break unless message
-            process message
-          end
-        end
+        consume queue
       end
       close_after consumers
+    end
+
+    def consume(queue)
+      background do
+        loop do
+          message = queue.pop
+          break unless message
+          process message
+        end
+      end
     end
 
     def finish
