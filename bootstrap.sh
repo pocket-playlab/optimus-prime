@@ -11,8 +11,13 @@ cd /vagrant
 # Install packages
 sudo apt-add-repository --yes ppa:brightbox/ruby-ng
 sudo apt-get update --quiet
-sudo -E apt-get install --quiet --assume-yes \
-  git libsqlite3-dev ruby2.2 ruby2.2-dev
+packages=(
+  ruby2.2 ruby2.2-dev  # Latest ruby from brightbox ppa
+  cmake pkg-config     # Needed for pronto gems
+  git                  # For installing gems from github
+  libsqlite3-dev       # For sqlite gem, needed to run the tests
+)
+sudo -E apt-get install --quiet --assume-yes ${packages[@]}
 
 # Install ruby dependencies
 sudo gem install bundler

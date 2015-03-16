@@ -10,8 +10,8 @@ group :development, :test do
 end
 
 group :development do
-  gem 'reek', require: false
-  gem 'rubocop', require: false
+  gem 'pronto-reek', require: false
+  gem 'pronto-rubocop', require: false
 end
 
 group :test do
