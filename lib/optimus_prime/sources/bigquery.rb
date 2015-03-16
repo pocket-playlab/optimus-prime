@@ -9,6 +9,7 @@ module OptimusPrime
         @sql = sql
         setup(**config_params)
         GoogleBigquery::Auth.new.authorize
+        @query_response = {}
       end
 
       def each
@@ -29,16 +30,16 @@ module OptimusPrime
 
       def query
         begin
-          result = GoogleBigquery::Jobs.query @project_id, query: @sql
+          @query_response = GoogleBigquery::Jobs.query @project_id, query: @sql
         rescue => e
           logger.error "Bigquery#query - #{e} | ProjectID: #{@project_id} | sql: #{@sql}"
           raise error
         end
-        if result['jobComplete'] && result['pageToken'].nil?
-          return map_result_into_hashes result['schema']['fields'], result['rows']
+        if @query_response['jobComplete'] && @query_response['pageToken'].nil?
+          return map_query_response_into_hashes
         end
 
-        query_job result['jobReference']['jobId']
+        query_job @query_response['jobReference']['jobId']
       end
 
       def get_query_results(job_id, request_opt: {})
@@ -52,20 +53,18 @@ module OptimusPrime
       def query_job(job_id, request_opt: {}, sleep_period: 3)
         Enumerator.new do |enum|
           loop do
-            result = get_query_results job_id, request_opt: request_opt
-            if process_job(enum, result, sleep_period)
-              break if result['pageToken'].nil?
-              request_opt[:pageToken] = result['pageToken']
+            @query_response = get_query_results job_id, request_opt: request_opt
+            if process_job(enum, sleep_period)
+              break if @query_response['pageToken'].nil?
+              request_opt[:pageToken] = @query_response['pageToken']
             end
           end
         end
       end
 
-      def process_job(enum, result, sleep_period)
-        if result['jobComplete']
-          map_result_into_hashes(result['schema']['fields'], result['rows']).each do |row|
-            enum << row
-          end
+      def process_job(enum, sleep_period)
+        if @query_response['jobComplete']
+          map_query_response_into_hashes.each { |row| enum << row }
           true
         else
           sleep sleep_period
@@ -73,30 +72,25 @@ module OptimusPrime
         end
       end
 
-      def convert_value(field_type, value)
-        case field_type
-        when 'INTEGER'
-          value.to_i
-        when 'FLOAT'
-          value.to_f
-        when 'BOOLEAN'
-          value == 'true'
-        else
-          value
-        end
+      def response_fields
+        @query_response['schema']['fields']
+      end
+
+      def response_rows
+        @query_response['rows']
       end
 
       # This can be used to map an array of fields and an array of rows
       # into an array of hash. [{ 'field' => 'value' }]
-      def map_result_into_hashes(fields, rows)
-        rows.map do |row|
+      def map_query_response_into_hashes
+        response_rows.map do |row|
           Hash[row['f'].map.with_index do |field, index|
-            value = if field['v'].nil?
-                      field['v']
+            value = if field['v']
+                      field['v'].convert_to response_fields[index]['type']
                     else
-                      convert_value fields[index]['type'], field['v']
+                      field['v']
                     end
-            [fields[index]['name'].to_sym, value]
+            [response_fields[index]['name'].to_sym, value]
           end]
         end
       end

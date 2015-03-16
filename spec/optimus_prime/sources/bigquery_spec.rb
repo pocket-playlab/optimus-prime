@@ -82,8 +82,7 @@ describe OptimusPrime::Sources::Bigquery do
       response = query_response.clone
       response['rows'] = rows
       response['pageToken'] = next_page_token
-      page_token =  request_page_token.nil? ? {} : { pageToken: request_page_token }
-      allow(GoogleBigquery::Jobs).to receive(:getQueryResults).with(project_id, job_id, page_token)
+      allow(GoogleBigquery::Jobs).to receive(:getQueryResults).with(project_id, job_id, request_page_token)
         .and_return(response)
     end
 
@@ -114,9 +113,9 @@ describe OptimusPrime::Sources::Bigquery do
         incomplete_query_response['jobComplete'] = false
         allow(GoogleBigquery::Jobs).to receive(:query).and_return(incomplete_query_response)
 
-        stub_get_query_results response_rows.take(2), nil, '2'
-        stub_get_query_results response_rows[2, 2], '2', '3'
-        stub_get_query_results [response_rows.last], '3'
+        stub_get_query_results response_rows.take(2), {}, '2'
+        stub_get_query_results response_rows[2, 2], { pageToken: '2' }, '3'
+        stub_get_query_results [response_rows.last], { pageToken: '3' }, nil
 
         expect(source.to_a).to eq(results)
       end
