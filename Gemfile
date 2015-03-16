@@ -5,10 +5,13 @@ ruby '2.2.0'
 gemspec
 
 group :development, :test do
-  gem 'pronto-reek', require: false
-  gem 'pronto-rubocop', require: false
   gem 'pry-byebug'
   gem 'rspec', '~> 3.1.0'
+end
+
+group :development do
+  gem 'pronto-reek', require: false
+  gem 'pronto-rubocop', require: false
 end
 
 group :test do
