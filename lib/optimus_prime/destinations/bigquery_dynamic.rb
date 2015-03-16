@@ -3,29 +3,28 @@ require 'google/api_client'
 module OptimusPrime
   module Destinations
     class BigqueryDynamic < OptimusPrime::Destination
-      attr_reader :client_email, :private_key, :chunk_size
-
-      # Legends:
-      # table_id should be something like this (optionally omit any key/value pair):
+      # This class can push data to multiple BigQuery tables in the same dataset.
+      # The way it detects which table a record should go to is with the table_id
+      # parameter explained below.
       # { 'prefix' => 'generic_preifx',
       #   'suffix' => 'generic_suffix',
-      #   'fields' => ['fields','to','be','used']
+      #   'fields' => ['record', 'fields','to','be','used']
       # }
-      #
-      # type_map should be a hash of key/value pairs
-      #
-      def initialize(client_email:, private_key:,
-                     resource_template:, table_id:, type_map:,
-                     id_field: nil, chunk_size: 100)
+      # The class also creates tables and updates their schemas if necessary based
+      # on the fields of records that it receives.
+      # When a new field should be added to the schema, the type of the field is
+      # determined using the type_map parameter, which is expected to be a hash.
+
+      attr_reader :client_email, :private_key, :chunk_size
+
+      def initialize(client_email:, private_key:, resource_template:, table_id:,
+                     type_map:, id_field: nil, chunk_size: 100)
         @client_email = client_email
-        @private_key  = OpenSSL::PKey::RSA.new private_key
+        @private_key  = OpenSSL::PKey::RSA.new(private_key)
         @template     = resource_template # https://cloud.google.com/bigquery/docs/reference/v2/tables
-        @table_id     = table_id
-        @type_map     = type_map
-        @id_field     = id_field    # optional - used for deduplication
-        @chunk_size   = chunk_size
-        @tables       = {}
-        @total        = 0
+        @table_id, @type_map   = table_id, type_map
+        @id_field, @chunk_size = id_field, chunk_size
+        @tables, @total = {}, 0
       end
 
       def write(record)
@@ -53,12 +52,23 @@ module OptimusPrime
       end
 
       def determine_table_of(record)
-        res = (@table_id['prefix'].nil? ? "" : @table_id['prefix'] + '_')
-        res += record.collect do |field, value|
-          value if @table_id['fields'].include? field.to_s
-        end.compact.join('_').to_s
-        res += ('_' + @table_id['suffix']) unless @table_id['suffix'].nil?
-        res.downcase.gsub('.', '_')
+        table_fields_of(record).join('_')
+        .prepend(prefix).concat(suffix)
+        .downcase.gsub('.','_')
+      end
+
+      def table_fields_of(record)
+        record.collect do |field, value|
+          value.to_s if @table_id['fields'].include? field.to_s
+        end.compact
+      end
+
+      def prefix
+        @table_id['prefix'] ? "#{@table_id['prefix']}_" : ''
+      end
+
+      def suffix
+        @table_id['suffix'] ? "_#{@table_id['suffix']}" : ''
       end
 
       def upload
@@ -72,6 +82,8 @@ module OptimusPrime
       end
 
       class BigQueryTable
+        # This class deals with a single table in BigQuery.
+
         attr_reader :id
 
         def initialize(id, resource_template, type_map, client, id_field = nil)
@@ -79,12 +91,9 @@ module OptimusPrime
           @resource = Marshal.load(Marshal.dump(resource_template)) # deep copy for the nested hash
           @resource['tableReference']['tableId'] = id
           @schema = @resource['schema']['fields']
-          @id_field = id_field
-          @type_map = type_map
-          @buffer = []
           @client = client
-          @exists = nil
-          @schema_synced = false
+          @type_map, @id_field = type_map, id_field
+          @buffer, @exists, @schema_synced = [], nil, false
         end
 
         def <<(record)
@@ -95,11 +104,7 @@ module OptimusPrime
         def upload
           return if @buffer.empty?
           create_or_update_table
-          response = insert_all
-          body = JSON.parse response.body
-          raise body['error']['message'] unless response.status == 200
-          failed = body.fetch('insertErrors', []).map { |e| e['index'] }.uniq.length
-          raise "Failed to insert #{failed} row(s) to table #{id}" if failed > 0
+          insert_all
           @buffer.clear
         end
 
@@ -115,25 +120,24 @@ module OptimusPrime
         def build_schema(record)
           existing_fields = @schema.collect { |column| column['name'] }
           fields = record.reject { |field, value| existing_fields.include? field }
-                         .collect do |field, value|
-                            { 'name' => field,
-                              'type' => determine_type_of(field) }
-                          end
-          unless fields.empty?
-            @schema.concat(fields)
-            @schema_synced = false
-          end
-        end
-
-        def determine_type_of(field)
-          @type_map[field]
+            .collect do |field, value|
+              { 'name' => field,
+                'type' => @type_map[field]
+              }
+            end
+          return if fields.empty?
+          @schema.concat(fields)
+          @schema_synced = false
         end
 
         def insert_all
-          execute bigquery.tabledata.insert_all,
-                  params: { 'tableId' => id },
-                  body:   { 'kind' => 'bigquery#tableDataInsertAllRequest',
-                            'rows' => @buffer }
+          response = execute bigquery.tabledata.insert_all,
+                             params: { 'tableId' => id },
+                             body:   { 'kind' => 'bigquery#tableDataInsertAllRequest',
+                                       'rows' => @buffer }
+          body = JSON.parse response.body
+          failed = body.fetch('insertErrors', []).map { |err| err['index'] }.uniq.length
+          raise "Failed to insert #{failed} row(s) to table #{id}" if failed > 0
         end
 
         def create_or_update_table
@@ -143,23 +147,12 @@ module OptimusPrime
 
         def update_table
           response = execute bigquery.tables.patch, params: { 'tableId' => id }, body: @resource
-          unless response.status == 200
-            body = JSON.parse response.body
-            raise body['error']['message']
-          end
           @schema_synced = true
-          response
         end
 
         def create_table
           response = execute bigquery.tables.insert, body: @resource
-          unless response.status == 200
-            body = JSON.parse response.body
-            raise body['error']['message']
-          end
-          @exists = true
-          @schema_synced = true
-          response
+          @exists = @schema_synced = true
         end
 
         def table_exists?
@@ -168,9 +161,6 @@ module OptimusPrime
           case response.status
           when 404 then return @exists = false
           when 200 then return @exists = true
-          else
-            body = JSON.parse response.body
-            raise body['error']['message']
           end
         end
 
@@ -179,10 +169,14 @@ module OptimusPrime
         end
 
         def execute(method, params: {}, body: nil)
-          @client.execute api_method:  method,
-                          parameters:  params.merge('projectId' => project_id,
-                                                    'datasetId' => dataset_id),
-                          body_object: body
+          response = @client.execute(
+            api_method:  method,
+            parameters:  params.merge('projectId' => project_id,
+                                      'datasetId' => dataset_id),
+            body_object: body
+          )
+          return response if [200, 404].include? response.status
+          raise JSON.parse(response.body)['error']['message']
         end
 
         def project_id
