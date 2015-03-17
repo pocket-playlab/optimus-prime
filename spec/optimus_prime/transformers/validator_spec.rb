@@ -6,20 +6,20 @@ RSpec.describe OptimusPrime::Transformers::Validator do
   let(:constraints) do
     {
       'level' => {
-        'type'   => 'range',
-        'values' => [0, 100]
+        type:  'range',
+        values: [0, 100]
       },
       'score' => {
-        'type'   => 'greater_than_or_equal',
-        'values' => [0]
+        type:  'greater_than_or_equal',
+        values: [0]
       },
       'altitude' => {
-        'type'   => 'less_than_or_equal',
-        'values' => [8888]
+        type:  'less_than_or_equal',
+        values: [8888]
       },
       'character' => {
-        'type'   => 'set',
-        'values' => ['tom', 'jerry']
+        type:   'set',
+        values: ['tom', 'jerry']
       }
     }
   end

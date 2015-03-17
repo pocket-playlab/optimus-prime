@@ -32,7 +32,7 @@ RSpec.describe OptimusPrime::Transformers::RenameKey do
     ]
   end
 
-  let (:renamer) do
+  let(:renamer) do
     OptimusPrime::Transformers::RenameKey.new(mapper: mapper)
   end
 
