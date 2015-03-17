@@ -1,8 +1,6 @@
 module OptimusPrime
   module Destinations
     class MergeRecord < Destination
-      attr_reader :join_keys
-
       def initialize(join_keys:)
         @join_keys = join_keys
         @records = {}
@@ -19,7 +17,7 @@ module OptimusPrime
       end
 
       def generate_key(record)
-        join_keys.map { |key| record[key.to_sym] }.join(':')
+        @join_keys.map { |key| record[key.to_sym] }.join(':')
       end
 
       def merge(record)
