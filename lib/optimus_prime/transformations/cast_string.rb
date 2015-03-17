@@ -1,6 +1,6 @@
 module OptimusPrime
   module Destinations
-    class NativeTypeCast < Destination
+    class CastString < Destination
       # This class accepts a hash object and converts its values
       # to their real data types based on the map of fieldname/
       # datatype given in the initializer.
@@ -27,11 +27,9 @@ module OptimusPrime
           when 'boolean'
             record[field] = (record[field].downcase == "true")
           when 'string'
-            record[field] = record[field].to_s
-          when 'hash'
-            record[field] = record[field].to_h
-          when 'array'
-            record[field] = record[field].to_a
+            ; # do nothing
+          when 'hash', 'array'
+            record[field] = eval(record[field])
           else
             raise TypeError.new("#{@type_map[field]} is not a native data type!")
           end
