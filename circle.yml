@@ -1,3 +1,10 @@
+dependencies:
+  bundler:
+    without:
+      - development
+  post:
+    - gem install pronto-rubocop pronto-reek
+
 test:
   post:
-    - bundle exec pronto run --formatter=github
+    - pronto run --formatter=github
