@@ -68,11 +68,8 @@ describe OptimusPrime::Destinations::MergeRecord do
 
   it 'should merge a record to an array of hash' do
     pipeline.start
-    expect(pipeline.started?).to be true
-    expect(pipeline.finished?).to be false
     pipeline.wait
-    expect(pipeline.finished?).to be true
-    @results = pipeline.steps.values_at(:dest_d)[0].written
-    expect(@results).to match_array output
+    results = pipeline.steps[:dest_d].written
+    expect(results).to match_array output
   end
 end
