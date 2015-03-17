@@ -9,6 +9,7 @@ group :development, :test do
   gem 'pronto-rubocop', require: false
   gem 'pry-byebug'
   gem 'rspec', '~> 3.1.0'
+  gem 'mail'
 end
 
 group :test do
