@@ -19,20 +19,13 @@ module OptimusPrime
       def transform(record)
         record.keys.each do |field|
           next unless @type_map.include? field
-          case @type_map[field].downcase
-          when 'integer'
-            record[field] = Integer(record[field], 10)
-          when 'float'
-            record[field] = Float(record[field])
-          when 'boolean'
-            record[field] = (record[field].downcase == "true")
-          when 'string'
-            ; # do nothing
-          when 'hash', 'array'
-            record[field] = eval(record[field])
-          else
-            raise TypeError.new("#{@type_map[field]} is not a native data type!")
-          end
+          record[field] = case @type_map[field].downcase
+            when 'integer' then Integer(record[field], 10)
+            when 'float'   then Float(record[field])
+            when 'boolean' then (record[field].downcase == "true")
+            when 'string'  then record[field] # the same
+            else raise TypeError.new("Cannot convert #{@type_map[field]} to String!")
+            end
         end
         record
       rescue => e

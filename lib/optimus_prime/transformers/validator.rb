@@ -6,7 +6,7 @@ module OptimusPrime
       # datatype given in the initializer.
 
       def initialize(constraints:)
-        @constraints = constraints
+        @rules = constraints
       end
 
       def write(record)
@@ -17,11 +17,8 @@ module OptimusPrime
 
       def valid?(record)
         record.each do |field, value|
-          next unless @constraints.include? field
-          valid = self.send(@constraints[field]["type"] + '_validator',
-                          value,
-                          @constraints[field]["values"])
-          next if valid
+          next unless @rules.include? field
+          next if send("#{@rules[field]['type']}_validator", value, @rules[field]["values"])
           logger.error(record)
           return false
         end
