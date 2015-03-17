@@ -84,4 +84,4 @@ UnusedParameters:
   enabled: false
 UtilityFunction:
   enabled: true
-  max_helper_calls: 1
+  max_helper_calls: 4
