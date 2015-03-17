@@ -36,11 +36,9 @@ module OptimusPrime
     alias_method :wait, :join
 
     def steps
-      @steps ||= graph.map { |key, step| [key, Step.create(step)] }.to_h
-                      .each do |key, step|
-                        step.logger = @logger
-                      end
-      @steps
+      @steps ||= graph.map  { |key, step| [key, Step.create(step)] }
+                      .each { |key, step| step.logger = @logger }
+                      .to_h
     end
 
     def edges
