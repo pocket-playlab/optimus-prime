@@ -19,10 +19,11 @@ module OptimusPrime
       def transform(record)
         record.keys.each do |field|
           next unless @type_map.include? field
-          record[field] = case @type_map[field].downcase
+          record[field] = 
+            case @type_map[field].downcase
             when 'integer' then Integer(record[field], 10)
             when 'float'   then Float(record[field])
-            when 'boolean' then (record[field].downcase == "true")
+            when 'boolean' then (record[field].downcase == 'true')
             when 'string'  then record[field] # the same
             else raise TypeError.new("Cannot convert #{@type_map[field]} to String!")
             end
