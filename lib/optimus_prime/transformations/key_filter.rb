@@ -1,6 +1,3 @@
-require 'optimus_prime'
-require 'optimus_prime/destination'
-
 module OptimusPrime
   module Destinations
     class KeyFilter < Destination
