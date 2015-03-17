@@ -19,7 +19,7 @@ module OptimusPrime
       def transform(record)
         record.keys.each do |field|
           next unless @type_map.include? field
-          record[field] = 
+          record[field] =
             case @type_map[field].downcase
             when 'integer' then Integer(record[field], 10)
             when 'float'   then Float(record[field])

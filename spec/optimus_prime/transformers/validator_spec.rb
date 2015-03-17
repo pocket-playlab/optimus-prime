@@ -7,7 +7,7 @@ RSpec.describe OptimusPrime::Transformers::Validator do
     {
       'level' => {
         'type'   => 'range',
-        'values' => [0,100]
+        'values' => [0, 100]
       },
       'score' => {
         'type'   => 'greater_than_or_equal',
@@ -27,7 +27,7 @@ RSpec.describe OptimusPrime::Transformers::Validator do
   let(:logfile) { '/tmp/validator.log' }
 
   let(:validator) do
-    validator = OptimusPrime::Transformers::Validator.new(constraints:constraints)
+    validator = OptimusPrime::Transformers::Validator.new(constraints: constraints)
     validator.logger = Logger.new(logfile)
     validator
   end

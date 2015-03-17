@@ -68,5 +68,4 @@ RSpec.describe OptimusPrime::Transformers::NativeTypeCast do
       expect(File.read(logfile).lines.count).to be > 1
     end
   end
-
 end
