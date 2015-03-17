@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'optimus_prime/destinations/bigquery'
 
 RSpec.describe OptimusPrime::Destinations::Bigquery do
-  let(:table) do
+  let(:resource) do
     {
       'kind' => 'bigquery#table',
       'id' => 'test',
@@ -32,7 +32,7 @@ RSpec.describe OptimusPrime::Destinations::Bigquery do
     OptimusPrime::Destinations::Bigquery.new(
       client_email: ENV.fetch('GOOGLE_CLIENT_EMAIL', 'test@developer.gserviceaccount.com'),
       private_key: ENV.fetch('GOOGLE_PRIVATE_KEY', File.open('spec/supports/key') { |f| f.read }),
-      table: table,
+      resource: resource,
       id_field: 'name',
     )
   end

@@ -1,4 +1,4 @@
-require 'google/api_client'
+require_relative 'bigquery_table_base'
 
 module OptimusPrime
   module Destinations
@@ -6,7 +6,7 @@ module OptimusPrime
       # This class can push data to multiple BigQuery tables in the same dataset.
       # The way it detects which table a record should go to is with the table_id
       # parameter explained below.
-      # { 'prefix' => 'generic_preifx',
+      # { 'prefix' => 'generic_prefix',
       #   'suffix' => 'generic_suffix',
       #   'fields' => ['record', 'fields','to','be','used']
       # }
@@ -83,8 +83,7 @@ module OptimusPrime
 
       class BigQueryTable
         # This class deals with a single table in BigQuery.
-
-        attr_reader :id
+        attr_reader :id, :resource, :client, :id_field
 
         def initialize(id, resource_template, type_map, client, id_field = nil)
           @id = id
@@ -97,18 +96,19 @@ module OptimusPrime
         end
 
         def <<(record)
-          build_schema(record)
           @buffer << format(record)
         end
 
         def upload
-          return if @buffer.empty?
-          create_or_update_table
+          return if buffer.empty?
+          rebuild_schema
+          create_or_patch_table
           insert_all
-          @buffer.clear
+          buffer.clear
         end
 
         private
+        include BigQueryTableBase
 
         def format(record)
           row = { 'json' => record }
@@ -117,74 +117,21 @@ module OptimusPrime
           row
         end
 
-        def build_schema(record)
-          existing_fields = @schema.collect { |column| column['name'] }
-          fields = record.reject { |field, value| existing_fields.include? field }
-            .collect do |field, value|
-              { 'name' => field,
-                'type' => @type_map[field]
-              }
-            end
-          return if fields.empty?
-          @schema.concat(fields)
-          @schema_synced = false
-        end
-
-        def insert_all
-          response = execute bigquery.tabledata.insert_all,
-                             params: { 'tableId' => id },
-                             body:   { 'kind' => 'bigquery#tableDataInsertAllRequest',
-                                       'rows' => @buffer }
-          body = JSON.parse response.body
-          failed = body.fetch('insertErrors', []).map { |err| err['index'] }.uniq.length
-          raise "Failed to insert #{failed} row(s) to table #{id}" if failed > 0
-        end
-
-        def create_or_update_table
-          create_table unless table_exists?
-          update_table unless @schema_synced
-        end
-
-        def update_table
-          response = execute bigquery.tables.patch, params: { 'tableId' => id }, body: @resource
-          @schema_synced = true
-        end
-
-        def create_table
-          response = execute bigquery.tables.insert, body: @resource
-          @exists = @schema_synced = true
-        end
-
-        def table_exists?
-          return @exists unless @exists.nil?
-          response = execute bigquery.tables.get, params: { 'tableId' => id }
-          case response.status
-          when 404 then return @exists = false
-          when 200 then return @exists = true
+        def rebuild_schema
+          buffer.each do |rec|
+            record = rec['json']
+            schema_fields = fields
+            record_fields = record.reject { |field, value| schema_fields.include? field }
+              .map { |field, value| { 'name' => field, 'type' => @type_map[field] } }
+            next if record_fields.empty?
+            @schema.concat(record_fields)
+            @schema_synced = false
           end
         end
 
-        def bigquery
-          @bigquery ||= @client.discovered_api 'bigquery', 'v2'
-        end
-
-        def execute(method, params: {}, body: nil)
-          response = @client.execute(
-            api_method:  method,
-            parameters:  params.merge('projectId' => project_id,
-                                      'datasetId' => dataset_id),
-            body_object: body
-          )
-          return response if [200, 404].include? response.status
-          raise JSON.parse(response.body)['error']['message']
-        end
-
-        def project_id
-          @resource['tableReference']['projectId']
-        end
-
-        def dataset_id
-          @resource['tableReference']['datasetId']
+        def create_or_patch_table
+          create_table unless exists?
+          patch_table  unless @schema_synced
         end
       end
     end
