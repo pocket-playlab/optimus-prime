@@ -17,13 +17,13 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
 
   let(:destination_with_string_condition) do
     OptimusPrime::Destinations::Rdbms.new dsn: dsn, table: table_name,
-                                          conditions: "Platform = 'ios'",
+                                          delete_conditions: "Platform = 'ios'",
                                           sql_trace: false
   end
 
   let(:destination_with_hash_condition) do
     OptimusPrime::Destinations::Rdbms.new dsn: dsn, table: table_name,
-                                          conditions: { version: '1.0.1' },
+                                          delete_conditions: { version: '1.0.1' },
                                           sql_trace: false
   end
 
