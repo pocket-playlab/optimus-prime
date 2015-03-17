@@ -14,6 +14,7 @@ module OptimusPrime
       end
 
       private
+
       def transform(record)
         record.keys.each do |field|
           next unless @mapper.include?(field)
