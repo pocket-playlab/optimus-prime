@@ -37,8 +37,8 @@ module OptimusPrime
 
     def steps
       @steps ||= graph.map  { |key, step| [key, Step.create(step)] }
-                      .each { |key, step| step.logger = @logger }
-                      .to_h
+                 .each { |key, step| step.logger = @logger }
+                 .to_h
     end
 
     def edges
