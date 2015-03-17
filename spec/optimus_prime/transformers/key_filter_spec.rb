@@ -25,7 +25,7 @@ RSpec.describe OptimusPrime::Transformers::KeyFilter do
     ['name', 'age', 'gender']
   end
 
-  let (:filter) do
+  let(:filter) do
     OptimusPrime::Transformers::KeyFilter.new(fields: fields)
   end
 

@@ -4,7 +4,6 @@ module OptimusPrime
       # This class accepts a hash object and converts its values
       # to their real data types based on the map of fieldname/
       # datatype given in the initializer.
-
       def initialize(type_map:)
         @type_map = type_map
       end
@@ -32,7 +31,7 @@ module OptimusPrime
       rescue => e
         raise e if e.instance_of? TypeError # if the map has a problem, we should blow up
         logger.error("Exception handled - #{e.class}: #{e.message} - record: #{record}")
-        return false
+        false
       end
     end
   end
