@@ -12,6 +12,7 @@ end
 group :development do
   gem 'pronto-reek', require: false
   gem 'pronto-rubocop', require: false
+  gem 'reek', '2.0.1'  # the lastest version doesn't work with pronto
 end
 
 group :test do
