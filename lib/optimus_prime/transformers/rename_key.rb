@@ -1,5 +1,5 @@
 module OptimusPrime
-  module Destinations
+  module Transformers
     class RenameKey < Destination
       # This class accepts a hash object and replaces incorrect
       # keys with correct ones based on the mapping hash given

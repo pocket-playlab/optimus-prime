@@ -1,5 +1,5 @@
 module OptimusPrime
-  module Destinations
+  module Transformers
     class Validator < Destination
       # This class accepts a hash object and converts its values
       # to their real data types based on the map of fieldname/

@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'optimus_prime/transformations/rename_key'
+require 'optimus_prime/transformers/rename_key'
 
-RSpec.describe OptimusPrime::Destinations::RenameKey do
+RSpec.describe OptimusPrime::Transformers::RenameKey do
 
   let(:mapper) { { 'aeg' => 'age', 'weitgh' => 'weight' } }
 
@@ -33,7 +33,7 @@ RSpec.describe OptimusPrime::Destinations::RenameKey do
   end
 
   let (:renamer) do
-    OptimusPrime::Destinations::RenameKey.new(mapper: mapper)
+    OptimusPrime::Transformers::RenameKey.new(mapper: mapper)
   end
 
   context 'input does not contain the replacement name' do

@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'optimus_prime/transformations/key_filter'
+require 'optimus_prime/transformers/key_filter'
 
-RSpec.describe OptimusPrime::Destinations::KeyFilter do
+RSpec.describe OptimusPrime::Transformers::KeyFilter do
 
   let(:input) do
     [
@@ -26,7 +26,7 @@ RSpec.describe OptimusPrime::Destinations::KeyFilter do
   end
 
   let (:filter) do
-    OptimusPrime::Destinations::KeyFilter.new(fields: fields)
+    OptimusPrime::Transformers::KeyFilter.new(fields: fields)
   end
 
   it 'should only allow specified fields in the output' do

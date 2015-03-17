@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'optimus_prime/transformations/cast_string'
+require 'optimus_prime/transformers/cast_string'
 
-RSpec.describe OptimusPrime::Destinations::NativeTypeCast do
+RSpec.describe OptimusPrime::Transformers::NativeTypeCast do
 
   let(:type_map_correct)   { { 'amount' => 'integer', 'price' => 'float' } }
   let(:type_map_erroneous) { { 'amount' => 'integer', 'price' => 'lorem' } }
@@ -39,7 +39,7 @@ RSpec.describe OptimusPrime::Destinations::NativeTypeCast do
 
   context 'valid input and correct type map' do
     it 'should successfully convert each value to it\'s real type' do
-      caster = OptimusPrime::Destinations::CastString.new(type_map: type_map_correct)
+      caster = OptimusPrime::Transformers::CastString.new(type_map: type_map_correct)
       caster.logger = logger
       output = []
       caster.output << output
@@ -50,7 +50,7 @@ RSpec.describe OptimusPrime::Destinations::NativeTypeCast do
 
   context 'valid input and incorrect type map' do
     it 'should raise a TypeError exception' do
-      caster = OptimusPrime::Destinations::CastString.new(type_map: type_map_erroneous)
+      caster = OptimusPrime::Transformers::CastString.new(type_map: type_map_erroneous)
       caster.logger = logger
       expect { input_valid.each { |record| caster.write(record) } }.to raise_error(TypeError)
     end
@@ -59,7 +59,7 @@ RSpec.describe OptimusPrime::Destinations::NativeTypeCast do
   context 'invalid input and correct type map' do
     before { File.delete(logfile) }
     it 'should raise a TypeError exception' do
-      caster = OptimusPrime::Destinations::CastString.new(type_map: type_map_correct)
+      caster = OptimusPrime::Transformers::CastString.new(type_map: type_map_correct)
       caster.logger = logger
       output = []
       caster.output << output

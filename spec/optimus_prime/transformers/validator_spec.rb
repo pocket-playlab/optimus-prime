@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'optimus_prime/transformations/validator'
+require 'optimus_prime/transformers/validator'
 
-RSpec.describe OptimusPrime::Destinations::Validator do
+RSpec.describe OptimusPrime::Transformers::Validator do
 
   let(:constraints) do
     {
@@ -27,7 +27,7 @@ RSpec.describe OptimusPrime::Destinations::Validator do
   let(:logfile) { '/tmp/validator.log' }
 
   let(:validator) do
-    validator = OptimusPrime::Destinations::Validator.new(constraints:constraints)
+    validator = OptimusPrime::Transformers::Validator.new(constraints:constraints)
     validator.logger = Logger.new(logfile)
     validator
   end
