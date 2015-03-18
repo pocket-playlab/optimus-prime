@@ -35,9 +35,7 @@ module OptimusPrime
       end
     end
 
-    def logger
-      @logger ||= Logger.new(STDERR)
-    end
+    attr_accessor :logger
 
     def start
       raise 'Already started' if started?
