@@ -1,27 +1,16 @@
-require 'sequel'
-require 'pry-byebug'
-
 module OptimusPrime
   module Destinations
-    class Rdbms < Destination
-      def initialize(dsn:, table:, **options)
-        @db = Sequel.connect(dsn, **options)
-        @table = @db[table.to_sym]
+    class Rdbms < RdbmsWriter
+      def initialize(dsn:, table:, delete_conditions:, **options)
+        @delete_conditions = delete_conditions
+        super(dsn: dsn, table: table, **options)
+        delete_records
       end
 
-      def write(record)
-        # log any data that doesn't match what we are expecting
-        # not sure if this should be a fatal condition...
-        unless record.is_a?(::Hash)
-          logger.error 'record was not a Hash as expected!'
-          logger.error record.inspect
-        end
+      private
 
-        @table.insert record
-      end
-
-      def finish
-        @db.disconnect
+      def delete_records
+        @table.where(@delete_conditions).delete
       end
     end
   end
