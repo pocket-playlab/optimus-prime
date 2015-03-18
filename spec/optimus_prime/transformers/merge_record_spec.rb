@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'optimus_prime/destinations/merge_record'
+require 'optimus_prime/transformers/merge_record'
 
 module OptimusPrime
   module Sources
@@ -28,7 +28,7 @@ module OptimusPrime
   end
 end
 
-describe OptimusPrime::Destinations::MergeRecord do
+describe OptimusPrime::Transformers::MergeRecord do
   let(:inputs) do
     [
       [{ Platform: 'android', Level: 1, Percent: 0.0 },
@@ -61,7 +61,7 @@ describe OptimusPrime::Destinations::MergeRecord do
   let(:pipeline) do
     OptimusPrime::Pipeline.new(**{
       trans_c: {
-        class: 'OptimusPrime::Destinations::MergeRecord',
+        class: 'OptimusPrime::Transformers::MergeRecord',
         params: { join_keys: [:Platform, :Level] },
         next: ['dest_d']
       },

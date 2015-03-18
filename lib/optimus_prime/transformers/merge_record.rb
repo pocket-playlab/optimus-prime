@@ -1,5 +1,5 @@
 module OptimusPrime
-  module Destinations
+  module Transformers
     class MergeRecord < Destination
       def initialize(join_keys:)
         @join_keys = join_keys
