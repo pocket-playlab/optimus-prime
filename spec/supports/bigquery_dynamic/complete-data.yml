@@ -1,0 +1,133 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/joisecubes_1_1/data
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.MgEJ0KU6dTMcaurAzYxXqsDodkR0wxFeLQSrm3N7qeTLIw5Xc33b7yp9wiq1-_AOI-DmUsOVlbgg6A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 10 Mar 2015 08:23:46 GMT
+      Date:
+      - Tue, 10 Mar 2015 08:23:46 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/u3b23HrHpM9ZrNcwFMknW_rPSzc"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=0.08
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAKvmUlDKzsxLUbJSUErKTC8sTS2qVC5JTMpJdUksSfTJLC5R
+        0gEqSS1JTAcpiVHKKAxJTAkKigjIDTDNMwxwcsrP801JcspOyzDRLzVOMjL2
+        KPIo8LWMKvJLLnfzzc4Ljy8KCK5KjlECm1OUX14MNCeaS0GhGogVlNKgPCgf
+        KFIGssfIQgnMrdXBlMvKzyxOTS5NSi3GrcZQzxC3ZGJKSnp+TgpUAYiM5YKq
+        xOsoY1MaOionvzgVm6u4gFQtFwDm1F+QpwEAAA==
+    http_version: 
+  recorded_at: Tue, 10 Mar 2015 08:23:46 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/joisecubes_1_1
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.MgEJ0KU6dTMcaurAzYxXqsDodkR0wxFeLQSrm3N7qeTLIw5Xc33b7yp9wiq1-_AOI-DmUsOVlbgg6A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 10 Mar 2015 08:23:47 GMT
+      Date:
+      - Tue, 10 Mar 2015 08:23:47 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/MTQyNTk3NTcwOTIzMg"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=0.08
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAHWRXW/CIBSG7/srGnbrZPVjRu80ccbEr3VcLJmLwfa0oi3U
+        ghpn/O8DqslW9QbCe3jf5xw4OS7aMB6ijouWLN7uID8+KbpMAFV0CRSNTWmO
+        VltCQ9//nKWzJvdmvZ7g43DZ20SrBh6T9+OEbOoTEhymZPgzjufI2pnNzbLk
+        mXKaHBULZEeBVNW1YBKC3RLkwlt49q6EJBoxvjGOlVKZ7GB8OByqsRBxAjRj
+        shqIFF+bxPsaznKxhkBJ/I+AQ6qoBC0bFLbDSHyHaCs+RJADD0BzT46ruy1C
+        h7etG5OLLulF3RAK2YYVYgnluGc7X7CClF4pEYMklPr0pU9W0iKnqWkD0VTs
+        eJFrko+ZVYcT0h/0fWTUc+WOLTZ7yfRB/OFk8Nizh1wywcu2t9G0Sx67YA+3
+        /f1F6eX7MneQA1UaQVjh9Rq1ZrvVfG232s2G/YeESjUWIdNvEpZutV7atXqt
+        +K0LhnR7oz5yzs4vjviznrsCAAA=
+    http_version: 
+  recorded_at: Tue, 10 Mar 2015 08:23:46 GMT
+recorded_with: VCR 2.9.3
