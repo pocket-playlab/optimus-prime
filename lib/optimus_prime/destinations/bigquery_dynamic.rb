@@ -1,4 +1,4 @@
-require_relative 'bigquery_table_base'
+require_relative 'common/bigquery_table_base'
 
 module OptimusPrime
   module Destinations
@@ -14,6 +14,9 @@ module OptimusPrime
       # on the fields of records that it receives.
       # When a new field should be added to the schema, the type of the field is
       # determined using the type_map parameter, which is expected to be a hash.
+      # Notice that chunck_size should NOT exceed 500 because of BigQuery limits.
+      # Please refer to this page for more about streaming limitations:
+      # https://cloud.google.com/bigquery/streaming-data-into-bigquery
 
       attr_reader :client_email, :private_key, :chunk_size
 
@@ -53,8 +56,8 @@ module OptimusPrime
 
       def determine_table_of(record)
         table_fields_of(record).join('_')
-        .prepend(prefix).concat(suffix)
-        .downcase.gsub('.','_')
+          .prepend(prefix).concat(suffix)
+          .downcase.gsub('.', '_')
       end
 
       def table_fields_of(record)
@@ -108,6 +111,7 @@ module OptimusPrime
         end
 
         private
+
         include BigQueryTableBase
 
         def format(record)
@@ -122,7 +126,7 @@ module OptimusPrime
             record = rec['json']
             schema_fields = fields
             record_fields = record.reject { |field, value| schema_fields.include? field }
-              .map { |field, value| { 'name' => field, 'type' => @type_map[field] } }
+                            .map { |field, value| { 'name' => field, 'type' => @type_map[field] } }
             next if record_fields.empty?
             @schema.concat(record_fields)
             @schema_synced = false

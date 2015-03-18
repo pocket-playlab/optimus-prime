@@ -15,12 +15,12 @@ module OptimusPrime
       end
 
       def create_table
-        response = execute bigquery.tables.insert, body: @resource
+        execute bigquery.tables.insert, body: @resource
         @exists = @schema_synced = true
       end
 
       def patch_table
-        response = execute bigquery.tables.patch, params: { 'tableId' => id }, body: @resource
+        execute bigquery.tables.patch, params: { 'tableId' => id }, body: @resource
         @schema_synced = true
       end
 

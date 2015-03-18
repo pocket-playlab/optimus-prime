@@ -1,4 +1,4 @@
-require_relative 'bigquery_table_base'
+require_relative 'common/bigquery_table_base'
 
 module OptimusPrime
   module Destinations
@@ -6,13 +6,16 @@ module OptimusPrime
       # This class can push data to a single table with a fixed well-known
       # resource model (https://cloud.google.com/bigquery/docs/reference/v2/tables).
       # If you need something dynamic, see the BigqueryDestination class.
+      # Notice that chunck_size should NOT exceed 500 because of BigQuery limits.
+      # Please refer to this page for more about streaming limitations:
+      # https://cloud.google.com/bigquery/streaming-data-into-bigquery
 
       attr_reader :client_email, :private_key, :resource, :id_field, :chunk_size
 
       def initialize(client_email:, private_key:, resource:, id_field: nil, chunk_size: 100)
         @client_email = client_email
         @private_key  = OpenSSL::PKey::RSA.new private_key
-        @resource     = resource       # 
+        @resource     = resource
         @id_field     = id_field    # optional - used for deduplication
         @chunk_size   = chunk_size
       end
@@ -23,6 +26,7 @@ module OptimusPrime
       end
 
       private
+
       include BigQueryTableBase
 
       def id
