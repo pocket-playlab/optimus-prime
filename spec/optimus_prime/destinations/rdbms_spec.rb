@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe OptimusPrime::Destinations::Rdbms do
   let(:input) do
     [
-      { platform: 'ios', version: '1.0.1' },
+      { platform: 'ios',     version: '1.0.1' },
       { platform: 'android', version: '1.0.1'  },
       { platform: 'android', version: '1.0.2'  },
       { platform: 'android', version: '1.0.1'  }
@@ -17,7 +17,7 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
 
   let(:destination_with_string_condition) do
     OptimusPrime::Destinations::Rdbms.new dsn: dsn, table: table_name,
-                                          delete_conditions: "Platform = 'ios'",
+                                          delete_conditions: "platform = 'ios'",
                                           sql_trace: false
   end
 
