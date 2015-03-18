@@ -13,7 +13,7 @@ module OptimusPrime
       private
 
       def finish
-        push @records.values
+        @records.values.each { |record| push record }
       end
 
       def generate_key(record)

@@ -17,9 +17,12 @@ module OptimusPrime
   module Destinations
     class MyDestination < Destination
       attr_reader :written
+      def initialize
+        @written = []
+      end
 
       def write(record)
-        @written = record
+        @written << record
       end
     end
   end
