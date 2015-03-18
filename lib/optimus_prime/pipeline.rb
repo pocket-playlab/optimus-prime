@@ -8,13 +8,13 @@ module OptimusPrime
     QUEUE_SIZE = 100
 
     def initialize(**graph)
+      @logger = Logger.new(STDERR)
       @graph = graph
       edges.each do |from, to|
         queue = SizedQueue.new QUEUE_SIZE
         from.output << queue
         to.input    << queue
       end
-      @logger = Logger.new(STDERR)
     end
 
     def start
@@ -37,8 +37,8 @@ module OptimusPrime
 
     def steps
       @steps ||= graph.map  { |key, step| [key, Step.create(step)] }
-                      .each { |key, step| step.logger = @logger }
-                      .to_h
+                 .each { |key, step| step.logger = @logger }
+                 .to_h
     end
 
     def edges

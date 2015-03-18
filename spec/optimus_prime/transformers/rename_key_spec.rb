@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'optimus_prime/transformers/rename_key'
 
 RSpec.describe OptimusPrime::Transformers::RenameKey do
-
   let(:mapper) { { 'aeg' => 'age', 'weitgh' => 'weight' } }
 
   let(:input_simple) do
