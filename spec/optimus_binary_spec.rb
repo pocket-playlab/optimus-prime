@@ -11,6 +11,7 @@ Pipeline finished.
   end
 
   let(:config_path) { 'spec/supports/config/test-config.yml' }
+  let(:config_path_with_dependencies) { 'spec/supports/config/test-config-dependencies.yml' }
 
   def tmp_destination
     @tmp_destination ||= 'tmp/destination.csv'
@@ -23,17 +24,55 @@ Pipeline finished.
   before(:all) { Dir.mkdir('tmp') unless Dir.exist?('tmp') }
 
   describe 'Finished output' do
-    before(:each) { @output = `bundle exec optimus.rb -p test_pipeline -f #{config_path}` }
-    after(:each) { delete_destination }
 
-    it 'should print out the finished output when arguments are given ' do
-      expect(@output).to eq finished
+    context 'without dependencies' do
+      before(:each) { @output = `bundle exec optimus.rb -p test_pipeline -f #{config_path}` }
+      after(:each) { delete_destination }
+
+      it 'should print out the finished output when arguments are given ' do
+        expect(@output).to eq finished
+      end
+
+      it 'should write in the destination csv' do
+        destination = File.open(tmp_destination, 'r')
+        expect(destination.readlines.size).to_not eq 0
+        destination.close
+      end
     end
 
-    it 'should write in the destination csv' do
-      destination = File.open(tmp_destination, 'r')
-      expect(destination.readlines.size).to_not eq 0
-      destination.close
+    context 'with dependencies loading' do
+
+      after(:each) { delete_destination }
+
+      context 'command line' do
+
+        it 'should require json and csv' do
+          @output = `bundle exec optimus.rb -p test_pipeline -f #{config_path} -d json,csv`
+          expect(@output).to include 'Requiring json'
+          expect(@output).to include 'Requiring csv'
+        end
+
+      end
+
+      context 'yaml config' do
+        it 'should require json and csv' do
+          @output = `bundle exec optimus.rb -p test_pipeline -f #{config_path_with_dependencies}`
+          expect(@output).to include 'Requiring json'
+          expect(@output).to include 'Requiring csv'
+        end
+      end
+
+      context 'command line + yaml' do
+
+        it 'should require json, csv and xml' do
+          @output = `bundle exec optimus.rb -p test_pipeline -f #{config_path_with_dependencies} -d benchmark`
+          expect(@output).to include 'Requiring json'
+          expect(@output).to include 'Requiring csv'
+          expect(@output).to include 'Requiring benchmark'
+        end
+
+      end
+
     end
   end
 
