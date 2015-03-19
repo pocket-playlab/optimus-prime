@@ -16,12 +16,9 @@ module OptimusPrime
       private
 
       def transform(record)
-        record.keys.each do |field|
-          next unless @mapper.include?(field)
-          record[@mapper[field]] ||= record[field]
-          record.delete field
+        record.each_with_object({}) do |(key, value), new_record|
+          new_record[@mapper[key] || key] = value
         end
-        record
       end
     end
   end
