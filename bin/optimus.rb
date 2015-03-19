@@ -64,10 +64,8 @@ end
 def require_dependencies(config, options)
   yaml_dependencies = config[options[:pipeline]]['dependencies']
   cli_dependencies = options[:dependencies]
-  dependencies = ((cli_dependencies || []) + (yaml_dependencies || [])).uniq
 
-  return unless dependencies.any?
-  dependencies.each do|dependency|
+  ((cli_dependencies || []) + (yaml_dependencies || [])).uniq.each do |dependency|
     p "Requiring #{dependency}"
     require(dependency)
   end
