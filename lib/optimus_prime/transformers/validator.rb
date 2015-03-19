@@ -17,9 +17,8 @@ module OptimusPrime
       private
 
       def valid?(record)
-        record.each do |field, value|
-          next unless @rules.include? field
-          next if send("#{@rules[field][:type]}_validator", value, @rules[field][:values])
+        @rules.each do |field, rule|
+          next if send("#{rule[:type]}_validator", record[field], rule[:values])
           logger.error(record) if @logging
           return false
         end
