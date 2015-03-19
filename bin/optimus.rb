@@ -66,7 +66,7 @@ def require_dependencies(config, options)
   cli_dependencies = options[:dependencies]
   dependencies = ((cli_dependencies || []) + (yaml_dependencies || [])).uniq
 
-  return unless dependencies && dependencies.any?
+  return unless dependencies.any?
   dependencies.each do|dependency|
     p "Requiring #{dependency}"
     require(dependency)
