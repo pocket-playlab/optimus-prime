@@ -77,7 +77,7 @@ module OptimusPrime
       end
 
       def response_rows
-        @query_response['rows']
+        @query_response['totalRows'].to_i == 0 ? [] : @query_response['rows']
       end
 
       # This can be used to map an array of fields and an array of rows
