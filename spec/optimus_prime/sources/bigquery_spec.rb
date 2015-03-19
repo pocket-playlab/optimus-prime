@@ -99,6 +99,15 @@ describe OptimusPrime::Sources::Bigquery do
       allow(GoogleBigquery::Auth).to receive_message_chain(:new, :authorize).and_return(true)
     end
 
+    context 'no result' do
+      it 'should not have a result' do
+        query_response['totalRows'] = '0'
+        query_response.delete 'rows'
+        allow(GoogleBigquery::Jobs).to receive(:query).and_return(query_response)
+        expect(source.to_a).to be_empty
+      end
+    end
+
     context 'one page result' do
       it 'should yield all results' do
         allow(GoogleBigquery::Jobs).to receive(:query).and_return(query_response)
