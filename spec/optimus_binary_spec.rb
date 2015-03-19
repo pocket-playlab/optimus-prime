@@ -64,7 +64,7 @@ Pipeline finished.
 
       context 'command line + yaml' do
 
-        it 'should require json, csv and xml' do
+        it 'should require json, csv and benchmark' do
           @output = `bundle exec optimus.rb -p test_pipeline -f #{config_dependencies} -d benchmark`
           expect(@output).to include 'Requiring json'
           expect(@output).to include 'Requiring csv'
