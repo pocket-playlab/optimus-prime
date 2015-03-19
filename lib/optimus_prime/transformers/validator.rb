@@ -26,23 +26,23 @@ module OptimusPrime
       end
 
       def range_validator(value, specifieres)
-        value >= specifieres[0] && value <= specifieres[1]
+        value && value >= specifieres[0] && value <= specifieres[1]
       end
 
       def less_than_or_equal_validator(value, specifieres)
-        value <= specifieres[0]
+        value && value <= specifieres[0]
       end
 
       def less_than_validator(value, specifieres)
-        value < specifieres[0]
+        value && value < specifieres[0]
       end
 
       def greater_than_or_equal_validator(value, specifieres)
-        value >= specifieres[0]
+        value && value >= specifieres[0]
       end
 
       def greater_than_validator(value, specifieres)
-        value > specifieres[0]
+        value && value > specifieres[0]
       end
 
       def set_validator(value, specifieres)
