@@ -25,6 +25,11 @@ optparse = OptionParser.new do |opts|
   opts.on('-p', '--pipeline PIPELINE', String, 'Identifier string of pipeline to run') do |pipeline|
     options[:pipeline] = pipeline
   end
+
+  opts.on('-d', '--dependencies DEPENDENCY1,DEPENDENCY2', String,
+          'List of dependencies separated by comma') do |dependencies|
+    options[:dependencies] = dependencies.split(',')
+  end
 end
 
 begin
@@ -56,9 +61,20 @@ def symbolize_nested_keys(h)
   end
 end
 
+def require_dependencies(config, options)
+  yaml_dependencies = config[options[:pipeline]]['dependencies']
+  cli_dependencies = options[:dependencies]
+
+  ((cli_dependencies || []) + (yaml_dependencies || [])).uniq.each do |dependency|
+    p "Requiring #{dependency}"
+    require(dependency)
+  end
+end
+
 def load_graph(options)
   config = load_yaml(options)
   raw_config = config[options[:pipeline]]['graph']
+  require_dependencies(config, options)
   symbolize_nested_keys(raw_config)
 end
 
