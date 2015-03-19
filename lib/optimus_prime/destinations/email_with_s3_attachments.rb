@@ -2,7 +2,7 @@ require 'mail'
 
 module OptimusPrime
   module Destinations
-    class EmailWithAttachments < Destination
+    class EmailWithS3Attachments < Destination
       def initialize(sender:, recipients:, title:, body:)
         set_default
         @mail = Mail.new do
@@ -16,7 +16,7 @@ module OptimusPrime
       def set_default
         Mail.defaults do
           delivery_method :smtp, address: ENV.fetch('EMAIL_HOST'),
-                                 port: 587,
+                                 port: ENV.fetch('EMAIL_PORT'),
                                  domain: ENV.fetch('EMAIL_DOMAIN'),
                                  user_name: ENV.fetch('EMAIL_USERNAME'),
                                  password: ENV.fetch('EMAIL_PASSWORD'),
@@ -25,8 +25,14 @@ module OptimusPrime
         end
       end
 
-      def write(file_path)
-        @mail.add_file(file_path)
+      def write(s3_config)
+        s3_file = download bucket: s3_config[:bucket], key: s3_config[:key]
+        @mail.add_file :filename => s3_config[:key], :content => s3_file.body.read
+      end
+
+      def download(bucket:, key:)
+        s3 ||= Aws::S3::Client.new
+        s3.get_object({ bucket: bucket, key: key })
       end
 
       def finish
