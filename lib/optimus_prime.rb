@@ -1,5 +1,4 @@
 require 'sequel'
-require 'pry-byebug'
 
 require 'optimus_prime/pipeline'
 require 'optimus_prime/step'
