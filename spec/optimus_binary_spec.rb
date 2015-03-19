@@ -11,7 +11,7 @@ Pipeline finished.
   end
 
   let(:config_path) { 'spec/supports/config/test-config.yml' }
-  let(:config_path_with_dependencies) { 'spec/supports/config/test-config-dependencies.yml' }
+  let(:config_dependencies) { 'spec/supports/config/test-config-dependencies.yml' }
 
   def tmp_destination
     @tmp_destination ||= 'tmp/destination.csv'
@@ -56,7 +56,7 @@ Pipeline finished.
 
       context 'yaml config' do
         it 'should require json and csv' do
-          @output = `bundle exec optimus.rb -p test_pipeline -f #{config_path_with_dependencies}`
+          @output = `bundle exec optimus.rb -p test_pipeline -f #{config_dependencies}`
           expect(@output).to include 'Requiring json'
           expect(@output).to include 'Requiring csv'
         end
@@ -65,7 +65,7 @@ Pipeline finished.
       context 'command line + yaml' do
 
         it 'should require json, csv and xml' do
-          @output = `bundle exec optimus.rb -p test_pipeline -f #{config_path_with_dependencies} -d benchmark`
+          @output = `bundle exec optimus.rb -p test_pipeline -f #{config_dependencies} -d benchmark`
           expect(@output).to include 'Requiring json'
           expect(@output).to include 'Requiring csv'
           expect(@output).to include 'Requiring benchmark'
