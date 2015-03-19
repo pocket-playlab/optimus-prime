@@ -1,0 +1,14 @@
+---
+joisecubes_1_1:
+- name: amount
+  type: INTEGER
+gunjlecubes_1_1:
+- name: levelno
+  type: INTEGER
+- name: bonus
+  type: BOOLEAN
+wormcubes_1_1:
+- name: reason
+  type: STRING
+- name: farm
+  type: STRING

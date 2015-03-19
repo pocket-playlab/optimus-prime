@@ -8,12 +8,12 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'rspec', '~> 3.1.0'
   gem 'mail'
-  gem 'reek', '2.0.1'  # the lastest version doesn't work with pronto
 end
 
 group :development do
   gem 'pronto-reek', require: false
   gem 'pronto-rubocop', require: false
+  gem 'reek', '2.0.1'  # the lastest version doesn't work with pronto
 end
 
 group :test do
@@ -21,4 +21,5 @@ group :test do
   gem 'fakes3', github: 'pocket-playlab/fake-s3'
   gem 'vcr'
   gem 'webmock'
+  gem 'sqlite3'
 end

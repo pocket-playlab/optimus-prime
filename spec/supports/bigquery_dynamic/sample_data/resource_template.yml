@@ -1,0 +1,13 @@
+---
+kind: bigquery#table
+tableReference:
+  projectId: ppl-analytics
+  datasetId: test
+schema:
+  fields:
+  - name: game
+    type: STRING
+  - name: version
+    type: FLOAT
+  - name: event
+    type: STRING
