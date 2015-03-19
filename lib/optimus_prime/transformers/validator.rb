@@ -17,37 +17,36 @@ module OptimusPrime
       private
 
       def valid?(record)
-        record.each do |field, value|
-          next unless @rules.include? field
-          next if send("#{@rules[field][:type]}_validator", value, @rules[field][:values])
+        @rules.each do |field, rule|
+          next if send("#{rule[:type]}_validator", record[field], rule[:values])
           logger.error(record) if @logging
           return false
         end
         true
       end
 
-      def range_validator(value, specifieres)
-        value >= specifieres[0] && value <= specifieres[1]
+      def range_validator(value, params)
+        value && value >= params[0] && value <= params[1]
       end
 
-      def less_than_or_equal_validator(value, specifieres)
-        value <= specifieres[0]
+      def less_than_or_equal_validator(value, params)
+        value && value <= params[0]
       end
 
-      def less_than_validator(value, specifieres)
-        value < specifieres[0]
+      def less_than_validator(value, params)
+        value && value < params[0]
       end
 
-      def greater_than_or_equal_validator(value, specifieres)
-        value >= specifieres[0]
+      def greater_than_or_equal_validator(value, params)
+        value && value >= params[0]
       end
 
-      def greater_than_validator(value, specifieres)
-        value > specifieres[0]
+      def greater_than_validator(value, params)
+        value && value > params[0]
       end
 
-      def set_validator(value, specifieres)
-        specifieres.include? value
+      def set_validator(value, params)
+        params.include? value
       end
     end
   end
