@@ -62,4 +62,10 @@ RSpec.describe OptimusPrime::Destinations::Csv do
     options[:chunk_size] = 5
     test
   end
+
+  it 'should send bucket and key when it finish' do
+    s3_connect = { bucket: bucket, key: 'people.csv' }
+    expect(destination).to receive(:push).with(s3_connect)
+    destination.finish
+  end
 end
