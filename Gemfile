@@ -7,6 +7,7 @@ gemspec
 group :development, :test do
   gem 'pry-byebug'
   gem 'rspec', '~> 3.1.0'
+  gem 'mail'
 end
 
 group :development do

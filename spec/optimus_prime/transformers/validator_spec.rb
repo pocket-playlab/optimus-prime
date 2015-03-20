@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'optimus_prime/transformers/validator'
 
 RSpec.describe OptimusPrime::Transformers::Validator do
-
   let(:constraints) do
     {
       'level' => {

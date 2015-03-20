@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'optimus_prime/transformers/key_filter'
 
 RSpec.describe OptimusPrime::Transformers::KeyFilter do
-
   let(:input) do
     [
       { 'name' => 'John', 'age' => 25, 'gender' => :male,   'likes'  => 'Baseball' },
