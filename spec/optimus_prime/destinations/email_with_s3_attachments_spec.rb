@@ -23,9 +23,7 @@ RSpec.describe OptimusPrime::Destinations::EmailWithS3Attachments do
     ]
   end
 
-  let(:email_config) do
-    { method: :test }
-  end
+  let(:email_config) { { method: :test } }
 
   def upload
     input.each { |obj| destination.write obj }
@@ -33,8 +31,7 @@ RSpec.describe OptimusPrime::Destinations::EmailWithS3Attachments do
   end
 
   def s3_object
-    object = s3.get_object(bucket: bucket, key: destination.key)
-    object
+    s3.get_object(bucket: bucket, key: destination.key)
   end
 
   def s3_mockup_step

@@ -4,7 +4,7 @@ module OptimusPrime
   module Destinations
     class EmailWithS3Attachments < Destination
       def initialize(sender:, recipients:, title:, body:, email_config:)
-        set_default email_config
+        mail_settings email_config
         @mail = Mail.new do
           from sender
           to recipients
@@ -13,7 +13,7 @@ module OptimusPrime
         end
       end
 
-      def set_default(email_config)
+      def mail_settings(email_config)
         Mail.defaults do
           delivery_method email_config[:method] || :smtp,
                           address: email_config[:address],
