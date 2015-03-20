@@ -24,7 +24,6 @@ Pipeline finished.
   before(:all) { Dir.mkdir('tmp') unless Dir.exist?('tmp') }
 
   describe 'Finished output' do
-
     context 'without dependencies' do
       before(:each) { @output = `bundle exec optimus.rb -p test_pipeline -f #{config_path}` }
       after(:each) { delete_destination }
@@ -41,17 +40,14 @@ Pipeline finished.
     end
 
     context 'with dependencies loading' do
-
       after(:each) { delete_destination }
 
       context 'command line' do
-
         it 'should require json and csv' do
           @output = `bundle exec optimus.rb -p test_pipeline -f #{config_path} -d json,csv`
           expect(@output).to include 'Requiring json'
           expect(@output).to include 'Requiring csv'
         end
-
       end
 
       context 'yaml config' do
@@ -63,16 +59,13 @@ Pipeline finished.
       end
 
       context 'command line + yaml' do
-
         it 'should require json, csv and benchmark' do
           @output = `bundle exec optimus.rb -p test_pipeline -f #{config_dependencies} -d benchmark`
           expect(@output).to include 'Requiring json'
           expect(@output).to include 'Requiring csv'
           expect(@output).to include 'Requiring benchmark'
         end
-
       end
-
     end
   end
 

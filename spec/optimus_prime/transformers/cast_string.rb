@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'optimus_prime/transformers/cast_string'
 
 RSpec.describe OptimusPrime::Transformers::NativeTypeCast do
-
   let(:type_map_correct)   { { 'amount' => 'integer', 'price' => 'float' } }
   let(:type_map_erroneous) { { 'amount' => 'integer', 'price' => 'lorem' } }
   let(:logfile) { '/tmp/cast_string.log' }
