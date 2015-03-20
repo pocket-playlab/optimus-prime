@@ -64,7 +64,8 @@ RSpec.describe OptimusPrime::Destinations::Csv do
   end
 
   it 'should send bucket and key when it finish' do
-    expect(destination).to receive(:push).with({ bucket: bucket, key: 'people.csv' })
+    s3_connect = { bucket: bucket, key: 'people.csv' }
+    expect(destination).to receive(:push).with(s3_connect)
     destination.finish
   end
 end
