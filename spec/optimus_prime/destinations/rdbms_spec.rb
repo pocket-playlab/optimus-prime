@@ -55,12 +55,13 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
   context 'string condition' do
     it 'should delete all the records with ios platform' do
       insert_records
+      destination = destination_with_string_condition
       expect(table.where(platform: 'ios').count).to eq 1
-      insert_records_with_destination(destination_with_string_condition)
+      insert_records_with_destination(destination)
       expect(records_from_db.count).to eq 7
     end
 
-    it 'should upload insert records into database' do
+    it 'should insert records into database' do
       insert_records_with_destination(destination_with_string_condition)
       expect(records_from_db).to eq(input)
     end
@@ -69,8 +70,9 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
   context 'hash condition' do
     it 'should delete all the records with version 1.0.1' do
       insert_records
+      destination = destination_with_hash_condition
       expect(table.where(version: '1.0.1').count).to eq 3
-      insert_records_with_destination(destination_with_hash_condition)
+      insert_records_with_destination(destination)
       expect(records_from_db.count).to eq 5
     end
 
