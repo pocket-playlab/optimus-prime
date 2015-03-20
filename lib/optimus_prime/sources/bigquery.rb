@@ -33,7 +33,7 @@ module OptimusPrime
           @query_response = GoogleBigquery::Jobs.query @project_id, query: @sql
         rescue => e
           logger.error "Bigquery#query - #{e} | ProjectID: #{@project_id} | sql: #{@sql}"
-          raise error
+          raise e
         end
         if @query_response['jobComplete'] && !@query_response.key?('pageToken')
           return map_query_response_into_hashes
