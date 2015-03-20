@@ -16,7 +16,7 @@ module OptimusPrime
       def set_default(email_config)
         Mail.defaults do
           delivery_method email_config[:method] || :smtp,
-                          address: email_config[:host],
+                          address: email_config[:address],
                           port: email_config[:port],
                           domain: email_config[:domain],
                           user_name: email_config[:user_name],
