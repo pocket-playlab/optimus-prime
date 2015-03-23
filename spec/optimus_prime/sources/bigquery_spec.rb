@@ -140,5 +140,24 @@ describe OptimusPrime::Sources::Bigquery do
         expect { source.to_a }.to raise_error(error)
       end
     end
+
+    context 'retry querying' do
+      it 'should retry querying if rateLimitExceeded is raised' do
+        error = '[BigQuery: global]: rateLimitExceeded Exceeded rate limits:
+          Your project exceeded quota for concurrent queries. For more information,
+          see https://cloud.google.com/bigquery/troubleshooting-errors'
+
+        call_count = 0
+        allow(GoogleBigquery::Jobs).to receive(:query) do
+          if call_count == 0
+            call_count += 1
+            raise(error)
+          else
+            query_response
+          end
+        end
+        expect(source.to_a).to eq(results)
+      end
+    end
   end
 end
