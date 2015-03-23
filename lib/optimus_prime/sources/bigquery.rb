@@ -32,7 +32,7 @@ module OptimusPrime
         sleep_duration = 3
         begin
           logger.info "Querying #{@sql}"
-          query_response = GoogleBigquery::Jobs.query @project_id, query: @sql
+          GoogleBigquery::Jobs.query @project_id, query: @sql
         rescue => e
           logger.error "Bigquery#query - #{e} | ProjectID: #{@project_id} | sql: #{@sql}"
           # BigBroda will raise an error as a string that contains error reason and message.
@@ -44,7 +44,6 @@ module OptimusPrime
           end
           raise e
         end
-        query_response
       end
 
       def query_results
