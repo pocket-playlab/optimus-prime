@@ -3,7 +3,7 @@ require 'spec_helper'
 root = Pathname.new(__FILE__).parent.parent
 ENV['PATH'] = "#{root.join('bin')}:#{ENV['PATH']}"
 
-describe 'optimus.rb' do
+describe 'optimus' do
   let(:finished) do
     <<-eos
 Pipeline finished.
@@ -24,9 +24,8 @@ Pipeline finished.
   before(:all) { Dir.mkdir('tmp') unless Dir.exist?('tmp') }
 
   describe 'Finished output' do
-
     context 'without dependencies' do
-      before(:each) { @output = `bundle exec optimus.rb -p test_pipeline -f #{config_path}` }
+      before(:each) { @output = `bundle exec optimus -p test_pipeline -f #{config_path}` }
       after(:each) { delete_destination }
 
       it 'should print out the finished output when arguments are given ' do
@@ -41,51 +40,45 @@ Pipeline finished.
     end
 
     context 'with dependencies loading' do
-
       after(:each) { delete_destination }
 
       context 'command line' do
-
         it 'should require json and csv' do
-          @output = `bundle exec optimus.rb -p test_pipeline -f #{config_path} -d json,csv`
+          @output = `bundle exec optimus -p test_pipeline -f #{config_path} -d json,csv`
           expect(@output).to include 'Requiring json'
           expect(@output).to include 'Requiring csv'
         end
-
       end
 
       context 'yaml config' do
         it 'should require json and csv' do
-          @output = `bundle exec optimus.rb -p test_pipeline -f #{config_dependencies}`
+          @output = `bundle exec optimus -p test_pipeline -f #{config_dependencies}`
           expect(@output).to include 'Requiring json'
           expect(@output).to include 'Requiring csv'
         end
       end
 
       context 'command line + yaml' do
-
         it 'should require json, csv and benchmark' do
-          @output = `bundle exec optimus.rb -p test_pipeline -f #{config_dependencies} -d benchmark`
+          @output = `bundle exec optimus -p test_pipeline -f #{config_dependencies} -d benchmark`
           expect(@output).to include 'Requiring json'
           expect(@output).to include 'Requiring csv'
           expect(@output).to include 'Requiring benchmark'
         end
-
       end
-
     end
   end
 
   describe 'Help output' do
     it 'should print out help message if no arguments are given' do
-      output = `bundle exec optimus.rb`
+      output = `bundle exec optimus`
       expect(output).to include('Missing options')
     end
   end
 
   describe 'Missing Pipeline' do
     it 'should raise a Pipeline not found exception when the specified pipeline is not found' do
-      output = `bundle exec optimus.rb  -p inexistent_pipeline -f #{config_path} 2>&1`
+      output = `bundle exec optimus  -p inexistent_pipeline -f #{config_path} 2>&1`
       expect(output).to include('Pipeline not found (RuntimeError)')
     end
   end

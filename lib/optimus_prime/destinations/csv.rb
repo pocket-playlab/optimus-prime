@@ -29,6 +29,7 @@ module OptimusPrime
         else
           upload_buffer
         end
+        push({ bucket: @bucket, key: @key })
       end
 
       private
