@@ -13,7 +13,7 @@ module OptimusPrime
       end
 
       def each
-        query.each { |row| yield row }
+        query_results.each { |row| yield row }
       end
 
       private
@@ -29,20 +29,34 @@ module OptimusPrime
       end
 
       def query
+        sleep_duration = 3
         begin
-          @query_response = GoogleBigquery::Jobs.query @project_id, query: @sql
+          logger.info "Querying #{@sql}"
+          query_response = GoogleBigquery::Jobs.query @project_id, query: @sql
         rescue => e
           logger.error "Bigquery#query - #{e} | ProjectID: #{@project_id} | sql: #{@sql}"
+          # BigBroda will raise an error as a string that contains error reason and message.
+          if e.message.include? 'rateLimitExceeded'
+            sleep sleep_duration
+            sleep_duration += 2
+            logger.info "Retry querying #{@sql}"
+            retry
+          end
           raise e
         end
+        query_response
+      end
+
+      def query_results
+        @query_response = query
         if @query_response['jobComplete'] && !@query_response.key?('pageToken')
           return map_query_response_into_hashes
         end
-
         query_job @query_response['jobReference']['jobId']
       end
 
       def get_query_results(job_id, request_opt: {})
+        logger.info "Querying jobId: #{job_id}"
         GoogleBigquery::Jobs.getQueryResults @project_id, job_id, request_opt
       rescue => e
         error_params = "ProjectID: #{@project_id} | JobID: #{job_id} | Options: #{request_opt}"

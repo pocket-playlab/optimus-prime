@@ -88,11 +88,13 @@ describe OptimusPrime::Sources::Bigquery do
     end
 
     let(:source) do
-      OptimusPrime::Sources::Bigquery.new project_id: project_id,
-                                          sql: sql,
-                                          pass_phrase: 'notasecret',
-                                          key_file: 'test-privatekey.p12',
-                                          email: 'test@developer.gserviceaccount.com'
+      src = OptimusPrime::Sources::Bigquery.new project_id: project_id,
+                                                sql: sql,
+                                                pass_phrase: 'notasecret',
+                                                key_file: 'test-privatekey.p12',
+                                                email: 'test@developer.gserviceaccount.com'
+      src.logger = Logger.new(STDERR)
+      src
     end
 
     before :each do
@@ -128,6 +130,14 @@ describe OptimusPrime::Sources::Bigquery do
         stub_get_query_results [response_rows.last], { pageToken: '3' }, nil
 
         expect(source.to_a).to eq(results)
+      end
+    end
+
+    context 'raise an error' do
+      it 'should raise an error that is not rateLimitExceeded' do
+        error = 'An error!'
+        allow(GoogleBigquery::Jobs).to receive(:query).and_raise(error)
+        expect { source.to_a }.to raise_error(error)
       end
     end
   end
