@@ -5,6 +5,7 @@ require 'optimus_prime/step'
 require 'optimus_prime/source'
 require 'optimus_prime/destination'
 
+require 'optimus_prime/sources/s3_source'
 require 'optimus_prime/destinations/rdbms_writer'
 
 # Load all Sources and Destinations
