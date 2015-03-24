@@ -16,10 +16,10 @@ module OptimusPrime
       private
 
       def valid?(record)
-        @rules.each do |field, rule|
-          next unless record.key? field
-          next if send("#{rule[:type]}_validator", record[field], rule[:values])
-          logger.error("INVALID: #{rule[:type]} #{rule[:values]}: #{record[field]}, #{record}")
+        record.each do |field, value|
+          next unless @rules.key? field
+          next if send("#{@rules[field][:type]}_validator", value, @rules[field][:values])
+          logger.error("INVALID field: #{field}: #{value} | rule: #{@rules[field]} | row #{record}")
           return false
         end
         true
