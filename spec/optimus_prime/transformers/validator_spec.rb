@@ -22,7 +22,7 @@ RSpec.describe OptimusPrime::Transformers::Validator do
       },
       'lorem' => {
         type:   'set',
-        values: ['ipsum','dolor']
+        values: ['ipsum', 'dolor']
       }
     }
   end
