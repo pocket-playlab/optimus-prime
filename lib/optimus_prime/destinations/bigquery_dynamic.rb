@@ -32,11 +32,9 @@ module OptimusPrime
 
       def write(record)
         tid = determine_table_of(record)
-        logger.debug "#{@total}, #{tid}, #{record}"
         unless @tables.key? tid
           @tables[tid] = BigQueryTable.new(tid, @template, @type_map, client, @id_field)
         end
-        logger.debug "writing #{record}"
         @tables[tid] << record
         @total += 1
         upload if @total >= chunk_size
@@ -123,6 +121,10 @@ module OptimusPrime
           row
         end
 
+        def fields
+          resource['schema']['fields'].map { |f| f['name'] }.to_set
+        end
+
         def rebuild_schema
           buffer.each do |rec|
             record = rec['json']
@@ -130,7 +132,6 @@ module OptimusPrime
             record_fields = record.reject { |field, value| schema_fields.include? field }
                             .map { |field, value| { 'name' => field, 'type' => @type_map[field] } }
             next if record_fields.empty?
-            logger.debug('rebuilding schema')
             @schema.concat(record_fields)
             @schema_synced = false
           end
