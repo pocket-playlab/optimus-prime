@@ -20,6 +20,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rest-client',       '~> 1.7.2'
   spec.add_dependency 'sequel'
   spec.add_dependency 'yajl-ruby'
-  spec.add_dependency 'bigbroda',          '~> 0.0.7'
+  spec.add_dependency 'bigbroda',          '0.0.7'
   spec.add_dependency 'mail'
 end
