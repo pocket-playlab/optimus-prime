@@ -15,7 +15,6 @@ module OptimusPrime
         objects.each do |object|
           csv = CSV.new(object.body, headers: :first_row, col_sep: @col_sep)
           csv.each do |line|
-            p line
             yield line.to_hash
           end
         end
