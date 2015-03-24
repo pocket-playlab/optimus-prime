@@ -19,6 +19,10 @@ RSpec.describe OptimusPrime::Transformers::Validator do
       'character' => {
         type:   'set',
         values: ['tom', 'jerry']
+      },
+      'lorem' => {
+        type:   'set',
+        values: ['ipsum', 'dolor']
       }
     }
   end

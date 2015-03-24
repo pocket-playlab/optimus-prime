@@ -5,9 +5,8 @@ module OptimusPrime
       # to their real data types based on the map of fieldname/
       # datatype given in the initializer.
 
-      def initialize(constraints:, logging: true)
+      def initialize(constraints:)
         @rules = constraints
-        @logging = logging
       end
 
       def write(record)
@@ -17,9 +16,10 @@ module OptimusPrime
       private
 
       def valid?(record)
-        @rules.each do |field, rule|
-          next if send("#{rule[:type]}_validator", record[field], rule[:values])
-          logger.error(record) if @logging
+        record.each do |field, value|
+          next unless @rules.key? field
+          next if send("#{@rules[field][:type]}_validator", value, @rules[field][:values])
+          logger.error("INVALID field: #{field}: #{value} | rule: #{@rules[field]} | row #{record}")
           return false
         end
         true
