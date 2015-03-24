@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # Example:
-# bundle exec optimus.rb -f spec/supports/config/test-config.yml -p test_pipeline
+# bundle exec optimus -f spec/supports/config/test-config.yml -p test_pipeline
 
 require 'yaml'
 require 'optparse'
@@ -11,7 +11,7 @@ require 'optimus_prime'
 options = {}
 
 optparse = OptionParser.new do |opts|
-  opts.banner = 'Usage: optimus.rb --file /path/to/config.yml --pipeline pipeline_identifier'
+  opts.banner = 'Usage: optimus --file /path/to/config.yml --pipeline pipeline_identifier'
 
   opts.on_tail('-h', '--help', 'Show this message') do
     puts opts

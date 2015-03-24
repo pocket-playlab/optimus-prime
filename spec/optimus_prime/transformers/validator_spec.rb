@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'optimus_prime/transformers/validator'
 
 RSpec.describe OptimusPrime::Transformers::Validator do
-
   let(:constraints) do
     {
       'level' => {
@@ -20,6 +19,10 @@ RSpec.describe OptimusPrime::Transformers::Validator do
       'character' => {
         type:   'set',
         values: ['tom', 'jerry']
+      },
+      'lorem' => {
+        type:   'set',
+        values: ['ipsum', 'dolor']
       }
     }
   end

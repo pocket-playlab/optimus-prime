@@ -88,11 +88,13 @@ describe OptimusPrime::Sources::Bigquery do
     end
 
     let(:source) do
-      OptimusPrime::Sources::Bigquery.new project_id: project_id,
-                                          sql: sql,
-                                          pass_phrase: 'notasecret',
-                                          key_file: 'test-privatekey.p12',
-                                          email: 'test@developer.gserviceaccount.com'
+      src = OptimusPrime::Sources::Bigquery.new project_id: project_id,
+                                                sql: sql,
+                                                pass_phrase: 'notasecret',
+                                                key_file: 'test-privatekey.p12',
+                                                email: 'test@developer.gserviceaccount.com'
+      src.logger = Logger.new(STDERR)
+      src
     end
 
     before :each do
@@ -127,6 +129,33 @@ describe OptimusPrime::Sources::Bigquery do
         stub_get_query_results response_rows[2, 2], { pageToken: '2' }, '3'
         stub_get_query_results [response_rows.last], { pageToken: '3' }, nil
 
+        expect(source.to_a).to eq(results)
+      end
+    end
+
+    context 'raise an error' do
+      it 'should raise an error that is not rateLimitExceeded' do
+        error = 'An error!'
+        allow(GoogleBigquery::Jobs).to receive(:query).and_raise(error)
+        expect { source.to_a }.to raise_error(error)
+      end
+    end
+
+    context 'retry querying' do
+      it 'should retry querying if rateLimitExceeded is raised' do
+        error = '[BigQuery: global]: rateLimitExceeded Exceeded rate limits:
+          Your project exceeded quota for concurrent queries. For more information,
+          see https://cloud.google.com/bigquery/troubleshooting-errors'
+
+        call_count = 0
+        allow(GoogleBigquery::Jobs).to receive(:query) do
+          if call_count == 0
+            call_count += 1
+            raise(error)
+          else
+            query_response
+          end
+        end
         expect(source.to_a).to eq(results)
       end
     end
