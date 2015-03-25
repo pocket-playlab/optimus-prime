@@ -121,6 +121,10 @@ module OptimusPrime
           row
         end
 
+        def fields
+          resource['schema']['fields'].map { |f| f['name'] }.to_set
+        end
+
         def rebuild_schema
           buffer.each do |rec|
             record = rec['json']
