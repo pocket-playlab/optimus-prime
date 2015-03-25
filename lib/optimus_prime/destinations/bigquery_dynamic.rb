@@ -34,6 +34,7 @@ module OptimusPrime
         tid = determine_table_of(record)
         unless @tables.key? tid
           @tables[tid] = BigQueryTable.new(tid, @template, @type_map, client, @id_field)
+          @tables[tid].logger = logger
         end
         @tables[tid] << record
         @total += 1
@@ -87,6 +88,7 @@ module OptimusPrime
       class BigQueryTable
         # This class deals with a single table in BigQuery.
         attr_reader :id, :resource, :client, :id_field
+        attr_accessor :logger
 
         def initialize(id, resource_template, type_map, client, id_field = nil)
           @id = id
