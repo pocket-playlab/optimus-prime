@@ -62,6 +62,7 @@ module OptimusPrime
                            body:   { 'kind' => 'bigquery#tableDataInsertAllRequest',
                                      'rows' => buffer }
         body = JSON.parse response.body
+        body.fetch('insertErrors', []).each { |err| logger.error err }
         failed = body.fetch('insertErrors', []).map { |err| err['index'] }.uniq.length
         raise "Failed to insert #{failed} row(s) to table #{id}" if failed > 0
       end
