@@ -101,8 +101,8 @@ module OptimusPrime
       end
 
       def each
-        @report['sessionEvents'].lazy.map do |session|
-          FlurrySession.new session, meta: @report['meta']
+        @report['sessionEvents'].each do |session|
+          yield FlurrySession.new session, meta: @report['meta']
         end
       end
     end
