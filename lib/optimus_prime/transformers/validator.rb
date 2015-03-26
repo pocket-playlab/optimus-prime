@@ -6,7 +6,7 @@ module OptimusPrime
       # datatype given in the initializer.
 
       def initialize(constraints:)
-        @rules = constraints
+        @rules = constraints.stringify_nested_symbolic_keys
       end
 
       def write(record)

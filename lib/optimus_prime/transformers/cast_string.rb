@@ -5,7 +5,7 @@ module OptimusPrime
       # to their real data types based on the map of fieldname/
       # datatype given in the initializer.
       def initialize(type_map:)
-        @type_map = type_map
+        @type_map = type_map.stringify_nested_symbolic_keys
       end
 
       def write(record)

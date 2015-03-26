@@ -6,7 +6,7 @@ module OptimusPrime
       # in the initializer.
 
       def initialize(mapper:)
-        @mapper = mapper
+        @mapper = mapper.stringify_nested_symbolic_keys
       end
 
       def write(record)
