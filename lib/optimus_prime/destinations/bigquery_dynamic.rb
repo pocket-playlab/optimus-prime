@@ -18,13 +18,13 @@ module OptimusPrime
       # Please refer to this page for more about streaming limitations:
       # https://cloud.google.com/bigquery/streaming-data-into-bigquery
 
-      attr_reader :client_email, :private_key, :chunk_size, :table_id
+      attr_reader :client_email, :private_key, :chunk_size, :table_id, :template
 
       def initialize(client_email:, private_key:, resource_template:, table_id:,
                      type_map:, id_field: nil, chunk_size: 100)
         @client_email = client_email
         @private_key  = OpenSSL::PKey::RSA.new(private_key)
-        @template     = resource_template # https://cloud.google.com/bigquery/docs/reference/v2/tables
+        self.template = resource_template # https://cloud.google.com/bigquery/docs/reference/v2/tables
         self.table_id = table_id
         @type_map     = type_map
         @id_field, @chunk_size = id_field, chunk_size
@@ -32,15 +32,15 @@ module OptimusPrime
       end
 
       def table_id=(tid)
-        @table_id = stringify_nested_symbolic_keys(tid)
+        @table_id = tid.stringify_nested_symbolic_keys
       end
 
-      def stringify_nested_symbolic_keys(h)
-        if h.is_a? Hash
-          Hash[h.map { |k, v| [k.is_a?(Symbol) ? k.to_s : k, stringify_nested_symbolic_keys(v)] }]
-        else
-          h
-        end
+      def template=(template)
+        @template = template.stringify_nested_symbolic_keys
+      end
+
+      def type_map=(map)
+        @type_map = map.stringify_nested_symbolic_keys
       end
 
       def write(record)
