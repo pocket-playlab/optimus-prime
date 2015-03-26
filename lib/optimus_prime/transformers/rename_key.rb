@@ -5,8 +5,8 @@ module OptimusPrime
       # keys with correct ones based on the mapping hash given
       # in the initializer.
 
-      def initialize(mapper:)
-        @mapper = mapper
+      def initialize(mapper:, stringify: true)
+        @mapper = stringify ? mapper.stringify_nested_symbolic_keys : mapper
       end
 
       def write(record)

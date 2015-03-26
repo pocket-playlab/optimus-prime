@@ -10,6 +10,28 @@ module OptimusPrime
       # - client: the Googla API client to make queries
       # - id_field: used for deduplication
 
+      MAX_ROWS_PER_INSERT = 500
+      MAX_ROWS_PER_SECOND = 10_000
+
+      def time_frame
+        @time_frame ||= Time.now.to_i
+      end
+
+      def last_total
+        @last_total ||= 0
+      end
+
+      def check_limits
+        if time_frame < Time.now.to_i
+          @time_frame = Time.now.to_i
+          @last_total = 0
+        elsif last_total + buffer.size > MAX_ROWS_PER_SECOND
+          sleep 1
+          @time_frame = Time.now.to_i
+          @last_total = 0
+        end
+      end
+
       def buffer
         @buffer ||= []
       end
@@ -33,12 +55,19 @@ module OptimusPrime
       end
 
       def insert_all
+        check_limits
+        @last_total += buffer.size
         response = execute bigquery.tabledata.insert_all,
                            params: { 'tableId' => id },
                            body:   { 'kind' => 'bigquery#tableDataInsertAllRequest',
                                      'rows' => buffer }
         body = JSON.parse response.body
         failed = body.fetch('insertErrors', []).map { |err| err['index'] }.uniq.length
+        return if failed.zero?
+        buffer.each_with_index do |record, index|
+          logger.debug "#{index}: #{record}"
+        end
+        body.fetch('insertErrors', []).each { |err| logger.error err }
         raise "Failed to insert #{failed} row(s) to table #{id}" if failed > 0
       end
 

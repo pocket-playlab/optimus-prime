@@ -18,22 +18,36 @@ module OptimusPrime
       # Please refer to this page for more about streaming limitations:
       # https://cloud.google.com/bigquery/streaming-data-into-bigquery
 
-      attr_reader :client_email, :private_key, :chunk_size
+      attr_reader :client_email, :private_key, :chunk_size, :table_id, :template
 
       def initialize(client_email:, private_key:, resource_template:, table_id:,
                      type_map:, id_field: nil, chunk_size: 100)
         @client_email = client_email
         @private_key  = OpenSSL::PKey::RSA.new(private_key)
-        @template     = resource_template # https://cloud.google.com/bigquery/docs/reference/v2/tables
-        @table_id, @type_map   = table_id, type_map
+        self.template = resource_template # https://cloud.google.com/bigquery/docs/reference/v2/tables
+        self.table_id = table_id
+        @type_map     = type_map
         @id_field, @chunk_size = id_field, chunk_size
         @tables, @total = {}, 0
+      end
+
+      def table_id=(tid)
+        @table_id = tid.stringify_nested_symbolic_keys
+      end
+
+      def template=(template)
+        @template = template.stringify_nested_symbolic_keys
+      end
+
+      def type_map=(map)
+        @type_map = map.stringify_nested_symbolic_keys
       end
 
       def write(record)
         tid = determine_table_of(record)
         unless @tables.key? tid
           @tables[tid] = BigQueryTable.new(tid, @template, @type_map, client, @id_field)
+          @tables[tid].logger = logger
         end
         @tables[tid] << record
         @total += 1
@@ -87,6 +101,7 @@ module OptimusPrime
       class BigQueryTable
         # This class deals with a single table in BigQuery.
         attr_reader :id, :resource, :client, :id_field
+        attr_accessor :logger
 
         def initialize(id, resource_template, type_map, client, id_field = nil)
           @id = id

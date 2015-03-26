@@ -4,8 +4,8 @@ module OptimusPrime
       # This class accepts a hash object and converts its values
       # to their real data types based on the map of fieldname/
       # datatype given in the initializer.
-      def initialize(type_map:)
-        @type_map = type_map
+      def initialize(type_map:, stringify: true)
+        @type_map = stringify ? type_map.stringify_nested_symbolic_keys : type_map
       end
 
       def write(record)

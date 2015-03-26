@@ -5,8 +5,11 @@ module OptimusPrime
       # to their real data types based on the map of fieldname/
       # datatype given in the initializer.
 
-      def initialize(constraints:)
-        @rules = constraints
+      attr_accessor :stringify
+
+      def initialize(constraints:, stringify: true)
+        self.stringify = stringify
+        @rules = stringify ? constraints.stringify_nested_symbolic_keys : constraints
       end
 
       def write(record)
@@ -16,6 +19,20 @@ module OptimusPrime
       private
 
       def valid?(record)
+        stringify ? validate_with_strings(record) : validate_with_symobls(record)
+      end
+
+      def validate_with_strings(record)
+        record.each do |field, value|
+          next unless @rules.key? field
+          next if send("#{@rules[field]['type']}_validator", value, @rules[field]['values'])
+          logger.error("INVALID field: #{field}: #{value} | rule: #{@rules[field]} | row #{record}")
+          return false
+        end
+        true
+      end
+
+      def validate_with_symobls(record)
         record.each do |field, value|
           next unless @rules.key? field
           next if send("#{@rules[field][:type]}_validator", value, @rules[field][:values])
