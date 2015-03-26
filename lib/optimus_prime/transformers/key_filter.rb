@@ -6,7 +6,7 @@ module OptimusPrime
       # initializer.
 
       def initialize(fields:)
-        @fields = fields.stringify_nested_symbolic_keys
+        @fields = fields
       end
 
       def write(record)
