@@ -7,12 +7,14 @@ module OptimusPrime
     class Flurry < OptimusPrime::Source
       attr_reader :api_access_code, :api_key, :start_time, :end_time, :poll_interval
 
-      def initialize(api_access_code:, api_key:, start_time:, end_time:, poll_interval: 10)
+      def initialize(api_access_code:, api_key:, start_time:,
+                     end_time:, poll_interval: 10, report_uri: nil)
         @api_access_code = api_access_code
         @api_key         = api_key
         @start_time      = Time.parse start_time
         @end_time        = Time.parse end_time
         @poll_interval   = poll_interval
+        @report_uri      = report_uri
         raise ArgumentError.new 'start time >= end time' if @start_time >= @end_time
       end
 
@@ -28,18 +30,32 @@ module OptimusPrime
 
       # Request the report, and poll until it's ready
       def report
-        report = request_report
-        report_uri = report.fetch('report').fetch('@reportUri')
-        report_data = poll report_uri
+        report_data = request_report_with_uri
+
+        unless report_data
+          report = request_report_with_params
+          report_uri = report.fetch('report').fetch('@reportUri')
+          report_data = poll report_uri
+        end
+
         FlurryReport.new report_data
+      end
+
+      def request_report_with_uri
+        return unless @report_uri
+        logger.debug "Requesting report from report uri: #{@report_uri}"
+        response = fetch_report @report_uri
+
+        return unless response.header['content-type'] == 'application/octet-stream'
+        parse_report response.body
       end
 
       # This makes the initial request for the report. The data is not
       # returned. Only a json response is returned. The response should have
       # the url to retrieve the actual data from the request.
-      def request_report
+      def request_report_with_params
         url = request_report_url
-        logger.debug "Requesting report from #{url}"
+        logger.debug "Requesting report with params from #{url}"
         response = Net::HTTP.get_response URI(url)
         logger.debug response.body
         Yajl::Parser.parse response.body
