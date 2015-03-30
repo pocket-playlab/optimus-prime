@@ -64,7 +64,7 @@ module OptimusPrime
 
       def insert_all
         check_limits
-        retried = false
+        retried = false unless retried
         @last_total += buffer.size
         body = JSON.parse perform_insertion.body
         failed = body.fetch('insertErrors', []).map { |err| err['index'] }.uniq.length
@@ -82,10 +82,15 @@ module OptimusPrime
         retry
       end
 
+      # Removes successful records to prevent duplication
+      # TODO only keep records with an error message of "stopped" or similar, and remove
+      # other records (which are actually invalid)
       def clean_buffer(body)
-        body.fetch('insertErrors', []).each do |err|
-          buffer.delete_at err['index']
-        end
+        errornous_records = body.fetch('insertErrors', []).map { |err| err['index'] }.to_set
+        temp_buffer = []
+        body.fetch('insertErrors', []).each { |err| temp_buffer << buffer[err['index']] }
+        buffer.clear
+        buffer = temp_buffer
       end
 
       def perform_insertion
