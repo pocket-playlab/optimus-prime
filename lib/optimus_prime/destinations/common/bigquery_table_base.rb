@@ -83,14 +83,13 @@ module OptimusPrime
       end
 
       # Removes successful records to prevent duplication
-      # TODO only keep records with an error message of "stopped" or similar, and remove
+      # TODO: only keep records with an error message of "stopped" or similar, and remove
       # other records (which are actually invalid)
       def clean_buffer(body)
         errornous_records = body.fetch('insertErrors', []).map { |err| err['index'] }.to_set
         temp_buffer = []
-        body.fetch('insertErrors', []).each { |err| temp_buffer << buffer[err['index']] }
-        buffer.clear
-        buffer = temp_buffer
+        errornous_records.each { |err| temp_buffer << buffer[err] }
+        buffer.clear.concat(temp_buffer)
       end
 
       def perform_insertion
