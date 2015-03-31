@@ -53,14 +53,6 @@ def load_yaml(options)
   config
 end
 
-def symbolize_nested_keys(h)
-  if h.is_a? Hash
-    Hash[h.map { |k, v| [k.respond_to?(:to_sym) ? k.to_sym : k, symbolize_nested_keys(v)] }]
-  else
-    h
-  end
-end
-
 def require_dependencies(config, options)
   yaml_dependencies = config[options[:pipeline]]['dependencies']
   cli_dependencies = options[:dependencies]
@@ -75,7 +67,7 @@ def load_graph(options)
   config = load_yaml(options)
   raw_config = config[options[:pipeline]]['graph']
   require_dependencies(config, options)
-  symbolize_nested_keys(raw_config)
+  raw_config.symbolize_nested_keys
 end
 
 graph = load_graph(options)
