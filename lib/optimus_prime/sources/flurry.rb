@@ -2,6 +2,12 @@ require 'csv'
 require 'rest_client'
 require 'yajl'  # to improve performance and reduce memory usage
 
+require 'optimus_prime/sources/flurry_helpers/flurry_connector'
+require 'optimus_prime/sources/flurry_helpers/flurry_report'
+require 'optimus_prime/sources/flurry_helpers/flurry_report_downloader'
+require 'optimus_prime/sources/flurry_helpers/flurry_report_generator'
+require 'optimus_prime/sources/flurry_helpers/flurry_session'
+
 module OptimusPrime
   module Sources
     class Flurry < OptimusPrime::Source
@@ -30,217 +36,17 @@ module OptimusPrime
       private
 
       def report
-        r = FlurryReportDownloader.new(@report_uri, @poll_interval, logger).report
-        FlurryReport.new(r || request_report_with_params)
+        @report = report_from_uri(@report_uri)
+        @report ||= report_from_uri(report_generator)
+        FlurryHelpers::FlurryReport.new(@report)
       end
 
-      # Tries to load the report specified in @report_uri
-      # If not available, proceed to generating the report
-      def request_report_with_uri
-        return unless @report_uri
-        logger.debug "Requesting report from report uri: #{@report_uri}"
-        response = fetch_report @report_uri
-
-        return unless response.header['content-type'] == 'application/octet-stream'
-        parse_report response.body
+      def report_from_uri(uri)
+        FlurryHelpers::FlurryReportDownloader.new(uri, poll_interval, logger).run
       end
 
-      # This makes the initial request for the report. The data is not
-      # returned. Only a json response is returned. The response should have
-      # the url to retrieve the actual data from the request.
-      def request_report_with_params
-        @url ||= request_report_url
-        logger.debug "Requesting report with params from #{@url}"
-        result = handle_request_report_response(Net::HTTP.get_response(URI(@url)))
-
-        if result
-          report_uri = result.fetch('report').fetch('@reportUri')
-          poll report_uri
-        else
-          request_report_with_params
-        end
-      end
-
-      # Build the url to make a request for a report to. This is not the same
-      # url as the report data itself. The result of the request to this url
-      # will be a json hash containing the url to retrieve the actual data
-      def request_report_url
-        params = {
-          apiAccessCode: api_access_code,
-          apiKey:        api_key,
-          startTime:     start_time.to_i * 1000,
-          endTime:       end_time.to_i * 1000,
-        }
-
-        query_string = params.map { |k, v| "#{k}=#{v}" }.join('&')
-
-        "http://api.flurry.com/rawData/Events?#{query_string}"
-      end
-
-      def handle_request_report_response(response)
-        logger.debug "Status: #{response.class} - Body: #{response.body}"
-
-        return sleep_and_call(2) { false } if response.is_a? Net::HTTPTooManyRequests
-        return parse_report_response(response) if response.is_a? Net::HTTPOK
-        raise "Unhandled HTTP Status: #{response.class}."
-      end
-
-      def sleep_and_call(duration)
-        logger.debug "Request Failed. Waiting #{duration} seconds before retrying."
-        sleep duration
-        yield
-      end
-
-      def parse_report_response(response)
-        json_response = Yajl::Parser.parse response.body
-        return sleep_and_call(@retry_interval) { false } if json_response['code'] == '108'
-        json_response
-      end
-
-      # This method goes out to retrieve the data that resulted from the query.
-      # It will continue to poll the url until all attempts (configurable) have
-      # been reached, at which point it will raise an exception.
-      def wait_for_report(uri)
-        response = fetch_report uri
-        case response.header['content-type']
-        when 'application/json'
-          raise 'Unknown response' if Yajl::Parser.parse(response.body)['@reportReady'] != 'false'
-          poll uri
-        when 'application/octet-stream'
-          parse_report response.body
-        else
-          raise 'Unknown response'
-        end
-      end
-
-      def poll(uri)
-        sleep poll_interval
-        wait_for_report uri
-      end
-
-      def fetch_report(uri)
-        logger.debug "Fetching report data from #{uri}"
-        Net::HTTP.get_response URI(uri)
-      end
-
-      def parse_report(data)
-        logger.info 'Parsing report'
-        Yajl::Parser.parse Zlib::GzipReader.new(StringIO.new(data)).read
-      end
-    end
-
-    class FlurryReportDownloader
-
-      def initialize(report_uri, poll_interval, logger)
-        @report_uri = report_uri
-        @poll_interval = poll_interval
-        @report = nil
-        @stop = false
-        @logger = logger
-      end
-
-      def report
-        return nil unless @report_uri
-        @stop = request_report until @report || @stop
-        @report
-      end
-
-      private
-
-      def request_report
-        @logger.debug "Fetching report data from #{@report_uri}"
-        response = Net::HTTP.get_response URI(@report_uri)
-
-        return sleep_and_log(1) if response.is_a? Net::HTTPTooManyRequests
-        return parse_report_response(response) if response.is_a? Net::HTTPOK
-        raise "Unhandled HTTP Status: #{response.class}."
-      end
-
-      def parse_report_response(response)
-        content_type = response.header['content-type']
-        raise "Unknown Response Type: #{content_type}" unless handlers.keys.include?(content_type)
-        handlers[content_type].call(response)
-      end
-
-      def handlers
-        @handlers ||= {
-          'application/json' => -> (response) { handle_json_response(response) },
-          'application/octet-stream' => -> (response) { handle_octet_stream_response(response) }
-        }
-      end
-
-      def handle_json_response(response)
-        json_response = Yajl::Parser.parse(response.body)
-
-        return true if json_response['message'] == 'Report not found'
-        return sleep_and_log(poll_interval) if json_response['@reportReady'] == 'false'
-        raise "Unknown Json Message: #{json_response}"
-      end
-
-      def handle_octet_stream_response(response)
-        @report = parse_report response.body
-      end
-
-      def parse_report(data)
-        @logger.info 'Parsing report'
-        Yajl::Parser.parse Zlib::GzipReader.new(StringIO.new(data)).read
-      end
-
-      def sleep_and_log(duration)
-        @logger.debug "Request Failed. Waiting #{duration} seconds before retrying."
-        sleep duration
-        false
-      end
-
-    end
-
-    class FlurryReportGenerator
-
-    end
-
-    class FlurryReport
-      include Enumerable
-
-      def initialize(report)
-        @report = report
-      end
-
-      def each
-        @report['sessionEvents'].each do |session|
-          yield FlurrySession.new session, meta: @report['meta']
-        end
-      end
-    end
-
-    class FlurrySession
-      include Enumerable
-
-      def initialize(session, meta:)
-        # Expand hash keys into their full names for readability
-        expand_keys = lambda do |hash|
-          hash.map { |k, v| [meta[k], v.is_a?(Array) ? v.map(&expand_keys) : v] }.to_h
-        end
-        @session = expand_keys.call session
-      end
-
-      def each
-        @session['logs'].each do |event|
-          yield format event
-        end
-      end
-
-      private
-
-      def format(event)
-        normalized = {
-          'Session'   => @session['uniqueId'],
-          'Version'   => @session['version'],
-          'Device'    => @session['device'],
-          'Event'     => event['eventName'],
-          'Timestamp' => (@session['startTimestamp'] + event['offsetTimestamp']) / 1000,
-        }
-        normalized.merge! event['parameters'] if event['parameters']
-        normalized
+      def report_generator
+        FlurryHelpers::FlurryReportGenerator.new(@api_access_code, @api_key, @start_time, @end_time, @retry_interval, logger).run
       end
     end
   end
