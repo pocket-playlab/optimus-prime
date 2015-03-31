@@ -29,10 +29,9 @@ module OptimusPrime
 
       private
 
-      # Try to get the report with @report_uri if present
-      # Else request the report, and poll until it's ready
       def report
-        FlurryReport.new request_report_with_uri || request_report_with_params
+        r = FlurryReportDownloader.new(@report_uri, @poll_interval, logger).report
+        FlurryReport.new(r || request_report_with_params)
       end
 
       # Tries to load the report specified in @report_uri
@@ -128,6 +127,75 @@ module OptimusPrime
         logger.info 'Parsing report'
         Yajl::Parser.parse Zlib::GzipReader.new(StringIO.new(data)).read
       end
+    end
+
+    class FlurryReportDownloader
+
+      def initialize(report_uri, poll_interval, logger)
+        @report_uri = report_uri
+        @poll_interval = poll_interval
+        @report = nil
+        @stop = false
+        @logger = logger
+      end
+
+      def report
+        return nil unless @report_uri
+        @stop = request_report until @report || @stop
+        @report
+      end
+
+      private
+
+      def request_report
+        @logger.debug "Fetching report data from #{@report_uri}"
+        response = Net::HTTP.get_response URI(@report_uri)
+
+        return sleep_and_log(1) if response.is_a? Net::HTTPTooManyRequests
+        return parse_report_response(response) if response.is_a? Net::HTTPOK
+        raise "Unhandled HTTP Status: #{response.class}."
+      end
+
+      def parse_report_response(response)
+        content_type = response.header['content-type']
+        raise "Unknown Response Type: #{content_type}" unless handlers.keys.include?(content_type)
+        handlers[content_type].call(response)
+      end
+
+      def handlers
+        @handlers ||= {
+          'application/json' => -> (response) { handle_json_response(response) },
+          'application/octet-stream' => -> (response) { handle_octet_stream_response(response) }
+        }
+      end
+
+      def handle_json_response(response)
+        json_response = Yajl::Parser.parse(response.body)
+
+        return true if json_response['message'] == 'Report not found'
+        return sleep_and_log(poll_interval) if json_response['@reportReady'] == 'false'
+        raise "Unknown Json Message: #{json_response}"
+      end
+
+      def handle_octet_stream_response(response)
+        @report = parse_report response.body
+      end
+
+      def parse_report(data)
+        @logger.info 'Parsing report'
+        Yajl::Parser.parse Zlib::GzipReader.new(StringIO.new(data)).read
+      end
+
+      def sleep_and_log(duration)
+        @logger.debug "Request Failed. Waiting #{duration} seconds before retrying."
+        sleep duration
+        false
+      end
+
+    end
+
+    class FlurryReportGenerator
+
     end
 
     class FlurryReport
