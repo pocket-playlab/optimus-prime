@@ -35,6 +35,8 @@ module OptimusPrime
         FlurryReport.new request_report_with_uri || request_report_with_params
       end
 
+      # Tries to load the report specified in @report_uri
+      # If not available, proceed to generating the report
       def request_report_with_uri
         return unless @report_uri
         logger.debug "Requesting report from report uri: #{@report_uri}"
@@ -79,20 +81,20 @@ module OptimusPrime
       def handle_request_report_response(response)
         logger.debug "Status: #{response.class} - Body: #{response.body}"
 
-        return sleep_and_false(2) if response.is_a? Net::HTTPTooManyRequests
+        return sleep_and_call(2) { false } if response.is_a? Net::HTTPTooManyRequests
         return parse_report_response(response) if response.is_a? Net::HTTPOK
         raise "Unhandled HTTP Status: #{response.class}."
       end
 
-      def sleep_and_false(duration)
+      def sleep_and_call(duration)
         logger.debug "Request Failed. Waiting #{duration} seconds before retrying."
         sleep duration
-        false
+        yield
       end
 
       def parse_report_response(response)
         json_response = Yajl::Parser.parse response.body
-        return sleep_and_false(@retry_interval) if json_response['code'] == '108'
+        return sleep_and_call(@retry_interval) { false } if json_response['code'] == '108'
         json_response
       end
 
