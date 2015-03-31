@@ -7,13 +7,14 @@ module OptimusPrime
     class Flurry < OptimusPrime::Source
       attr_reader :api_access_code, :api_key, :start_time, :end_time, :poll_interval
 
-      def initialize(api_access_code:, api_key:, start_time:,
-                     end_time:, poll_interval: 10, report_uri: nil)
+      def initialize(api_access_code:, api_key:, start_time:, end_time:,
+                     poll_interval: 10, report_uri: nil, retry_interval: 600)
         @api_access_code = api_access_code
         @api_key         = api_key
         @start_time      = Time.parse start_time
         @end_time        = Time.parse end_time
         @poll_interval   = poll_interval
+        @retry_interval  = retry_interval
         @report_uri      = report_uri
         raise ArgumentError.new 'start time >= end time' if @start_time >= @end_time
       end
@@ -28,17 +29,10 @@ module OptimusPrime
 
       private
 
-      # Request the report, and poll until it's ready
+      # Try to get the report with @report_uri if present
+      # Else request the report, and poll until it's ready
       def report
-        report_data = request_report_with_uri
-
-        unless report_data
-          report = request_report_with_params
-          report_uri = report.fetch('report').fetch('@reportUri')
-          report_data = poll report_uri
-        end
-
-        FlurryReport.new report_data
+        FlurryReport.new request_report_with_uri || request_report_with_params
       end
 
       def request_report_with_uri
@@ -54,11 +48,16 @@ module OptimusPrime
       # returned. Only a json response is returned. The response should have
       # the url to retrieve the actual data from the request.
       def request_report_with_params
-        url = request_report_url
-        logger.debug "Requesting report with params from #{url}"
-        response = Net::HTTP.get_response URI(url)
-        logger.debug response.body
-        Yajl::Parser.parse response.body
+        @url ||= request_report_url
+        logger.debug "Requesting report with params from #{@url}"
+        result = handle_request_report_response(Net::HTTP.get_response(URI(@url)))
+
+        if result
+          report_uri = result.fetch('report').fetch('@reportUri')
+          poll report_uri
+        else
+          request_report_with_params
+        end
       end
 
       # Build the url to make a request for a report to. This is not the same
@@ -75,6 +74,26 @@ module OptimusPrime
         query_string = params.map { |k, v| "#{k}=#{v}" }.join('&')
 
         "http://api.flurry.com/rawData/Events?#{query_string}"
+      end
+
+      def handle_request_report_response(response)
+        logger.debug "Status: #{response.class} - Body: #{response.body}"
+
+        return sleep_and_false(2) if response.is_a? Net::HTTPTooManyRequests
+        return parse_report_response(response) if response.is_a? Net::HTTPOK
+        raise "Unhandled HTTP Status: #{response.class}."
+      end
+
+      def sleep_and_false(duration)
+        logger.debug "Request Failed. Waiting #{duration} seconds before retrying."
+        sleep duration
+        false
+      end
+
+      def parse_report_response(response)
+        json_response = Yajl::Parser.parse response.body
+        return sleep_and_false(@retry_interval) if json_response['code'] == '108'
+        json_response
       end
 
       # This method goes out to retrieve the data that resulted from the query.
