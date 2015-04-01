@@ -1,6 +1,9 @@
 module OptimusPrime
   module Sources
     module FlurryHelpers
+      # This class should not be instanciated directly.
+      # Use FlurryReportDownloader or FlurryReportGenerator depending on
+      # your needs.
       # FlurryConnector contains the shared logic for the FlurryReport
       # Downloader and the FlurryReportGenerator.
       # Thanks to this class, requests to Flurry are handled in the same way
@@ -18,12 +21,16 @@ module OptimusPrime
         # or if @stop is set to true, for example if the report is not
         # existing at all
         def run
+          raise 'Abstract Method!'
+        end
+
+        protected
+
+        def loop_request
           return nil unless url
           @stop = request! until @output || @stop
           @output
         end
-
-        protected
 
         # Make the request to Flurry
         def request!

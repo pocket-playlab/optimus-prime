@@ -10,6 +10,10 @@ module OptimusPrime
           super(logger)
         end
 
+        def run
+          loop_request
+        end
+
         private
 
         # Parse tje response as JSON then check if the report is actually
