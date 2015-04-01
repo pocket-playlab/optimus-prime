@@ -46,7 +46,8 @@ module OptimusPrime
       end
 
       def report_generator
-        FlurryHelpers::FlurryReportGenerator.new(@api_access_code, @api_key, @start_time, @end_time, @retry_interval, logger).run
+        FlurryHelpers::FlurryReportGenerator.new(@api_access_code, @api_key, @start_time,
+                                                 @end_time, @retry_interval, logger).run
       end
     end
   end
