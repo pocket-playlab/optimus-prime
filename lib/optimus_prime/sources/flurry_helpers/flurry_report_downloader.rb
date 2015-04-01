@@ -16,7 +16,7 @@ module OptimusPrime
 
         private
 
-        # Parse tje response as JSON then check if the report is actually
+        # Parse the response as JSON then check if the report is actually
         # existing or not. Stop the loop if the report does not exist, else
         # continue until the report is ready.
         def handle_json_response(response)
