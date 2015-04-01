@@ -17,15 +17,15 @@ module OptimusPrime
           @logger = logger
         end
 
-        # Loop until we get an output (report url or report data)
-        # or if @stop is set to true, for example if the report is not
-        # existing at all
         def run
           raise 'Abstract Method!'
         end
 
         protected
 
+        # Loop until we get an output (report url or report data)
+        # or if @stop is set to true, for example if the report is not
+        # existing at all
         def loop_request
           return nil unless url
           @stop = request! until @output || @stop
