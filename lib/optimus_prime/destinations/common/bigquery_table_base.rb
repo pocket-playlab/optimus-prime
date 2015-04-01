@@ -104,7 +104,8 @@ module OptimusPrime
       end
 
       def execute(method, params: {}, body: nil)
-        retries, duration = 0, 1
+        retries  ||= 0
+        duration ||= 1
         response = perform_request(method, params: params, body: body)
         return response if [200, 404].include? response.status
         raise JSON.parse(response.body)['error']['message']
