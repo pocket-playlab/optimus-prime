@@ -1,7 +1,6 @@
 module OptimusPrime
   module Transformers
     class RecordFilter < Destination
-
       def initialize(constraints:)
         @rules = constraints
       end
@@ -40,6 +39,13 @@ module OptimusPrime
         params.include? value
       end
 
+      def contained(value, params)
+        params.any? { |p| value.include?(p) }
+      end
+
+      def not_contained(value, params)
+        params.none? { |p| value.include?(p) }
+      end
     end
   end
 end
