@@ -34,7 +34,6 @@ module OptimusPrime
         end
 
         def extract_report_uri(json_response)
-          @stop = true
           @output = json_response['report']['@reportUri']
         end
 
