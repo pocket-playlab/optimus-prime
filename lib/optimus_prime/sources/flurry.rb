@@ -40,7 +40,7 @@ module OptimusPrime
       end
 
       def report_from_uri(uri)
-        FlurryHelpers::FlurryReportDownloader.new(uri, @poll_interval, logger).run
+        FlurryHelpers::FlurryReportDownloader.new(uri, @poll_interval, @retry_interval, logger).run
       end
 
       def report_generator

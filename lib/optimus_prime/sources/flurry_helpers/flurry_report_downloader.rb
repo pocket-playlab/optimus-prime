@@ -4,8 +4,9 @@ module OptimusPrime
       # The FlurryReportDownloader is only responsible for polling
       # Flurry to get a report when it's ready.
       class FlurryReportDownloader < FlurryConnector
-        def initialize(report_uri, poll_interval, logger)
+        def initialize(report_uri, poll_interval, retry_interval, logger)
           @url = report_uri
+          @retry_interval = retry_interval
           @poll_interval = poll_interval
           super(logger)
         end

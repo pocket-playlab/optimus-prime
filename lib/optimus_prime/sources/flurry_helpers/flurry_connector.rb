@@ -43,6 +43,7 @@ module OptimusPrime
         # If we get 200 back, we proceed to parse the response.
         def handle_response(response)
           return sleep_and_log(1) if response.is_a? Net::HTTPTooManyRequests
+          return sleep_and_log(@retry_interval) if response.is_a? Net::HTTPInternalServerError
           return parse_report_response(response) if response.is_a? Net::HTTPOK
           raise "Unhandled HTTP Status: #{response.class}."
         end

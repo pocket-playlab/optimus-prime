@@ -28,7 +28,6 @@ module OptimusPrime
         def handle_json_response(response)
           json_response = Yajl::Parser.parse(response.body)
 
-          return sleep_and_log(@retry_interval) if json_response['code'] == '108'
           return extract_report_uri(json_response) if contains_report?(json_response)
           raise "Unknown Json Message: #{json_response}"
         end
