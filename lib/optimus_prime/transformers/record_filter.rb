@@ -1,8 +1,8 @@
 module OptimusPrime
   module Transformers
     class RecordFilter < Destination
-      def initialize(constraints:)
-        @rules = constraints
+      def initialize(constraints:, stringify: true)
+        @rules = stringify ? constraints.stringify_nested_symbolic_keys : constraints
       end
 
       def write(record)
@@ -12,7 +12,9 @@ module OptimusPrime
       private
 
       def valid?(record)
-        @rules.all? { |field, rule| send(rule[:type], record[field], rule[:values]) }
+        # p record
+        require 'byebug'; byebug if record[:name] == 'Bob' && @rules.has_key?(:name)
+        @rules.all? { |field, rule| send(rule['type' || :type], record[field], rule['values' || :values]) }
       end
 
       def range(value, params)
