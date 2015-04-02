@@ -5,7 +5,7 @@ http_interactions:
     uri: https://accounts.google.com/o/oauth2/token
     body:
       encoding: ASCII-8BIT
-      string: grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiIxMDc5MjM4Mjc2MDQtb29sYjNqZDdrMG9mZGYyaXNxaTlkMmZvNjEzcXRuZ3RAZGV2ZWxvcGVyLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvYmlncXVlcnkiLCJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE0Mjc0NTE4ODMsImlhdCI6MTQyNzQ1MTc2M30.oc7usTCPiOi3usUffJWq-1oQ2pOTh16W1CBDMnOwaXuxPi38DFMWCf-o5ibuhagCMnP9ydjdGDNuJ1wrVHz3tG10-BIXf7wj4A_bQSXAnVL99CCCQF9RJ3DjCbUUhWyOrO0KcGp5iAkaHbAOvr5KSk10_KWvrLhzmBOkh4eDaEg
+      string: grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiIxMDc5MjM4Mjc2MDQtb29sYjNqZDdrMG9mZGYyaXNxaTlkMmZvNjEzcXRuZ3RAZGV2ZWxvcGVyLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvYmlncXVlcnkiLCJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE0Mjc4OTg1MzUsImlhdCI6MTQyNzg5ODQxNX0.mmZiTumoWvCEv09w5Kd8bpLYaPie3XgaFJQ4WzpPjC71I4RTGETiRPXVHdlZXnP3z97ZUXjnACNr1ZJ56S3-riDJzq6vCUlEd0mGSUGUixGPr1OYgERHsKMaun4QFyQ3IVUOfpzrSo6HfmbjhJ7nIbM_EgVRsqZCxTETwQvAbAQ
     headers:
       Cache-Control:
       - no-store
@@ -31,7 +31,7 @@ http_interactions:
       Expires:
       - Fri, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Fri, 27 Mar 2015 10:23:49 GMT
+      - Wed, 01 Apr 2015 14:28:01 GMT
       Content-Disposition:
       - attachment; filename="json.txt"; filename*=UTF-8''json.txt
       X-Content-Type-Options:
@@ -54,12 +54,12 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "access_token" : "ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw",
+          "access_token" : "ya29.SAE6lvJk_LbcdCWXJEHZvdrpMdUTvuoQmr3SwdJdp0dBm8nFG9nhIf2t_yYd5Gkp8x-mLYo9uWspTg",
           "token_type" : "Bearer",
           "expires_in" : 3600
         }
     http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:23:49 GMT
+  recorded_at: Wed, 01 Apr 2015 14:28:00 GMT
 - request:
     method: get
     uri: https://www.googleapis.com/discovery/v1/apis/bigquery/v2/rest
@@ -69,7 +69,7 @@ http_interactions:
     headers:
       User-Agent:
       - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
+        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-24-generic
          (gzip)
       Accept-Encoding:
       - gzip
@@ -83,9 +83,9 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Fri, 27 Mar 2015 10:28:49 GMT
+      - Wed, 01 Apr 2015 14:33:02 GMT
       Date:
-      - Fri, 27 Mar 2015 10:23:49 GMT
+      - Wed, 01 Apr 2015 14:28:02 GMT
       Etag:
       - '"ye6orv2F-1npMW3u9suM3a7C5Bo/X3GNgFVfMbHh3aWCPGGPYckpfZM"'
       Vary:
@@ -391,7 +391,7 @@ http_interactions:
         s+uAttDduvCHpb/cCZB34ufoAMD7slH+HHrXsr4IbkPhu2dwG7VJeNDs7ZFx
         PTIu75FxrfTFSlGjJ/D/3578LwiDNJILOQEA
     http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:23:50 GMT
+  recorded_at: Wed, 01 Apr 2015 14:28:01 GMT
 - request:
     method: delete
     uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/joisecubes_1_1
@@ -401,14 +401,14 @@ http_interactions:
     headers:
       User-Agent:
       - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
+        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-24-generic
          (gzip)
       Accept-Encoding:
       - gzip
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
+      - Bearer ya29.SAE6lvJk_LbcdCWXJEHZvdrpMdUTvuoQmr3SwdJdp0dBm8nFG9nhIf2t_yYd5Gkp8x-mLYo9uWspTg
       Cache-Control:
       - no-store
       Accept:
@@ -425,7 +425,7 @@ http_interactions:
       Expires:
       - Fri, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Fri, 27 Mar 2015 10:23:50 GMT
+      - Wed, 01 Apr 2015 14:28:02 GMT
       Etag:
       - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/vyGp6PvFo4RvsFtPoIWeCReyIC8"'
       Vary:
@@ -439,132 +439,24 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:23:51 GMT
-- request:
-    method: delete
-    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/gunjlecubes_1_1
-    body:
-      encoding: UTF-8
-      string: ''
-    headers:
-      User-Agent:
-      - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
-         (gzip)
-      Accept-Encoding:
-      - gzip
-      Content-Type:
-      - ''
-      Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
-      Cache-Control:
-      - no-store
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 204
-      message: No Content
-    headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
-      Expires:
-      - Fri, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Fri, 27 Mar 2015 10:23:51 GMT
-      Etag:
-      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/vyGp6PvFo4RvsFtPoIWeCReyIC8"'
-      Vary:
-      - Origin
-      - X-Origin
-      Server:
-      - GSE
-      Alternate-Protocol:
-      - 443:quic,p=0.5
-    body:
-      encoding: UTF-8
-      string: ''
-    http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:23:51 GMT
-- request:
-    method: delete
-    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/wormcubes_1_1
-    body:
-      encoding: UTF-8
-      string: ''
-    headers:
-      User-Agent:
-      - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
-         (gzip)
-      Accept-Encoding:
-      - gzip
-      Content-Type:
-      - ''
-      Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
-      Cache-Control:
-      - no-store
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 404
-      message: Not Found
-    headers:
-      Vary:
-      - Origin
-      - X-Origin
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Encoding:
-      - gzip
-      Date:
-      - Fri, 27 Mar 2015 10:23:52 GMT
-      Expires:
-      - Fri, 27 Mar 2015 10:23:52 GMT
-      Cache-Control:
-      - private, max-age=0
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Xss-Protection:
-      - 1; mode=block
-      Server:
-      - GSE
-      Alternate-Protocol:
-      - 443:quic,p=0.5
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAAKWMQQrCMBBF9zlFyFrFQlc5gEtX7kTKJBlKIcmUTIpIyd1N
-        op7AzYf3PrxdSIUpUVJa7kJ+gSvdK3VVpaMAS6xSzZ4MeHX4+ITA1H2kfKEt
-        ut8TkBlmbNeVsuyfljcwHuW6+iNE8K+8WNYZOZ+elILdDPI0TINqiVLn0WLK
-        kmud8Tx2/LNcRBFvBzQOe/UAAAA=
-    http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:23:52 GMT
+  recorded_at: Wed, 01 Apr 2015 14:28:02 GMT
 - request:
     method: post
     uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables
     body:
       encoding: UTF-8
-      string: '{"kind":"bigquery#table","tableReference":{"projectId":"ppl-analytics","datasetId":"test","tableId":"joisecubes_1_1"},"schema":{"fields":[{"name":"amount","type":"INTEGER"},{"name":"game","type":"STRING"},{"name":"version","type":"FLOAT"},{"name":"event","type":"STRING"}]}}'
+      string: '{"kind":"bigquery#table","tableReference":{"projectId":"ppl-analytics","datasetId":"test","tableId":"joisecubes_1_1"},"schema":{"fields":[{"name":"game","type":"STRING"},{"name":"version","type":"FLOAT"},{"name":"event","type":"STRING"}]}}'
     headers:
       User-Agent:
       - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
+        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-24-generic
          (gzip)
       Content-Type:
       - application/json
       Accept-Encoding:
       - gzip
       Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
+      - Bearer ya29.SAE6lvJk_LbcdCWXJEHZvdrpMdUTvuoQmr3SwdJdp0dBm8nFG9nhIf2t_yYd5Gkp8x-mLYo9uWspTg
       Cache-Control:
       - no-store
       Accept:
@@ -581,9 +473,9 @@ http_interactions:
       Expires:
       - Fri, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Fri, 27 Mar 2015 10:23:53 GMT
+      - Wed, 01 Apr 2015 14:28:04 GMT
       Etag:
-      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/XZuQITnV64FnpBxITM_F4MWqRuw"'
+      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/uLCHthscXM8Y-X-dD4mVvY1UWy8"'
       Vary:
       - Origin
       - X-Origin
@@ -606,84 +498,16 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAHWPXU/CMBiF7/crlnqLVJAYwx1EIFM+dC5KFEPKeNkKWzvW
-        boMQ/rttB4nycdOm5/Sc5313lo1WlM1R00YzGqwzSLc3kswiQBVlgSSBtiao
-        9fzk119f8nAcsmHkFB69q7dH94TDIx5/ZW+Oxz4eGl2WtDeON5h2G4PPtZsV
-        E2R6qAEkSXRLGIm2kvqiKUHI6pJTAX42AzGtTWvmr4Bo0adspROhlIloYlwU
-        RTXgPIiAJFRUfR7j47Q4r+Mk5UvwpcD/CHhOJBGgZI3CZiuBLxCN48ICUmA+
-        KO7OstW0ZalzProO2ejQXvqaUMqmrBRPUJa9N/v5IcTkSFlQiOZCvb7Vy0hK
-        ZCTWYyAS84yVvbp5mxjVGXqdXsdFWt1XLsQCfZ+E3j3XGfauZ3JIBeXsNNbt
-        j1re9RTkcD7fX5Q6fg57H22v1e53kLW3fgFk13jPfAIAAA==
+        H4sIAAAAAAAAAH2PzVLCMBSF932KTtwCEXTBsAPxB63gQFUYcZiQXtpAm9Qm
+        tNNheHeTFBYiukkm5+Sc796d46IN4wHquGjJwq8tZOWFIssYUE1boEhorDnq
+        PvZp6+Upj6YRH8aDwmeXrd7oigho461386AiSafP7Vl9Wg/618lbPmu+vpft
+        ObI9zALSNK4TTuJSMSo7CqRqrAWTQLdLkIvmomn/SohXHuMbk4iUSmUH46Io
+        GqEQYQwkZbJBRYKP0+K8hdNMrIEqiX8QcEAUkaBlg8J2K4nPEK0zhhVkwClo
+        7s5x9bRV6eD36CbkokN75RtCJduySjxBOe7e7kcjSMiRsmIQB1K/PvTLSlrk
+        JDFjoNDctUpTZWq1iT8eDO+REfe1M5kcMskEP43deaOu/3cKcuDqP5Q+Pg8L
+        HG2/2/NukbN3vgEWxUG6RQIAAA==
     http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:23:53 GMT
-- request:
-    method: post
-    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables
-    body:
-      encoding: UTF-8
-      string: '{"kind":"bigquery#table","tableReference":{"projectId":"ppl-analytics","datasetId":"test","tableId":"gunjlecubes_1_1"},"schema":{"fields":[{"name":"game","type":"STRING"},{"name":"version","type":"FLOAT"},{"name":"event","type":"STRING"}]}}'
-    headers:
-      User-Agent:
-      - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
-         (gzip)
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip
-      Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
-      Cache-Control:
-      - no-store
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
-      Expires:
-      - Fri, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Fri, 27 Mar 2015 10:23:54 GMT
-      Etag:
-      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/TCs6CzSsB_YuCcxk-zOJJpeGN5M"'
-      Vary:
-      - Origin
-      - X-Origin
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Encoding:
-      - gzip
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Xss-Protection:
-      - 1; mode=block
-      Server:
-      - GSE
-      Alternate-Protocol:
-      - 443:quic,p=0.5
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAAH2PUU/CMBSF3/crlvoKVDAawxugEhDBwB40Ykgpl61Qurp2
-        G4Pw3207eBDRlzY9p+d89+49H62ZWKCmj+Ys/EohKa40mXNAFWOBJqG1pqjV
-        f6CN1+cseovEkPfygF032qMbEsM9DjrqrrObqPbsPe3Q7bq6G/X7ErrD25cp
-        cj3MAaTkVSIILzSjqqlB6VqYihUHms5BzeqzuvusgC8HTKxtJNJaqibGeZ7X
-        wjgOORDJVI3GG3waF2cNLJN4BVQr/AOBF0QTBUa2LOzWUvgS0lljWEICgoIB
-        7z3fzFu29n4Pb0M+OtaXvkWUsisrxXOW5x/chjSCDTlhlgz4QpnXh3k5yYiC
-        bMA12LtSarqQTpsE496wi6x4qFzIZJAoFovz2NNg1Ar+TkEGQv+HMsfncYGT
-        HbTag0fkHbxv0nWA00gCAAA=
-    http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:23:54 GMT
+  recorded_at: Wed, 01 Apr 2015 14:28:03 GMT
 - request:
     method: get
     uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/joisecubes_1_1
@@ -693,14 +517,14 @@ http_interactions:
     headers:
       User-Agent:
       - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
+        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-24-generic
          (gzip)
       Accept-Encoding:
       - gzip
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
+      - Bearer ya29.SAE6lvJk_LbcdCWXJEHZvdrpMdUTvuoQmr3SwdJdp0dBm8nFG9nhIf2t_yYd5Gkp8x-mLYo9uWspTg
       Cache-Control:
       - no-store
       Accept:
@@ -711,13 +535,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Fri, 27 Mar 2015 10:23:55 GMT
+      - Wed, 01 Apr 2015 14:28:04 GMT
       Date:
-      - Fri, 27 Mar 2015 10:23:55 GMT
+      - Wed, 01 Apr 2015 14:28:04 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/MTQyNzQ1MTgzMzIzOQ"'
+      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/MTQyNzg5ODQ4Mzc2Ng"'
       Vary:
       - Origin
       - X-Origin
@@ -740,17 +564,17 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAHVQW0/CMBR+369Y6itSNjAibxCRTLkI7sFEDCnbYRS2dq6F
-        ZRD+u20HCSK8tDnfOd/lnL1lozVlIWrZaE6jnw1kxZ0k8xhQRbVAkki3pqj9
-        +hy472/b5eeSDWMv92nN7YzqhEMTD/xxMdyNnYEf7QY7bzcaT5GhU6ObpvE9
-        YSQuJA1ES4KQ1RWnAoLNHMTMmTlmVkC86FO21oyllKloYZzneTXiPIqBpFRU
-        A57gU0i8dXGa8RUEUuA/DjgkkghQsLbCZhmBrziazgQWkAELQPnuLVulLUW9
-        /9E1yUZH9bKvHUrYiJXghZVlH8x+wRIScnJZUIhDoaovVRlIgYwkOgYiCd+w
-        UlcrF6lBvaHf7XUnSKOHyhVapP8L0oc/8Ya925wtZIJydkl76Y/a/m0WbOF/
-        vnMr9Xwf92abpFOoO+mRGjoiE56fAUEGRKoUPi3lnYb72HhwmvW6W38yEzER
-        csBDqs4W3p46JfHbnX4XWQfrF+n1NwHeAgAA
+        H4sIAAAAAAAAAH2PXU/CMBSG7/crlnqLFAYCcgdBDcqH4C5MxJDSHUZhtHMt
+        LIPw3207SBTBmy19znk/zt5x0YrxADVdNGPh1waS7EaRWQSooEegSGhGE9R6
+        7lDv9WW7eF/wQdRNfVby2sMKEdDAfX+UDXbh3bAzqvZ31BuEE2TlzPrGcXRL
+        OIkyxahsKpCquBRMAt3MQE7L07LdlRDNe4yvjGKhVCybGKdpWgyFCCMgMZNF
+        Ktb4VBJvPRwnYglUSfwrAQdEEQkamyhsj5H4QqKdjGEOCXAKOnfvuLptbtr9
+        W92IXHR0z+cmIcfWLIdnUY57sPfRBazJKWXOIAqkfn3ol0UacrI2NVBo/oWc
+        qSy27M0fdwdPyMBD4YJmC4lkgp/LHnvDln9dBVvg6r8o/fk8HsA363amDzYr
+        JXQkY5H+ADQBonQLn+X25apXb9w3qo1KvVazGxGRqi8Cpu8Prm+dmvitdu8B
+        OQfnG1tEgbmnAgAA
     http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:23:55 GMT
+  recorded_at: Wed, 01 Apr 2015 14:28:04 GMT
 - request:
     method: get
     uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/joisecubes_1_1
@@ -760,14 +584,14 @@ http_interactions:
     headers:
       User-Agent:
       - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
+        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-24-generic
          (gzip)
       Accept-Encoding:
       - gzip
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
+      - Bearer ya29.SAE6lvJk_LbcdCWXJEHZvdrpMdUTvuoQmr3SwdJdp0dBm8nFG9nhIf2t_yYd5Gkp8x-mLYo9uWspTg
       Cache-Control:
       - no-store
       Accept:
@@ -778,13 +602,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Fri, 27 Mar 2015 10:23:56 GMT
+      - Wed, 01 Apr 2015 14:28:05 GMT
       Date:
-      - Fri, 27 Mar 2015 10:23:56 GMT
+      - Wed, 01 Apr 2015 14:28:05 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/MTQyNzQ1MTgzMzIzOQ"'
+      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/MTQyNzg5ODQ4Mzc2Ng"'
       Vary:
       - Origin
       - X-Origin
@@ -807,230 +631,34 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAHVQW0/CMBR+369Y6itSNjAibxCRTLkI7sFEDCnbYRS2dq6F
-        ZRD+u20HCSK8tDnfOd/lnL1lozVlIWrZaE6jnw1kxZ0k8xhQRbVAkki3pqj9
-        +hy472/b5eeSDWMv92nN7YzqhEMTD/xxMdyNnYEf7QY7bzcaT5GhU6ObpvE9
-        YSQuJA1ES4KQ1RWnAoLNHMTMmTlmVkC86FO21oyllKloYZzneTXiPIqBpFRU
-        A57gU0i8dXGa8RUEUuA/DjgkkghQsLbCZhmBrziazgQWkAELQPnuLVulLUW9
-        /9E1yUZH9bKvHUrYiJXghZVlH8x+wRIScnJZUIhDoaovVRlIgYwkOgYiCd+w
-        UlcrF6lBvaHf7XUnSKOHyhVapP8L0oc/8Ya925wtZIJydkl76Y/a/m0WbOF/
-        vnMr9Xwf92abpFOoO+mRGjoiE56fAUEGRKoUPi3lnYb72HhwmvW6W38yEzER
-        csBDqs4W3p46JfHbnX4XWQfrF+n1NwHeAgAA
+        H4sIAAAAAAAAAH2PXU/CMBSG7/crlnqLFAYCcgdBDcqH4C5MxJDSHUZhtHMt
+        LIPw3207SBTBmy19znk/zt5x0YrxADVdNGPh1waS7EaRWQSooEegSGhGE9R6
+        7lDv9WW7eF/wQdRNfVby2sMKEdDAfX+UDXbh3bAzqvZ31BuEE2TlzPrGcXRL
+        OIkyxahsKpCquBRMAt3MQE7L07LdlRDNe4yvjGKhVCybGKdpWgyFCCMgMZNF
+        Ktb4VBJvPRwnYglUSfwrAQdEEQkamyhsj5H4QqKdjGEOCXAKOnfvuLptbtr9
+        W92IXHR0z+cmIcfWLIdnUY57sPfRBazJKWXOIAqkfn3ol0UacrI2NVBo/oWc
+        qSy27M0fdwdPyMBD4YJmC4lkgp/LHnvDln9dBVvg6r8o/fk8HsA363amDzYr
+        JXQkY5H+ADQBonQLn+X25apXb9w3qo1KvVazGxGRqi8Cpu8Prm+dmvitdu8B
+        OQfnG1tEgbmnAgAA
     http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:23:56 GMT
-- request:
-    method: post
-    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/joisecubes_1_1/insertAll
-    body:
-      encoding: UTF-8
-      string: '{"kind":"bigquery#tableDataInsertAllRequest","rows":[{"json":{"game":"joisecubes","version":1.1,"event":"addgold","amount":28}},{"json":{"game":"joisecubes","version":1.1,"event":"losegold","amount":35}}]}'
-    headers:
-      User-Agent:
-      - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
-         (gzip)
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip
-      Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
-      Cache-Control:
-      - no-store
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
-      Expires:
-      - Fri, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Fri, 27 Mar 2015 10:23:57 GMT
-      Etag:
-      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/vyGp6PvFo4RvsFtPoIWeCReyIC8"'
-      Vary:
-      - Origin
-      - X-Origin
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Encoding:
-      - gzip
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Xss-Protection:
-      - 1; mode=block
-      Server:
-      - GSE
-      Alternate-Protocol:
-      - 443:quic,p=0.5
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAAKvmUlDKzsxLUbJSUErKTC8sTS2qVC5JTMpJdUksSfTMK04t
-        KnHMyQlKLS7IB3KUuGq5AH1Qqg4zAAAA
-    http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:23:57 GMT
-- request:
-    method: get
-    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/gunjlecubes_1_1
-    body:
-      encoding: UTF-8
-      string: ''
-    headers:
-      User-Agent:
-      - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
-         (gzip)
-      Accept-Encoding:
-      - gzip
-      Content-Type:
-      - ''
-      Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
-      Cache-Control:
-      - no-store
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Expires:
-      - Fri, 27 Mar 2015 10:23:57 GMT
-      Date:
-      - Fri, 27 Mar 2015 10:23:57 GMT
-      Cache-Control:
-      - private, max-age=0, must-revalidate, no-transform
-      Etag:
-      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/MTQyNzQ1MTgzNDQ1OA"'
-      Vary:
-      - Origin
-      - X-Origin
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Encoding:
-      - gzip
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Xss-Protection:
-      - 1; mode=block
-      Server:
-      - GSE
-      Alternate-Protocol:
-      - 443:quic,p=0.5
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAAH2PX0/CMBTF3/cplvqKlA2IhLcR1KD8EdyDiRhStstW6Nq5
-        FpZB+O52HSSK4suW/u4959xzsGy0oTxEXRstafS5hay4UWTJANX0CBSJytEc
-        eU/9wH153sVvMR+zQe7ThtubNImADh7502K8nzojP9qP+1Nn4s2RkVPjm6bs
-        lnDCCkUD2VUgVT3a8jWDYLsEuXAWjlmWwFZDyjelJFYqlV2M8zyvR0JEDEhK
-        ZT0QCT5fiXcuTjOxhkBJ/CMCh0QRCRqXWdi0kfivSDOawQoy4AHo4INl63sr
-        18Hv40uRjU721byMqLAxq+BllmUfTcMghoScY1YUWCj1612/DNKQkwSMQ/mv
-        VUwVqWGv/mwwfkQlPNb+0Owgk1TwS9nDcOL511WwA67+i9Kfj1MBvk16hW5c
-        rjTQicxE/g0EGRClr/BpZe+03LtW2+k0W612x2wwItVIhFT3D69vnS/xvd7w
-        HllH6wuCDlv4qgIAAA==
-    http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:23:57 GMT
-- request:
-    method: get
-    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/gunjlecubes_1_1
-    body:
-      encoding: UTF-8
-      string: ''
-    headers:
-      User-Agent:
-      - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
-         (gzip)
-      Accept-Encoding:
-      - gzip
-      Content-Type:
-      - ''
-      Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
-      Cache-Control:
-      - no-store
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Expires:
-      - Fri, 27 Mar 2015 10:23:58 GMT
-      Date:
-      - Fri, 27 Mar 2015 10:23:58 GMT
-      Cache-Control:
-      - private, max-age=0, must-revalidate, no-transform
-      Etag:
-      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/MTQyNzQ1MTgzNDQ1OA"'
-      Vary:
-      - Origin
-      - X-Origin
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Encoding:
-      - gzip
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Xss-Protection:
-      - 1; mode=block
-      Server:
-      - GSE
-      Alternate-Protocol:
-      - 443:quic,p=0.5
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAAH2PX0/CMBTF3/cplvqKlA2IhLcR1KD8EdyDiRhStstW6Nq5
-        FpZB+O52HSSK4suW/u4959xzsGy0oTxEXRstafS5hay4UWTJANX0CBSJytEc
-        eU/9wH153sVvMR+zQe7ThtubNImADh7502K8nzojP9qP+1Nn4s2RkVPjm6bs
-        lnDCCkUD2VUgVT3a8jWDYLsEuXAWjlmWwFZDyjelJFYqlV2M8zyvR0JEDEhK
-        ZT0QCT5fiXcuTjOxhkBJ/CMCh0QRCRqXWdi0kfivSDOawQoy4AHo4INl63sr
-        18Hv40uRjU721byMqLAxq+BllmUfTcMghoScY1YUWCj1612/DNKQkwSMQ/mv
-        VUwVqWGv/mwwfkQlPNb+0Owgk1TwS9nDcOL511WwA67+i9Kfj1MBvk16hW5c
-        rjTQicxE/g0EGRClr/BpZe+03LtW2+k0W612x2wwItVIhFT3D69vnS/xvd7w
-        HllH6wuCDlv4qgIAAA==
-    http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:23:58 GMT
+  recorded_at: Wed, 01 Apr 2015 14:28:05 GMT
 - request:
     method: patch
-    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/gunjlecubes_1_1
+    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/joisecubes_1_1
     body:
       encoding: UTF-8
-      string: '{"kind":"bigquery#table","tableReference":{"projectId":"ppl-analytics","datasetId":"test","tableId":"gunjlecubes_1_1"},"schema":{"fields":[{"name":"game","type":"STRING"},{"name":"version","type":"FLOAT"},{"name":"event","type":"STRING"},{"name":"levelno","type":"INTEGER"},{"name":"bonus","type":"BOOLEAN"}]}}'
+      string: '{"kind":"bigquery#table","tableReference":{"projectId":"ppl-analytics","datasetId":"test","tableId":"joisecubes_1_1"},"schema":{"fields":[{"name":"game","type":"STRING"},{"name":"version","type":"FLOAT"},{"name":"event","type":"STRING"},{"name":"amount","type":"INTEGER"}]}}'
     headers:
       User-Agent:
       - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
+        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-24-generic
          (gzip)
       Content-Type:
       - application/json
       Accept-Encoding:
       - gzip
       Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
+      - Bearer ya29.SAE6lvJk_LbcdCWXJEHZvdrpMdUTvuoQmr3SwdJdp0dBm8nFG9nhIf2t_yYd5Gkp8x-mLYo9uWspTg
       Cache-Control:
       - no-store
       Accept:
@@ -1047,9 +675,9 @@ http_interactions:
       Expires:
       - Fri, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Fri, 27 Mar 2015 10:23:59 GMT
+      - Wed, 01 Apr 2015 14:28:07 GMT
       Etag:
-      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/MTQyNzQ1MTgzNDQ1OA"'
+      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/MTQyNzg5ODQ4Mzc2Ng"'
       Vary:
       - Origin
       - X-Origin
@@ -1072,267 +700,15 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAJWQQU/CQBCF7/0VzXpF1iJGwq0EJFVoBXswUWOWdmgXlt3a
-        3dIUw393u4VEUQ5e2uyb+d6bmU/LRmvKY9S30YImHwXk1YUiCwaopUugSFKX
-        XpF7P4w6jw/b9DnlPvPKkF51BsE1EdDD03BW+buZMw2TnT+cOYH7igxOjW+W
-        sUvCCasUjWRfgVTtpOArBlGxAPnuvDumWQJbTihf10iqVCb7GJdl2U6ESBiQ
-        jMp2JDb4OCXednCWixVESuIfETgmikjQcp2FzTYS/xVpSnNYQg48Ah38adl6
-        3sbV+z18DdnoYN/U64hGNmaNeJpl2XuzYZTChhxjlhRYLPXrRb+MpEVONmAc
-        6n+r0VSVGe0pnHv+GNXivvUHs4VcUsFPsbtJ4IbnKdgCV/+NYppiXJxinh+O
-        xqP5eW4heCFPqUEQTEau31D683Y4Fy82g0rft+65QgdlLspvQpQDUXrnkDb+
-        Trdz271xetfd7k3PdDAi1VTEVF87Pt91HCV0B5MRsvbWF/4vVSwYAwAA
+        H4sIAAAAAAAAAJWQUU/CMBSF3/crlvqKFCYC8gYRCQpDcQ8makzpLqOwtXMt
+        W4bhv9t2kKjogy9t+t177jm3H46LNoyHqOeiBYvet5CVZ4osYkA1XQJFIlN6
+        Qf3ba+rd3+WrpxX343ERsIY3mF0QAV08DR5Kfxddzq4fWtMd9fzoBVk5s3PT
+        ND4nnMSlYlT2FEhVXwsmgW4XIN+ab03bKyFeThjfGMVKqVT2MC6Koh4JEcVA
+        UibrVCT4GBLnHk4zsQaqJP7mgEOiiASNjRW2y0j8i6OtzGEJGXAK2vfDcXXa
+        auj4NLoRuegwvaobhwrbYRX8YeW4e7sfXUFCji5LBnEo9etZvyzSkJPExECR
+        uWsVU2Vq2WMwH/sjZOC+9osmh0wywX/KbiazfvC3CnLg6r9WJBHbU9XYD4aj
+        4byS6eP1sDffJoNS/5PpaaADmYviC6AZEKXDB6wyaLa8Tveq2+pedNpt2xET
+        qaYiZPrbwr+7jlGC/mAyRM7e+QTi0TUQ3gIAAA==
     http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:23:59 GMT
-- request:
-    method: post
-    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/gunjlecubes_1_1/insertAll
-    body:
-      encoding: UTF-8
-      string: '{"kind":"bigquery#tableDataInsertAllRequest","rows":[{"json":{"game":"gunjlecubes","version":1.1,"event":"uplevel","levelno":23}},{"json":{"game":"gunjlecubes","version":1.1,"event":"unlocklevel","bonus":true}}]}'
-    headers:
-      User-Agent:
-      - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
-         (gzip)
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip
-      Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
-      Cache-Control:
-      - no-store
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
-      Expires:
-      - Fri, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Fri, 27 Mar 2015 10:24:00 GMT
-      Etag:
-      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/vyGp6PvFo4RvsFtPoIWeCReyIC8"'
-      Vary:
-      - Origin
-      - X-Origin
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Encoding:
-      - gzip
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Xss-Protection:
-      - 1; mode=block
-      Server:
-      - GSE
-      Alternate-Protocol:
-      - 443:quic,p=0.5
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAAKvmUlDKzsxLUbJSUErKTC8sTS2qVC5JTMpJdUksSfTMK04t
-        KnHMyQlKLS7IB3KUuGq5AH1Qqg4zAAAA
-    http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:24:00 GMT
-- request:
-    method: get
-    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/wormcubes_1_1
-    body:
-      encoding: UTF-8
-      string: ''
-    headers:
-      User-Agent:
-      - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
-         (gzip)
-      Accept-Encoding:
-      - gzip
-      Content-Type:
-      - ''
-      Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
-      Cache-Control:
-      - no-store
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 404
-      message: Not Found
-    headers:
-      Vary:
-      - Origin
-      - X-Origin
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Encoding:
-      - gzip
-      Date:
-      - Fri, 27 Mar 2015 10:24:01 GMT
-      Expires:
-      - Fri, 27 Mar 2015 10:24:01 GMT
-      Cache-Control:
-      - private, max-age=0
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Xss-Protection:
-      - 1; mode=block
-      Server:
-      - GSE
-      Alternate-Protocol:
-      - 443:quic,p=0.5
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAAKWMQQrCMBBF9zlFyFrFQlc5gEtX7kTKJBlKIcmUTIpIyd1N
-        op7AzYf3PrxdSIUpUVJa7kJ+gSvdK3VVpaMAS6xSzZ4MeHX4+ITA1H2kfKEt
-        ut8TkBlmbNeVsuyfljcwHuW6+iNE8K+8WNYZOZ+elILdDPI0TINqiVLn0WLK
-        kmud8Tx2/LNcRBFvBzQOe/UAAAA=
-    http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:24:01 GMT
-- request:
-    method: post
-    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables
-    body:
-      encoding: UTF-8
-      string: '{"kind":"bigquery#table","tableReference":{"projectId":"ppl-analytics","datasetId":"test","tableId":"wormcubes_1_1"},"schema":{"fields":[{"name":"game","type":"STRING"},{"name":"version","type":"FLOAT"},{"name":"event","type":"STRING"},{"name":"reason","type":"STRING"},{"name":"farm","type":"STRING"}]}}'
-    headers:
-      User-Agent:
-      - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
-         (gzip)
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip
-      Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
-      Cache-Control:
-      - no-store
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
-      Expires:
-      - Fri, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Fri, 27 Mar 2015 10:24:02 GMT
-      Etag:
-      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/gYEhlyznK6qgEawt9qpAKLiL7PM"'
-      Vary:
-      - Origin
-      - X-Origin
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Encoding:
-      - gzip
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Xss-Protection:
-      - 1; mode=block
-      Server:
-      - GSE
-      Alternate-Protocol:
-      - 443:quic,p=0.5
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAAJWQXU/CMBSG7/crlnqLVDDxg7sR0SATCO5CI4aUcbZVum60
-        Zcsg/HfbDi4QP+JNm/O+fc9zTreOi5aUL1DHRXMar9YgqjNF5gxQQ1ugSGys
-        KfIe78L2eFAkLwkfsn4Z0It2d3RJMrjB8WsvYdWGD65WcY+U6naVewOf+tfj
-        pymyfagF5Dk7J5ywStFQdhRI1SwzkYbrOchZa9ayTyWwyKd8aQKJUrnsYFyW
-        ZTPOspgByalshlmKD8Pioo1zkX1AqCQ+AuAFUUSClg0J26UkPgVaYwIRCOAh
-        aOzWcfWsdc/+6eAm5KJ989o3gFq2zWrxmOS4O7tdmEBKDpCIAltIXb3pykpa
-        5CQ1U6DY3I1aU1Vutedg0h8+ICPuGt9kChCSZvxr7N4fecHPKSiAq/+iBBB5
-        SvorFRGR/pbRx/v+qw524HX9HnJ2ziev3eAlrAIAAA==
-    http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:24:02 GMT
-- request:
-    method: post
-    uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/wormcubes_1_1/insertAll
-    body:
-      encoding: UTF-8
-      string: '{"kind":"bigquery#tableDataInsertAllRequest","rows":[{"json":{"game":"wormcubes","version":1.1,"event":"faillevel","reason":"timout"}},{"json":{"game":"wormcubes","version":1.1,"event":"harvestdone","farm":"canada"}}]}'
-    headers:
-      User-Agent:
-      - |-
-        Optimus Prime/0.0.1 google-api-ruby-client/0.8.2 Linux/3.13.0-46-generic
-         (gzip)
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip
-      Authorization:
-      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
-      Cache-Control:
-      - no-store
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
-      Expires:
-      - Fri, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Fri, 27 Mar 2015 10:24:03 GMT
-      Etag:
-      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/vyGp6PvFo4RvsFtPoIWeCReyIC8"'
-      Vary:
-      - Origin
-      - X-Origin
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Encoding:
-      - gzip
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Xss-Protection:
-      - 1; mode=block
-      Server:
-      - GSE
-      Alternate-Protocol:
-      - 443:quic,p=0.5
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        H4sIAAAAAAAAAKvmUlDKzsxLUbJSUErKTC8sTS2qVC5JTMpJdUksSfTMK04t
-        KnHMyQlKLS7IB3KUuGq5AH1Qqg4zAAAA
-    http_version: 
-  recorded_at: Fri, 27 Mar 2015 10:24:03 GMT
+  recorded_at: Wed, 01 Apr 2015 14:28:06 GMT
 recorded_with: VCR 2.9.3
