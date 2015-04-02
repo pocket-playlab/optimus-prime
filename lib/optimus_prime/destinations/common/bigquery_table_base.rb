@@ -96,7 +96,9 @@ module OptimusPrime
         execute bigquery.tabledata.insert_all,
                 params: { 'tableId' => id },
                 body:   { 'kind' => 'bigquery#tableDataInsertAllRequest',
-                          'rows' => buffer }
+                          'rows' => buffer,
+                          'skipInvalidRows' => true,
+                          'ignoreUnknownValues' => false }
       end
 
       def bigquery
