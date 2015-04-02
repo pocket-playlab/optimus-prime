@@ -71,25 +71,25 @@ module OptimusPrime
         raise "Failed to insert #{failed} row(s) to table #{id}" unless failed.zero?
       rescue => e
         if retried
+          raise e unless body
+          # TODO: raise exception if the number of invalid records equals the buffer size
+          # it needs better test cases
           body.fetch('insertErrors', []).each do |err|
-            logger.error "Error: #{err} | Record: #{buffer[err['index']]}"
+            logger.error "Insertion Error: #{err} | Record: #{buffer[err['index']]}"
           end
-          raise e
+          return
         end
-        clean_buffer(body)
+        clean_buffer(body) if body
         sleep 2
         retried = true
         retry
       end
 
       # Removes successful records to prevent duplication
-      # TODO: only keep records with an error message of "stopped" or similar, and remove
-      # other records (which are actually invalid)
       def clean_buffer(body)
-        errornous_records = body.fetch('insertErrors', []).map { |err| err['index'] }.to_set
-        temp_buffer = []
-        errornous_records.each { |err| temp_buffer << buffer[err] }
-        buffer.clear.concat(temp_buffer)
+        invalid_rows = body.fetch('insertErrors', []).map { |err| err['index'] }.to_set
+        invalid_records = invalid_rows.each_with_object([]) { |err, obj| obj << buffer[err] }
+        buffer.clear.concat(invalid_records)
       end
 
       def perform_insertion
@@ -109,14 +109,20 @@ module OptimusPrime
         retries  ||= 0
         duration ||= 1
         response = perform_request(method, params: params, body: body)
-        return response if [200, 404].include? response.status
-        raise JSON.parse(response.body)['error']['message']
+        return response if [200, 404].include?(response.status)
+        raise_response(response)
       rescue => e
         raise e unless (500..599).include?(response.status) and retries < MAX_RETRIES
         sleep duration
         duration *= 2
         retries += 1
         retry
+      end
+
+      def raise_response(response)
+        raise "HTTP Status: #{response.status} | message: #{JSON.parse(response.body)}"
+      rescue JSON::ParserError
+        raise "HTTP Status: #{response.status} | message: #{response.body}"
       end
 
       def perform_request(method, params: {}, body: nil)
