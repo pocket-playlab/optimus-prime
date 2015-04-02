@@ -97,32 +97,32 @@ RSpec.describe OptimusPrime::Transformers::RecordFilter do
   context 'stringify' do
     let(:record_filter) { OptimusPrime::Transformers::RecordFilter }
 
-    let(:symbol_key) { { name: 'Bob'     } }
-    let(:string_key) { { 'name' => 'Bob' } }
+    let(:symbol_key) { [ { name: 'Bob'     } ] }
+    let(:string_key) { [ { 'name' => 'Bob' } ] }
 
-    let(:condition) { { name: { type: :set, values: ['Bob'] } } }
+    let(:cond) { { name: { type: :set, values: ['Bob'] } } }
 
     context 'string keys' do
       it 'should keep key as string and match the condition' do
-        # out = record_filter.new(constraints: condition, stringify: true).write(string_key)
-        # pp out
-        # expect(out).to match_array string_key
+        out = write_records(record_filter.new(constraints: cond, stringify: true), string_key)
+        expect(out).to match_array string_key
       end
 
       it 'should filter the records when stringify is false' do
-        # record_filter.new(constraints: condition, stringify: false).write(string_key)
+        out = write_records(record_filter.new(constraints: cond, stringify: false), string_key)
+        expect(out).to match_array []
       end
     end
 
     context 'symbol keys' do
       it 'should filter the records' do
-        # out = write_records(record_filter.new(constraints: condition, stringify: true), symbol_key)
-        # expect(out).to match_array []
+        out = write_records(record_filter.new(constraints: cond, stringify: true), symbol_key)
+        expect(out).to match_array []
       end
 
       it 'should match symbol key' do
-        # out = write_records(record_filter.new(constraints: condition, stringify: false), symbol_key)
-        # expect(out).to match_array symbol_key
+        out = write_records(record_filter.new(constraints: cond, stringify: false), symbol_key)
+        expect(out).to match_array symbol_key
       end
     end
 
