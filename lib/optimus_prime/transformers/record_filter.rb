@@ -12,9 +12,10 @@ module OptimusPrime
       private
 
       def valid?(record)
-        # p record
-        require 'byebug'; byebug if record[:name] == 'Bob' && @rules.has_key?(:name)
-        @rules.all? { |field, rule| send(rule['type' || :type], record[field], rule['values' || :values]) }
+        @rules.all? { |field, rule|
+          send(rule['type'] || rule[:type],
+               record[field],
+               rule['values'] || rule[:values]) }
       end
 
       def range(value, params)
