@@ -11,8 +11,6 @@ require 'optimus_prime/sources/flurry_helpers/flurry_session'
 module OptimusPrime
   module Sources
     class Flurry < OptimusPrime::Source
-      attr_reader :api_access_code, :api_key, :start_time, :end_time, :poll_interval
-
       def initialize(api_access_code:, api_key:, start_time:, end_time:,
                      poll_interval: 10, report_uri: nil, retry_interval: 600)
         @api_access_code = api_access_code
@@ -42,7 +40,7 @@ module OptimusPrime
       end
 
       def report_from_uri(uri)
-        FlurryHelpers::FlurryReportDownloader.new(uri, poll_interval, logger).run
+        FlurryHelpers::FlurryReportDownloader.new(uri, @poll_interval, logger).run
       end
 
       def report_generator
