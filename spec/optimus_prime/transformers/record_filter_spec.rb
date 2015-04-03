@@ -83,12 +83,12 @@ RSpec.describe OptimusPrime::Transformers::RecordFilter do
     let(:ac_filter) { OptimusPrime::Transformers::RecordFilter.new(constraints: start_with_a_or_c) }
     let(:b_filter) { OptimusPrime::Transformers::RecordFilter.new(constraints: start_with_b) }
 
-    it 'should not contained b' do
+    it 'filters b from the output' do
       output = write_records(ac_filter, records)
       expect(output).to match_array records_without_b
     end
 
-    it 'should contained only b' do
+    it 'lists only b record' do
       output = write_records(b_filter, records)
       expect(output).to match_array [{ 'code' => 'B-222-3CB' }]
     end
@@ -97,34 +97,33 @@ RSpec.describe OptimusPrime::Transformers::RecordFilter do
   context 'stringify' do
     let(:record_filter) { OptimusPrime::Transformers::RecordFilter }
 
-    let(:symbol_key) { [ { name: 'Bob'     } ] }
-    let(:string_key) { [ { 'name' => 'Bob' } ] }
+    let(:symbol_key) { [{ name: 'Bob' }] }
+    let(:string_key) { [{ 'name' => 'Bob' }] }
 
     let(:cond) { { name: { type: :set, values: ['Bob'] } } }
 
     context 'string keys' do
-      it 'should keep key as string and match the condition' do
+      it 'matches with string keys' do
         out = write_records(record_filter.new(constraints: cond, stringify: true), string_key)
         expect(out).to match_array string_key
       end
 
-      it 'should filter the records when stringify is false' do
+      it 'filters the records when stringify is false' do
         out = write_records(record_filter.new(constraints: cond, stringify: false), string_key)
         expect(out).to match_array []
       end
     end
 
     context 'symbol keys' do
-      it 'should filter the records' do
+      it 'filters the invalid records' do
         out = write_records(record_filter.new(constraints: cond, stringify: true), symbol_key)
         expect(out).to match_array []
       end
 
-      it 'should match symbol key' do
+      it 'matches with symbol key' do
         out = write_records(record_filter.new(constraints: cond, stringify: false), symbol_key)
         expect(out).to match_array symbol_key
       end
     end
-
   end
 end
