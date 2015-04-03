@@ -16,7 +16,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.MgEJ0KU6dTMcaurAzYxXqsDodkR0wxFeLQSrm3N7qeTLIw5Xc33b7yp9wiq1-_AOI-DmUsOVlbgg6A
+      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
       Cache-Control:
       - no-store
       Accept:
@@ -27,13 +27,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Tue, 10 Mar 2015 08:23:46 GMT
+      - Fri, 27 Mar 2015 10:26:07 GMT
       Date:
-      - Tue, 10 Mar 2015 08:23:46 GMT
+      - Fri, 27 Mar 2015 10:26:07 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/u3b23HrHpM9ZrNcwFMknW_rPSzc"'
+      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/ZNeDkI2sgCDwRF9uZrx1EcQacDY"'
       Vary:
       - Origin
       - X-Origin
@@ -50,19 +50,19 @@ http_interactions:
       Server:
       - GSE
       Alternate-Protocol:
-      - 443:quic,p=0.08
+      - 443:quic,p=0.5
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
         H4sIAAAAAAAAAKvmUlDKzsxLUbJSUErKTC8sTS2qVC5JTMpJdUksSfTJLC5R
-        0gEqSS1JTAcpiVHKKAxJTAkKigjIDTDNMwxwcsrP801JcspOyzDRLzVOMjL2
-        KPIo8LWMKvJLLnfzzc4Ljy8KCK5KjlECm1OUX14MNCeaS0GhGogVlNKgPCgf
-        KFIGssfIQgnMrdXBlMvKzyxOTS5NSi3GrcZQzxC3ZGJKSnp+TgpUAYiM5YKq
-        xOsoY1MaOionvzgVm6u4gFQtFwDm1F+QpwEAAA==
+        0gEqSS1JTAcpiVFy9HJJNgrwLsuIyMjzy/EsD8k0MHLyN07MT7XQj/JLdcn2
+        NCpOd3YpD3KzLI0qqjB0TQ5MTHaJjFECm1OUX14MNCeaS0GhGogVlNKgPCgf
+        KFIGssfYVAnMrdXBlMvKzyxOTS5NSi3GrcZQzxC3ZE5+cWp6fk4KVAWIjOWC
+        KsXrKiMLGroqMSUFm6O4gFQtFwDMV61cpwEAAA==
     http_version: 
-  recorded_at: Tue, 10 Mar 2015 08:23:46 GMT
+  recorded_at: Fri, 27 Mar 2015 10:26:07 GMT
 - request:
     method: get
     uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/joisecubes_1_1
@@ -79,7 +79,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.MgEJ0KU6dTMcaurAzYxXqsDodkR0wxFeLQSrm3N7qeTLIw5Xc33b7yp9wiq1-_AOI-DmUsOVlbgg6A
+      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
       Cache-Control:
       - no-store
       Accept:
@@ -90,13 +90,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Tue, 10 Mar 2015 08:23:47 GMT
+      - Fri, 27 Mar 2015 10:26:07 GMT
       Date:
-      - Tue, 10 Mar 2015 08:23:47 GMT
+      - Fri, 27 Mar 2015 10:26:07 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/MTQyNTk3NTcwOTIzMg"'
+      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/MTQyNzQ1MTg0MzM3MA"'
       Vary:
       - Origin
       - X-Origin
@@ -113,21 +113,21 @@ http_interactions:
       Server:
       - GSE
       Alternate-Protocol:
-      - 443:quic,p=0.08
+      - 443:quic,p=0.5
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAHWRXW/CIBSG7/srGnbrZPVjRu80ccbEr3VcLJmLwfa0oi3U
-        ghpn/O8DqslW9QbCe3jf5xw4OS7aMB6ijouWLN7uID8+KbpMAFV0CRSNTWmO
-        VltCQ9//nKWzJvdmvZ7g43DZ20SrBh6T9+OEbOoTEhymZPgzjufI2pnNzbLk
-        mXKaHBULZEeBVNW1YBKC3RLkwlt49q6EJBoxvjGOlVKZ7GB8OByqsRBxAjRj
-        shqIFF+bxPsaznKxhkBJ/I+AQ6qoBC0bFLbDSHyHaCs+RJADD0BzT46ruy1C
-        h7etG5OLLulF3RAK2YYVYgnluGc7X7CClF4pEYMklPr0pU9W0iKnqWkD0VTs
-        eJFrko+ZVYcT0h/0fWTUc+WOLTZ7yfRB/OFk8Nizh1wywcu2t9G0Sx67YA+3
-        /f1F6eX7MneQA1UaQVjh9Rq1ZrvVfG232s2G/YeESjUWIdNvEpZutV7atXqt
-        +K0LhnR7oz5yzs4vjviznrsCAAA=
+        H4sIAAAAAAAAAHWRX2+CMBTF3/kUpHt1VsBlzjfNnHETnI6HJXMxFa5QRcpo
+        laDxu68tmmz+eWnTc3vO7952b5hoRdMQtU00p9HPBvLyTpB5AqgmSyBIpEpT
+        1Hl9Duz3t238GadeMih82rC7I4cwaGHXH5febmy5ftRwd67jdqZI26nOzbLk
+        nqQkKQUNeFsAF/UloxyCzRz4zJpZ+i6HZDGk6Uo5YiEy3sa4KIp6xFiUAMko
+        rwdsjU9N4q2Ns5wtIRAc/yPgkAjCQcoKhfUwHF8h6soEFpBDGoDk7g1TdluF
+        Di5bVyYTHdOruiJUsg6rxDOUYR70fEEMa3KiLCgkIZenL3nSkhRTslZtILJm
+        m7TKVcllptWB5/f6vQlS6qF2xRap/cz04U8GXv+2Zws5pyw9t70MRx3/tgu2
+        cNnfX5Rcvo9zBzkQIRE+rbxW035sPlgtx7GdJ/0PCeHCZSGVbxKe32o6zmOj
+        +q0jxu90hz1kHIxfs91GmbsCAAA=
     http_version: 
-  recorded_at: Tue, 10 Mar 2015 08:23:46 GMT
+  recorded_at: Fri, 27 Mar 2015 10:26:07 GMT
 recorded_with: VCR 2.9.3

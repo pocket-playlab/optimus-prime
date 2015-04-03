@@ -16,7 +16,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.MgEJ0KU6dTMcaurAzYxXqsDodkR0wxFeLQSrm3N7qeTLIw5Xc33b7yp9wiq1-_AOI-DmUsOVlbgg6A
+      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
       Cache-Control:
       - no-store
       Accept:
@@ -27,13 +27,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Tue, 10 Mar 2015 08:25:48 GMT
+      - Fri, 27 Mar 2015 10:28:09 GMT
       Date:
-      - Tue, 10 Mar 2015 08:25:48 GMT
+      - Fri, 27 Mar 2015 10:28:09 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/sz5IkhVqSsvouKfcTHqyt27ozNk"'
+      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/sz5IkhVqSsvouKfcTHqyt27ozNk"'
       Vary:
       - Origin
       - X-Origin
@@ -50,19 +50,19 @@ http_interactions:
       Server:
       - GSE
       Alternate-Protocol:
-      - 443:quic,p=0.08
+      - 443:quic,p=0.5
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
         H4sIAAAAAAAAAKvmUlDKzsxLUbJSUErKTC8sTS2qVC5JTMpJdUksSfTJLC5R
-        0gEqSS1JTAcpiVHKKAxJTAkKigjIDTDNMwxwcsrP801JcspOyzDRL64y9czO
+        0gEqSS1JTAcpiVFy9HJJNgrwLsuIyMjzy/EsD8k0MHLyN07MT7XQL64y9czO
         CCsMLi7LL/VOSw7xKKwsMTLPr/LLjlECm1OUX14MNCeaS0GhGogVlNKgPCgf
         KFIGsie9NC8rJzW5NCm1WAksXquDqchQzxC3ZGlBTmpZag5uBUbGOOXySnNy
-        IHIgMpYLqojWLs7LyU/Oxu9qhMuwGFBSVJqqhOZuLiBVywUA9roOPOYBAAA=
+        IHIgMpYLqojWLs7LyU/Oxu9qhMuwGFBSVJqqhOZuLiBVywUAkSyOfuYBAAA=
     http_version: 
-  recorded_at: Tue, 10 Mar 2015 08:25:48 GMT
+  recorded_at: Fri, 27 Mar 2015 10:28:09 GMT
 - request:
     method: get
     uri: https://www.googleapis.com/bigquery/v2/projects/ppl-analytics/datasets/test/tables/gunjlecubes_1_1
@@ -79,7 +79,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.MgEJ0KU6dTMcaurAzYxXqsDodkR0wxFeLQSrm3N7qeTLIw5Xc33b7yp9wiq1-_AOI-DmUsOVlbgg6A
+      - Bearer ya29.QwE6BtJW8ewwq8DPWMt877Q0eVEczL7AhWfu4ZkIU3Wk8mwwZyaZAToetaVPRXJyOvj7L_sCotuKZw
       Cache-Control:
       - no-store
       Accept:
@@ -90,13 +90,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Tue, 10 Mar 2015 08:25:49 GMT
+      - Fri, 27 Mar 2015 10:28:10 GMT
       Date:
-      - Tue, 10 Mar 2015 08:25:49 GMT
+      - Fri, 27 Mar 2015 10:28:10 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"hqTadRRXPmP5n1PBBonMdbBkfh4/MTQyNTk3NTc1MDIwOQ"'
+      - '"AJDc2PKvhXhnNlIwTi02BO3aoe8/MTQyNzQ1MTg5NzI5Nw"'
       Vary:
       - Origin
       - X-Origin
@@ -113,21 +113,21 @@ http_interactions:
       Server:
       - GSE
       Alternate-Protocol:
-      - 443:quic,p=0.08
+      - 443:quic,p=0.5
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAJWRwU/CMBTG7/srlnpF6pCJcGMRDQkMmD2YiDHd9hiV0o61
-        QAjhf7fr4ODEg5c2/V5/3/dee3RctGIiRT0XxSzbbKE43Ggac0ANUwJNs7I0
-        R8sNoWkUvU3XU1940yCQYpzGwWqxbOMxmR1CsroPSeKNn4b7yWyOLM6sb57z
-        WyooP2iWqJ4GpZvZVnxxSLYxqE/v07OXFfDFiIlViSy1zlUP4/1+38ykzDjQ
-        nKlmItf40iXetXBeyC9ItMI/InBKNVVg5DIL22kUvhZpSxEsoACRgAk+Oq7p
-        t3Id/m6+hFx0tq/qZUQlW7NKrGc57slOmCxhTS8xCwY8Veb0bk5WMqKga7AO
-        5d6oNH3IrfZKomH4gkrx1LjC7KBQTIo69jya9MnfFOxA6P9GcUNxIevYMCSD
-        l0H0NxdLsVV1KphMRoN+WFFm+Tg/V1IA1WYgwirYa7f8bsd/6D76nZb9P06V
-        HsuUmadMa7c6/l3rrlv98jmH9IPRADkn5xvG4RO09QIAAA==
+        H4sIAAAAAAAAAJWRzW7CMBCE73mKyL1S3AQQPzdQKUoLodAcKpUKmWQJpsZO
+        Y0MEiHev48ChKRx6seVZfzO79tGy0RflEerYaEHj7y2k+ztFFgxQRZdAkTgv
+        zVD3+TF0X192q/cV95mXBfTB7Y1rREALj4LJ3j9MnFEQN/yD1/CzGTI4Nb5J
+        wu4JJ2yvaCg7CqSqxlu+ZhBuFyDnztwxlyWw5ZDyrxxZKZXIDsZZllVjIWIG
+        JKGyGooNvnSJdy5OUrGGUEn8KwJHRBEJWs6zsJlG4muRpjSFJaTAQ9DBR8vW
+        /Rau3t/mc8hGZ/uinkcUsjErxHKWZZ/MhOEKNuQSs6TAIqlPH/pkJC1ysgHj
+        kO+VQlP7xGhvwdTzBygXT5UrzA5SSQUvY0/DcTe4TcEOuPpvFNMU46KMeX7Q
+        H/Snt7mF4FtZpnrj8bDf9QtKL5/n5wpTIEoPFNACdupus95wWrV6vdEy/8eI
+        VCMRUf2UUflWu+m2m8Uvn3OCbm/YR9bJ+gHcqBfQ9QIAAA==
     http_version: 
-  recorded_at: Tue, 10 Mar 2015 08:25:49 GMT
+  recorded_at: Fri, 27 Mar 2015 10:28:10 GMT
 recorded_with: VCR 2.9.3
