@@ -12,10 +12,11 @@ module OptimusPrime
       private
 
       def valid?(record)
-        @rules.all? { |field, rule|
+        @rules.all? do |field, rule|
           send(rule['type'] || rule[:type],
                record[field],
-               rule['values'] || rule[:values]) }
+               rule['values'] || rule[:values])
+        end
       end
 
       def range(value, params)
