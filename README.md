@@ -103,9 +103,13 @@ data source, you can use it to make sure that the last chunk gets uploaded.
 #### Development
 
 1. Make sure you have [Vagrant](vagrant) installed.
-2. Run `vagrant up && vagrant provision` to start and setup the VM.
+2. Run `vagrant up` to start and setup the VM.
 3. Run `vagrant ssh` to login to the server.
 4. You can run the tests with `rake`.
+
+##### Troubleshooting
+
+If the app is complaining about some gems missing you might have to run `vagrant provision` manually.
 
 
 
