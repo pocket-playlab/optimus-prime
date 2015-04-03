@@ -2,7 +2,6 @@ require 'csv'
 require 'rest_client'
 require 'yajl'  # to improve performance and reduce memory usage
 
-require 'optimus_prime/sources/flurry_helpers/flurry_connector'
 require 'optimus_prime/sources/flurry_helpers/flurry_report'
 require 'optimus_prime/sources/flurry_helpers/flurry_report_downloader'
 require 'optimus_prime/sources/flurry_helpers/flurry_report_generator'
