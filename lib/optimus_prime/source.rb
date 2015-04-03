@@ -1,4 +1,6 @@
 module OptimusPrime
+  # A source of data. Subclass this and implement `#each`. The `#each` method
+  # should yield values, which will be sent downstream for processing.
   class Source < OptimusPrime::Step
     include Enumerable
 
