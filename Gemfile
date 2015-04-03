@@ -22,4 +22,5 @@ group :test do
   gem 'vcr'
   gem 'webmock'
   gem 'sqlite3'
+  gem 'rspec-mocks'
 end
