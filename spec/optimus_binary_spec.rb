@@ -23,9 +23,13 @@ Pipeline finished.
 
   before(:all) { Dir.mkdir('tmp') unless Dir.exist?('tmp') }
 
+  let(:operate) { 'bundle exec optimus operate' }
+
   describe 'Finished output' do
     context 'without dependencies' do
-      before(:each) { @output = `bundle exec optimus -p test_pipeline -f #{config_path}` }
+      before(:each) do
+        @output = `#{operate} pipeline #{config_path} test_pipeline`
+      end
       after(:each) { delete_destination }
 
       it 'should print out the finished output when arguments are given ' do
@@ -44,7 +48,7 @@ Pipeline finished.
 
       context 'command line' do
         it 'should require json and csv' do
-          @output = `bundle exec optimus -p test_pipeline -f #{config_path} -d json,csv`
+          @output = `#{operate} pipeline #{config_path} test_pipeline -d json,csv`
           expect(@output).to include 'Requiring json'
           expect(@output).to include 'Requiring csv'
         end
@@ -52,7 +56,7 @@ Pipeline finished.
 
       context 'yaml config' do
         it 'should require json and csv' do
-          @output = `bundle exec optimus -p test_pipeline -f #{config_dependencies}`
+          @output = `#{operate} pipeline #{config_dependencies} test_pipeline`
           expect(@output).to include 'Requiring json'
           expect(@output).to include 'Requiring csv'
         end
@@ -60,7 +64,7 @@ Pipeline finished.
 
       context 'command line + yaml' do
         it 'should require json, csv and benchmark' do
-          @output = `bundle exec optimus -p test_pipeline -f #{config_dependencies} -d benchmark`
+          @output = `#{operate} pipeline #{config_dependencies} test_pipeline -d benchmark`
           expect(@output).to include 'Requiring json'
           expect(@output).to include 'Requiring csv'
           expect(@output).to include 'Requiring benchmark'
@@ -72,14 +76,15 @@ Pipeline finished.
   describe 'Help output' do
     it 'should print out help message if no arguments are given' do
       output = `bundle exec optimus`
-      expect(output).to include('Missing options')
+      expect(output).to include('Commands:')
     end
   end
 
   describe 'Missing Pipeline' do
+    let(:pipeline_name) { 'inexistent_pipeline' }
     it 'should raise a Pipeline not found exception when the specified pipeline is not found' do
-      output = `bundle exec optimus  -p inexistent_pipeline -f #{config_path} 2>&1`
-      expect(output).to include('Pipeline not found (RuntimeError)')
+      output = `#{operate} pipeline #{config_path} #{pipeline_name} 2>&1`
+      expect(output).to include("Pipeline #{pipeline_name} does not exist in #{config_path}")
     end
   end
 end
