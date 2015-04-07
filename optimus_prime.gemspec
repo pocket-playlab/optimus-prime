@@ -22,4 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'yajl-ruby'
   spec.add_dependency 'bigbroda',          '0.0.7'
   spec.add_dependency 'mail'
+  spec.add_dependency 'thor'
 end
