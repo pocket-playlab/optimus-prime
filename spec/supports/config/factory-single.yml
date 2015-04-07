@@ -1,0 +1,3 @@
+- id: first
+  file: spec/supports/config/test-config.yml
+  pipeline: test_pipeline
