@@ -35,8 +35,7 @@ module OptimusPrime
         sleep pl['pre_wait'] if pl['pre_wait']
         system("bundle exec optimus operate pipeline #{pl['file']} #{pl['pipeline']}",
                out: $stdout,
-               err: $stderr
-        )
+               err: $stderr)
         exitstatus = $CHILD_STATUS.exitstatus # also $? would work
         puts "#{pl['id']} finished with exit code #{exitstatus}"
         sleep pl['post_wait'] if pl['post_wait']
