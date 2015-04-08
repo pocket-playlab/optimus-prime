@@ -2,16 +2,21 @@ module OptimusPrime
   module Sources
     class Rdbms < Source
       def initialize(dsn:, query:, **options)
-        @db = Sequel.connect(dsn, **options)
-        @result = @db[query]
+        @db ||= Sequel.connect(dsn, **options)
+        @query = query
       end
 
       def each
-        @result.each do |row|
+        query.each do |row|
           yield row
         end
       end
 
+      private
+
+      def query
+        @db[@query]
+      end
     end
   end
 end
