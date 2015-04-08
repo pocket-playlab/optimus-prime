@@ -2,7 +2,7 @@ module OptimusPrime
   module Sources
     class Rdbms < Source
       def initialize(dsn:, query:, **options)
-        @db ||= Sequel.connect(dsn, **options)
+        @db = Sequel.connect(dsn, **options)
         @query = query
       end
 
