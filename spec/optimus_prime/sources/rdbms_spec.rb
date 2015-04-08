@@ -40,5 +40,4 @@ describe OptimusPrime::Sources::Rdbms do
       expect { rows.each }.to raise_error
     end
   end
-
 end
