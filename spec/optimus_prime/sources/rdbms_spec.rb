@@ -14,7 +14,7 @@ describe OptimusPrime::Sources::Rdbms do
   let(:dsn) { 'sqlite://test.db' }
   let(:table_name) { :events }
   let(:db) { Sequel.connect(dsn) }
-  let(:table) { db[table_name.to_sym] }
+  let(:table) { db[table_name] }
 
   before do
     db = Sequel.connect(dsn)
