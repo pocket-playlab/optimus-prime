@@ -1,12 +1,33 @@
 require 'logger'
 
 module OptimusPrime
+  # A processing pipeline representing a flow of data from one or more sources
+  # to one or more destinations, with any number of intermediate steps.
+  #
+  # Sources should be subclasses of `OptimusPrime::Source`; destinations and
+  # intermediate steps should be subclasses of `OptimusPrime::Destination`.
+  #
+  # Steps are connected to each other with queues. Start the pipeline by
+  # calling `#start`. This will start all steps, which will listen on their
+  # input queues and push data to their output queues.
+  #
+  # Once started, a pipeline will run in the background. To wait for it to
+  # finish, call `#wait`.
   class Pipeline
     attr_reader :graph, :logger
 
     # TODO: configurable queue size
     QUEUE_SIZE = 100
 
+    # Expects a hash representation of the pipeline graph. Keys should be the
+    # name of each step, values should be of the form
+    #
+    #     {
+    #       class: 'StepClassName',
+    #       params: { step constructor params },
+    #       next: ['name of next step', ...]
+    #     }
+    #
     def initialize(**graph)
       @logger = Logger.new(STDERR)
       @graph = graph
@@ -36,8 +57,8 @@ module OptimusPrime
     alias_method :wait, :join
 
     def steps
-      @steps ||= graph.map  { |key, step| [key, Step.create(step)] }
-                 .each { |key, step| step.logger = @logger }
+      @steps ||= graph.map { |key, config| [key, Step.create(config)] }
+                 .each     { |key, step| step.logger = @logger }
                  .to_h
     end
 

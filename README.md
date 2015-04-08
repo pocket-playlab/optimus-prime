@@ -98,5 +98,21 @@ has been processed. If you are buffering output and uploading it in chunks to a
 data source, you can use it to make sure that the last chunk gets uploaded.
 
 
+### Contributing
+
+#### Development
+
+1. Make sure you have [Vagrant](vagrant) installed.
+2. Run `vagrant up` to start and setup the VM.
+3. Run `vagrant ssh` to login to the server.
+4. You can run the tests with `rake`.
+
+##### Troubleshooting
+
+If the app is complaining about some gems missing you might have to run `vagrant provision` manually.
+
+
+
 [1]: http://upload.wikimedia.org/wikipedia/en/1/19/Optimus10108pieces.jpg
 [2]: http://nodejs.org/api/stream.html
+[vagrant]: https://www.vagrantup.com/
