@@ -26,7 +26,7 @@ module OptimusPrime
         @private_key  = OpenSSL::PKey::RSA.new(private_key)
         self.template = resource_template # https://cloud.google.com/bigquery/docs/reference/v2/tables
         self.table_id = table_id
-        @type_map     = type_map
+        self.type_map = type_map
         @id_field, @chunk_size = id_field, chunk_size
         @tables, @total = {}, 0
       end
