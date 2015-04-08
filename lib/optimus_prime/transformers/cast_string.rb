@@ -18,6 +18,8 @@
 #
 # With each write it accepts a Hash and and returns a Hash with converted types.
 
+require 'date'
+
 module OptimusPrime
   module Transformers
     class CastString < Destination
@@ -47,6 +49,7 @@ module OptimusPrime
             when 'float'    then Float(val)
             # NOTE: Every string not being 'true' results in false.
             when 'boolean'  then val.downcase == 'true'
+            when 'date'     then Date.parse(val)
             else raise TypeError.new("Cannot convert #{type} to String!")
           end
         end
