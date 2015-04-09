@@ -18,13 +18,15 @@
 #
 # With each write it accepts a Hash and and returns a Hash with converted types.
 
+require 'date'
+
 module OptimusPrime
   module Transformers
     class CastString < Destination
       # type_map - Hash specifying the types like in the example above
       # stringify - Optional Boolean you can set to false to
       #             NOT convert Symbol keys of the type_map to Strings
-      def initialize(type_map:, stringify: true)
+      def initialize(type_map: {}, stringify: true)
         @type_map = stringify ? type_map.stringify_nested_symbolic_keys : type_map
       end
 
@@ -36,24 +38,30 @@ module OptimusPrime
       private
 
       def transform(record)
-        # NOTE: Could also use #map here to not overwrite the existing record.
-        record.each do |key, val|
+        record.map do |key, val|
           type = @type_map[key.to_s]
-          record[key] = case type && type.downcase
-            when nil        then val
-            when 'string'   then val
-            # Using Integer and Float as constructors to raise Exception.
-            when 'integer'  then Integer(val, 10)
-            when 'float'    then Float(val)
-            # NOTE: Every string not being 'true' results in false.
-            when 'boolean'  then val.downcase == 'true'
-            else raise TypeError.new("Cannot convert #{type} to String!")
-          end
-        end
+          result = val.is_a?(String) ? cast(val, type) : val
+          [key, result]
+        end.to_h
+      rescue TypeError
+        raise
       rescue => e
-        raise e if e.instance_of? TypeError # if the map has a problem, we should blow up
         logger.error("Exception handled - #{e.class}: #{e.message} - record: #{record}")
         false
+      end
+
+      def cast(val, type)
+        case type && type.downcase
+        when nil        then val
+        when 'string'   then val
+        # Using Integer and Float as constructors to raise Exception.
+        when 'integer'  then Integer(val, 10)
+        when 'float'    then Float(val)
+        # NOTE: Every string not being 'true' results in false.
+        when 'boolean'  then val.downcase == 'true'
+        when 'date'     then Date.parse(val)
+        else raise TypeError.new("Cannot convert #{type} to String!")
+        end
       end
     end
   end

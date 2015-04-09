@@ -32,6 +32,7 @@ RSpec.describe OptimusPrime::Transformers::CastString do
         amount: '125',
         price: '412.5',
         is_available: 'true',
+        due: '2015-04-01'
       }
     ]
   end
@@ -50,6 +51,7 @@ RSpec.describe OptimusPrime::Transformers::CastString do
         amount: 125,
         price: 412.5,
         is_available: true,
+        due: Date.parse('2015-04-01')
       }
     ]
   end
