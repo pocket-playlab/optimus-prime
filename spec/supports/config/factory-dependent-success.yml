@@ -1,0 +1,8 @@
+- id: first
+  file: spec/supports/config/test-config.yml
+  pipeline: test_pipeline
+- id: second
+  file: spec/supports/config/test-config.yml
+  pipeline: test_pipeline
+  dependencies:
+  - first
