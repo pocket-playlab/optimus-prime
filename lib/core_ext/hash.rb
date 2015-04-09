@@ -13,10 +13,6 @@ class Hash
     _deep_transform_keys_in_object(self, &block)
   end
 
-  def deep_dup
-    Marshal.load(Marshal.dump(self))
-  end
-
   private
 
   def _deep_transform_keys_in_object(object, &block)

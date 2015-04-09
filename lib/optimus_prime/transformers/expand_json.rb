@@ -19,7 +19,7 @@ module OptimusPrime
       private
 
       def transform(record)
-        result = record.deep_dup
+        result = record.dup
         fields.each do |field|
           next unless result.key? field
           result = expand(result, field)
