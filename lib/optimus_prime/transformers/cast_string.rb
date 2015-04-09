@@ -40,7 +40,7 @@ module OptimusPrime
       def transform(record)
         # NOTE: Could also use #map here to not overwrite the existing record.
         record.each do |key, val|
-          next if val.nil?
+          next unless val.is_a? String
           type = @type_map[key.to_s]
           record[key] = case type && type.downcase
             when nil        then val
