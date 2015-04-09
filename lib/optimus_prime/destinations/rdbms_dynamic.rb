@@ -27,8 +27,7 @@ module OptimusPrime
         columns = missing_columns(record)
         add_columns(columns) unless columns.empty?
         true
-      # TODO: What's the correct Exception here to catch possible DB errors?
-      rescue StandardError => e
+      rescue Sequel::Error => e
         logger.error "Exception handled - #{e.class}: #{e.message} - record: #{record}"
         false
       end
