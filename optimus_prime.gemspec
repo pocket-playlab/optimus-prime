@@ -11,7 +11,6 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Playlab ETL library'
 
   spec.files         = FileList["lib/**/*.rb", "bin/*", "[A-Z]*", "test/**/*"].to_a
-
   spec.executables   = spec.files.grep(/^bin\//) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(/^(test|spec|features)\//)
   spec.require_paths = ['lib']
