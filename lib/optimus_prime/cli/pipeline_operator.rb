@@ -14,9 +14,9 @@ module OptimusPrime
         else
           raise "Pipeline #{name} does not exist in #{config_file}"
         end
-        self.pipeline = OptimusPrime::Pipeline.new graph
         @cli_dependencies = cli_dependencies ? cli_dependencies.split(',') : []
         require_dependencies
+        self.pipeline = OptimusPrime::Pipeline.new graph
       end
 
       def operate
@@ -38,7 +38,7 @@ module OptimusPrime
       def require_dependencies
         yaml_dependencies = config[name]['dependencies'] || []
         (cli_dependencies + yaml_dependencies).uniq.each do |dependency|
-          p "Requiring #{dependency}"
+          puts "Requiring #{dependency}"
           require(dependency)
         end
       end
