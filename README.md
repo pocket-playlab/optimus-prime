@@ -103,16 +103,12 @@ data source, you can use it to make sure that the last chunk gets uploaded.
 #### Development
 
 1. You need [Docker][install-docker] and [docker-compose][install-compose].
-To install them on OSX just run `brew install docker boot2docker docker-compose`. To start the boot2docker VM you need to run `boot2docker init && boot2docker up` and make sure you set the environment variables as described by the `boot2docker up` command. Feel free to use the `source <(boot2docker shellinit)` command to write and load the _pem_ files required by Docker.
+To install them on OSX just run `brew install docker boot2docker docker-compose`. To start the boot2docker VM you need to run `boot2docker init && boot2docker up` and make sure you set the environment variables as described by the `boot2docker up` command. Feel free to use the `source <(boot2docker shellinit)` command to write and load the _pem_ files required by Docker. The included `docker-compose.yml` file describes all containers needed to run the application in development. For now it only uses an additional _data_ container that uses the same image as the main application. This container exposes `/home/playlab/ruby` as a volume, which is then included in the main app container using the `volume_from` directive. This allows us to persist any gems installed in the development container.
 
-The included `docker-compose.yml` file describes all containers needed to run the application in development. For now it only uses an additional _data_ container that uses the same image as the main application. This container exposes `/home/playlab/ruby` as a volume, which is then included in the main app container using the `volume_from` directive. This allows us to persist any gems installed in the development container.
-
-2. To run docker-compose automatically use:
-`./bin/docker-run`
-
-By default the container will execute the `bin/optimus` script with no argument then exit.
+2. To run _docker-compose_ automatically use: `./bin/docker-run`. By default the container will execute the `bin/optimus` script with no argument then exit.
 
 3. If you want a shell inside your container just run: `./bin/docker-run bash`
+
 4. To run the tests: `./bin/docker-run rake`
 
 [1]: http://upload.wikimedia.org/wikipedia/en/1/19/Optimus10108pieces.jpg
