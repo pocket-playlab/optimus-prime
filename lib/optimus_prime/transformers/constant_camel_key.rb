@@ -9,8 +9,7 @@
 module OptimusPrime
   module Transformers
     class ConstantCamelKey < Destination
-      MATCH_BRACES = /\(.*?\)/
-      MATCH_SPECIAL_CHARS_AND_SPACES = /[^a-zA-Z0-9]/
+      MATCH_SPECIAL_CHARS_AND_SPACES = /[^a-zA-Z0-9-]/
 
       def write(data)
         # Format all keys
@@ -20,10 +19,7 @@ module OptimusPrime
       private
 
       def format(key)
-        key
-          .gsub(MATCH_BRACES, '')
-          .gsub(MATCH_SPECIAL_CHARS_AND_SPACES, '_')
-          .camelize
+        key.gsub(MATCH_SPECIAL_CHARS_AND_SPACES, '_').camelize
       end
     end
   end

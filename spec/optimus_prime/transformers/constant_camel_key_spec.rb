@@ -7,19 +7,19 @@ RSpec.describe OptimusPrime::Transformers::ConstantCamelKey do
   context 'Multiple Hashes with different combinations of characters' do
     let(:input) do
       [
-        { 'name' => 'John', 'this is my size' => 192.3, 'me@me!' => 83.5 },
+        { 'name' => 'John', 'this is my-size' => 192.3, 'me@me!' => 83.5 },
         { 'under_check_score' => 'Jack', '3@+#a&' => 24, 'number (unique users)' => 1 },
         { 'This 1 tests' => 'nothing', 'I love 555' => 'numbers' },
-        { 'Yes, (braces) get' => 'removed' }
+        { 'Yes, (braces) will' => 'stay', 'this-Is' => 'interesting' }
       ]
     end
 
     let(:result) do
       [
-        { 'Name' => 'John', 'ThisIsMySize' => 192.3, 'MeMe' => 83.5 },
-        { 'UnderCheckScore' => 'Jack', '3A' => 24, 'Number' => 1 },
+        { 'Name' => 'John', 'ThisIsMy-size' => 192.3, 'MeMe' => 83.5 },
+        { 'UnderCheckScore' => 'Jack', '3A' => 24, 'NumberUniqueUsers' => 1 },
         { 'This1Tests' => 'nothing', 'ILove555' => 'numbers' },
-        { 'YesGet' => 'removed' }
+        { 'YesBracesWill' => 'stay', 'This-Is' => 'interesting' }
       ]
     end
 
