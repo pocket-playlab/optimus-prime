@@ -1,6 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'rake'
 require 'optimus_prime/version'
 
 Gem::Specification.new do |spec|
@@ -9,7 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Prair Pusanasurapant', 'M Lertvanasirikul', 'Rick Apichairuk', 'Omar Khan']
   spec.summary       = 'Playlab ETL library'
 
-  spec.files         = `git ls-files -z`.split("\x0")
+  spec.files         = FileList["lib/**/*.rb", "bin/*", "[A-Z]*", "test/**/*"].to_a
+
   spec.executables   = spec.files.grep(/^bin\//) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(/^(test|spec|features)\//)
   spec.require_paths = ['lib']
