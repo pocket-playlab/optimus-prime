@@ -1,0 +1,9 @@
+#!/bin/bash
+# Install gems and run the given command using bundle exec
+set -ex
+
+bundle config --delete frozen
+bundle config --delete without
+bundle install --quiet
+
+exec bundle exec "$@"
