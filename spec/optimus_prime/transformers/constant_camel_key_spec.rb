@@ -10,7 +10,8 @@ RSpec.describe OptimusPrime::Transformers::ConstantCamelKey do
         { 'name' => 'John', 'this is my-size' => 192.3, 'me@me!' => 83.5 },
         { 'under_check_score' => 'Jack', '3@+#a&' => 24, 'number (unique users)' => 1 },
         { 'This 1 tests' => 'nothing', 'I love 555' => 'numbers' },
-        { 'Yes, (braces) will' => 'stay', 'this-Is' => 'interesting' }
+        { 'Yes, (braces) will' => 'stay', 'this-Is' => 'interesting' },
+        { 'whatHAPPENS' => 'with Uppercase' }
       ]
     end
 
@@ -19,7 +20,9 @@ RSpec.describe OptimusPrime::Transformers::ConstantCamelKey do
         { 'Name' => 'John', 'ThisIsMy-size' => 192.3, 'MeMe' => 83.5 },
         { 'UnderCheckScore' => 'Jack', '3A' => 24, 'NumberUniqueUsers' => 1 },
         { 'This1Tests' => 'nothing', 'ILove555' => 'numbers' },
-        { 'YesBracesWill' => 'stay', 'This-Is' => 'interesting' }
+        { 'YesBracesWill' => 'stay', 'This-Is' => 'interesting' },
+        { 'WhatHAPPENS' => 'with Uppercase' }
+
       ]
     end
 
