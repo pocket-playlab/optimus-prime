@@ -20,6 +20,7 @@ test:
         pocketplaylab/optimus-prime:$CIRCLE_BRANCH
         rake
   post:
+    - gem install pronto-rubocop
     - bundle exec pronto run --formatter=github
 
 database:
