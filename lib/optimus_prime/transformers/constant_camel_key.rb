@@ -1,8 +1,7 @@
 # The ConstantCamelKey transformer formats each key of a Hash.
-# - It only contains letters and numbers.
+# - It only contains letters, numbers and dashes.
 # - It is CamelCased.
 # - It begins Uppercase.
-# - Braces including their content get removed.
 #
 # No configuration available.
 
