@@ -1,6 +1,5 @@
 /.bundle/
 /.yardoc
-/Gemfile.lock
 /_yardoc/
 /coverage/
 /doc/
@@ -14,5 +13,4 @@
 .DS_Store
 mkmf.log
 /.idea/*
-/.vagrant/*
 /test.db
