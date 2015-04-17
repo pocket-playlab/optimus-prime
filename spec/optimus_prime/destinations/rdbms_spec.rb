@@ -17,16 +17,16 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
 
   let(:destination_with_string_condition) do
     dest = OptimusPrime::Destinations::Rdbms.new dsn: dsn, table: table_name, retry_interval: 0.1,
-                                          delete_conditions: "platform = 'ios'",
-                                          sql_trace: false
+                                                 delete_conditions: "platform = 'ios'",
+                                                 sql_trace: false
     dest.logger = Logger.new(STDERR)
     dest
   end
 
   let(:destination_with_hash_condition) do
     dest = OptimusPrime::Destinations::Rdbms.new dsn: dsn, table: table_name, retry_interval: 0.1,
-                                                           delete_conditions: { version: '1.0.1' },
-                                                           sql_trace: false
+                                                 delete_conditions: { version: '1.0.1' },
+                                                 sql_trace: false
     dest.logger = Logger.new(STDERR)
     dest
   end
@@ -69,23 +69,6 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
       insert_records_with_destination(destination_with_string_condition)
       expect(records_from_db).to eq(input)
     end
-
-    context 'exception raised' do
-      before do
-        @dest = destination_with_string_condition
-        allow(@dest).to receive(:sleep) {}
-        allow(@dest).to receive(:delete_records) do
-          allow(@dest).to receive(:delete_records).and_call_original
-          raise Sequel::DatabaseConnectionError
-        end
-      end
-
-      it 'retries when sequel raises a database connection error' do
-        insert_records
-        insert_records_with_destination(@dest)
-        expect(records_from_db.count).to eq 7
-      end
-    end
   end
 
   context 'hash condition' do
@@ -100,23 +83,6 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
     it 'should upload insert records into database' do
       insert_records_with_destination(destination_with_hash_condition)
       expect(records_from_db).to eq(input)
-    end
-
-    context 'exception raised' do
-      before do
-        @dest = destination_with_hash_condition
-        allow(@dest).to receive(:sleep) {}
-        allow(@dest).to receive(:delete_records) do
-          allow(@dest).to receive(:delete_records).and_call_original
-          raise Sequel::DatabaseConnectionError
-        end
-      end
-
-      it 'retries when sequel raises a database connection error' do
-        insert_records
-        insert_records_with_destination(@dest)
-        expect(records_from_db.count).to eq 5
-      end
     end
   end
 
