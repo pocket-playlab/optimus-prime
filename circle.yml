@@ -37,7 +37,7 @@ database:
 
 deployment:
   hub:
-    branch: ['master', 'switch-to-docker‘]
+    branch: [master, switch-to-docker]
     commands:
       - sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" dockercfg.template > ~/.dockercfg
       - docker push pocketplaylab/datacubes:$CIRCLE_BRANCH
