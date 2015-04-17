@@ -27,7 +27,6 @@ WORKDIR ${ROOT}
 ENV BUNDLE_APP_CONFIG ${ROOT}/.bundle
 ENV GEM_HOME ${HOME}/ruby/2.2.1
 COPY Gemfile Gemfile
-COPY Gemfile.lock Gemfile.lock
 COPY optimus_prime.gemspec optimus_prime.gemspec
 
 # The following dependency is mandatory before the bundle install
