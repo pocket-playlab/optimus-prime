@@ -65,7 +65,6 @@ module OptimusPrime
         @max_retries ||= 3
         @retry_interval ||= 5
       end
-
     end
   end
 end

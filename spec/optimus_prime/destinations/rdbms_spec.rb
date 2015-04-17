@@ -85,5 +85,4 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
       expect(records_from_db).to eq(input)
     end
   end
-
 end

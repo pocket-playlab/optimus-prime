@@ -79,5 +79,4 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
       end.to raise_error "Couldn't execute block: Sequel::DatabaseConnectionError"
     end
   end
-
 end
