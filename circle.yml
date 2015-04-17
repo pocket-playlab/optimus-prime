@@ -21,7 +21,7 @@ test:
         rake
   post:
     - gem install pronto-rubocop
-    - bundle exec pronto run --formatter=github
+    - pronto run --formatter=github
 
 database:
   override:
