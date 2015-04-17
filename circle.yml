@@ -2,6 +2,14 @@ machine:
   services:
     - docker
 
+# this step edits timestamps in .git repos to avoid rebuilding everytime
+checkout:
+  post:
+    - find . -exec touch -t 201401010000 {} \;
+    - for x in $(git ls-tree --full-tree --name-only -r HEAD); do \
+      touch -t $(date -d "$(git log -1 --format=%ci "${x}")" \
+      +%y%m%d%H%M.%S) "${x}"; done
+
 dependencies:
   cache_directories:
     - "~/docker"
@@ -29,7 +37,7 @@ database:
 
 deployment:
   hub:
-    branch: master
+    branch: ['master', 'switch-to-docker‘]
     commands:
       - sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" dockercfg.template > ~/.dockercfg
       - docker push pocketplaylab/datacubes:$CIRCLE_BRANCH
