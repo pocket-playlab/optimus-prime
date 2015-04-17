@@ -41,6 +41,8 @@ module OptimusPrime
     def start
       raise 'Already started' if started?
       steps.values.each(&:start)
+      # Returning self allows method chaining (e.g. pipeline.start.join)
+      self
     end
 
     def started?
@@ -53,6 +55,8 @@ module OptimusPrime
 
     def join
       steps.values.each(&:join)
+      # Returning self allows method chaining (e.g. pipeline.join.finished?)
+      self
     end
     alias_method :wait, :join
 
