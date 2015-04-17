@@ -22,6 +22,10 @@ test:
   post:
     - bundle exec pronto run --formatter=github
 
+database:
+  override:
+    - echo 'No database used'
+
 deployment:
   hub:
     branch: master
