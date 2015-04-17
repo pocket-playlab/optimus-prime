@@ -38,4 +38,4 @@ deployment:
     branch: [master, switch-to-docker]
     commands:
       - sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" dockercfg.template > ~/.dockercfg
-      - docker push pocketplaylab/datacubes:$CIRCLE_BRANCH
+      - docker push pocketplaylab/optimus-prime:$CIRCLE_BRANCH
