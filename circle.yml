@@ -1,3 +1,30 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  cache_directories:
+    - "~/docker"
+  override:
+    - mkdir -p ~/docker
+    - if [[ -e ~/docker/optimus-prime.tar ]]; then docker load -i ~/docker/optimus-prime.tar; fi
+    - docker build -t pocketplaylab/optimus-prime:$CIRCLE_BRANCH .
+    - docker save "pocketplaylab/optimus-prime:$CIRCLE_BRANCH" > ~/docker/optimus-prime.tar
+
 test:
+  override:
+    - >
+        docker run
+        --entrypoint='bin/run'
+        --net=host
+        pocketplaylab/optimus-prime:$CIRCLE_BRANCH
+        rake
   post:
     - bundle exec pronto run --formatter=github
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" dockercfg.template > ~/.dockercfg
+      - docker push pocketplaylab/datacubes:$CIRCLE_BRANCH
