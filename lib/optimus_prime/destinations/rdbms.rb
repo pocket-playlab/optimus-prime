@@ -9,10 +9,11 @@ module OptimusPrime
       # table - Name of the table to use
       # delete_conditions - used in the #where method to find the rows to delete
       # options - all additional parameters are passed to Sequel
-      def initialize(dsn:, table:, delete_conditions:, **options)
+      def initialize(dsn:, table:, delete_conditions:, retry_interval: nil, max_retries: nil,
+                     **options)
         @delete_conditions = delete_conditions
         @records_deleted = false
-        super(dsn: dsn, table: table, **options)
+        super
       end
 
       def write(record)
@@ -23,8 +24,10 @@ module OptimusPrime
       private
 
       def delete_records
-        @table.where(@delete_conditions).delete
-        @records_deleted = true
+        execute do
+          @table.where(@delete_conditions).delete
+          @records_deleted = true
+        end
       end
     end
   end
