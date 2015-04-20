@@ -104,13 +104,7 @@ data source, you can use it to make sure that the last chunk gets uploaded.
 
 1. You need [Docker][install-docker] and [docker-compose][install-compose].  To
 install them on OSX just run `brew install docker boot2docker docker-compose`.
-To start the boot2docker VM you need to run `boot2docker init && boot2docker up`
-and make sure you set the environment variables as described by the `boot2docker
-up` command. Feel free to use the `source <(boot2docker shellinit)`command to
-write and load the _pem_ files required by Docker, you can add `$(boot2docker
-shellinit)` to your `.zshrc` or `.bashrc` file. The included
-`docker-compose.yml` file describes all containers needed to run the application
-in development. For now it only uses an additional _data_ container that uses
+For now the container only uses an additional _data_ container built with
 the same image as the main application. This container exposes
 `/home/playlab/ruby` as a volume, which is then included in the main app
 container using the `volume_from` directive. This allows us to persist any gems
