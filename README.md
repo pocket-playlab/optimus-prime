@@ -110,7 +110,7 @@ the same image as the main application. This container exposes
 container using the `volume_from` directive. This allows us to persist any gems
 installed in the development container.
 
-2. To run the _boot2docker VM_ and _docker-compose_ automatically use:
+2. To run the _boot2docker VM_ and _docker-compose_ automatically, use:
  `./bin/docker-run`. By default the container will execute the `bin/optimus`
 script with no argument then exit.
 
