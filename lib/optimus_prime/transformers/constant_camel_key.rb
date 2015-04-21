@@ -1,5 +1,5 @@
 # The ConstantCamelKey transformer formats each key of a Hash.
-# - It only contains letters, numbers and dashes.
+# - It only contains letters and numbers.
 # - It is CamelCased.
 # - It begins Uppercase.
 #
@@ -8,7 +8,7 @@
 module OptimusPrime
   module Transformers
     class ConstantCamelKey < Destination
-      MATCH_SPECIAL_CHARS_AND_SPACES = /[^a-zA-Z0-9-]/
+      MATCH_SPECIAL_CHARS_AND_SPACES = /[^a-zA-Z0-9]/
 
       def write(data)
         # Format all keys

@@ -17,10 +17,10 @@ RSpec.describe OptimusPrime::Transformers::ConstantCamelKey do
 
     let(:result) do
       [
-        { 'Name' => 'John', 'ThisIsMy-size' => 192.3, 'MeMe' => 83.5 },
+        { 'Name' => 'John', 'ThisIsMySize' => 192.3, 'MeMe' => 83.5 },
         { 'UnderCheckScore' => 'Jack', '3A' => 24, 'NumberUniqueUsers' => 1 },
         { 'This1Tests' => 'nothing', 'ILove555' => 'numbers' },
-        { 'YesBracesWill' => 'stay', 'This-Is' => 'interesting' },
+        { 'YesBracesWill' => 'stay', 'ThisIs' => 'interesting' },
         { 'WhatHAPPENS' => 'with Uppercase' }
 
       ]
