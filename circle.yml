@@ -9,13 +9,13 @@ checkout:
     - for x in $(git ls-tree --full-tree --name-only -r HEAD); do touch -t $(date -d "$(git log -1 --format=%ci "${x}")" +%y%m%d%H%M.%S) "${x}"; done
 
 dependencies:
-#  cache_directories:
-#    - "~/docker"
+  cache_directories:
+    - "~/docker"
   override:
-#    - mkdir -p ~/docker
-#    - if [[ -e ~/docker/optimus-prime.tar ]]; then docker load -i ~/docker/optimus-prime.tar; fi
+    - mkdir -p ~/docker
+    - if [[ -e ~/docker/optimus-prime.tar ]]; then docker load -i ~/docker/optimus-prime.tar; fi
     - docker build -t pocketplaylab/optimus-prime:$CIRCLE_BRANCH .
-#    - docker save "pocketplaylab/optimus-prime:$CIRCLE_BRANCH" > ~/docker/optimus-prime.tar
+    - docker save "pocketplaylab/optimus-prime:$CIRCLE_BRANCH" > ~/docker/optimus-prime.tar
 
 test:
   override:
