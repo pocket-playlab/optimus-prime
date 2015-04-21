@@ -20,9 +20,7 @@ module OptimusPrime
       end
 
       def operate
-        pipeline.start
-        pipeline.wait
-        pipeline.finished? ? puts('Pipeline finished.') : raise('Pipeline failed to finish!')
+        pipeline.start.wait.finished? ? puts('Pipeline finished.') : raise('Pipeline failed to finish!')
       end
 
       def finished?
