@@ -23,6 +23,8 @@ require 'date'
 module OptimusPrime
   module Transformers
     class CastString < Destination
+      TRUTHY_STRING = /^(true|yes)$/
+
       # type_map - Hash specifying the types like in the example above
       # stringify - Optional Boolean you can set to false to
       #             NOT convert Symbol keys of the type_map to Strings
@@ -57,8 +59,8 @@ module OptimusPrime
         # Using Integer and Float as constructors to raise Exception.
         when 'integer'  then Integer(val, 10)
         when 'float'    then Float(val)
-        # NOTE: Every string not being 'true' results in false.
-        when 'boolean'  then val.downcase == 'true'
+        # NOTE: Every string not being 'true' or 'yes' results in false.
+        when 'boolean'  then !(val.downcase =~ TRUTHY_STRING).nil?
         when 'date'     then Date.parse(val)
         else raise TypeError.new("Cannot convert #{type} to String!")
         end
