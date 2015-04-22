@@ -16,7 +16,8 @@ module OptimusPrime
   module Destinations
     class RdbmsDynamic < RdbmsWriter
       def write(record)
-        super(record) if ensure_columns(record)
+        cleaned_record = remove_nil_fields(record)
+        super(cleaned_record) if ensure_columns(cleaned_record)
       end
 
       private
@@ -32,6 +33,14 @@ module OptimusPrime
         false
       end
 
+      # Remove all fields from the record
+      # where the value is nil.
+      #
+      # Returns a copy of the record.
+      def remove_nil_fields(record)
+        record.reject { |key, val| val.nil? }
+      end
+
       # Find columns missing in database.
       # Return a Hash of column names and their types
       #
@@ -41,10 +50,9 @@ module OptimusPrime
       #   sample: Integer
       # }
       def missing_columns(record)
-        table_columns = @table.columns
         Hash[
           record
-            .reject { |key| table_columns.include? key }
+            .reject { |key, val| @table.columns.include?(key.to_sym) || val.nil? }
             .map { |key, val| [key, val.class] }
         ]
       end
