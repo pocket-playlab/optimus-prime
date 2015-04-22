@@ -4,7 +4,7 @@ require 'optimus_prime/destinations/rdbms_dynamic'
 RSpec.describe OptimusPrime::Destinations::RdbmsDynamic do
   let(:input) do
     [
-      { name: 'Rick' },
+      { name: 'Rick', color: nil },
       { name: 'Omar', car: 'Range Rover' },
       { name: 'Prair', car: 'Toyota Camry', horsepower: 160 },
       { name: 'M', car: 'Honda Civic Type R', color: 'red' },
