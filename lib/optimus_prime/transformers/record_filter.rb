@@ -43,12 +43,16 @@ module OptimusPrime
         params.include? value
       end
 
+      def not_set(value, params)
+        not set(value, params)
+      end
+
       def contained(value, params)
         params.any? { |p| value.include?(p) }
       end
 
       def not_contained(value, params)
-        params.none? { |p| value.include?(p) }
+        not contained(value, params)
       end
     end
   end

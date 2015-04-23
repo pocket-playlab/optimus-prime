@@ -5,7 +5,7 @@ RSpec.describe OptimusPrime::Transformers::RecordFilter do
     {
       level: { type: :range, values: [0, 100] },
       altitude: { type: :less_than_or_equal, values: [8000] },
-      character: { type: :set, values: ['tom', 'jerry'] },
+      character: { type: :not_set, values: [nil, 'james'] },
       nil_stuff: { type: :set, values: [nil] },
     }
   end
@@ -29,7 +29,8 @@ RSpec.describe OptimusPrime::Transformers::RecordFilter do
       { 'character' => 'jerry', 'level' => 50, 'altitude' => 4582, 'nil_stuff' => nil },
       { 'character' => 'jerry', 'level' => 50, 'altitude' => 8001 },
       { 'character' => 'jerry', 'level' => 2, 'altitude' => 1000, 'nil_stuff' => 'not_nil!' },
-      { 'character' => 'james', 'level' => 50, 'altitude' => 4581 }
+      { 'character' => 'james', 'level' => 50, 'altitude' => 4581 },
+      { 'level' => 12, 'altitude' => 3142 }
     ]
   end
 
@@ -57,7 +58,7 @@ RSpec.describe OptimusPrime::Transformers::RecordFilter do
     expect(output).to match_array output_invalid
   end
 
-  context '#contained, #not_contained' do
+  describe '#contained, #not_contained' do
     let(:records) do
       [
         { 'code' => 'A-111-3CB' },
