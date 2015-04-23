@@ -9,11 +9,13 @@ module OptimusPrime
       # dsn   - Connection string for the database
       # table - Name of the table to use
       # options - all additional parameters are passed to Sequel
-      def initialize(dsn:, table:, retry_interval: 5, max_retries: 3, **options)
+      def initialize(dsn:, table:, retry_interval: 5, max_retries: 3, chunk_size: 100, **options)
         @db = Sequel.connect(dsn, **options)
         @table = @db[table.to_sym]
         @retry_interval = retry_interval
         @max_retries = max_retries
+        @chunk_size = chunk_size
+        @records = []
       end
 
       def write(record)
@@ -24,10 +26,12 @@ module OptimusPrime
           logger.error record.inspect
         end
 
-        execute { @table.insert record }
+        @records << record
+        multi_insert if @records.length == @chunk_size
       end
 
       def finish
+        multi_insert unless @records.empty?
         @db.disconnect
       end
 
@@ -36,7 +40,7 @@ module OptimusPrime
       # after waiting for 'retry_interval' seconds.
       #
       # execute do
-      #  @table.insert record
+      #  @table.multi_insert records
       # end
       def execute(&block)
         run_block(block)
@@ -64,6 +68,11 @@ module OptimusPrime
       def set_instance_variables
         @max_retries ||= 3
         @retry_interval ||= 5
+      end
+
+      def multi_insert
+        execute { @table.multi_insert(@records) }
+        @records.clear
       end
     end
   end
