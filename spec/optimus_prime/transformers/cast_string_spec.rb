@@ -10,7 +10,11 @@ RSpec.describe OptimusPrime::Transformers::CastString do
       price: 'Float',
       is_available: 'BOOLEAN',
       notes: 'string',
-      due: 'date'
+      due: 'date',
+      a: 'boolean',
+      b: 'boolean',
+      c: 'boolean',
+      d: 'boolean'
     }
   end
 
@@ -25,14 +29,19 @@ RSpec.describe OptimusPrime::Transformers::CastString do
         amount: '23',
         price: '299.23',
         is_available: 'False',
-        notes: 'lorem ipsum'
+        notes: 'lorem ipsum',
+        field: 'not affected'
       },
       {
         event: 'buybeans',
         amount: '125',
         price: '412.5',
+        due: '2015-04-01',
         is_available: 'true',
-        due: '2015-04-01'
+        a: 'false',
+        b: 'yes',
+        c: 'no',
+        d: 'something'
       }
     ]
   end
@@ -44,14 +53,19 @@ RSpec.describe OptimusPrime::Transformers::CastString do
         amount: 23,
         price: 299.23,
         is_available: false,
-        notes: 'lorem ipsum'
+        notes: 'lorem ipsum',
+        field: 'not affected'
       },
       {
         event: 'buybeans',
         amount: 125,
         price: 412.5,
+        due: Date.parse('2015-04-01'),
         is_available: true,
-        due: Date.parse('2015-04-01')
+        a: false,
+        b: true,
+        c: false,
+        d: false
       }
     ]
   end

@@ -16,15 +16,19 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
   let(:table) { db[table_name.to_sym] }
 
   let(:destination_with_string_condition) do
-    OptimusPrime::Destinations::Rdbms.new dsn: dsn, table: table_name,
-                                          delete_conditions: "platform = 'ios'",
-                                          sql_trace: false
+    dest = OptimusPrime::Destinations::Rdbms.new dsn: dsn, table: table_name, retry_interval: 0.1,
+                                                 delete_conditions: "platform = 'ios'",
+                                                 sql_trace: false
+    dest.logger = Logger.new(STDERR)
+    dest
   end
 
   let(:destination_with_hash_condition) do
-    OptimusPrime::Destinations::Rdbms.new dsn: dsn, table: table_name,
-                                          delete_conditions: { version: '1.0.1' },
-                                          sql_trace: false
+    dest = OptimusPrime::Destinations::Rdbms.new dsn: dsn, table: table_name, retry_interval: 0.1,
+                                                 delete_conditions: { version: '1.0.1' },
+                                                 sql_trace: false
+    dest.logger = Logger.new(STDERR)
+    dest
   end
 
   before do

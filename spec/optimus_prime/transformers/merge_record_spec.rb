@@ -70,9 +70,7 @@ describe OptimusPrime::Transformers::MergeRecord do
   end
 
   it 'should merge a record to an array of hash' do
-    pipeline.start
-    pipeline.wait
-    results = pipeline.steps[:dest_d].written
+    results = pipeline.start.wait.steps[:dest_d].written
     expect(results).to match_array output
   end
 end
