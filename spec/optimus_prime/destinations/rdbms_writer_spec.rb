@@ -88,14 +88,16 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
 
   context 'the number of records is equal to chunk size' do
     it 'inserts records into database' do
-      rdbms = OptimusPrime::Destinations::RdbmsWriter.new(dsn: dsn, table: table, chunk_size: input.count)
+      rdbms = OptimusPrime::Destinations::RdbmsWriter.new(dsn: dsn, table: table,
+                                                          chunk_size: input.count)
       shared_expect_results(rdbms)
     end
   end
 
   context 'the number of records is greater than chunk size' do
     it 'inserts records into database' do
-      rdbms = OptimusPrime::Destinations::RdbmsWriter.new(dsn: dsn, table: table, chunk_size: 1)
+      rdbms = OptimusPrime::Destinations::RdbmsWriter.new(dsn: dsn, table: table,
+                                                          chunk_size: 1)
       shared_expect_results(rdbms)
     end
   end
