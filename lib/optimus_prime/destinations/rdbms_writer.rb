@@ -9,7 +9,8 @@ module OptimusPrime
       # dsn   - Connection string for the database
       # table - Name of the table to use
       # options - all additional parameters are passed to Sequel
-      def initialize(dsn:, table:, retry_interval: 5, max_retries: 3, chunk_size: 100, **options)
+      def initialize(dsn:, table:, retry_interval: 5, max_retries: 3, chunk_size: 100,
+                     **options)
         @db = Sequel.connect(dsn, **options)
         @table = @db[table.to_sym]
         @retry_interval = retry_interval

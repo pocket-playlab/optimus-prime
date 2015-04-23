@@ -38,7 +38,7 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
 
   def insert_records(dest)
     input.each { |record| dest.write record }
-    destination.close
+    dest.close
   end
 
   def records_from_db
@@ -55,8 +55,8 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
     end
   end
 
-  it 'should upload insert records into database' do
-    insert_records(destination)
+  def shared_expect_results(dest)
+    insert_records(dest)
     expect(records_from_db).to eq(input)
   end
 
@@ -77,6 +77,26 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
       expect do
         insert_records(@dest)
       end.to raise_error "Couldn't execute block: Sequel::DatabaseConnectionError"
+    end
+  end
+
+  context 'the number of records is less than the default chunk size' do
+    it 'inserts records into database' do
+      shared_expect_results(destination)
+    end
+  end
+
+  context 'the number of records is equal to chunk size' do
+    it 'inserts records into database' do
+      rdbms = OptimusPrime::Destinations::RdbmsWriter.new(dsn: dsn, table: table, chunk_size: input.count)
+      shared_expect_results(rdbms)
+    end
+  end
+
+  context 'the number of records is greater than chunk size' do
+    it 'inserts records into database' do
+      rdbms = OptimusPrime::Destinations::RdbmsWriter.new(dsn: dsn, table: table, chunk_size: 1)
+      shared_expect_results(rdbms)
     end
   end
 end
