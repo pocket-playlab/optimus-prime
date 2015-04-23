@@ -10,7 +10,8 @@ module OptimusPrime
       end
 
       def write(record)
-        push transform(record)
+        filtered = transform record
+        push filtered unless filtered.empty?
       end
 
       private

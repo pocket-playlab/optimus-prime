@@ -7,7 +7,8 @@ RSpec.describe OptimusPrime::Transformers::KeyFilter do
       { 'name' => 'John', 'age' => 25, 'gender' => :male,   'likes'  => 'Baseball' },
       { 'name' => 'Rita', 'age' => 21, 'gender' => :female, 'hates'  => 'dragons'  },
       { 'name' => 'Tony', 'age' => 14, 'gender' => :male,   'height' => 192.8      },
-      { 'name' => 'Lura', 'age' => 36, 'gender' => :female, 'skills' => 'chess'    }
+      { 'name' => 'Lura', 'age' => 36, 'gender' => :female, 'skills' => 'chess'    },
+      { 'favourite colour' => 'mauve' }
     ]
   end
 
