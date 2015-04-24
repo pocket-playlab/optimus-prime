@@ -4,13 +4,18 @@ require 'optimus_prime/destinations/rdbms_writer'
 RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
   let(:input) do
     [
-      { name:  'Rick',     car:  'C6 Z06',             horsepower:  505  },
-      { name:  'Omar',     car:  'Range Rover',        horsepower:  280  },
-      { name:  'Prair',    car:  'Toyota Camry',       horsepower:  160  },
-      { name:  'M',        car:  'Honda Civic Type R', horsepower:  750  },
-      { name:  'Thibault', car:  'Audi S4',            horsepower:  480  },
-      { name:  'Tamer',    car:  'Mercedes SLK',       horsepower:  350  },
+      { name: 'Rick',     car: 'C6 Z06',             horsepower: 505 },
+      { name: 'Omar',     car: 'Range Rover',        horsepower: 280 },
+      { name: 'Prair',    car: 'Toyota Camry',       horsepower: 160 },
+      { name: 'M',        car: 'Honda Civic Type R', horsepower: 750 },
+      { name: 'Thibault', car: 'Audi S4',            horsepower: 480 },
+      { name: 'Tamer',    car: 'Mercedes SLK',       horsepower: 350 },
+      { name: 'Tamer',    car: 'Mercedes SLK',       horsepower: 350 },
     ]
+  end
+
+  let(:output) do
+    input.uniq { |record| record[:name] }
   end
 
   let(:dsn) { 'sqlite://test.db' }
@@ -30,7 +35,7 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
     # db.sql_log_level = :debug
     db.drop_table? table
     db.create_table table do
-      String :name
+      String :name, unique: true
       String :car
       Integer :horsepower
     end
@@ -57,7 +62,7 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
 
   def shared_expect_results(dest)
     insert_records(dest)
-    expect(records_from_db).to eq(input)
+    expect(records_from_db).to eq(output)
   end
 
   context 'exception raised' do
@@ -69,14 +74,12 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
     it 'retries when sequel raises a database connection error' do
       stub_run_block(@dest, 2)
       insert_records(@dest)
-      expect(records_from_db).to eq(input)
+      expect(records_from_db).to eq(output)
     end
 
     it 'fails if the number of attempts is over max_retries' do
       stub_run_block(@dest, 3)
-      expect do
-        insert_records(@dest)
-      end.to raise_error "Couldn't execute block: Sequel::DatabaseConnectionError"
+      expect { insert_records(@dest) }.to raise_error Sequel::DatabaseConnectionError
     end
   end
 

@@ -20,13 +20,6 @@ module OptimusPrime
       end
 
       def write(record)
-        # log any data that doesn't match what we are expecting
-        # not sure if this should be a fatal condition...
-        unless record.is_a?(::Hash)
-          logger.error 'record was not a Hash as expected!'
-          logger.error record.inspect
-        end
-
         @records << record
         multi_insert if @records.length == @chunk_size
       end
@@ -41,7 +34,7 @@ module OptimusPrime
       # after waiting for 'retry_interval' seconds.
       #
       # execute do
-      #  @table.multi_insert records
+      #   @table.multi_insert record
       # end
       def execute(&block)
         run_block(block)
@@ -52,7 +45,7 @@ module OptimusPrime
           log_and_sleep(e)
           retry
         else
-          raise "Couldn't execute block: #{e}"
+          raise
         end
       end
 
@@ -61,8 +54,8 @@ module OptimusPrime
         block.call
       end
 
-      def log_and_sleep(e)
-        logger.error "Error while connecting to database: #{e}. Sleeping #{@retry_interval}s..."
+      def log_and_sleep(error)
+        logger.error "Error while connecting to database: #{error}. Sleeping #{@retry_interval}s..."
         sleep @retry_interval
       end
 
@@ -76,7 +69,13 @@ module OptimusPrime
       # otherwise some columns could be missed or set to null instead of to default values.
       def multi_insert
         add_missing_fields!
-        execute { @table.multi_insert(@records) }
+        execute do
+          begin
+            @table.multi_insert(@records)
+          rescue Sequel::UniqueConstraintViolation => e
+            logger.warn e.to_s
+          end
+        end
         @records.clear
       end
 
