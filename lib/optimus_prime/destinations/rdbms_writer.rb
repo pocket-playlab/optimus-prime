@@ -71,9 +71,22 @@ module OptimusPrime
         @retry_interval ||= 5
       end
 
+      # [Note for Dataset#multi_insert from Sequel documentation]
+      # Be aware that all hashes should have the same keys if you use this calling method,
+      # otherwise some columns could be missed or set to null instead of to default values.
       def multi_insert
+        add_missing_fields!
         execute { @table.multi_insert(@records) }
         @records.clear
+      end
+
+      def add_missing_fields!
+        fields = @records.map { |record| record.keys }.flatten.uniq
+        @records.each do |record|
+          (fields - record.keys).each do |missing_field|
+            record.merge!({missing_field => nil })
+          end
+        end
       end
     end
   end
