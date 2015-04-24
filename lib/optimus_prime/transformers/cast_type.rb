@@ -60,6 +60,7 @@ module OptimusPrime
         when 'float'    then Float(val)
         when 'boolean'  then TRUTHY_STRINGS.include?(String(val).downcase)
         when 'date'     then Date.parse(val)
+        when 'datetime' then val.is_a?(Integer) ? Time.at(val).to_datetime : DateTime.parse(val)
         else raise TypeError.new("Cannot convert #{type}")
         end
       end
