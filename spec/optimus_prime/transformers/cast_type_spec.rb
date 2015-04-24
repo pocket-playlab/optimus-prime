@@ -11,6 +11,7 @@ RSpec.describe OptimusPrime::Transformers::CastType do
       is_available: 'BOOLEAN',
       notes: 'string',
       due: 'date',
+      timestamp: 'datetime',
       a: 'boolean',
       b: 'boolean',
       c: 'boolean',
@@ -28,6 +29,7 @@ RSpec.describe OptimusPrime::Transformers::CastType do
         event: 'buymeat',
         amount: '23',
         price: '299.23',
+        timestamp: 1429660574,
         is_available: 'False',
         notes: 'lorem ipsum',
         field: 'not affected'
@@ -56,6 +58,7 @@ RSpec.describe OptimusPrime::Transformers::CastType do
         event: 'buymeat',
         amount: 23,
         price: 299.23,
+        timestamp: Time.at(1429660574).to_datetime,
         is_available: false,
         notes: 'lorem ipsum',
         field: 'not affected'
