@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'date'
-require 'optimus_prime/transformers/cast_string'
+require 'optimus_prime/transformers/cast_type'
 
-RSpec.describe OptimusPrime::Transformers::CastString do
+RSpec.describe OptimusPrime::Transformers::CastType do
   let(:type_map_correct) do
     {
       amount: 'integer',
@@ -38,6 +38,7 @@ RSpec.describe OptimusPrime::Transformers::CastString do
         price: '412.5',
         due: '2015-04-01',
         is_available: 'true',
+        notes: 5,
         a: 'false',
         b: 'yes',
         c: 'no',
@@ -62,6 +63,7 @@ RSpec.describe OptimusPrime::Transformers::CastString do
         price: 412.5,
         due: Date.parse('2015-04-01'),
         is_available: true,
+        notes: '5',
         a: false,
         b: true,
         c: false,
@@ -87,7 +89,7 @@ RSpec.describe OptimusPrime::Transformers::CastString do
 
   context 'valid input and correct type map' do
     it 'should successfully convert each value to it\'s real type' do
-      caster = OptimusPrime::Transformers::CastString.new(type_map: type_map_correct)
+      caster = OptimusPrime::Transformers::CastType.new(type_map: type_map_correct)
       caster.logger = logger
       output = []
       caster.output << output
@@ -98,7 +100,7 @@ RSpec.describe OptimusPrime::Transformers::CastString do
 
   context 'valid input and incorrect type map' do
     it 'should raise a TypeError exception' do
-      caster = OptimusPrime::Transformers::CastString.new(type_map: type_map_erroneous)
+      caster = OptimusPrime::Transformers::CastType.new(type_map: type_map_erroneous)
       caster.logger = logger
       expect { input_valid.each { |record| caster.write(record) } }.to raise_error(TypeError)
     end
@@ -107,7 +109,7 @@ RSpec.describe OptimusPrime::Transformers::CastString do
   context 'invalid input and correct type map' do
     before { File.delete(logfile) }
     it 'should log an exception and skip the record' do
-      caster = OptimusPrime::Transformers::CastString.new(type_map: type_map_correct)
+      caster = OptimusPrime::Transformers::CastType.new(type_map: type_map_correct)
       caster.logger = logger
       output = []
       caster.output << output
