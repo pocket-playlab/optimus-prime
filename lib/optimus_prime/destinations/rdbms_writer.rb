@@ -81,10 +81,10 @@ module OptimusPrime
       end
 
       def add_missing_fields!
-        fields = @records.map { |record| record.keys }.flatten.uniq
+        fields = @records.map(&:keys).flatten.uniq
         @records.each do |record|
           (fields - record.keys).each do |missing_field|
-            record.merge!({missing_field => nil })
+            record.merge!(missing_field => nil)
           end
         end
       end
