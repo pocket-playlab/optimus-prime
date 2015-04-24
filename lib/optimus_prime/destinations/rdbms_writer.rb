@@ -17,14 +17,13 @@ module OptimusPrime
       end
 
       def write(record)
-        # log any data that doesn't match what we are expecting
-        # not sure if this should be a fatal condition...
-        unless record.is_a?(::Hash)
-          logger.error 'record was not a Hash as expected!'
-          logger.error record.inspect
+        execute do
+          begin
+            @table.insert record
+          rescue Sequel::UniqueConstraintViolation => e
+            logger.warn e.to_s
+          end
         end
-
-        execute { @table.insert record }
       end
 
       def finish
@@ -36,7 +35,7 @@ module OptimusPrime
       # after waiting for 'retry_interval' seconds.
       #
       # execute do
-      #  @table.insert record
+      #   @table.insert record
       # end
       def execute(&block)
         run_block(block)
@@ -47,7 +46,7 @@ module OptimusPrime
           log_and_sleep(e)
           retry
         else
-          raise "Couldn't execute block: #{e}"
+          raise
         end
       end
 
@@ -56,8 +55,8 @@ module OptimusPrime
         block.call
       end
 
-      def log_and_sleep(e)
-        logger.error "Error while connecting to database: #{e}. Sleeping #{@retry_interval}s..."
+      def log_and_sleep(error)
+        logger.error "Error while connecting to database: #{error}. Sleeping #{@retry_interval}s..."
         sleep @retry_interval
       end
 
