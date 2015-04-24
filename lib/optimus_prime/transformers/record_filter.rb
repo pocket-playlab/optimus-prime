@@ -1,8 +1,8 @@
 module OptimusPrime
   module Transformers
     class RecordFilter < Destination
-      def initialize(constraints:, stringify: true)
-        @rules = stringify ? constraints.stringify_nested_symbolic_keys : constraints
+      def initialize(constraints:)
+        @rules = constraints.with_indifferent_access
       end
 
       def write(record)
@@ -13,9 +13,7 @@ module OptimusPrime
 
       def valid?(record)
         @rules.all? do |field, rule|
-          send(rule['type'] || rule[:type],
-               record[field],
-               rule['values'] || rule[:values])
+          send(rule['type'], record[field], rule['values'])
         end
       end
 

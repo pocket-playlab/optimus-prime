@@ -101,6 +101,10 @@ module OptimusPrime
       @output ||= Set.new
     end
 
+    def hash_with_indifferent_access(message)
+      message.is_a?(Hash) ? HashWithIndifferentAccess.new(message) : message
+    end
+
     private
 
     # Spawn a listener thread for each input queue, then call `#close` when
