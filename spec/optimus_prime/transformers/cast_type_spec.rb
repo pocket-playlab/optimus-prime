@@ -43,6 +43,9 @@ RSpec.describe OptimusPrime::Transformers::CastType do
         b: 'yes',
         c: 'no',
         d: 'something'
+      },
+      {
+        price: nil
       }
     ]
   end
@@ -68,6 +71,9 @@ RSpec.describe OptimusPrime::Transformers::CastType do
         b: true,
         c: false,
         d: false
+      },
+      {
+        price: nil
       }
     ]
   end

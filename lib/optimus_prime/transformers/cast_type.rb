@@ -41,7 +41,7 @@ module OptimusPrime
       def transform(record)
         record.map do |key, val|
           type = @type_map[key.to_s]
-          result = cast(val, type)
+          result = val && cast(val, type)
           [key, result]
         end.to_h
       rescue TypeError
