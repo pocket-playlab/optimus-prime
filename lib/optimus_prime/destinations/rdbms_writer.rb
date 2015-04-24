@@ -72,8 +72,8 @@ module OptimusPrime
         execute do
           begin
             @table.multi_insert(@records)
-          rescue Sequel::UniqueConstraintViolation => e
-            logger.warn e.to_s
+          rescue Sequel::UniqueConstraintViolation
+            retry_insert
           end
         end
         @records.clear
@@ -84,6 +84,18 @@ module OptimusPrime
         @records.each do |record|
           (fields - record.keys).each do |missing_field|
             record.merge!(missing_field => nil)
+          end
+        end
+      end
+
+      def retry_insert
+        @records.each do |record|
+          execute do
+            begin
+              @table.insert record
+            rescue Sequel::UniqueConstraintViolation => e
+              logger.warn e.to_s
+            end
           end
         end
       end

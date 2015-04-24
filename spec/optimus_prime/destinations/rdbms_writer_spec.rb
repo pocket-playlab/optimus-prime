@@ -21,12 +21,7 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
   let(:dsn) { 'sqlite://test.db' }
   let(:table) { :developer_cars }
 
-  let(:destination) do
-    OptimusPrime::Destinations::RdbmsWriter.new(dsn: dsn, table: table,
-                                                max_retries: 4, sql_trace: false).tap do |d|
-      d.logger = Logger.new(STDERR)
-    end
-  end
+  let(:destination) { init_rdbms_writer(max_retries: 4) }
 
   before do
     db = Sequel.connect(dsn)
@@ -38,6 +33,13 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
       String :name, unique: true
       String :car
       Integer :horsepower
+    end
+  end
+
+  def init_rdbms_writer(max_retries: 4, chunk_size: 10)
+    OptimusPrime::Destinations::RdbmsWriter.new(dsn: dsn, table: table, max_retries: max_retries,
+                                                chunk_size: chunk_size, sql_trace: false).tap do |d|
+      d.logger = Logger.new(STDERR)
     end
   end
 
@@ -91,16 +93,14 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
 
   context 'the number of records is equal to chunk size' do
     it 'inserts records into database' do
-      rdbms = OptimusPrime::Destinations::RdbmsWriter.new(dsn: dsn, table: table,
-                                                          chunk_size: input.count)
+      rdbms = init_rdbms_writer(chunk_size: input.count)
       shared_expect_results(rdbms)
     end
   end
 
   context 'the number of records is greater than chunk size' do
     it 'inserts records into database' do
-      rdbms = OptimusPrime::Destinations::RdbmsWriter.new(dsn: dsn, table: table,
-                                                          chunk_size: 1)
+      rdbms = init_rdbms_writer(chunk_size: 4)
       shared_expect_results(rdbms)
     end
   end
