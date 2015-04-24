@@ -26,8 +26,6 @@ module OptimusPrime
       TRUTHY_STRING = /^(true|yes)$/
 
       # type_map - Hash specifying the types like in the example above
-      # stringify - Optional Boolean you can set to false to
-      #             NOT convert Symbol keys of the type_map to Strings
       def initialize(type_map: {})
         @type_map = type_map.with_indifferent_access
       end
