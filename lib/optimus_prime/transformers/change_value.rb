@@ -18,7 +18,7 @@ module OptimusPrime
     class ChangeValue < Destination
       # value_map - Hash of existing values to transform to new values
       def initialize(value_map: {})
-        @value_map = value_map
+        @value_map = value_map.with_indifferent_access
       end
 
       # Change the value for each entry in the given Hash.

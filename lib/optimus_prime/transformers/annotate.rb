@@ -3,7 +3,7 @@ module OptimusPrime
     # Adds the given keys and values to each record
     class Annotate < Destination
       def initialize(extra)
-        @extra = extra
+        @extra = extra.with_indifferent_access
       end
 
       def write(record)

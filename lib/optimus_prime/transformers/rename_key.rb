@@ -6,7 +6,7 @@ module OptimusPrime
       # in the initializer.
 
       def initialize(mapper:)
-        @mapper = mapper
+        @mapper = mapper.with_indifferent_access
       end
 
       def write(record)
