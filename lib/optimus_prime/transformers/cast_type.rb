@@ -1,5 +1,4 @@
-# The CastString transformer converts
-# string values in a Hash to their real types.
+# The CastType transformer converts values in a Hash to other types.
 #
 # Keys in the hash can be strings or symbols.
 #
@@ -22,8 +21,8 @@ require 'date'
 
 module OptimusPrime
   module Transformers
-    class CastString < Destination
-      TRUTHY_STRING = /^(true|yes)$/
+    class CastType < Destination
+      TRUTHY_STRINGS = %w(true yes)
 
       # type_map - Hash specifying the types like in the example above
       # stringify - Optional Boolean you can set to false to
@@ -42,7 +41,7 @@ module OptimusPrime
       def transform(record)
         record.map do |key, val|
           type = @type_map[key.to_s]
-          result = val.is_a?(String) ? cast(val, type) : val
+          result = cast(val, type)
           [key, result]
         end.to_h
       rescue TypeError
@@ -55,14 +54,13 @@ module OptimusPrime
       def cast(val, type)
         case type && type.downcase
         when nil        then val
-        when 'string'   then val
-        # Using Integer and Float as constructors to raise Exception.
+        # Using String, Integer and Float as constructors to raise exception.
+        when 'string'   then String(val)
         when 'integer'  then Integer(val, 10)
         when 'float'    then Float(val)
-        # NOTE: Every string not being 'true' or 'yes' results in false.
-        when 'boolean'  then !(val.downcase =~ TRUTHY_STRING).nil?
+        when 'boolean'  then TRUTHY_STRINGS.include?(String(val).downcase)
         when 'date'     then Date.parse(val)
-        else raise TypeError.new("Cannot convert #{type} to String!")
+        else raise TypeError.new("Cannot convert #{type}")
         end
       end
     end
