@@ -36,6 +36,11 @@ ENV BUNDLE_APP_CONFIG ${ROOT}/.bundle
 ENV BUNDLE_PATH ${BUNDLE_APP_CONFIG}
 ENV GEM_HOME ${HOME}/ruby
 
+# For now CircleCI only supports Docker 1.4, for that version
+# relative paths on ADD/COPY are not allowed. The following PR
+# added that feature to 1.5 version:
+# https://github.com/docker/docker/pull/9635
+# In the meantime we have to stick with absolute paths.
 COPY Gemfile ${ROOT}/Gemfile
 COPY optimus_prime.gemspec ${ROOT}/optimus_prime.gemspec
 
