@@ -19,7 +19,7 @@ module OptimusPrime
       background do
         each do |message|
           raise "#{self.class.name} returned null value" unless message
-          push message
+          push(message.is_a?(Hash) ? HashWithIndifferentAccess.new(message) : message)
         end
         close
       end
