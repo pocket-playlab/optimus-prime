@@ -118,7 +118,20 @@ script with no argument then exit.
 
 4. To run the tests: `./bin/docker-run rake`
 
+##### Guard Workflow
+
+Guard can watch the files for changes for you and auto-run the tests affected by this changes.
+
+- Use `./bin/docker-run guard` to keep watching for changes.
+Only the changed tests re-runs.
+- Guard provides you a console (using [pry][pry]). Hit _ENTER_ without anything else to run all tests.
+- You can put `binding.pry` debugger statements in your code like you're used to.
+- If an error occurs, pry automatically stops at the line in the code the error was raised.
+
+
+
 [1]: http://upload.wikimedia.org/wikipedia/en/1/19/Optimus10108pieces.jpg
 [2]: http://nodejs.org/api/stream.html
 [install-docker]:  https://docs.docker.com/installation/
 [install-compose]: https://docs.docker.com/compose/install/
+[pry]: http://pryrepl.org/

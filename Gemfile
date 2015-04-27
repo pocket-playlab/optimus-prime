@@ -5,6 +5,8 @@ ruby '2.2.2'
 gemspec
 
 group :development, :test do
+  gem 'pry-rescue'
+  gem 'guard-rspec', require: false
   gem 'pry-byebug'
   gem 'rspec', '~> 3.1.0'
   gem 'mail'
