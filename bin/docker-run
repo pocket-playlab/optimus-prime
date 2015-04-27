@@ -10,7 +10,7 @@ function run {
     eval "$(boot2docker shellinit 2> /dev/null)"
   fi
   log 'Building docker containers'
-  docker-compose build > /dev/null
+  docker-compose build
   log 'Starting containers'
   if [[ "$@" == '' ]]; then
     docker-compose up
