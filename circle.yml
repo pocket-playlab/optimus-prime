@@ -1,11 +1,14 @@
 machine:
+  environment:
+    rvm_install_on_use_flag: 0
+    rvm_gemset_create_on_use_flag: 0
   services:
     - docker
 
 # this step edits timestamps in .git repos to avoid rebuilding everytime
 checkout:
   post:
-    - find . -exec touch -t 201401010000 {} \;
+    - git ls-files | xargs touch -t 201402020000
     - for x in $(git ls-tree --full-tree --name-only -r HEAD); do touch -t $(date -d "$(git log -1 --format=%ci "${x}")" +%y%m%d%H%M.%S) "${x}"; done
 
 dependencies:
