@@ -9,25 +9,23 @@ module OptimusPrime
       # dsn   - Connection string for the database
       # table - Name of the table to use
       # options - all additional parameters are passed to Sequel
-      def initialize(dsn:, table:, retry_interval: 5, max_retries: 3, **options)
+      def initialize(dsn:, table:, retry_interval: 5, max_retries: 3, chunk_size: 100,
+                     **options)
         @db = Sequel.connect(dsn, **options)
         @table = @db[table.to_sym]
         @retry_interval = retry_interval
         @max_retries = max_retries
+        @chunk_size = chunk_size
+        @records = []
       end
 
       def write(record)
-        # log any data that doesn't match what we are expecting
-        # not sure if this should be a fatal condition...
-        unless record.is_a?(::Hash)
-          logger.error 'record was not a Hash as expected!'
-          logger.error record.inspect
-        end
-
-        execute { @table.insert record }
+        @records << record
+        multi_insert if @records.length == @chunk_size
       end
 
       def finish
+        multi_insert unless @records.empty?
         @db.disconnect
       end
 
@@ -36,7 +34,7 @@ module OptimusPrime
       # after waiting for 'retry_interval' seconds.
       #
       # execute do
-      #  @table.insert record
+      #   @table.multi_insert record
       # end
       def execute(&block)
         run_block(block)
@@ -47,7 +45,7 @@ module OptimusPrime
           log_and_sleep(e)
           retry
         else
-          raise "Couldn't execute block: #{e}"
+          raise
         end
       end
 
@@ -56,14 +54,50 @@ module OptimusPrime
         block.call
       end
 
-      def log_and_sleep(e)
-        logger.error "Error while connecting to database: #{e}. Sleeping #{@retry_interval}s..."
+      def log_and_sleep(error)
+        logger.error "Error while connecting to database: #{error}. Sleeping #{@retry_interval}s..."
         sleep @retry_interval
       end
 
       def set_instance_variables
         @max_retries ||= 3
         @retry_interval ||= 5
+      end
+
+      # [Note for Dataset#multi_insert from Sequel documentation]
+      # Be aware that all hashes should have the same keys if you use this calling method,
+      # otherwise some columns could be missed or set to null instead of to default values.
+      def multi_insert
+        add_missing_fields!
+        execute do
+          begin
+            @table.multi_insert(@records)
+          rescue Sequel::UniqueConstraintViolation
+            retry_insert
+          end
+        end
+        @records.clear
+      end
+
+      def add_missing_fields!
+        fields = @records.map(&:keys).flatten.uniq
+        @records.each do |record|
+          (fields - record.keys).each do |missing_field|
+            record.merge!(missing_field => nil)
+          end
+        end
+      end
+
+      def retry_insert
+        @records.each do |record|
+          execute do
+            begin
+              @table.insert record
+            rescue Sequel::UniqueConstraintViolation => e
+              logger.warn e.to_s
+            end
+          end
+        end
       end
     end
   end
