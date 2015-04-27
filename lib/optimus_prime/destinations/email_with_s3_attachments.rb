@@ -4,7 +4,7 @@ module OptimusPrime
   module Destinations
     class EmailWithS3Attachments < Destination
       def initialize(sender:, recipients:, title:, body:, email_config:)
-        mail_settings email_config
+        mail_settings email_config.with_indifferent_access
         @mail = Mail.new do
           from sender
           to recipients
