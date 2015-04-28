@@ -1,0 +1,36 @@
+#!/bin/bash
+set -e
+
+function run {
+  if [[ `uname` == 'Darwin' ]]; then
+    log 'Starting boot2docker vm'
+    boot2docker init
+    boot2docker up &> /dev/null
+    log 'Setting boot2docker environment variables'
+    eval "$(boot2docker shellinit 2> /dev/null)"
+  fi
+  log 'Building docker containers'
+  docker-compose build
+  log 'Starting containers'
+  if [[ "$@" == '' ]]; then
+    docker-compose up
+  else
+    docker-compose run --rm app "$@"
+  fi
+}
+
+function log {
+  echo -e "\033[1m-- $@\033[0m"
+}
+
+case "$@" in
+  -h | --help)
+    echo 'Run the given command inside a docker container.'
+    echo 'If no command is given, run the whole stack.'
+    echo ''
+    echo 'Usage:'
+    echo "  $0 <command>"
+    ;;
+  *)
+    run "$@"
+esac

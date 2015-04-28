@@ -1,3 +1,44 @@
-test:
+machine:
+  environment:
+    rvm_install_on_use_flag: 0
+    rvm_gemset_create_on_use_flag: 0
+  services:
+    - docker
+
+# this step edits timestamps in .git repos to avoid rebuilding everytime
+checkout:
   post:
-    - bundle exec pronto run --formatter=github
+    - git ls-files | xargs touch -t 201402020000
+    - for x in $(git ls-tree --full-tree --name-only -r HEAD); do touch -t $(date -d "$(git log -1 --format=%ci "${x}")" +%y%m%d%H%M.%S) "${x}"; done
+
+dependencies:
+  cache_directories:
+    - "~/docker"
+  override:
+    - mkdir -p ~/docker
+    - if [[ -e ~/docker/optimus-prime.tar ]]; then docker load -i ~/docker/optimus-prime.tar; fi
+    - docker build -t pocketplaylab/optimus-prime:$CIRCLE_BRANCH .
+    - docker save "pocketplaylab/optimus-prime:$CIRCLE_BRANCH" > ~/docker/optimus-prime.tar
+
+test:
+  override:
+    - >
+        docker run
+        --entrypoint='bin/run'
+        --net=host
+        pocketplaylab/optimus-prime:$CIRCLE_BRANCH
+        rake
+  post:
+    - gem install pronto-rubocop
+    - pronto run --formatter=github
+
+database:
+  override:
+    - echo 'No database used'
+
+# deployment:
+#   hub:
+#     branch: [master, switch-to-docker]
+#     commands:
+#       - sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" dockercfg.template > ~/.dockercfg
+#       - docker push pocketplaylab/optimus-prime:$CIRCLE_BRANCH

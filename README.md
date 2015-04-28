@@ -102,17 +102,33 @@ data source, you can use it to make sure that the last chunk gets uploaded.
 
 #### Development
 
-1. Make sure you have [Vagrant](vagrant) installed.
-2. Run `vagrant up` to start and setup the VM.
-3. Run `vagrant ssh` to login to the server.
-4. You can run the tests with `rake`.
+You need [Docker][install-docker] and [docker-compose][install-compose].  To
+install them on OSX just run:
 
-##### Troubleshooting
+`brew install docker boot2docker docker-compose`
 
-If the app is complaining about some gems missing you might have to run `vagrant provision` manually.
+For now the container only uses one additional _data_ container built with
+the same image as the main application. This container exposes
+`/home/playlab/ruby` as a volume, which is then included in the main app
+container using the `volume_from` directive. This allows us to persist any gems
+installed in the development container.
 
+To run the _boot2docker VM_ and _docker-compose_ automatically, use:
 
+ `./bin/docker-run`
+ 
+By default the container will execute the `bin/optimus` script with no argument
+then exit.
+
+If you want a shell inside your container just run:
+
+`./bin/docker-run bash`
+
+To run the tests:
+
+`./bin/docker-run rake`
 
 [1]: http://upload.wikimedia.org/wikipedia/en/1/19/Optimus10108pieces.jpg
 [2]: http://nodejs.org/api/stream.html
-[vagrant]: https://www.vagrantup.com/
+[install-docker]:  https://docs.docker.com/installation/
+[install-compose]: https://docs.docker.com/compose/install/

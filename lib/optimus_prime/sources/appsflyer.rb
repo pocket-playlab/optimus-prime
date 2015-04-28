@@ -14,7 +14,7 @@ module OptimusPrime
       end
 
       def each
-        CSV.parse api_response, headers: true do |row|
+        CSV.parse api_response.force_encoding('ASCII-8BIT'), headers: true do |row|
           yield row.to_h
         end
       end

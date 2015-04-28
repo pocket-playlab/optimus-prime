@@ -14,5 +14,4 @@
 .DS_Store
 mkmf.log
 /.idea/*
-/.vagrant/*
 /test.db
