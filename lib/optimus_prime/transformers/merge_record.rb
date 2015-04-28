@@ -17,7 +17,7 @@ module OptimusPrime
       end
 
       def generate_key(record)
-        @join_keys.map { |key| record[key.to_sym] }.join(':')
+        @join_keys.map { |key| record[key] }.join(':')
       end
 
       def merge(record)

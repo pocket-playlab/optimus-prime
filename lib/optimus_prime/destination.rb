@@ -11,7 +11,7 @@ module OptimusPrime
 
     def process(message)
       raise 'Closed' if closed?
-      write message
+      write hash_with_indifferent_access(message)
     end
   end
 end
