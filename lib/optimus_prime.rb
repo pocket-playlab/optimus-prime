@@ -1,5 +1,7 @@
 require 'sequel'
 
+require 'active_support/core_ext/hash'
+
 require 'optimus_prime/pipeline'
 require 'optimus_prime/step'
 require 'optimus_prime/source'

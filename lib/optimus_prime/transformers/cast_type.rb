@@ -25,10 +25,8 @@ module OptimusPrime
       TRUTHY_STRINGS = %w(true yes)
 
       # type_map - Hash specifying the types like in the example above
-      # stringify - Optional Boolean you can set to false to
-      #             NOT convert Symbol keys of the type_map to Strings
-      def initialize(type_map: {}, stringify: true)
-        @type_map = stringify ? type_map.stringify_nested_symbolic_keys : type_map
+      def initialize(type_map: {})
+        @type_map = type_map.with_indifferent_access
       end
 
       def write(record)
@@ -40,7 +38,7 @@ module OptimusPrime
 
       def transform(record)
         record.map do |key, val|
-          type = @type_map[key.to_s]
+          type = @type_map[key]
           result = val && cast(val, type)
           [key, result]
         end.to_h

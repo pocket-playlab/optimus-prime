@@ -94,37 +94,4 @@ RSpec.describe OptimusPrime::Transformers::RecordFilter do
       expect(output).to match_array [{ 'code' => 'B-222-3CB' }]
     end
   end
-
-  context 'stringify' do
-    let(:record_filter) { OptimusPrime::Transformers::RecordFilter }
-
-    let(:symbol_key) { [{ name: 'Bob' }] }
-    let(:string_key) { [{ 'name' => 'Bob' }] }
-
-    let(:cond) { { name: { type: :set, values: ['Bob'] } } }
-
-    context 'string keys' do
-      it 'matches with string keys' do
-        out = write_records(record_filter.new(constraints: cond, stringify: true), string_key)
-        expect(out).to match_array string_key
-      end
-
-      it 'filters the records when stringify is false' do
-        out = write_records(record_filter.new(constraints: cond, stringify: false), string_key)
-        expect(out).to match_array []
-      end
-    end
-
-    context 'symbol keys' do
-      it 'filters the invalid records' do
-        out = write_records(record_filter.new(constraints: cond, stringify: true), symbol_key)
-        expect(out).to match_array []
-      end
-
-      it 'matches with symbol key' do
-        out = write_records(record_filter.new(constraints: cond, stringify: false), symbol_key)
-        expect(out).to match_array symbol_key
-      end
-    end
-  end
 end
