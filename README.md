@@ -116,7 +116,7 @@ installed in the development container.
 To run the _boot2docker VM_ and _docker-compose_ automatically, use:
 
  `./bin/docker-run`
- 
+
 By default the container will execute the `bin/optimus` script with no argument
 then exit.
 
@@ -127,6 +127,13 @@ If you want a shell inside your container just run:
 To run the tests:
 
 `./bin/docker-run rake`
+
+
+### License
+
+Released under the [MIT License](LICENSE).
+
+
 
 [1]: http://upload.wikimedia.org/wikipedia/en/1/19/Optimus10108pieces.jpg
 [2]: http://nodejs.org/api/stream.html
