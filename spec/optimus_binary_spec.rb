@@ -16,6 +16,7 @@ Pipeline finished.
 
   let(:config_path) { 'spec/supports/config/test-config.yml' }
   let(:config_dependencies) { 'spec/supports/config/test-config-dependencies.yml' }
+  let(:config_exceptions) { 'spec/supports/config/test-config-exceptions.yml' }
 
   def tmp_destination
     @tmp_destination ||= 'tmp/destination.csv'
@@ -73,6 +74,13 @@ Pipeline finished.
           expect(@output).to include 'Requiring csv'
           expect(@output).to include 'Requiring benchmark'
         end
+      end
+    end
+
+    context 'with an exception adapter specified' do
+      it 'dfifou' do
+        @output = `#{operate} pipeline #{config_exceptions} test_pipeline`
+        expect(@output).to include finished
       end
     end
   end

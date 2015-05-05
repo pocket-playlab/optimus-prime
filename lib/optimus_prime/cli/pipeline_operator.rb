@@ -16,11 +16,12 @@ module OptimusPrime
         end
         @cli_dependencies = cli_dependencies ? cli_dependencies.split(',') : []
         require_dependencies
+        load_errors_adapter
         self.pipeline = OptimusPrime::Pipeline.new graph
       end
 
       def operate
-        pipeline.start.wait.finished? ? puts('Pipeline finished.') : raise('Pipeline failed to finish!')
+        @errors_adapter ? @errors_adapter.run(method(:start_pipeline)) : start_pipeline
       end
 
       def finished?
@@ -29,8 +30,19 @@ module OptimusPrime
 
       private
 
+      def start_pipeline
+        pipeline.start.wait.finished? ? puts('Pipeline finished.') : raise('Pipeline failed to finish!')
+      end
+
       def graph
         @graph ||= config[name]['graph'].symbolize_nested_keys
+      end
+
+      def load_errors_adapter
+        errors_config = config[name]['errors']
+        return unless errors_config
+        adapter_name = "OptimusPrime::Adapters::#{errors_config['adapter'].capitalize}Adapter"
+        @errors_adapter = Object.const_defined?(adapter_name) ? adapter_name.constantize.new(errors_config['options']) : nil
       end
 
       def require_dependencies

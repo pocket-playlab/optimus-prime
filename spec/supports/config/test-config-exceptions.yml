@@ -1,0 +1,34 @@
+# Using Ruby to set yaml values with a string and a lambda
+source1: &csv_source <%= 'spec/supports/csv/local_csv_source_sample.csv' %>
+source2: &pipe_source <%= -> { 'spec/supports/csv/local_csv_source_pipe.csv' }.call %>
+destination: &destination 'tmp/destination.csv'
+test_pipeline:
+
+  errors:
+    adapter: Sentry
+    options:
+      dsn: 'fifou'
+
+  dependencies:
+    - json
+    - csv
+
+  graph:
+    a:
+      class: 'OptimusPrime::Sources::LocalCsv'
+      params:
+        file_path: *csv_source
+      next:
+        - c
+    b:
+      class: 'OptimusPrime::Sources::LocalCsv'
+      params:
+        file_path: *pipe_source
+        col_sep: '|'
+      next:
+        - c
+    c:
+      class: 'OptimusPrime::Destinations::LocalCsv'
+      params:
+        fields: ['FirstName', 'LastName', 'Title', 'ReportsTo.Email', 'Birthdate', 'Description']
+        file_path: *destination
