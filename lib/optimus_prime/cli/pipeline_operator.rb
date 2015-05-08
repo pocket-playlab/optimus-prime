@@ -21,7 +21,7 @@ module OptimusPrime
       end
 
       def operate
-        @errors_adapter ? @errors_adapter.run(method(:start_pipeline)) : start_pipeline
+        @errors_adapter ? @errors_adapter.run(&method(:start_pipeline)) : start_pipeline
       end
 
       def finished?

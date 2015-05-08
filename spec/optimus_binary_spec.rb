@@ -78,8 +78,9 @@ Pipeline finished.
     end
 
     context 'with an exception adapter specified' do
-      it 'dfifou' do
+      it 'starts to capture exceptions with Raven' do
         @output = `#{operate} pipeline #{config_exceptions} test_pipeline`
+        expect(@output).to include 'Raven'
         expect(@output).to include finished
       end
     end

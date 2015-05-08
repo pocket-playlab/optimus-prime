@@ -1,10 +1,12 @@
+require 'sentry-raven'
+
 module OptimusPrime
   module Adapters
 
-    class SentryAdapter
+    class SentryAdapter < BaseAdapter
 
       def run(&block)
-        Raven.capture do
+        ::Raven.capture do
           block.call
         end
       end
@@ -12,7 +14,9 @@ module OptimusPrime
       private
 
       def configure_errors_adapter(&block)
-        Raven.configure(block)
+        ::Raven.configure do |config|
+          block.call(config)
+        end
       end
 
     end

@@ -6,7 +6,7 @@ module OptimusPrime
       def initialize(options)
         configure_errors_adapter do |config|
           options.each do |key, value|
-            config.send(key, value)
+            config.send("#{key}=", value)
           end
         end
       end
