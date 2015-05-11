@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 ruby '2.2.2'
 
+gem 'sentry-raven', git: 'https://github.com/getsentry/raven-ruby.git'
+
 gemspec
 
 group :development, :test do
