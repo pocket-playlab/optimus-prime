@@ -32,16 +32,10 @@ describe OptimusPrime::Transformers::BigqueryNestedFieldsStringConverter do
   def init_pipeline(keys:)
     OptimusPrime::Pipeline.new(
       **{
-        src: {
-          class: 'OptimusPrime::Sources::MyTestSource',
-          params: { records: input },
-          next: ['trans']
-        },
-        trans: {
-          class: 'OptimusPrime::Transformers::BigqueryNestedFieldsStringConverter',
-          params: { keys: keys },
-          next: ['dest']
-        },
+        src: { class: 'OptimusPrime::Sources::MyTestSource',
+               params: { records: input }, next: ['trans'] },
+        trans: { class: 'OptimusPrime::Transformers::BigqueryNestedFieldsStringConverter',
+                 params: { keys: keys }, next: ['dest'] },
         dest: { class: 'OptimusPrime::Destinations::MyTestDestination' }
       }
     )
@@ -107,7 +101,7 @@ describe OptimusPrime::Transformers::BigqueryNestedFieldsStringConverter do
         {
           field1: 'value',
           field2: [{ 'customer_id' => 298, 'type' => 'sms', 'cost' => 2 }],
-          field3: [{ :customer_id => 298, :type => 'mms', :cost => 5 }]
+          field3: [{ customer_id: 298, type: 'mms', cost: 5 }]
         },
         {
           field1: 'value'
