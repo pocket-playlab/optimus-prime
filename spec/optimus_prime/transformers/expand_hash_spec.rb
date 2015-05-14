@@ -34,7 +34,7 @@ RSpec.describe OptimusPrime::Transformers::ExpandHash do
 
     it 'pushes nothing and logs an error' do
       expect(output_of(invalid_input)).to match_array([])
-      expect(logs).to include('Cannot expand invalid JSON field')
+      expect(logs).to include('Cannot expand invalid Hash field')
     end
   end
 
