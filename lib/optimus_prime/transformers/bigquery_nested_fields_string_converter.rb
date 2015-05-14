@@ -21,7 +21,7 @@ module OptimusPrime
     #    'field2' => [{ 'id' => 298, 'type' => 'sms', 'cost' => 2 }],
     #    'field3' => [{ 'id' => 299, 'type' => 'mms', 'cost' => 5 }]
     #  }
-    class BigQueryNestedFieldsStringConverter < Destination
+    class BigqueryNestedFieldsStringConverter < Destination
       def initialize(keys:)
         @keys = keys
       end

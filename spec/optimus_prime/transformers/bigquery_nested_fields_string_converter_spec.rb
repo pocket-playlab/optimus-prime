@@ -3,7 +3,7 @@ require 'optimus_prime/transformers/bigquery_nested_fields_string_converter'
 
 module OptimusPrime
   module Sources
-    class MySource < Source
+    class MyTestSource < Source
       def initialize(records:)
         @records = records
       end
@@ -15,7 +15,7 @@ module OptimusPrime
   end
 
   module Destinations
-    class MyDestination < Destination
+    class MyTestDestination < Destination
       attr_reader :written
       def initialize
         @written = []
@@ -28,7 +28,7 @@ module OptimusPrime
   end
 end
 
-describe OptimusPrime::Transformers::BigQueryNestedFieldsStringConverter do
+describe OptimusPrime::Transformers::BigqueryNestedFieldsStringConverter do
   let(:input) do
     [
       {
@@ -67,16 +67,16 @@ describe OptimusPrime::Transformers::BigQueryNestedFieldsStringConverter do
     OptimusPrime::Pipeline.new(
       **{
         src: {
-          class: 'OptimusPrime::Sources::MySource',
+          class: 'OptimusPrime::Sources::MyTestSource',
           params: { records: input },
           next: ['trans']
         },
         trans: {
-          class: 'OptimusPrime::Transformers::BigQueryNestedFieldsStringConverter',
+          class: 'OptimusPrime::Transformers::BigqueryNestedFieldsStringConverter',
           params: { keys: ['field2', 'field3'] },
           next: ['dest']
         },
-        dest: { class: 'OptimusPrime::Destinations::MyDestination' }
+        dest: { class: 'OptimusPrime::Destinations::MyTestDestination' }
       }
     )
   end
