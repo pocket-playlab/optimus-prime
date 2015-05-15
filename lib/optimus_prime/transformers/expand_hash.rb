@@ -9,6 +9,10 @@ module OptimusPrime
         record[field]
       end
 
+      def error_message(err, record, field)
+        "#{err.message}: Cannot expand invalid Hash field '#{field}' in: #{record}"
+      end
+
     end
   end
 end

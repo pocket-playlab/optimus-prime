@@ -33,12 +33,16 @@ module OptimusPrime
         record.delete field
         overwrite ? record.merge(expanded_field) : expanded_field.merge(record)
       rescue => err
-        logger.error "#{err.message}: Cannot expand invalid JSON field '#{field}' in: #{record}"
+        logger.error error_message(err, record, field)
         return false
       end
 
       def read_value(record, field)
         JSON.parse(record[field])
+      end
+
+      def error_message(err, record, field)
+        "#{err.message}: Cannot expand invalid JSON field '#{field}' in: #{record}"
       end
 
     end

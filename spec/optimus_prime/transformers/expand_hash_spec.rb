@@ -1,8 +1,7 @@
 require 'spec_helper'
-require 'optimus_prime/transformers/expand_json'
 
 RSpec.describe OptimusPrime::Transformers::ExpandHash do
-  let(:logfile) { '/tmp/expand_json.log' }
+  let(:logfile) { '/tmp/expand_hash.log' }
   let(:invalid_input) { [{ 'a' => 'b', 'c' => 'd' }, { 'e' => 'f', 'g' => 'h' }] }
 
   def output_of(input)
@@ -29,7 +28,7 @@ RSpec.describe OptimusPrime::Transformers::ExpandHash do
     end
   end
 
-  context 'with invalid json in record fields' do
+  context 'with invalid hash in record fields' do
     let(:transformer) { OptimusPrime::Transformers::ExpandHash.new(fields: ['a', 'e']) }
 
     it 'pushes nothing and logs an error' do
@@ -38,7 +37,7 @@ RSpec.describe OptimusPrime::Transformers::ExpandHash do
     end
   end
 
-  context 'with valid json and fields' do
+  context 'with valid hash and fields' do
     let(:simple_input) do
       [{ 'a' => 'b', 'c' => { 'foo' => 'bar', 'baz' => 'quux' } },
        { 'e' => 'f', 'g' => 'h' }]
@@ -49,12 +48,12 @@ RSpec.describe OptimusPrime::Transformers::ExpandHash do
     end
     let(:transformer) { OptimusPrime::Transformers::ExpandHash.new(fields: ['c']) }
 
-    it 'expands json fields correctly' do
+    it 'expands hash fields correctly' do
       expect(output_of(simple_input)).to match_array(simple_output)
     end
   end
 
-  context 'with duplicate fields in the record and the json field' do
+  context 'with duplicate fields in the record and the hash field' do
     let(:duplicates) do
       [
         { 'first' => 'second', 'third' => { 'first' => 'fourth' } },
