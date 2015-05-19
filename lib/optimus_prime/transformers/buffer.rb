@@ -1,3 +1,6 @@
+# buffer is not meant to be used for big quantities of data
+# and is mostly thought as a simple buffer for big query results
+
 module OptimusPrime
   module Transformers
     class Buffer < Destination
