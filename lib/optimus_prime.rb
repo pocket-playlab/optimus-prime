@@ -15,6 +15,7 @@ require 'optimus_prime/destinations/rdbms_writer'
 require 'optimus_prime/sources/flurry_helpers/flurry_connector'
 require 'optimus_prime/transformers/expand_json'
 require 'optimus_prime/sources/app_annie'
+require 'optimus_prime/sources/rdbms'
 
 # Load all Sources and Destinations
 Dir[File.dirname(__FILE__) + '/optimus_prime/**/*.rb'].each do |file|
