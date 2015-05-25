@@ -7,7 +7,7 @@ module OptimusPrime
       def request(method:, path:, api_key:, **options)
         url = "https://api.appannie.com#{path}"
         begin
-          response = JSON.parse(
+          JSON.parse(
             RestClient.send(method, url, ({ authorization: "Bearer #{api_key}" }).merge(options))
           )
         rescue => e
