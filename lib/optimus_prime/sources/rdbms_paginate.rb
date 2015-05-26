@@ -1,6 +1,6 @@
 module OptimusPrime
   module Sources
-    class RdbmsPagedEach < Rdbms
+    class RdbmsPaginate < Rdbms
       def initialize(dsn:, query:, rows_per_fetch:, order_field: :id, **options)
         super(dsn: dsn, query: query, **options)
         @rows_per_fetch = rows_per_fetch

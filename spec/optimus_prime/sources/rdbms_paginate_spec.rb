@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe OptimusPrime::Sources::RdbmsPagedEach do
+describe OptimusPrime::Sources::RdbmsPaginate do
   let(:input) do
     [
       { id: 1, platform: 'ios',     version: '8.1'  },
@@ -31,7 +31,7 @@ describe OptimusPrime::Sources::RdbmsPagedEach do
 
   context '#each' do
     it 'matches the same keys of input' do
-      rows = OptimusPrime::Sources::RdbmsPagedEach.new dsn: dsn,
+      rows = OptimusPrime::Sources::RdbmsPaginate.new dsn: dsn,
                                                        query: 'select * from devices',
                                                        rows_per_fetch: 2,
                                                        order_field: :id
