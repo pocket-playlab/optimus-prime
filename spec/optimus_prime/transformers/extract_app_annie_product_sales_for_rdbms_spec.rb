@@ -15,9 +15,7 @@ describe OptimusPrime::Transformers::ExtractAppAnnieProductSalesForRdbms do
 
   before(:each) do
     @output = []
-    @extractor = OptimusPrime::Transformers::ExtractAppAnnieProductSalesForRdbms.new(
-      default_fields: ['vertical', 'currency', 'market']
-    )
+    @extractor = OptimusPrime::Transformers::ExtractAppAnnieProductSalesForRdbms.new
     @extractor.output << @output
   end
 
@@ -31,76 +29,81 @@ describe OptimusPrime::Transformers::ExtractAppAnnieProductSalesForRdbms do
     it 'returns an array of extracted data' do
       expected_output = [
         {
-          'sales_list_date' => '2015-01-01',
-          'sales_list_country' => 'AU',
-          'sales_list_units_product_downloads' => 6,
-          'sales_list_units_product_refunds' => 0,
-          'sales_list_units_iap_sales' => 0,
-          'sales_list_units_iap_refunds' => 0,
-          'sales_list_revenue_product_downloads' => '0.00',
-          'sales_list_revenue_product_refunds' => '0.00',
-          'sales_list_revenue_iap_sales' => '0.00',
-          'sales_list_revenue_iap_refunds' => '0.00',
-          'sales_list_revenue_ad' => '0.00',
+          'date' => '2015-01-01',
+          'country' => 'AU',
+          'units_product_downloads' => 6,
+          'units_product_refunds' => 0,
+          'units_iap_sales' => 0,
+          'units_iap_refunds' => 0,
+          'revenue_product_downloads' => '0.00',
+          'revenue_product_refunds' => '0.00',
+          'revenue_iap_sales' => '0.00',
+          'revenue_iap_refunds' => '0.00',
+          'revenue_ad' => '0.00',
           'vertical' => 'apps',
           'currency' => 'USD',
-          'market' => 'ios'
+          'market' => 'ios',
+          'sales_type' => 'sales_list'
         },
         {
-          'sales_list_date' => '2015-01-01',
-          'sales_list_country' => 'US',
-          'sales_list_units_product_downloads' => 2,
-          'sales_list_units_product_refunds' => 0,
-          'sales_list_units_iap_sales' => 0,
-          'sales_list_units_iap_refunds' => 0,
-          'sales_list_revenue_product_downloads' => '0.00',
-          'sales_list_revenue_product_refunds' => '0.00',
-          'sales_list_revenue_iap_sales' => '0.00',
-          'sales_list_revenue_iap_refunds' => '0.00',
-          'sales_list_revenue_ad' => '0.00',
+          'date' => '2015-01-01',
+          'country' => 'US',
+          'units_product_downloads' => 2,
+          'units_product_refunds' => 0,
+          'units_iap_sales' => 0,
+          'units_iap_refunds' => 0,
+          'revenue_product_downloads' => '0.00',
+          'revenue_product_refunds' => '0.00',
+          'revenue_iap_sales' => '0.00',
+          'revenue_iap_refunds' => '0.00',
+          'revenue_ad' => '0.00',
           'vertical' => 'apps',
           'currency' => 'USD',
-          'market' => 'ios'
+          'market' => 'ios',
+          'sales_type' => 'sales_list'
         },
         {
-          'sales_list_date' => '2015-01-01',
-          'sales_list_country' => 'TH',
-          'sales_list_units_product_downloads' => 0,
-          'sales_list_units_product_refunds' => 0,
-          'sales_list_units_iap_sales' => 0,
-          'sales_list_units_iap_refunds' => 0,
-          'sales_list_revenue_product_downloads' => '0.00',
-          'sales_list_revenue_product_refunds' => '0.00',
-          'sales_list_revenue_iap_sales' => '0.00',
-          'sales_list_revenue_iap_refunds' => '0.00',
-          'sales_list_revenue_ad' => '0.00',
+          'date' => '2015-01-01',
+          'country' => 'TH',
+          'units_product_downloads' => 0,
+          'units_product_refunds' => 0,
+          'units_iap_sales' => 0,
+          'units_iap_refunds' => 0,
+          'revenue_product_downloads' => '0.00',
+          'revenue_product_refunds' => '0.00',
+          'revenue_iap_sales' => '0.00',
+          'revenue_iap_refunds' => '0.00',
+          'revenue_ad' => '0.00',
           'vertical' => 'apps',
           'currency' => 'USD',
-          'market' => 'ios'
+          'market' => 'ios',
+          'sales_type' => 'sales_list'
         },
         {
-          'iap_sales_list_date' => '2015-04-18',
-          'iap_sales_list_country' => 'AU',
-          'iap_sales_list_units_sales' => 1,
-          'iap_sales_list_units_refunds' => 0,
-          'iap_sales_list_iap' => 'com.app.product_1',
-          'iap_sales_list_revenue_sales' => '3.14',
-          'iap_sales_list_revenue_refunds' => '0.00',
+          'date' => '2015-04-18',
+          'country' => 'AU',
+          'units_sales' => 1,
+          'units_refunds' => 0,
+          'iap' => 'com.app.product_1',
+          'revenue_sales' => '3.14',
+          'revenue_refunds' => '0.00',
           'vertical' => 'apps',
           'currency' => 'USD',
-          'market' => 'ios'
+          'market' => 'ios',
+          'sales_type' => 'iap_sales_list'
         },
         {
-          'iap_sales_list_date' => '2015-04-18',
-          'iap_sales_list_country' => 'US',
-          'iap_sales_list_units_sales' => 1,
-          'iap_sales_list_units_refunds' => 0,
-          'iap_sales_list_iap' => 'com.app.product_2',
-          'iap_sales_list_revenue_sales' => '5.55',
-          'iap_sales_list_revenue_refunds' => '0.00',
+          'date' => '2015-04-18',
+          'country' => 'US',
+          'units_sales' => 1,
+          'units_refunds' => 0,
+          'iap' => 'com.app.product_2',
+          'revenue_sales' => '5.55',
+          'revenue_refunds' => '0.00',
           'vertical' => 'apps',
           'currency' => 'USD',
-          'market' => 'ios'
+          'market' => 'ios',
+          'sales_type' => 'iap_sales_list'
         }
       ]
       expect_output(multiple_pages_input, expected_output)
@@ -114,36 +117,38 @@ describe OptimusPrime::Transformers::ExtractAppAnnieProductSalesForRdbms do
 
       expected_output = [
         {
-          'sales_list_date' => '2015-01-01',
-          'sales_list_country' => 'AU',
-          'sales_list_units_product_downloads' => 6,
-          'sales_list_units_product_refunds' => 0,
-          'sales_list_units_iap_sales' => 0,
-          'sales_list_units_iap_refunds' => 0,
-          'sales_list_revenue_product_downloads' => '0.00',
-          'sales_list_revenue_product_refunds' => '0.00',
-          'sales_list_revenue_iap_sales' => '0.00',
-          'sales_list_revenue_iap_refunds' => '0.00',
-          'sales_list_revenue_ad' => '0.00',
+          'date' => '2015-01-01',
+          'country' => 'AU',
+          'units_product_downloads' => 6,
+          'units_product_refunds' => 0,
+          'units_iap_sales' => 0,
+          'units_iap_refunds' => 0,
+          'revenue_product_downloads' => '0.00',
+          'revenue_product_refunds' => '0.00',
+          'revenue_iap_sales' => '0.00',
+          'revenue_iap_refunds' => '0.00',
+          'revenue_ad' => '0.00',
           'vertical' => 'apps',
           'currency' => 'USD',
-          'market' => 'ios'
+          'market' => 'ios',
+          'sales_type' => 'sales_list'
         },
         {
-          'sales_list_date' => '2015-01-01',
-          'sales_list_country' => 'US',
-          'sales_list_units_product_downloads' => 2,
-          'sales_list_units_product_refunds' => 0,
-          'sales_list_units_iap_sales' => 0,
-          'sales_list_units_iap_refunds' => 0,
-          'sales_list_revenue_product_downloads' => '0.00',
-          'sales_list_revenue_product_refunds' => '0.00',
-          'sales_list_revenue_iap_sales' => '0.00',
-          'sales_list_revenue_iap_refunds' => '0.00',
-          'sales_list_revenue_ad' => '0.00',
+          'date' => '2015-01-01',
+          'country' => 'US',
+          'units_product_downloads' => 2,
+          'units_product_refunds' => 0,
+          'units_iap_sales' => 0,
+          'units_iap_refunds' => 0,
+          'revenue_product_downloads' => '0.00',
+          'revenue_product_refunds' => '0.00',
+          'revenue_iap_sales' => '0.00',
+          'revenue_iap_refunds' => '0.00',
+          'revenue_ad' => '0.00',
           'vertical' => 'apps',
           'currency' => 'USD',
-          'market' => 'ios'
+          'market' => 'ios',
+          'sales_type' => 'sales_list'
         }
       ]
       expect_output(modified_input, expected_output)
@@ -157,28 +162,30 @@ describe OptimusPrime::Transformers::ExtractAppAnnieProductSalesForRdbms do
 
       expected_output = [
         {
-          'iap_sales_list_date' => '2015-04-18',
-          'iap_sales_list_country' => 'AU',
-          'iap_sales_list_units_sales' => 1,
-          'iap_sales_list_units_refunds' => 0,
-          'iap_sales_list_iap' => 'com.app.product_1',
-          'iap_sales_list_revenue_sales' => '3.14',
-          'iap_sales_list_revenue_refunds' => '0.00',
+          'date' => '2015-04-18',
+          'country' => 'AU',
+          'units_sales' => 1,
+          'units_refunds' => 0,
+          'iap' => 'com.app.product_1',
+          'revenue_sales' => '3.14',
+          'revenue_refunds' => '0.00',
           'vertical' => 'apps',
           'currency' => 'USD',
-          'market' => 'ios'
+          'market' => 'ios',
+          'sales_type' => 'iap_sales_list'
         },
         {
-          'iap_sales_list_date' => '2015-04-18',
-          'iap_sales_list_country' => 'US',
-          'iap_sales_list_units_sales' => 1,
-          'iap_sales_list_units_refunds' => 0,
-          'iap_sales_list_iap' => 'com.app.product_2',
-          'iap_sales_list_revenue_sales' => '5.55',
-          'iap_sales_list_revenue_refunds' => '0.00',
+          'date' => '2015-04-18',
+          'country' => 'US',
+          'units_sales' => 1,
+          'units_refunds' => 0,
+          'iap' => 'com.app.product_2',
+          'revenue_sales' => '5.55',
+          'revenue_refunds' => '0.00',
           'vertical' => 'apps',
           'currency' => 'USD',
-          'market' => 'ios'
+          'market' => 'ios',
+          'sales_type' => 'iap_sales_list'
         }
       ]
       expect_output(modified_input, expected_output)

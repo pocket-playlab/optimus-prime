@@ -3,11 +3,11 @@ module OptimusPrime
     # This class accepts data from AppAnnie Product Sales,
     # extracts sales_list and iap_sales_list data, and transforms
     # them into an array of hash. Each hash will contain default fields
-    # specified in the "default_fields" argument.
+    # specified in the "default_fields" variable.
     class ExtractAppAnnieProductSalesForRdbms < OptimusPrime::Destination
-      def initialize(default_fields:)
+      def initialize
         @rows = []
-        @default_fields = default_fields
+        @default_fields = ['vertical', 'currency', 'market']
       end
 
       def write(data)
@@ -45,8 +45,8 @@ module OptimusPrime
 
       def extract_list(data, prefix)
         data[prefix].each do |row|
-          new_row = default_fields data
-          row.each { |key, value| new_row.merge! expand_hash(value, "#{prefix}_#{key}") }
+          new_row = default_fields(data).merge('sales_type' => prefix)
+          row.each { |key, value| new_row.merge! expand_hash(value, key) }
           @rows << new_row
         end
       end
