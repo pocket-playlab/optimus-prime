@@ -4,12 +4,12 @@
       "date": "2015-01-01",
       "country": "AU",
       "units": {
-        "product": { "promotions": 0, "downloads": 6, "updates": 22, "refunds": 0 },
-        "iap": { "promotions": 0, "sales": 0, "refunds": 0 }
+        "product": { "downloads": 6, "refunds": 0 },
+        "iap": { "sales": 0, "refunds": 0 }
       },
       "revenue": {
-        "product": { "promotions": "0.00", "downloads": "0.00", "updates": "0.00", "refunds": "0.00" },
-        "iap": { "promotions": "0.00", "sales": "0.00", "refunds": "0.00" },
+        "product": { "downloads": "0.00", "updates": "0.00" },
+        "iap": { "sales": "0.00", "refunds": "0.00" },
         "ad": "0.00"
       }
     }
