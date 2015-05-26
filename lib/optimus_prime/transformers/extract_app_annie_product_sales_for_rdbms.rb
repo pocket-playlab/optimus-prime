@@ -28,17 +28,15 @@ module OptimusPrime
       def expand_hash(data, prefix)
         new_row = {}
         if data.is_a? Hash
-          data.each do |key, value|
-            if value.is_a? Hash
-              value.each { |k, v| new_row["#{prefix}_#{key}_#{k}"] = v }
-            else
-              new_row["#{prefix}_#{key}"] = value
-            end
-          end
+          data.each { |key, value| set_new_key(new_row, value, "#{prefix}_#{key}") }
         else
           new_row["#{prefix}"] = data
         end
         new_row
+      end
+
+      def set_new_key(row, value, key)
+        value.is_a? Hash ? value.each { |k, v| row["#{key}_#{k}"] = v } : row[key] = value
       end
 
       def default_fields(data)
