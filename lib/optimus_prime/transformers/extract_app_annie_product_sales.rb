@@ -4,7 +4,7 @@ module OptimusPrime
     # extracts sales_list and iap_sales_list data, and transforms
     # them into an array of hash. Each hash will contain default fields
     # specified in the "default_fields" variable.
-    class ExtractAppAnnieProductSalesForRdbms < OptimusPrime::Destination
+    class ExtractAppAnnieProductSales < OptimusPrime::Destination
       def initialize
         @rows = []
         @default_fields = ['vertical', 'currency', 'market']

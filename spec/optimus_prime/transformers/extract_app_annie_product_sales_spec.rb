@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'optimus_prime/transformers/extract_app_annie_product_sales_for_rdbms'
+require 'optimus_prime/transformers/extract_app_annie_product_sales'
 
-describe OptimusPrime::Transformers::ExtractAppAnnieProductSalesForRdbms do
+describe OptimusPrime::Transformers::ExtractAppAnnieProductSales do
   let(:multiple_pages_input) do
     [
       JSON.parse(File.read('spec/supports/app_annie/one_page_response.json')),
@@ -15,7 +15,7 @@ describe OptimusPrime::Transformers::ExtractAppAnnieProductSalesForRdbms do
 
   before(:each) do
     @output = []
-    @extractor = OptimusPrime::Transformers::ExtractAppAnnieProductSalesForRdbms.new
+    @extractor = OptimusPrime::Transformers::ExtractAppAnnieProductSales.new
     @extractor.output << @output
   end
 
