@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/sources/appsflyer'
 
 describe OptimusPrime::Sources::Rdbms do
   let(:input) do
