@@ -36,7 +36,7 @@ module OptimusPrime
       end
 
       def set_new_key(row, value, key)
-        value.is_a? Hash ? value.each { |k, v| row["#{key}_#{k}"] = v } : row[key] = value
+        value.is_a?(Hash) ? value.each { |k, v| row["#{key}_#{k}"] = v } : row[key] = value
       end
 
       def default_fields(data)
