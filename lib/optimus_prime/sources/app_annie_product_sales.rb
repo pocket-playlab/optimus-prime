@@ -7,12 +7,10 @@ module OptimusPrime
   module Sources
     class AppAnnieProductSales < AppAnnie
       def initialize(api_key:, account_id:, product_id:,
-                     start_date:, end_date:, break_down: 'date+country+iap')
+                     start_date:, end_date:, options: {})
         @api_key = api_key
         @path = "/v1.2/accounts/#{account_id}/products/#{product_id}/sales"
-        @params = {
-          params: { break_down: break_down, start_date: start_date, end_date: end_date }
-        }
+        @params = { params: options.merge(start_date: start_date, end_date: end_date) }
       end
 
       def each
