@@ -27,7 +27,8 @@ describe OptimusPrime::Sources::AppAnnieProductSales do
             account_id: 'acc_id',
             product_id: 'prod_id',
             start_date: '2015-01-01',
-            end_date: '2015-01-01'
+            end_date: '2015-01-01',
+            options: { break_down: 'date+country+iap' }
           }, next: ['dest']
         },
         dest: { class: 'OptimusPrime::Destinations::MyTestDestination' }
