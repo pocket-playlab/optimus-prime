@@ -35,7 +35,11 @@ module OptimusPrime
         # Make the request to Flurry
         def request!
           logger.debug "Fetching report data from #{url}"
-          handle_response(Net::HTTP.get_response(URI(url)))
+          current_url = URI.parse(url)
+          http = Net::HTTP.new(current_url.host, current_url.port)
+          http.read_timeout = 300
+          resp = http.start() { |http| http.get(current_url) }
+          handle_response(resp)
         end
 
         # Check if we're over limit (1 call / second). If we are
