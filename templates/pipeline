@@ -1,0 +1,10 @@
+<%= trigger %>:
+<% if dependencies && dependencies.length %>
+  dependencies:
+<% dependencies.each do |dep|
+    - <%= Template.new (dep).result %>
+<% end
+end %>
+<% steps.each do |step| %>
+  <%= Template.new(step).result %>
+<% end %>

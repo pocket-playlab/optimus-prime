@@ -20,8 +20,15 @@ module OptimusPrime
 
   class OptimusCLI < Thor
     desc 'operate [SUBCOMMAND] ...ARGS', 'run pipeline or factory.'
+    map 'o' => :operate
     subcommand 'operate', Operator
 
     # TODO: implement a generator for pipeline and factory config files!
+
+    desc 'version', 'Display installed OptimusPrime version.'
+    map '-v' => :version
+    def version
+      puts "OptimusPrime #{OptimusPrime::VERSION}"
+    end
   end
 end
