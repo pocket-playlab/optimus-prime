@@ -54,7 +54,7 @@ module OptimusPrime
         when nil        then val
         # Using String, Integer and Float as constructors to raise exception.
         when 'string'   then String(val)
-        when 'integer'  then Integer(val, 10)
+        when 'integer'  then val.is_a?(Numeric) ? Integer(val) : Integer(val, 10)
         when 'float'    then Float(val)
         when 'boolean'  then TRUTHY_STRINGS.include?(String(val).downcase)
         when 'date'     then Date.parse(val)
