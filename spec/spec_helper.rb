@@ -24,6 +24,8 @@ RSpec.configure do |config|
 end
 
 VCR.configure do |config|
+  # TODO: Remove this when tests are done
+  config.allow_http_connections_when_no_cassette = true
   config.cassette_library_dir = 'spec/supports'
   config.hook_into :webmock
   config.ignore_localhost = true
