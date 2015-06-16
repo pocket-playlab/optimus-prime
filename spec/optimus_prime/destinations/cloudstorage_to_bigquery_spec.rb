@@ -34,14 +34,15 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
   end
 
   let(:destination) do
-    OptimusPrime::Destinations::CloudstorageToBigquery.new(
+    d = OptimusPrime::Destinations::CloudstorageToBigquery.new(
       client_email: ENV.fetch('GOOGLE_CLIENT_EMAIL', 'test@developer.gserviceaccount.com'),
       private_key: ENV.fetch('GOOGLE_PRIVATE_KEY', File.read('spec/supports/key')),
       project: 'pl-playground',
       dataset: 'json_load',
       schema: schema
-
     )
+    d.logger = Logger.new STDOUT
+    d
   end
 
   it 'runs without errors' do

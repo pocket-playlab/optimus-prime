@@ -21,7 +21,7 @@ module OptimusPrime
       end
 
       def write(tasks)
-        jobs = tasks.map { |table, uris| LoadJob.new client, @config, table, uris }
+        jobs = tasks.map { |table, uris| LoadJob.new client, logger, @config, table, uris }
         wait_for_jobs(jobs)
       end
 
@@ -49,36 +49,42 @@ module OptimusPrime
 
       class LoadJob
         # for BigQueryTableBase
-        attr_reader :client, :id, :project_id, :dataset_id
+        attr_reader :client, :logger, :id, :project_id, :dataset_id, :resource
 
-        def initialize(client, config, table, uris)
+        def initialize(client, logger, config, table, uris)
           @client     = client
+          @logger     = logger
           @id         = table
           @project_id = config[:project]
           @dataset_id = config[:dataset]
           @schema     = config[:schema]
+          @resource   = generate_resource
 
-          # TODO: Patch schema before inserting
+          # NOTE: Could be optimised to just fetch the table once
+          patch_table if exists?
+
           insert_request = insert_files(uris)
           @job_id = JSON.parse(insert_request.body)['jobReference']['jobId']
-          # TODO: Use logger.info instead of `p`
-          p "LoadJob created (#{@job_id})."
+          logger.info "LoadJob created (#{@job_id})."
         end
 
         def pending?
           request = execute(bigquery.jobs.get, params: { 'jobId' => @job_id })
           body = JSON.parse(request.body)
-          # TODO: Raise error if job has errors (body['status']['errors'|'errorResult'])
-          #       Test by creating wrong schema
+          error = body['status']['errorResult']
+          raise Exception.new request.body
           state = body['status']['state']
-          # TODO: Use logger.info instead of `p`
-          p "LoadJob for table #{id} has state #{state}."
+          logger.info "LoadJob for table #{id} has state #{state}."
           state != 'DONE'
         end
 
         private
 
         include BigQueryTableBase
+
+        def generate_resource
+          { schema: @schema }.stringify_nested_symbolic_keys
+        end
 
         def insert_files(uris)
           execute(bigquery.jobs.insert, body: generate_job_data(uris))
