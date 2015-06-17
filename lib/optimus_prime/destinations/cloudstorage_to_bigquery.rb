@@ -65,17 +65,18 @@ module OptimusPrime
 
           insert_request = insert_files(uris)
           @job_id = JSON.parse(insert_request.body)['jobReference']['jobId']
-          logger.info "LoadJob created (#{@job_id})."
+          logger.info "LoadJob created #{@job_id} (table: #{id})."
         end
 
         def pending?
           request = execute(bigquery.jobs.get, params: { 'jobId' => @job_id })
           body = JSON.parse(request.body)
           error = body['status']['errorResult']
-          raise Exception.new request.body
-          state = body['status']['state']
-          logger.info "LoadJob for table #{id} has state #{state}."
-          state != 'DONE'
+
+          raise LoadJobError.new(request.body) if error
+          state = body['status']['state'].downcase
+          logger.info "LoadJob #{@job_id} (table: #{id}) is #{state}."
+          state != 'done'
         end
 
         private
@@ -106,6 +107,16 @@ module OptimusPrime
             }
           }.stringify_nested_symbolic_keys
         end
+
+        class LoadJobError < StandardError
+          # This is in the section "Additional Data" in Sentry
+          attr_reader :extra
+
+          def initialize(extra = {})
+            @message = 'Load job in BigQuery encountered a problem.'
+            @extra = extra
+            end
+          end
 
       end
 
