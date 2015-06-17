@@ -33,10 +33,10 @@ module OptimusPrime
       private
 
       def push_pair(category, file_path)
-        push({
+        push(
           category: category,
           file: Pathname.new(file_path).relative_path_from(base_path).to_path
-        }) if file_path
+        ) if file_path
       end
 
       def path_for(record)
@@ -44,7 +44,7 @@ module OptimusPrime
       end
 
       def category_of(record)
-        category_template % record
+        (category_template % record).downcase.gsub('.', '_')
       end
 
       def find_or_create_stream(category, record)
