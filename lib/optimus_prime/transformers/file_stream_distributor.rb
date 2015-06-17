@@ -11,7 +11,7 @@ module OptimusPrime
         @path_template = path_template
         @base_path = Pathname.new(base_path)
         @max_per_file = max_per_file
-        @stream_type = stream_type
+        @stream_type = stream_type.is_a?(String) ? constantize(stream_type) : stream_type
         @streams = {}
       end
 
@@ -31,6 +31,10 @@ module OptimusPrime
       end
 
       private
+
+      def constantize(name)
+        name.split('::').reduce(Module, :const_get)
+      end
 
       def push_pair(category, file_path)
         push(

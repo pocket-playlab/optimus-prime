@@ -21,7 +21,7 @@ RSpec.describe OptimusPrime::Transformers::FileStreamDistributor do
     OptimusPrime::Transformers::FileStreamDistributor.new(
       path_template: path_template, base_path: base_path,
       category_template: category_template,  max_per_file: max_per_file,
-      stream_type: OptimusPrime::Streams::FileStreams::NewlineJsonGzipped
+      stream_type: 'OptimusPrime::Streams::FileStreams::NewlineJsonGzipped'
     )
   end
   after(:each) do
