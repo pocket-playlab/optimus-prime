@@ -26,7 +26,7 @@ module OptimusPrime
       def finish
         @streams.each do |category, stream|
           file_path = stream.close
-          push_pair(category, file_path)
+          push_pair(category, file_path) if file_path
         end
       end
 
