@@ -1,5 +1,3 @@
-# TODO: Test with big files
-
 require_relative 'common/bigquery_table_base'
 
 SLEEPING_TIME = 10
@@ -73,7 +71,7 @@ module OptimusPrime
           body = JSON.parse(request.body)
           error = body['status']['errorResult']
 
-          raise LoadJobError.new(request.body) if error
+          raise LoadJobError.new(body) if error
           state = body['status']['state'].downcase
           logger.info "LoadJob #{@job_id} (table: #{id}) is #{state}."
           state != 'done'
