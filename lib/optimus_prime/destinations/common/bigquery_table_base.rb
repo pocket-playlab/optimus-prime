@@ -112,7 +112,7 @@ module OptimusPrime
         return response if [200, 404].include?(response.status)
         raise_response(response)
       rescue => e
-        raise e unless (500..599).include?(response.status) and retries < MAX_RETRIES
+        raise e unless response and (500..599).include?(response.status) and retries < MAX_RETRIES
         sleep duration
         duration *= 2
         retries += 1
