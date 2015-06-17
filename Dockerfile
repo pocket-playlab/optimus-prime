@@ -30,16 +30,16 @@ COPY Gemfile Gemfile
 COPY optimus_prime.gemspec optimus_prime.gemspec
 
 # The following dependency is mandatory before the bundle install
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-RUN mkdir -p /usr/src/app/lib/optimus_prime
-COPY lib/optimus_prime/version.rb /usr/src/app/lib/optimus_prime/version.rb
+RUN mkdir -p lib/optimus_prime
+COPY lib/optimus_prime/version.rb lib/optimus_prime/version.rb
 
 # RUN gem install bundler
 RUN bundle install
 
 # Copy application source. We do this after installing the gems so that docker
-# can cache the bundle install step.
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
 COPY . /usr/src/app
 
 # For now by default we just run the optimus script with no argument
