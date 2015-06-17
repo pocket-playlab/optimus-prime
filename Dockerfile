@@ -27,6 +27,7 @@ WORKDIR .
 # https://github.com/docker/docker/pull/9635
 # In the meantime we have to stick with absolute paths.
 COPY Gemfile Gemfile
+COPY Gemfile.lock Gemfile.lock
 COPY optimus_prime.gemspec optimus_prime.gemspec
 
 # The following dependency is mandatory before the bundle install
