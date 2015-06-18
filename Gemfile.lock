@@ -23,6 +23,7 @@ PATH
       bigbroda (= 0.0.7)
       google-api-client (= 0.8.2)
       mail
+      rake
       rest-client (~> 1.7.2)
       sentry-raven
       sequel
@@ -149,6 +150,7 @@ GEM
       byebug (~> 4.0)
       pry (~> 0.10)
     rainbow (2.0.0)
+    rake (10.4.2)
     reek (2.0.1)
       parser (~> 2.2)
       rainbow (~> 2.0)
