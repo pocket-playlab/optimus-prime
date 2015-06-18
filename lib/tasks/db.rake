@@ -6,11 +6,11 @@ namespace :db do
 
   desc "Prints current schema version"
   task :version do
-    version = if DB.tables.include?(:schema_info)
-      DB[:schema_info].first[:version]
+    version = if DB.tables.include?(:schema_migrations)
+      DB[:schema_migrations].to_a.last[:filename]
     end || 0
 
-    puts "Schema Version: #{version}"
+    puts "Last Migration: #{version}"
   end
 
   desc "Perform migration up to latest migration available"
