@@ -4,6 +4,10 @@ namespace :db do
   Sequel.extension :migration
   DB = Sequel.connect(ENV['DATABASE_URL'])
 
+  def migrations_path
+    File.join(File.expand_path('../../..', __FILE__), 'migrations')
+  end
+
   desc "Prints current schema version"
   task :version do
     version = if DB.tables.include?(:schema_migrations)
@@ -15,7 +19,6 @@ namespace :db do
 
   desc "Perform migration up to latest migration available"
   task :migrate do
-    migrations_path = File.join(File.expand_path('../..', __FILE__), 'optimus_prime', 'persistence', 'migrations')
     Sequel::Migrator.run(DB, migrations_path)
     Rake::Task['db:version'].execute
   end
@@ -24,14 +27,12 @@ namespace :db do
   task :rollback, :target do |t, args|
     args.with_defaults(:target => 0)
 
-    migrations_path = File.join(File.expand_path('../..', __FILE__), 'optimus_prime', 'persistence', 'migrations')
     Sequel::Migrator.run(DB, migrations_path, :target => args[:target].to_i)
     Rake::Task['db:version'].execute
   end
 
   desc "Perform migration reset (full rollback and migration)"
   task :reset do
-    migrations_path = File.join(File.expand_path('../..', __FILE__), 'optimus_prime', 'persistence', 'migrations')
     Sequel::Migrator.run(DB, migrations_path, :target => 0)
     Sequel::Migrator.run(DB, migrations_path)
     Rake::Task['db:version'].execute

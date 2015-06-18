@@ -1,4 +1,8 @@
 namespace :generate do
+
+  def migrations_path
+    File.join(File.expand_path('../../..', __FILE__), 'migrations')
+  end
   #
   desc 'Generate a timestamped, empty Sequel migration.'
   task :migration, [:name, :fu] do |t, args|
@@ -9,7 +13,7 @@ namespace :generate do
 
     content = "Sequel.migration do\n  up do\n    \n  end\n\n  down do\n    \n  end\nend\n"
     timestamp = Time.now.to_i
-    filename = File.join(File.expand_path('../..', __FILE__), 'optimus_prime', 'persistence', 'migrations', "#{timestamp}_#{args[:name]}.rb")
+    filename = File.join(migrations_path, "#{timestamp}_#{args[:name]}.rb")
 
     File.open(filename, 'w') do |f|
       f.puts content
