@@ -51,6 +51,7 @@ module OptimusPrime
       end
     end
 
+    include Wisper::Publisher
     attr_accessor :logger
 
     def start

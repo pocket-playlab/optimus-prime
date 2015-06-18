@@ -28,6 +28,7 @@ PATH
       sentry-raven
       sequel
       thor
+      wisper
       yajl-ruby
 
 GEM
@@ -211,6 +212,7 @@ GEM
     webmock (1.21.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
+    wisper (1.6.0)
     yajl-ruby (1.2.1)
 
 PLATFORMS

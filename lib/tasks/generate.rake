@@ -1,5 +1,4 @@
 namespace :generate do
-
   def migrations_path
     File.join(File.expand_path('../../..', __FILE__), 'migrations')
   end
