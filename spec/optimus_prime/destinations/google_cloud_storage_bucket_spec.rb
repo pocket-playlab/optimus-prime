@@ -1,5 +1,4 @@
 require 'spec_helper'
-# require 'webmock/rspec'
 require 'optimus_prime/destinations/google_cloud_storage_bucket'
 
 RSpec.describe OptimusPrime::Destinations::GoogleCloudStorageBucket do
