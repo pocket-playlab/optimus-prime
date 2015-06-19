@@ -1,14 +1,15 @@
 Sequel.migration do
   up do
-    create_table(:jobs) do
+    create_table(:load_jobs) do
       primary_key :id
+      String :identifier
+      String :job_id
       String :operation_id, null: false, index: true
-      String :uri
+      String :uris
       String :category
       String :status, null: false
-      Timestamp :created_at
-      Timestamp :uploaded_at
-      Timestamp :imported_at
+      Timestamp :start_time
+      Timestamp :end_time
       String :error
     end
   end
