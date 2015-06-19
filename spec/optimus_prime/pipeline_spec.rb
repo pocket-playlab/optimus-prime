@@ -96,7 +96,7 @@ describe OptimusPrime::Pipeline do
   let(:modules) do
     {
       persistence: {
-        options: { dsn: 'db_dsn' }
+        options: { dsn: 'sqlite:test.db' }
       },
       exceptional: {
         adapter: 'Sentry',
