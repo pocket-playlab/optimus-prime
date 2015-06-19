@@ -60,8 +60,8 @@ describe OptimusPrime::Pipeline do
     end
   end
 
-  let(:pipeline) do
-    OptimusPrime::Pipeline.new(
+  let(:steps) do
+    {
       a: {
         class: 'OptimusPrime::Sources::Test',
         params: { data: data_for(1..10), delay: 1 },
@@ -90,7 +90,27 @@ describe OptimusPrime::Pipeline do
       g: {
         class: 'OptimusPrime::Destinations::Test'
       }
-    )
+    }
+  end
+
+  let(:modules) do
+    {
+      persistence: {
+        options: { dsn: 'db_dsn' }
+      },
+      exceptional: {
+        adapter: 'Sentry',
+        options: { dsn: 'test' }
+      }
+    }
+  end
+
+  let(:pipeline) do
+    OptimusPrime::Pipeline.new(steps)
+  end
+
+  let(:pipeline_with_modules) do
+    OptimusPrime::Pipeline.new(steps, :my_pipeline, modules)
   end
 
   describe '#start' do
@@ -111,5 +131,29 @@ describe OptimusPrime::Pipeline do
       pipeline.start
       expect { pipeline.start }.to raise_error
     end
+  end
+
+  describe 'modules' do
+    it 'runs the pipeline' do
+      pipeline_with_modules.operate
+      expect(pipeline_with_modules.finished?).to be true
+
+      expected = (4..40).step(4).to_a + (202..222).step(2).to_a
+      pipeline_with_modules.steps.values_at(:f, :g).each do |destination|
+        actual = destination.written.map { |record| record['value'] }
+        expect(actual).to match_array expected
+      end
+    end
+
+    it 'loads the persistence module' do
+      pipeline_with_modules.operate
+      expect(pipeline_with_modules.module_loader.persistence).to_not be nil
+    end
+
+    it 'loads the exceptional module' do
+      pipeline_with_modules.operate
+      expect(pipeline_with_modules.module_loader.exceptional).to_not be nil
+    end
+
   end
 end

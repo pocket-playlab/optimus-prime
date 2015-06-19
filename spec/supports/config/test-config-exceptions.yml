@@ -4,10 +4,11 @@ source2: &pipe_source <%= -> { 'spec/supports/csv/local_csv_source_pipe.csv' }.c
 destination: &destination 'tmp/destination.csv'
 test_pipeline:
 
-  errors:
-    adapter: Sentry
-    options:
-      dsn: 'test'
+  modules:
+    exceptional:
+      adapter: Sentry
+      options:
+        dsn: 'test'
 
   graph:
     a:

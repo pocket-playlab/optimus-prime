@@ -10,13 +10,13 @@ module OptimusPrime
               end
             end
           end
-          
+
           def run
             raise 'Abstract Method.'
           end
-          
+
           protected
-          
+
           def configure_errors_adapter
             raise 'Abstract Method.'
           end
