@@ -51,6 +51,9 @@ module OptimusPrime
 
     def run
       start.join
+    rescue => e
+      broadcast(:pipeline_failed, self, e)
+      raise
     end
 
     def start
@@ -78,10 +81,12 @@ module OptimusPrime
     alias_method :wait, :join
 
     def steps
-      @steps ||= graph.map { |key, config| [key, Step.create(config)] }
-      .each     { |key, step| step.logger = @logger }
-      .each     { |key, step| subscribe_all(step) }
-      .to_h
+      @steps ||= graph
+        .map { |key, config| [key, Step.create(config)] }
+        .each do |key, step|
+          step.logger = @logger
+          subscribe_all(step)
+        end.to_h
     end
 
     def edges
