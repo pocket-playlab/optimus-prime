@@ -15,13 +15,13 @@ module OptimusPrime
 
       def register_modules
         MODULES.each do |mod|
-          send("register_#{mod}") unless @modules[mod]
+          send("register_#{mod}") if @modules[mod]
         end
       end
 
       def register_persistence
         raise 'Pipeline name required for persistence' unless @pipeline.name
-        @persistence = Persistence.new(@modules[:persistence][:options])
+        @persistence = Persistence::Listener.new(@modules[:persistence][:options])
         @subscribers << @persistence
       end
 
