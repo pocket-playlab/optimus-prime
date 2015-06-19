@@ -1,8 +1,11 @@
 #export DATABASE_URL=postgres://thibault:fu@localhost:5432/megatron
 namespace :db do
-  require "sequel"
-  Sequel.extension :migration
-  DB = Sequel.connect(ENV['DATABASE_URL'])
+
+  if ENV['DATABASE_URL']
+    require "sequel"
+    Sequel.extension :migration
+    DB = Sequel.connect(ENV['DATABASE_URL'])
+  end
 
   def migrations_path
     File.join(File.expand_path('../../..', __FILE__), 'migrations')
