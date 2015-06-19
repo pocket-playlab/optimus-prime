@@ -2,13 +2,18 @@ require 'sequel'
 
 require 'active_support/core_ext/hash'
 
+# Persistence
+require 'optimus_prime/modules/persistence/operation'
+require 'optimus_prime/modules/persistence/listener'
+
+# Exceptional
+require 'optimus_prime/modules/exceptional/adapters/base_adapter.rb'
+require 'optimus_prime/modules/exceptional/adapters/sentry_adapter.rb'
+
 require 'optimus_prime/pipeline'
 require 'optimus_prime/step'
 require 'optimus_prime/source'
 require 'optimus_prime/destination'
-
-require 'optimus_prime/modules/exceptional/adapters/base_adapter.rb'
-require 'optimus_prime/modules/exceptional/adapters/sentry_adapter.rb'
 
 require 'optimus_prime/sources/s3_source'
 require 'optimus_prime/destinations/rdbms_writer'
