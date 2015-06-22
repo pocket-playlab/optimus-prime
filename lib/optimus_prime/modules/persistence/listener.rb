@@ -6,9 +6,14 @@ module OptimusPrime
 
         def initialize(dsn:)
           @db = Sequel.connect(dsn)
+          run_migrations
           @pipeline_name = nil
           @operation_id = nil
           @jobs = {}
+        end
+
+        def run_migrations
+          Sequel::Migrator.run(@db, "migrations")
         end
 
         def operation
@@ -21,9 +26,9 @@ module OptimusPrime
 
         def pipeline_started(pipeline)
           @pipeline_name = pipeline.name
-          @operation_id = operation.create pipeline_id: pipeline.name,
+          @operation_id = operation.create pipeline_id: pipeline.name.to_s,
                                            start_time: Time.now,
-                                           status: :started
+                                           status: 'started'
         end
 
         def pipeline_finished(pipeline)

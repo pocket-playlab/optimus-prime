@@ -1,4 +1,5 @@
 require 'sequel'
+Sequel.extension :migration, :core_extensions
 
 require 'active_support/core_ext/hash'
 
