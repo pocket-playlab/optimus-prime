@@ -39,11 +39,11 @@ module OptimusPrime
 
       def check_status(job)
         pending = job.pending?
+        broadcast(:load_job_finished, job) unless pending
       rescue LoadJobError => e
         broadcast(:load_job_failed, job, e)
         logger.error('Load job in BigQuery encountered a problem.', e)
       ensure
-        broadcast(:load_job_finished, job) unless pending
         pending
       end
 

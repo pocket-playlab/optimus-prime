@@ -12,7 +12,7 @@ module OptimusPrime
         end
 
         def update(params)
-          table.where(params.delete(:identifier)).update(params)
+          table.where(identifier: params.delete(:identifier)).update(params)
         end
 
         def table
