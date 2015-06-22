@@ -15,6 +15,8 @@ module OptimusPrime
           table.where(identifier: params.delete(:identifier)).update(params)
         end
 
+        private
+
         def table
           @table ||= @db[:load_jobs]
         end

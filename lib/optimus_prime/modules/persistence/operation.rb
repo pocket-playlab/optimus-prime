@@ -15,6 +15,8 @@ module OptimusPrime
           table.where(id: params.delete(:id)).update(params)
         end
 
+        private
+
         def table
           @table ||= @db[:operations]
         end

@@ -15,6 +15,6 @@ Sequel.migration do
   end
 
   down do
-    drop_table(:jobs)
+    drop_table(:load_jobs)
   end
 end
