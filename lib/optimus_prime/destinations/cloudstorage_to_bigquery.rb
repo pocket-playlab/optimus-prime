@@ -40,11 +40,11 @@ module OptimusPrime
       def check_status(job)
         pending = job.pending?
         broadcast(:load_job_finished, job) unless pending
+        pending
       rescue LoadJobError => e
         broadcast(:load_job_failed, job, e)
-        logger.error('Load job in BigQuery encountered a problem.', e)
-      ensure
-        pending
+        logger.error("Load job in BigQuery encountered a problem: #{e}.")
+        false
       end
 
       def client
@@ -56,6 +56,16 @@ module OptimusPrime
           asserter = Google::APIClient::JWTAsserter.new @client_email, scope, @private_key
           client.authorization = asserter.authorize
           client
+        end
+      end
+
+      class LoadJobError < StandardError
+        # This is in the section "Additional Data" in Sentry
+        attr_reader :extra
+
+        def initialize(extra = {})
+          @message = 'Load job in BigQuery encountered a problem.'
+          @extra = extra
         end
       end
 
@@ -87,7 +97,6 @@ module OptimusPrime
           error = body['status']['errorResult']
 
           raise LoadJobError.new(body) if error
-
           state = body['status']['state'].downcase
           logger.info "LoadJob #{@job_id} (table: #{id}) is #{state}."
           state != 'done'
@@ -121,16 +130,6 @@ module OptimusPrime
             }
           }.stringify_nested_symbolic_keys
         end
-
-        class LoadJobError < StandardError
-          # This is in the section "Additional Data" in Sentry
-          attr_reader :extra
-
-          def initialize(extra = {})
-            @message = 'Load job in BigQuery encountered a problem.'
-            @extra = extra
-            end
-          end
 
       end
 

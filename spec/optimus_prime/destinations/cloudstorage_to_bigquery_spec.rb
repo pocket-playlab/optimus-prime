@@ -32,6 +32,13 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
     }
   end
 
+  class Listener
+
+    def load_job_failed(job, e)
+    end
+
+  end
+
   let(:logger) { Logger.new STDOUT }
 
   def destination(schema)
@@ -57,7 +64,10 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
   it 'raises an exception for a wrong schema' do
     d = destination(invalid_schema)
     VCR.use_cassette('cloudstorage_to_bigquery/fail') do
-      expect{d.write(params)}.to raise_error(OptimusPrime::Destinations::CloudstorageToBigquery::LoadJob::LoadJobError)
+      l = Listener.new
+      expect(l).to receive(:load_job_failed).twice
+      d.subscribe(l)
+      d.write(params)
       d.close
     end
   end
