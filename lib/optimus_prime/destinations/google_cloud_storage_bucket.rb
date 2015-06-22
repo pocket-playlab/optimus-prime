@@ -21,7 +21,7 @@ module OptimusPrime
       end
 
       def default_options
-        { base_local_path: nil, content_type: 'applicatoin/json', upload_type: 'resumable' }
+        { base_local_path: nil, content_type: 'application/json', upload_type: 'resumable' }
       end
 
       def write(record)
