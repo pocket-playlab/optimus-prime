@@ -1,4 +1,4 @@
-require 'httpclient'
+require 'excon'
 require 'google/api_client'
 
 module OptimusPrime
@@ -6,10 +6,10 @@ module OptimusPrime
     class GoogleCloudStorageBucket < Destination
       attr_reader :client_email, :private_key, :bucket,
                   :base_local_path, :upload_type, :content_type
-      MAX_RETRIES = 2
+      MAX_RETRIES = 4
 
       def initialize(client_email:, private_key:, bucket:, options:)
-        Faraday.default_adapter = :httpclient
+        Faraday.default_adapter = :excon
         @client_email = client_email
         @private_key  = OpenSSL::PKey::RSA.new(private_key)
         @bucket = bucket

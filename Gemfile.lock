@@ -21,8 +21,8 @@ PATH
       activesupport
       aws-sdk (~> 2.0.23)
       bigbroda (= 0.0.7)
+      excon
       google-api-client (= 0.8.2)
-      httpclient
       mail
       rest-client (~> 1.7.2)
       sentry-raven
@@ -85,6 +85,7 @@ GEM
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
     equalizer (0.0.11)
+    excon (0.45.3)
     extlib (0.9.16)
     fakefs (0.6.7)
     faraday (0.9.1)
@@ -106,7 +107,6 @@ GEM
     httparty (0.13.5)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    httpclient (2.6.0.1)
     i18n (0.7.0)
     ice_nine (0.11.1)
     jmespath (1.0.2)
@@ -233,4 +233,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.10.3
+   1.10.4
