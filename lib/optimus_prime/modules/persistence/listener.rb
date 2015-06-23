@@ -2,7 +2,7 @@ module OptimusPrime
   module Modules
     module Persistence
       class Listener
-        attr_reader :options
+        attr_reader :options, :db
 
         def initialize(dsn:)
           @db = Sequel.connect(dsn)

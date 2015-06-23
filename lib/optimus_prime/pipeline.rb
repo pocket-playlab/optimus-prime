@@ -52,7 +52,7 @@ module OptimusPrime
     def run
       start.join
     rescue => e
-      broadcast(:pipeline_failed, self, e)
+      broadcast(:pipeline_failed, self, "Error in pipeline: #{$!}. Backtrace:\n\t#{e.backtrace.join("\n\t")}")
       raise
     end
 
