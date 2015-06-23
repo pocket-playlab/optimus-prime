@@ -27,7 +27,7 @@ module OptimusPrime
             broadcast(:load_job_started, job)
             job
           end
-        end
+        end.compact
         wait_for_jobs(jobs)
       end
 
