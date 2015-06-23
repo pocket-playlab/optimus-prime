@@ -21,11 +21,13 @@ module OptimusPrime
       def write(tasks)
         jobs = tasks.map do |table, uris|
           if discard_job?(uris.first)
+            nil
+          else
             job = LoadJob.new client, logger, @config, table, uris
             broadcast(:load_job_started, job)
             job
           end
-        end.compact
+        end
         wait_for_jobs(jobs)
       end
 
