@@ -35,13 +35,15 @@ module OptimusPrime
 
       def discard_job?(uri)
         return unless module_loader.try(:persistence)
+
         job = module_loader.persistence.load_job.get(uri)
+        return unless job
 
         if job[:status] == 'failed'
-          logger.error("Existing load job found with status 'failed'. Re-running job: #{job}")
+          logger.error("Existing load job found with status 'failed'. Re-running job #{job[:identifier]}")
           false
         else
-          logger.error("Existing load job found with status '#{job[:status]}'. Discarding... #{job}")
+          logger.error("Existing load job found with status '#{job[:status]}'. Discarding job #{job[:identifier]}")
           true
         end
       end
