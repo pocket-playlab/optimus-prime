@@ -61,7 +61,7 @@ module OptimusPrime
         broadcast(:load_job_finished, job) unless pending
         pending
       rescue LoadJobError => e
-        broadcast(:load_job_failed, job, e)
+        broadcast(:load_job_failed, job, "Error in pipeline #{e.class}, #{e.message}. Backtrace:\n\t#{e.backtrace.join("\n\t")}")
         logger.error("Load job in BigQuery encountered a problem: #{e}.")
         false
       end

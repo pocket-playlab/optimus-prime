@@ -51,7 +51,8 @@ module OptimusPrime
         def load_job_failed(job, error)
           load_job.update identifier: job.uris.first,
                           status: 'failed',
-                          end_time: Time.now
+                          end_time: Time.now,
+                          error: error
         end
       end
     end
