@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'optimus_prime/destinations/cloudstorage_to_bigquery'
 
 RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
-
   let(:valid_schema) do
     {
       fields: [
@@ -33,10 +32,8 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
   end
 
   class Listener
-
     def load_job_failed(job, e)
     end
-
   end
 
   let(:logger) { Logger.new STDOUT }
@@ -73,15 +70,27 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
   end
 
   describe 'persistence' do
-
     let(:base) do
       OptimusPrime::Modules::Persistence::Base.new(dsn: 'sqlite:listener_test.db')
     end
 
     let(:listener) { base.listener }
 
-    describe 'started' do
+    describe 'existing job' do
+      it 'does not re-run an existing finished job' do
+      end
 
+      it 're-run an existing failed job' do
+      end
+
+      it 're-run an existing failed job' do
+      end
+
+      it 'does not do anything if persistence is not enabled' do
+      end
+    end
+
+    describe 'started' do
       it 'receives the load job started event' do
         VCR.use_cassette('cloudstorage_to_bigquery/started_event') do
           d = destination(valid_schema)
@@ -91,11 +100,9 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
           d.close
         end
       end
-
     end
 
     describe 'finished' do
-
       it 'receives the load job finished event' do
         VCR.use_cassette('cloudstorage_to_bigquery/finished_event') do
           d = destination(valid_schema)
@@ -118,11 +125,9 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
           expect(load_job[:status]).to eq 'finished'
         end
       end
-
     end
 
     describe 'failed' do
-
       it 'receives the load job failed event' do
         VCR.use_cassette('cloudstorage_to_bigquery/failed_event') do
           expect(listener).to receive(:load_job_failed).twice
@@ -145,9 +150,6 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
           expect(load_job[:status]).to eq 'failed'
         end
       end
-
     end
-
   end
-
 end

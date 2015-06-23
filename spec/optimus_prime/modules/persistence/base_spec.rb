@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 RSpec.describe OptimusPrime::Modules::Persistence::Base do
-
   let(:db) do
     Sequel.connect('sqlite:base_test.db')
   end
@@ -22,5 +21,4 @@ RSpec.describe OptimusPrime::Modules::Persistence::Base do
     expect(base.db['select * from operations'].columns).to eq(operation_columns)
     expect(base.db['select * from load_jobs'].columns).to eq(load_job_columns)
   end
-
 end

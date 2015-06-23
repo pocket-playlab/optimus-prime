@@ -10,7 +10,7 @@ module OptimusPrime
         end
 
         def run_migrations
-          Sequel::Migrator.run(@db, "migrations")
+          Sequel::Migrator.run(@db, 'migrations')
         end
 
         def operation
@@ -24,7 +24,6 @@ module OptimusPrime
         def listener
           @listener ||= Listener.new(self)
         end
-
       end
     end
   end

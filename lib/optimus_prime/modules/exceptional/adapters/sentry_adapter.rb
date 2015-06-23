@@ -10,9 +10,9 @@ module OptimusPrime
               block.call
             end
           end
-          
+
           private
-          
+
           def configure_errors_adapter(&block)
             ::Raven.configure do |config|
               block.call(config)

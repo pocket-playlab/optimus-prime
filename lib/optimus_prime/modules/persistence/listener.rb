@@ -53,7 +53,6 @@ module OptimusPrime
                           status: 'failed',
                           end_time: Time.now
         end
-
       end
     end
   end

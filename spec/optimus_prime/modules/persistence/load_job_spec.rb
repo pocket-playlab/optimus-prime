@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 RSpec.describe OptimusPrime::Modules::Persistence::LoadJob do
-
   let(:db) { Sequel.connect('sqlite:load_job_test.db') }
   let(:table) { db[:load_jobs] }
 
@@ -15,9 +14,9 @@ RSpec.describe OptimusPrime::Modules::Persistence::LoadJob do
 
   let(:operation_id) do
     operation_params = { pipeline_id: 'super_pipeline',
-     start_time: Time.now,
-     status: 'started' }
-     operation.create(operation_params)
+                         start_time: Time.now,
+                         status: 'started' }
+    operation.create(operation_params)
   end
 
   let(:params) do
@@ -37,7 +36,7 @@ RSpec.describe OptimusPrime::Modules::Persistence::LoadJob do
   end
 
   after(:each) do
-    Sequel::Migrator.run(db, 'migrations', :target => 0)
+    Sequel::Migrator.run(db, 'migrations', target: 0)
   end
 
   it 'creates a load job' do
@@ -48,8 +47,7 @@ RSpec.describe OptimusPrime::Modules::Persistence::LoadJob do
 
   it 'updates a load job' do
     id = load_job.create(params)
-    load_job.update({identifier: '/super_game/ios/1.0.0/20150315/050000/1.json.gz', job_id: 'test'})
+    load_job.update(identifier: '/super_game/ios/1.0.0/20150315/050000/1.json.gz', job_id: 'test')
     expect(table.where(id: id).first[:job_id]).to eq 'test'
   end
-
 end

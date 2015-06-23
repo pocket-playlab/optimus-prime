@@ -41,7 +41,7 @@ module OptimusPrime
       edges.each do |from, to|
         queue = SizedQueue.new QUEUE_SIZE
         from.output << queue
-        to.input    << queue
+        to.input << queue
       end
     end
 
@@ -52,7 +52,7 @@ module OptimusPrime
     def run
       start.join
     rescue => e
-      broadcast(:pipeline_failed, self, "Error in pipeline: #{$!}. Backtrace:\n\t#{e.backtrace.join("\n\t")}")
+      broadcast(:pipeline_failed, self, "Error in pipeline: #{$ERROR_INFO}. Backtrace:\n\t#{e.backtrace.join("\n\t")}")
       raise
     end
 
@@ -82,12 +82,12 @@ module OptimusPrime
 
     def steps
       @steps ||= graph
-        .map { |key, config| [key, Step.create(config)] }
-        .each do |key, step|
-          step.logger = @logger
-          step.module_loader = @module_loader
-          subscribe_all(step)
-        end.to_h
+                 .map { |key, config| [key, Step.create(config)] }
+                 .each do |key, step|
+        step.logger = @logger
+        step.module_loader = @module_loader
+        subscribe_all(step)
+      end.to_h
     end
 
     def edges
@@ -103,15 +103,14 @@ module OptimusPrime
 
     def sources
       graph.keys - graph.values
-                        .flat_map { |step| step[:next] }
-                        .compact
-                        .map(&:to_sym)
+        .flat_map { |step| step[:next] }
+        .compact
+        .map(&:to_sym)
     end
 
     def walk(from, visited)
       (graph.fetch(from)[:next] || []).map(&:to_sym).flat_map do |to|
-        visited.include?(to) ? [[from, to]]
-                             : [[from, to]] + walk(to, visited.add(to))
+        visited.include?(to) ? [[from, to]] : [[from, to]] + walk(to, visited.add(to))
       end
     end
 
@@ -120,6 +119,5 @@ module OptimusPrime
         object.subscribe(subscriber)
       end
     end
-
   end
 end

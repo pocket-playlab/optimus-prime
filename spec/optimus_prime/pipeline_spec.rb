@@ -160,13 +160,11 @@ describe OptimusPrime::Pipeline do
     end
 
     describe 'persistence' do
-
       let(:base) do
         OptimusPrime::Modules::Persistence::Base.new(dsn: 'sqlite:listener_test.db')
       end
 
       describe 'started' do
-
         it 'receives the pipeline started event' do
           pipeline.subscribe(base.listener)
           expect(base.listener).to receive(:pipeline_started).with(pipeline)
@@ -180,11 +178,9 @@ describe OptimusPrime::Pipeline do
           expect(operation[:pipeline_id]).to eq pipeline_with_name.name
           expect(operation[:status]).to eq 'started'
         end
-
       end
 
       describe 'finished' do
-
         it 'receives the pipeline finished event' do
           pipeline.subscribe(base.listener)
           expect(base.listener).to receive(:pipeline_finished).with(pipeline)
@@ -201,11 +197,9 @@ describe OptimusPrime::Pipeline do
           expect(updated[:status]).to eq 'finished'
           expect(updated[:error]).to eq nil
         end
-
       end
 
       describe 'failed' do
-
         it 'receives the pipeline failed event' do
           pipeline.subscribe(base.listener)
           expect(base.listener).to receive(:pipeline_failed)
@@ -222,11 +216,7 @@ describe OptimusPrime::Pipeline do
           expect(operation[:status]).to eq 'failed'
           expect(operation[:error]).to include 'random exception'
         end
-
       end
-
     end
-
   end
-
 end

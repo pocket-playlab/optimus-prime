@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 RSpec.describe OptimusPrime::Modules::Persistence::Operation do
-
   let(:db) { Sequel.connect('sqlite:operation_test.db') }
   let(:table) { db[:operations] }
 
@@ -11,8 +10,8 @@ RSpec.describe OptimusPrime::Modules::Persistence::Operation do
 
   let(:params) do
     { pipeline_id: 'super_pipeline',
-     start_time: Time.now,
-     status: 'started' }
+      start_time: Time.now,
+      status: 'started' }
   end
 
   before(:each) do
@@ -20,7 +19,7 @@ RSpec.describe OptimusPrime::Modules::Persistence::Operation do
   end
 
   after(:each) do
-    Sequel::Migrator.run(db, 'migrations', :target => 0)
+    Sequel::Migrator.run(db, 'migrations', target: 0)
   end
 
   it 'creates an operation' do
@@ -31,8 +30,7 @@ RSpec.describe OptimusPrime::Modules::Persistence::Operation do
 
   it 'updates an operation' do
     id = operation.create(params)
-    operation.update({id: id, pipeline_id: 'lame_pipeline'})
+    operation.update(id: id, pipeline_id: 'lame_pipeline')
     expect(table.where(id: id).first[:pipeline_id]).to eq 'lame_pipeline'
   end
-
 end

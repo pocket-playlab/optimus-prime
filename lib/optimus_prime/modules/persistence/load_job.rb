@@ -2,7 +2,6 @@ module OptimusPrime
   module Modules
     module Persistence
       class LoadJob
-
         def initialize(db)
           @db = db
         end
@@ -24,7 +23,6 @@ module OptimusPrime
         def table
           @table ||= @db[:load_jobs]
         end
-
       end
     end
   end

@@ -2,7 +2,6 @@ module OptimusPrime
   module Modules
     module Persistence
       class Operation
-
         def initialize(db)
           @db = db
         end
@@ -20,7 +19,6 @@ module OptimusPrime
         def table
           @table ||= @db[:operations]
         end
-
       end
     end
   end
