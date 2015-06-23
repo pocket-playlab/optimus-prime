@@ -1,0 +1,1466 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://accounts.google.com/o/oauth2/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiIzNDUyNjIyNzA0NzYtZG5hdXZmYjRubjlnMGoybjRhdXNmcTRhMnNocmhvOWpAZGV2ZWxvcGVyLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE0MzUwMzU4NTEsImlhdCI6MTQzNTAzNTczMSwic2NvcGUiOiJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2JpZ3F1ZXJ5In0.GcubJ_I9VW4ms-m9E-UOFqlwph0fW_QoOPOzIPytiBusOt0THBEqP6XDPj30C0TqvtD6ppfAKPeP3yibiyyQ44hjlEefxwgUTly88YZ6ILS8UxFlZb25wvabJJb2CTCBjUJJi47kjrXyLvk70nfn_IQ2FbG_Yx5i5EzTG8bcddY
+    headers:
+      Cache-Control:
+      - no-store
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:12 GMT
+      Content-Disposition:
+      - attachment; filename="json.txt"; filename*=UTF-8''json.txt
+      P3p:
+      - CP="This is not a P3P policy! See http://www.google.com/support/accounts/bin/answer.py?hl=en&answer=151657
+        for more info."
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Set-Cookie:
+      - NID=68=VnCYqClKa_RnxypOnPoLwkChYA2_3fwt-G-9DTav-NOSpYwfyz0aCLVeriOcnYDKWF4I1Yw4My2Ma3AUaPiRXTEFbWMDQ1XV9RGBTIbnveqJCVGtzFktl56_XIKO54m5;Domain=.google.com;Path=/;Expires=Wed,
+        23-Dec-2015 05:03:12 GMT;HttpOnly
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Accept-Ranges:
+      - none
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "access_token" : "ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A",
+          "token_type" : "Bearer",
+          "expires_in" : 3600
+        }
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:12 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/discovery/v1/apis/bigquery/v2/rest
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:08:12 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:12 GMT
+      Etag:
+      - '"ye6orv2F-1npMW3u9suM3a7C5Bo/dfyqUMrFd-mvh1ZHmWj5OJLDhTI"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '12553'
+      Server:
+      - GSE
+      Cache-Control:
+      - public, max-age=300, must-revalidate, no-transform
+      Age:
+      - '0'
+      Alternate-Protocol:
+      - 443:quic,p=1
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+        vTNcSOqakHRCigZQuvYk8ZRSpf90dawv1Onjzq4gqLlxoEH8VYR20+UBVSbW
+        qUXLZpcG4Fa7nHij+wBKlwEM+M6V7Ar/uXNfdwOg1jAsNSe8qwsCmnay6YIA
+        opx7Wl0FA88qbNegYJnfdnRhhL3c6anUaIsZ856tvgdsWbtQlAfwC+1cu4Z9
+        IBN6WM4IszZ7XYn2E/vKrSNNIZTbMpuz5QqXdbUxyPBtu5WaD/gqy6U9bRo7
+        zJhRvllv2jVazJghnq85Z6XFjHKAoKbRAxad4Th3gEdaa4ODitkDkplsUPQE
+        jI9eSW0EA2IhqXqnF0dH+Dss/ZCaw7TCtj66c7q74sQ8L+T1aeVmnU4YxSid
+        qpnKKuCXMNDnyzjo884sdO1m2e6m9NU6u//jOqcepo3NVB2x2Pkwvll2GN90
+        PYwwBrBfgu1CG7Dhuo9KjWRNMwWVJomcXDGtVrSk4esPNgkSpbcyTFE3mBIa
+        t48NO8Pu96qxhclIR6hoB4feUZKrKKpuETdHz2hJJKa22Tuw6pNAA72VN691
+        Wt5aDXybtpzToOey9NTd83td4hK6+nYZXX3bla7cdlGIwAdJEXe/wbOUQmG2
+        lNEXnjledmphktIfsqrDxLlNxyVWVly3HKr0mc5aUSI0tPoOJilmtPtst1M+
+        dGXo7VKXrG11/W/bdGXtwaw9vqW6ftGg5xeddfxab+QSV+RyKnhJPULZra/8
+        k5YBOp6ZzDJTMseXoFsuSnNjAnpxUMIVsfHKlyvKcbLuqOb26Y0k0BnVWhV4
+        exmypyJVHkRFj/ZqRvwF5dYFCQVIVas2THKdCz9etjbYourSVka/rBOpM3hL
+        3sS1WFmjV7Ger2RJfMxYVkJJ82AJTlbulpAIgik2sms5dQDkj+QGLU8yMkYA
+        QEDV2VtVkPn3KsT8uwuwH99u6Y9P2P6vCdTYT+47WFPp7d5TW17lo8Mufst9
+        cwtr9c7c9+6fc30/nVmDPEYKSXM1ry50AloGlR1AOB3tH8oe3v1FrO7yjuJQ
+        35fcb+QHL9pwoz4rZrrXkIsEpA6OuJiDqjEdbwKMHKN26daX9RcluODI71ZE
+        xU7Kby3DBHlnbKmPYu3xPHH+dCUKWYxjF7Xbli4SByndcaHIUqlRLmepLwl0
+        2XdlF2rZ8Nqe9158xhV/8dA74HCb9LbkJfzhX7AD7CXmQVS/r90K6Somvlja
+        BudRZ4X+nusoxqzq6a2nKvIsKyT/wg4ErcorVP0C9TVHz3DTm6qWXqX6m7FV
+        ASuXjG5rAIc01DjYfmzE3tyI/W4vA5BXpy/TQn61sd4BZu5/bi5D2bQFC1/n
+        NtPZUnL30GKt3LlzJvJcR41mkU8NHUDZnSO+so0PFgFdWvXs6dOnpkOEvCUr
+        v0qT4vJKF/HMqWQunMMhX+MuRaE/CSOs1ihd6GOuEEJHA9XgAcGYiwu1gKCK
+        5YFGJE5So04MqpYZ3nz21HvzQlUY4DlQ2npKuQZxovcIOwyTRTUwCVnKoSvv
+        SaQWfaI2gFPUtnr5EiU1Gxej7DuMZ2BlAuJ26Mw0+dJtnPufB6ZPWKl2ha5C
+        ATtyz3u/dTZ6PTo4503+avbsa+/l6fEb7+f57Ynipnvz20PNxua358zIPmDD
+        hM0Dlrwx8mFtEBYDHEmRv9mM8H4ARIoSbn9y44e5W4tkZ/JVAigD4PAzU6hm
+        LhPMuBs2VZHR/X62g05VfXHlhSdXYdWL0DgDkjeuBLKg8j/BJAg2V5wwS5e5
+        FmpE2VoJf5r6mvVy+y2Gz7q5Luab6tgD9Yu5rXKbWYlToub9c8l1dF99vXon
+        5da4tyc2ZGQir3rqxq2+Ah4h//51W+r+KxT6rF2CU6v81V4R5D67t6BVX2Eq
+        C7H7AOKvcQ3rj4+3rz7Q21db6ayPd6ze8x2rbUtNHu9LbXNfqmaJ0oj0M2MX
+        DjSzlG4PZ0jmWaoTgZXjYWtSXCZQxF3SUv6w97I26EoNkV2n9kvKf/6tq9zv
+        L9/vXOq3CoPx6Llw2cim1YlO7c7aBWTtQq99yobeUV54z3pTu3frbuK7t8th
+        xedFmG5yQI4To/Z0aApsDbAyBa3cKMQUgZFSAbiVhdTEh/sP5AKLqUY0fKBU
+        ZKV+BMJEe2GcMKW+Ij61CJpGPuodLVGhPoSyDi40x1HqcGDje3udOEpjHUvd
+        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
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:12 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/datasets/json_load/tables/table1
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:13 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:13 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/MTQzNTAzNDY2NTYwNg"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJVSXU/CMBR9369Y6ivSwTZIeIPgBxEWhUWCYkzdLrOytXMt
+        zGn473bdIBiNCS9Le849H73Zl2GiNWUh6pnohUbvG8iKM0leYkANRYEkUUkt
+        0RWzr1PuzskNSy83vuN27wdDbxI9DHI88e8+Pb//6Q0Xbc9f5F60RFpOtW8a
+        n6cxKaKMb1jYexOcPcechE0d09KDAuLVmLJ1Of4qZSp6GOd53ow4j2IgKRXN
+        gCd43xBv2zjN+BsEUuAf9jgkkghQ8CEH6xyBj+L0cQoryIAFoEK/DFP1rBxH
+        v0uXIhPV1hV/sK847VgxdY5h7vTLgldIyD5iRSEOhbo9qpuGFMhIUnZAtyoP
+        stFQO5aeRarxmT8deVeoBHeNP3RD2NIATlVdfMiMiJNVW2DyVNGMJzDPOIsu
+        y+f/p1afp3pxbJMMCgnlspBrtSwL1eiU5xpstSsoyIBIyplPq7SWYzuubbuO
+        bXW7eiImQk54SNX2w6Mp17KdTsftWJ3qp6j7+P3B+AIZO+Mbp4Z7JxwDAAA=
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:13 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/datasets/json_load/tables/table1
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:13 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:13 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/MTQzNTAzNDY2NTYwNg"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJVSXU/CMBR9369Y6ivSwTZIeIPgBxEWhUWCYkzdLrOytXMt
+        zGn473bdIBiNCS9Le849H73Zl2GiNWUh6pnohUbvG8iKM0leYkANRYEkUUkt
+        0RWzr1PuzskNSy83vuN27wdDbxI9DHI88e8+Pb//6Q0Xbc9f5F60RFpOtW8a
+        n6cxKaKMb1jYexOcPcechE0d09KDAuLVmLJ1Of4qZSp6GOd53ow4j2IgKRXN
+        gCd43xBv2zjN+BsEUuAf9jgkkghQ8CEH6xyBj+L0cQoryIAFoEK/DFP1rBxH
+        v0uXIhPV1hV/sK847VgxdY5h7vTLgldIyD5iRSEOhbo9qpuGFMhIUnZAtyoP
+        stFQO5aeRarxmT8deVeoBHeNP3RD2NIATlVdfMiMiJNVW2DyVNGMJzDPOIsu
+        y+f/p1afp3pxbJMMCgnlspBrtSwL1eiU5xpstSsoyIBIyplPq7SWYzuubbuO
+        bXW7eiImQk54SNX2w6Mp17KdTsftWJ3qp6j7+P3B+AIZO+Mbp4Z7JxwDAAA=
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:14 GMT
+- request:
+    method: post
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: '{"configuration":{"load":{"sourceUris":["gs://optimus-prime-test/closeaccount-small.json.gz","gs://optimus-prime-test/newuser-small.json.gz"],"schema":{"fields":[{"name":"PlayerID","type":"STRING"},{"name":"Device","type":"STRING"},{"name":"Extras","type":"STRING"},{"name":"Event","type":"STRING"}]},"sourceFormat":"NEWLINE_DELIMITED_JSON","destinationTable":{"projectId":"pl-playground","datasetId":"json_load","tableId":"table1"}}}}'
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:15 GMT
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/6FCY1sga2KSwCJUWunvXeNl3eHQ"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1T21LbMBB9z1dk1FcSg2MTwlMnxIGQYCiEpheYjGKvFQVZ
+        MpLslDL590q2E3qZlg5Plvfs2bO7OnpuNNED5TE6bqIFJY85yKd3K7FAewYA
+        jYkF7tAp75xlwp/hMc+G+dTzux/7g/CCfOmvncPhyecDRbA7vlmfnN/Ocl58
+        gpB14OzDHSrr0LJ8xloZw09EipzHx0ZjHheXxWWfBiTxxyKI2OP4aELzAPwr
+        VfIUsGRC+YNlL7XO1LHjrNfrNhGCMMAZVe1IpM62b6dwnUyKFURaOb+oOUZN
+        Of8jaXKuIQEJPAIj+9xomsarmqM/p7CUklNhrwk0mhurEQmeUJJLrKngWxEm
+        cFyfzeAilxHcSqpM6KsNNRGx04tM0zRXrUzSFFoalHYiJhTgKDL96JZKMWPt
+        lRK8Tb6X3f2DyWGdK5C/kSznfq9qI1pCirddNVFCgcUvLdVhA3Cc2m2hK7MZ
+        kKNBrWwQ/ZSVyM30ehSeoiq82fsLfwAFNXt/Izv4piVWb2YXwPVr5PJz39jV
+        QbFZJOXlTU7xgsHLsl5xjeVijRXUGXb989IENaptuQorjwfoJ9nKIEMhU6xt
+        RhjMJqMwmA+CyehiNA0G8/Oby9AyNrXplMY6V1u32b/qxoJwUM23y6JmomiX
+        GUmopqPVmg68jr/f8bs9z3d7W5q10dxYhTKb0jHQoet2973uYSvmOC+Shcd5
+        j+yvXO7hXCWPHnbVUi5Fb/U+hgKYyEC2iali7782s33bqLFp/ABVoppBowQA
+        AA==
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:15 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/datasets/json_load/tables/table2
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:16 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:16 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/MTQzNTAzNDQxNDM4Mg"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJVSW2+CMBh951eQ7tVZJ+CcbzPsYiZkOjKTXbJU+GRVaBmt
+        oi7+95WCZsuWJb4APec7l37h0zDRgrII9Uw0pfHHEvLNiSTTBFBDUSBJXFIv
+        6IZZtxl3JuSOZdfLwHbOH/uu78VP/QJ7wWjrB5db3x2tfdezvfgFaTnVvlly
+        miVkE+d8yaLeXHD2lnASNXVMWw8KSGZDyhbl+LuUmehhXBRFM+Y8ToBkVDRD
+        nuJ9Q7xq4yzncwilwD/scUQkEaDgQw7WOQJ/i9OfY5hBDiwEFfppmKpn5Tj4
+        XboUmai2rviDfcVpx4qpcwxzp28WvkNK9hEzCkkk1OlZnTSkQEbSsgO6V3mQ
+        D1ztWHpuMo0/BOOBf4NKcNf4Q+fCioZwrOpqLXMijlatgMljRQ88hUnOWXxd
+        Xv8/tXq81otjy7S/kVAuC7XtbquFanTMCw12KiTMgUjKWUCrsDPbsh3Lcuz2
+        RedMTyRESI9HVC0/+jbltCzbVu9u/U/UdYLL/vAKGTvjC4hn+ZEbAwAA
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:16 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/datasets/json_load/tables/table2
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:17 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:17 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/MTQzNTAzNDQxNDM4Mg"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJVSW2+CMBh951eQ7tVZJ+CcbzPsYiZkOjKTXbJU+GRVaBmt
+        oi7+95WCZsuWJb4APec7l37h0zDRgrII9Uw0pfHHEvLNiSTTBFBDUSBJXFIv
+        6IZZtxl3JuSOZdfLwHbOH/uu78VP/QJ7wWjrB5db3x2tfdezvfgFaTnVvlly
+        miVkE+d8yaLeXHD2lnASNXVMWw8KSGZDyhbl+LuUmehhXBRFM+Y8ToBkVDRD
+        nuJ9Q7xq4yzncwilwD/scUQkEaDgQw7WOQJ/i9OfY5hBDiwEFfppmKpn5Tj4
+        XboUmai2rviDfcVpx4qpcwxzp28WvkNK9hEzCkkk1OlZnTSkQEbSsgO6V3mQ
+        D1ztWHpuMo0/BOOBf4NKcNf4Q+fCioZwrOpqLXMijlatgMljRQ88hUnOWXxd
+        Xv8/tXq81otjy7S/kVAuC7XtbquFanTMCw12KiTMgUjKWUCrsDPbsh3Lcuz2
+        RedMTyRESI9HVC0/+jbltCzbVu9u/U/UdYLL/vAKGTvjC4hn+ZEbAwAA
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:17 GMT
+- request:
+    method: post
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: '{"configuration":{"load":{"sourceUris":["gs://optimus-prime-test/login-small.json.gz"],"schema":{"fields":[{"name":"PlayerID","type":"STRING"},{"name":"Device","type":"STRING"},{"name":"Extras","type":"STRING"},{"name":"Event","type":"STRING"}]},"sourceFormat":"NEWLINE_DELIMITED_JSON","destinationTable":{"projectId":"pl-playground","datasetId":"json_load","tableId":"table2"}}}}'
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:18 GMT
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/FKVVeLI3jDm-nNqgjl3tb-xMc1E"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1TXU/bMBR976+ovFfSQD4o5WlDSSGjhA0KSAxUucmt6+DY
+        qe20dKj/fXbSwqZpYuIpyT33nONzr/PS6aInynN03EVTShY1yPWnQkzRngFA
+        Y2KBB3TK/bNKhHf4nFfDehyE/duTKL0g9ycrd3h+ewujxC+i0uHpghTM11Pn
+        +SI7iB9Qo0Mb+Yo5FcNrIkXN82PjMXlW9VE490fD9U0Gp+uz0ferev3l7l4/
+        iYangM1GlD9Z9lzrSh277mq16hEhCANcUdXLROnuzu0uPbeSooBMK/cPN9e4
+        Kfd/LE3PFcxAAs/A2L50uubgrWbydwpLaTgt9p5Bp7uxHpngM0pqiTUVfGfC
+        BM637ya4qGUGN5IqU/phS11EbHpRaVrWyqkkLcHRoLTLBKHcUSVmrFcowXvk
+        J7KMx71WKptDiXfKXTSjwPI32W3ZAByXNjH6ZtKBTKImW4PoddUg1+OrJD1F
+        bXmz9w9+BEtqZvdBdvysJVYfZi+B6/fIzeOx86qDcjNGypttjPGUwduw3tm8
+        5WKNFWw77PgnzSK3qLZyLda8eug323bJQyFLrG1HGt+NkjSeRPEouUjGcTT5
+        en2ZWsZme3GUxrpWuxtjv9qNxWnU5nvtoiZR9tqZSWjT0XZMB4Ef7vthf9A/
+        Cgc7Wq1ATsxVocy2+EHoHXpefz/oHzo5x/VyNg04H5D9wuMBrtVsEWBPzeVc
+        DIrPOSyBiQpkjxgVu3+cZWZM2v6fqLPp/AKpNvE4ZwQAAA==
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:18 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_dvOvOBiEgf5KoEclqK8LiuEe5Ps?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:19 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:19 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/6FCY1sga2KSwCJUWunvXeNl3eHQ"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1T21LbMBB9z1dk1FcSg2MTwlMnxIGQYCiEpheYjGKvFQVZ
+        MpLslDL590q2E3qZlg5Plvfs2bO7OnpuNNED5TE6bqIFJY85yKd3K7FAewYA
+        jYkF7tAp75xlwp/hMc+G+dTzux/7g/CCfOmvncPhyecDRbA7vlmfnN/Ocl58
+        gpB14OzDHSrr0LJ8xloZw09EipzHx0ZjHheXxWWfBiTxxyKI2OP4aELzAPwr
+        VfIUsGRC+YNlL7XO1LHjrNfrNhGCMMAZVe1IpM62b6dwnUyKFURaOb+oOUZN
+        Of8jaXKuIQEJPAIj+9xomsarmqM/p7CUklNhrwk0mhurEQmeUJJLrKngWxEm
+        cFyfzeAilxHcSqpM6KsNNRGx04tM0zRXrUzSFFoalHYiJhTgKDL96JZKMWPt
+        lRK8Tb6X3f2DyWGdK5C/kSznfq9qI1pCirddNVFCgcUvLdVhA3Cc2m2hK7MZ
+        kKNBrWwQ/ZSVyM30ehSeoiq82fsLfwAFNXt/Izv4piVWb2YXwPVr5PJz39jV
+        QbFZJOXlTU7xgsHLsl5xjeVijRXUGXb989IENaptuQorjwfoJ9nKIEMhU6xt
+        RhjMJqMwmA+CyehiNA0G8/Oby9AyNrXplMY6V1u32b/qxoJwUM23y6JmomiX
+        GUmopqPVmg68jr/f8bs9z3d7W5q10dxYhTKb0jHQoet2973uYSvmOC+Shcd5
+        j+yvXO7hXCWPHnbVUi5Fb/U+hgKYyEC2iali7782s33bqLFp/ABVoppBowQA
+        AA==
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:19 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_xsu85h3LFyUceGyHLQRuyAWZtko?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:19 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:19 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/FKVVeLI3jDm-nNqgjl3tb-xMc1E"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1TXU/bMBR976+ovFfSQD4o5WlDSSGjhA0KSAxUucmt6+DY
+        qe20dKj/fXbSwqZpYuIpyT33nONzr/PS6aInynN03EVTShY1yPWnQkzRngFA
+        Y2KBB3TK/bNKhHf4nFfDehyE/duTKL0g9ycrd3h+ewujxC+i0uHpghTM11Pn
+        +SI7iB9Qo0Mb+Yo5FcNrIkXN82PjMXlW9VE490fD9U0Gp+uz0ferev3l7l4/
+        iYangM1GlD9Z9lzrSh277mq16hEhCANcUdXLROnuzu0uPbeSooBMK/cPN9e4
+        Kfd/LE3PFcxAAs/A2L50uubgrWbydwpLaTgt9p5Bp7uxHpngM0pqiTUVfGfC
+        BM637ya4qGUGN5IqU/phS11EbHpRaVrWyqkkLcHRoLTLBKHcUSVmrFcowXvk
+        J7KMx71WKptDiXfKXTSjwPI32W3ZAByXNjH6ZtKBTKImW4PoddUg1+OrJD1F
+        bXmz9w9+BEtqZvdBdvysJVYfZi+B6/fIzeOx86qDcjNGypttjPGUwduw3tm8
+        5WKNFWw77PgnzSK3qLZyLda8eug323bJQyFLrG1HGt+NkjSeRPEouUjGcTT5
+        en2ZWsZme3GUxrpWuxtjv9qNxWnU5nvtoiZR9tqZSWjT0XZMB4Ef7vthf9A/
+        Cgc7Wq1ATsxVocy2+EHoHXpefz/oHzo5x/VyNg04H5D9wuMBrtVsEWBPzeVc
+        DIrPOSyBiQpkjxgVu3+cZWZM2v6fqLPp/AKpNvE4ZwQAAA==
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:19 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_dvOvOBiEgf5KoEclqK8LiuEe5Ps?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:30 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:30 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/banq3iJxSiyXMy40iliMW1CGucA"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1T23LaMBB95ysY9RUwATsUntoUhxJumYQ2nTYZRshrIyJL
+        RpJNaIZ/r2Qb0su0dPJkec+ePburo+dKFT1SHqBeFS1ptElB7t6sxRLVDAAa
+        Rxa4RwPe/pgI7w6PeHKZzl2v8/miP51EXy+2zhLzTZtePd3S3ZfJzm1SRid3
+        Zx8GKXl/j/I6NC+fsHrC8C6SIuVBz2gsgmyWzS6oH4XeSPiEbUZvxzT1wbtW
+        OU8BC8eUP1r2SutE9Rxnu902IiEiBjihqkFE7Bz6drKWk0ixBqKV84uaY9SU
+        8z+SJucGQpDACRjZ50rVNF7UHP45haXknAI7JVCp7q0GETykUSqxpoIfRJjA
+        QXk2g4tUEvgkqTKhbzZURZGdXiSaxqmqJ5LGUNegtEOYUIAJMf3ouooxY421
+        ErwRfc+7+weTwzZVIH8jWc5DrWiDrCDGh66qKKTAgpeWyrABOI7tttC12QzI
+        Yb9UNojeJTlyO78ZTgeoCO9rf+H3IaNm769k+09aYvVqdgZcnyLnn4fKsQ4K
+        zCIpz29yjpcMXpZ1wjWWizVWUGbY9S9yE5SotuUKLD+eoZ9kC4NcChljbTOm
+        /t14OPUXfX88nAznfn9xdTubWsa+NJ3SWKfq4Db7V9yYP+0X8x2zqJmIHDOJ
+        hGI6WqzpzG17zbbX6bpeq3ugWRstjFUosyltA523Wp2m2zmvBxynWbh0Oe9G
+        zXWLuzhV4cbFLbWSK9FdvwsgAyYSkI3IVLH3X5rZvm1U2Vd+ABhDTnejBAAA
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:30 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_xsu85h3LFyUceGyHLQRuyAWZtko?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:30 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:30 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/VA6kh_oGqS6WpMcyhvHzZAczx6w"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1TXW/aMBR951cg7xVIFxIofRoVH2WDdCu0SKwVMs4lMSR2
+        sB0grfjvsxOgm6aJqU9J7rnnHJ97nbdSGa0p89FNGS1osElBZJ9WfIEqGgCF
+        AwM8oz6r3yXcneJvLOmlE8dtPt12vFEwu91ZT+3GOpzz/mbcmCYjkoXbu9dZ
+        m7zuG7tnlOvQXD6JqkmEs0DwlPk32mO+l+m1G9aHveyRQD+7G/54SLP2dKbW
+        POdJiJZDytaGHSqVyBvL2u12tYDzIAKcUFkjPLZO57a2tpUIvgKipPWHm6Xd
+        pPU/lrrnAZYggBHQtm+lsj54oTn4O4Wh5JwCu2RQKh+MB+FsSYNUYEU5O5lE
+        HPvHdx2cp4LAo6BSl36aUhkFJj1PFI1TWU0EjaGqQCor4gFlVRnjKKqtJGe1
+        4BUZxkulkCIhxPikXEZLCpH/Lnssa4Dh2CRG33U6EINOni1HVJbkyHjyMPD6
+        qCgfKv/gd2BL9ew+yO7ulcDyw+wtMHWJnD9eSmcd5OsxUpZvY4IXEbwP68Lm
+        DRcrLOHYYcY/zxd5RJWRK7D81Ua/2RZL7nERY2U6vO50OPC68053OBgNJt3O
+        /Ov43jOMw/HiSIVVKk83xnwVG+t6nSLfuYvqROTcSQQU6Wgxps9O3b2qu81W
+        89ptnWipBDHXV4VGpqXuuHbDtptXTrNR9RlOt8uFw1gruFrZzMGpXG4cbMtQ
+        hLy1+uLDFiKegKgFWsXsHxOix6TM/4lKh9Iv/4mZCWcEAAA=
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:30 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_dvOvOBiEgf5KoEclqK8LiuEe5Ps?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:41 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:41 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/6pHapD3LPQg06riNfFJN5q1wYNA"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1UXXPaMBB851cw6mvAYGwIeWoZTEJDnDQhzbRNhhH22YgI
+        SUiyKc3w3yvZJl+dNp08YW5vb/eOxQ+1OronLEZHdTQn6ToDuf2w5HN0YADQ
+        OLXALTpmnRPB/Rt8ysQom3p+7+tgGJ6l3wcbpytOsBh2Jhdf0lZXkjAZfQ79
+        dXvzLfx0i4o5pBgvaENQvE0lz1h8ZDRmcX6enw9IkCb+KQ8iuj49nJAsAP9C
+        FTwFNJkQdm/ZC62FOnKczWbTTDlPKWBBVDPiK2fv28ldR0i+hEgr54WaY9SU
+        8z+SpucSEpDAIjCyD7W6MV7OHP+5haUUnBJ7S6BW31mNiLOEpJnEmnC2F6Ec
+        x9WzWZxnMoJrSZQp/bClOkrt9lxosspUQ0iygoYGpZ2IcgU4iowf3VArTGlz
+        qThrpr8Kd/9gMthkCuQrkuXcHZQ2ogWs8N5VHSUEaPxkqSobgOGVvRa6MJcB
+        OR5WygbRW1EgV9PLcXiMyvLu4C/8IeTE3P2d7OCnlli9m50D02+Ri4+72uMc
+        FJtDElb8klM8p/B0rDdSY7lYYwVVhz3/rAhBhWo7rsSKxzZ6JlsGZMTlCmvb
+        EQY3k3EYzIbBZHw2ngbD2eer89AydlXolMY6U/u02W/FepfXYVju99hFzEbR
+        Y2ckodyOlGdqex2/1fF7fc93+2X+DUnqV/hh22v7hyX+ItqEiUyPCAWrgNxy
+        26fqYKtLxO/0es/926TOTBoJtWjHqHddt9fyet1GzHCWJ3OPsX7aWrrMw5lK
+        1h521UIueH/5MYYcKBcgm6mZYiNW/V/s6wPVdrXfULxtjAYFAAA=
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:41 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_xsu85h3LFyUceGyHLQRuyAWZtko?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:42 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:42 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/6aPLrJUJoJgouWPRQsU1YlYuo28"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1U23LaMBR85ysY9TXgYGwueWozQAIlDiFQJmkyjLCFEZEl
+        RxeIm+Hfqwvk0k4nnTzZPnt2V3t0xs+lMnjANAEnZbDA6aNCvPiyZgtwpAEk
+        YWqAO3BG6+c5C2fwO817ahKEzR+nnegivT3deg04GvLBdMAGKVOz0fhKTGs3
+        5EYxv3UHrA628jmp5AQWKWeKJifaY/4kVCtc1Ye9Yhqjs+J8eDVWxbfZrXxg
+        licQWQ4xfTDslZS5OPG87XZbTRlLCYI5FtWYZd7h3N7G93LO1iiWwnvn5mk3
+        4f2Ppe4ZoyXiiMZI2z6XyvrgTrP/dwpDsRyHfWRQKu+MR8zoEqeKQ4kZPZgQ
+        BpP9uw7OFI/RlGOhSz9NqQxSk57lEmdKVHKOM1SRSEiPsBTTisggIdW1YLSa
+        /gKGcX/kpOIVyuBBuQyWGJHkVXZf1gCFmUkMRjod4v2OzWYRWeQWuZ6M+9EZ
+        cOXd0T/4HbTBenafZHefJIfi0+wNovIjsn3cl150QKLHiKm9jQlcEPQ6rA9u
+        3nChhALtO8z45/Yi96g0cg6zrz54Y+suucd4BqXpiLqzYT/qzjvdYf+iP+l2
+        5oPry8gwdvvFERJKJQ4bY75svPE0ily+ly6sE8UvnTFHLh12Y6oF9fC4Hjbb
+        zVbYdjusSVz+gbdqfiOoOfzdemKaK9nDBAnb7dK+Vk8L6RC/0Wy9Pb8SiM/1
+        NmJi0HoQ+g3fbx4HzUYloVBtlouA0nZ6vPZpAJVYPgbQFyu+Yu311wRtEGE5
+        4tVUq5gVg3Gsb0KaXwAo7Uq/ATK3VKfKBAAA
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:42 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_dvOvOBiEgf5KoEclqK8LiuEe5Ps?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:52 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:52 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/sBLooucDTw9ez-WXx1IR2r2T5G4"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1UXXPaMBB851cw6mvAwdgl5KnD4KRuiJMhpOm0yTDCPhsR
+        WXIk2YRk+O+VLJOvTptOnjC3t7d7x+LHVhvdEpagwzZakOyuBLH5tOILtKcB
+        UDgzwDU6Zv2vBfev8AkrjsqZ5w++j8bRafZztHbkaMJ5GY9n6yE8dK5+3PfC
+        qSvcmX/sXaN6DqnHF7RTULzJBC9Zcqg15kl1Vp2NSJCl/gkPYnp3cjAhZQD+
+        uax5Emg6IezWsJdKFfLQcdbrdTfjPKOACyK7Mc+dnW+ncp1C8BXESjqv1Byt
+        Jp3/kdQ9U0hBAItByz622tq4nRn+uYWh1ByLvSfQam+NRsxZSrJSYEU424lQ
+        jpPmWS/OSxHDpSBSl36ZUhtlZnteKJKXslMIkkNHgVROTLkEHMfaj+rIHFPa
+        XUnOutlD7e4fTAbrUoJ4QzKcmz1rI15Cjneu2iglQJNnS01ZAwzn5lroXF8G
+        RDhulDWiNkWNXMymYXSMbHm79xf+GCqi7/5BdnCvBJYfZlfA1Hvk+uOm9TQH
+        JfqQhNW/5AwvKDwf653UGC5WWELTYc4/r0PQoMqMs1j92EMvZG1AjrjIsTId
+        UXA1CaNgPg4m4Wk4C8bzbxdnkWFsm9BJhVUpd2kz3+r1ppdRZPd76iJ6o/ip
+        MxZgtyP2TD2v7+/3/cHQ892hzb8mCfUGP+h5Pf/A4q+iTVhRqiNCwSgg1277
+        XB1tlEX8/mDw0r9J6lynkVCD9rX6Z9cd7HuDz52E4bJKFx5jw2x/5TIPlzK9
+        87Arl2LJh6svCVRAeQGim+kpJmLN/8W8PlBr2/oN7r0v0wYFAAA=
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:52 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_xsu85h3LFyUceGyHLQRuyAWZtko?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:53 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:53 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/3Y6kuGW155dbdnD07TavRI1-KMQ"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1U23LaMBR85ysY9TVg8AVDntoMl7ghJCGkTNNkGGELI5Al
+        RxeIm+HfK1mQW6eTTp4wZ8/u+uw546dKFawxTcBxFcxx+qAQL76s2BwcaQBJ
+        mBrgDgyod5qzYArPaN5XEz8If5x0R+fp7cnW8X621mowbQZBMk9otxFO4GYc
+        NWtn51d3oNTBpXxOajmBRcqZosmx9pg9CtUOlt6wX9zEaFCcDq/Gqvg2vZVr
+        VvIEIoshpmvDXkqZi2PH2W639ZSxlCCYY1GPWeYc3tvZuE7O2QrFUjhv3Bzt
+        Jpz/sdQ9Y7RAHNEYadunSlW/uNWM/p7CUEqOxT4yqFR3xiNmdIFTxaHEjB5M
+        CIPJ/lkPzhSP0Q3HQpd+mVIVpGZ6lkucKVHLOc5QTSIhHcJSTGsig4TUV4LR
+        evobGMb9kZWKlyiDB+UqWGBEkhfZfVkDFGZmYnCpp0M86pazlYgs8hK5noyj
+        0QDY8u7oH/wu2mCd3SfZvUfJofg0e4Oo/Ihc/txXnnVAomPEtNzGBM4Jegnr
+        g80bLpRQoH2HiX9WLnKPSiNnsfLRBa9s7ZL7jGdQmo5RbzqMRr1ZtzeMzqNJ
+        rzv7fn0xMozd/nCEhFKJw8WYfzbxi1EPvGrBepz4uS3myI6GbUZN3wsaXhB2
+        wnbQsQesSVy+w9tNt+U3LY5o8h51/dANLfrmcjHNlexjgkTZbYN4qZ4U0iJu
+        K2zvQaakRsdsaymNN+Vngt/0Gq+zUALxmb5sTAzq+YHbct2w4YetWkKh2izm
+        PqWdtLFyqQ+VWDz40BVLvmSd1dcEbRBhOeL1VKuYc4VxrLcqzecEVHaVP2uJ
+        vKUWBQAA
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:53 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_dvOvOBiEgf5KoEclqK8LiuEe5Ps?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:04:03 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:04:03 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/-OGiTtLe0np9zHN64hVMtEu4myw"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1UXW/aQBB851eg62vAYGw+8lQhnISGmIjQRGoTocNemyP2
+        nXN3tksi/nvvfCZfVZsqT5idnZ3dYfBTo4nuCQ3RcROtSfyQA9992bI1OlIA
+        SBxr4Bad0t5ZxtwbfE6zk3zpuIPr8cS/iH+MS6s1PyVLOYMOzUaPZ37f2Vxf
+        SC930l15i6o5pBqfJa0swbuYs5yGx0pjFRbzYj4mXhy558wLkofz4YzkHriX
+        ouIJSKIZofeavZEyE8eWVZZlO2YsTgBnRLQDllqHva3CtjLOthBIYb1Rs5Sa
+        sP5HUvUsIAIONAAl+9RoqsXNzOmfV2hKxTHYRwKN5l5rBIxGJM45loTRg0jC
+        cFg/q8NZzgP4zolQpZ+61ESxvp5lkqS5aGWcpNCSIKQVJEwADgK1j2yJFCdJ
+        eysYbceP1Xb/YFIocwH8HUlz7o7MGsEGUnzYqokiAkn4slJdVgDFqXYLXSpn
+        gE8ntbJC5C6rkKvlYuqfIlPeH/2FP4GCKN8/yfZ+SY7Fp9kFUPkRufq4azzP
+        QaEyktDql1zidQIvZn2QGs3FEguoO7T9qyoENSr1OINVj130StYE5ITxFEvd
+        4Xs3s6nvrSbebHoxXXqT1berua8Z+zp0QmKZi0Pa9Dfj+Nz30KsWos4JntsC
+        DuY0YjzqOj2303MHI8e1Ryb8isTlO3zYdbru0OBAw/dor9cfdQ36JvWEZrk8
+        IQlofWQbI16q4500iNsbDGqQ5VKhC1YaSudN+ZkwVLqvvdCpX6lkk0SjPXVM
+        37YHHWfQb4UU50W0digdxZ2tTR2ci+jBwbbY8A0bbb+GUEDCMuDtWE3Rca3/
+        e/pVhBr7xm8v/IYJUgUAAA==
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:04:03 GMT
+recorded_with: VCR 2.9.3

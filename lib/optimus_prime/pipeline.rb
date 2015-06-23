@@ -85,6 +85,7 @@ module OptimusPrime
         .map { |key, config| [key, Step.create(config)] }
         .each do |key, step|
           step.logger = @logger
+          step.module_loader = @module_loader
           subscribe_all(step)
         end.to_h
     end

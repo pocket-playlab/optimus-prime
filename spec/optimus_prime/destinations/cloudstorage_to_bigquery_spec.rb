@@ -72,5 +72,82 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
     end
   end
 
+  describe 'persistence' do
+
+    let(:base) do
+      OptimusPrime::Modules::Persistence::Base.new(dsn: 'sqlite:listener_test.db')
+    end
+
+    let(:listener) { base.listener }
+
+    describe 'started' do
+
+      it 'receives the load job started event' do
+        VCR.use_cassette('cloudstorage_to_bigquery/started_event') do
+          d = destination(valid_schema)
+          d.subscribe(listener)
+          expect(listener).to receive(:load_job_started).twice
+          d.write(params)
+          d.close
+        end
+      end
+
+    end
+
+    describe 'finished' do
+
+      it 'receives the load job finished event' do
+        VCR.use_cassette('cloudstorage_to_bigquery/finished_event') do
+          d = destination(valid_schema)
+          d.subscribe(listener)
+          listener.pipeline_started(OptimusPrime::Pipeline.new({}, 'super pipline'))
+          expect(listener).to receive(:load_job_finished).twice
+          d.write(params)
+          d.close
+        end
+      end
+
+      it 'updates the load job in DB when finished' do
+        VCR.use_cassette('cloudstorage_to_bigquery/finished_save') do
+          d = destination(valid_schema)
+          d.subscribe(listener)
+          listener.pipeline_started(OptimusPrime::Pipeline.new({}, 'super pipline'))
+          d.write(params)
+          d.close
+          load_job = base.db[:load_jobs].where(identifier: 'gs://optimus-prime-test/closeaccount-small.json.gz').first
+          expect(load_job[:status]).to eq 'finished'
+        end
+      end
+
+    end
+
+    describe 'failed' do
+
+      it 'receives the load job failed event' do
+        VCR.use_cassette('cloudstorage_to_bigquery/failed_event') do
+          expect(listener).to receive(:load_job_failed).twice
+          d = destination(invalid_schema)
+          d.subscribe(listener)
+          listener.pipeline_started(OptimusPrime::Pipeline.new({}, 'super pipline'))
+          d.write(params)
+          d.close
+        end
+      end
+
+      it 'updates the load job in DB when failed' do
+        VCR.use_cassette('cloudstorage_to_bigquery/failed_save') do
+          d = destination(invalid_schema)
+          d.subscribe(listener)
+          listener.pipeline_started(OptimusPrime::Pipeline.new({}, 'super pipline'))
+          d.write(params)
+          d.close
+          load_job = base.db[:load_jobs].where(identifier: 'gs://optimus-prime-test/closeaccount-small.json.gz').first
+          expect(load_job[:status]).to eq 'failed'
+        end
+      end
+
+    end
+
+  end
 
 end

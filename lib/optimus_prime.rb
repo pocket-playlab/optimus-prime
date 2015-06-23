@@ -5,7 +5,9 @@ require 'active_support/core_ext/hash'
 
 # Persistence
 require 'optimus_prime/modules/persistence/operation'
+require 'optimus_prime/modules/persistence/load_job'
 require 'optimus_prime/modules/persistence/listener'
+require 'optimus_prime/modules/persistence/base'
 
 # Exceptional
 require 'optimus_prime/modules/exceptional/adapters/base_adapter.rb'

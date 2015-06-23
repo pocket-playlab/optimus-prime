@@ -2,26 +2,14 @@ module OptimusPrime
   module Modules
     module Persistence
       class Listener
-        attr_reader :options, :db
+        attr_reader :base
+        delegate :operation, :load_job, to: :base
 
-        def initialize(dsn:)
-          @db = Sequel.connect(dsn)
-          run_migrations
+        def initialize(base)
+          @base = base
           @pipeline_name = nil
           @operation_id = nil
           @jobs = {}
-        end
-
-        def run_migrations
-          Sequel::Migrator.run(@db, "migrations")
-        end
-
-        def operation
-          @operation ||= Operation.new(@db)
-        end
-
-        def load_job
-          @load_job ||= LoadJob.new(@db)
         end
 
         def pipeline_started(pipeline)
@@ -45,23 +33,23 @@ module OptimusPrime
         end
 
         def load_job_started(job)
-          @jobs[job.uris.first] = load_job.create identifier: job.uris.first,
-                                                  job_id: job.job_id,
-                                                  operation_id: @operation_id,
-                                                  uris: job.uris.join(','),
-                                                  category: job.id,
-                                                  status: 'started',
-                                                  start_time: Time.now
+          load_job.create identifier: job.uris.first,
+                          job_id: job.job_id,
+                          operation_id: @operation_id,
+                          uris: job.uris.join(','),
+                          category: job.id.to_s,
+                          status: 'started',
+                          start_time: Time.now
         end
 
         def load_job_finished(job)
-          load_job.update id: @jobs[job.uris.first],
+          load_job.update identifier: job.uris.first,
                           status: 'finished',
                           end_time: Time.now
         end
 
         def load_job_failed(job, error)
-          load_job.update id: @jobs[job.uris.first],
+          load_job.update identifier: job.uris.first,
                           status: 'failed',
                           end_time: Time.now
         end

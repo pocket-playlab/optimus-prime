@@ -21,8 +21,8 @@ module OptimusPrime
 
       def register_persistence
         raise 'Pipeline name required for persistence' unless @pipeline.name
-        @persistence = Persistence::Listener.new(@modules[:persistence][:options])
-        @subscribers << @persistence
+        @persistence = Persistence::Base.new(@modules[:persistence][:options])
+        @subscribers << @persistence.listener
       end
 
       def register_exceptional

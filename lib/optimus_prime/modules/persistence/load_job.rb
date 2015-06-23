@@ -7,6 +7,10 @@ module OptimusPrime
           @db = db
         end
 
+        def get(identifier)
+          table.where(identifier: identifier).first
+        end
+
         def create(params)
           table.insert(params)
         end

@@ -20,14 +20,29 @@ module OptimusPrime
 
       def write(tasks)
         jobs = tasks.map do |table, uris|
-          job = LoadJob.new client, logger, @config, table, uris
-          broadcast(:load_job_started, job)
-          job
-        end
+          if discard_job?(uris.first)
+            job = LoadJob.new client, logger, @config, table, uris
+            broadcast(:load_job_started, job)
+            job
+          end
+        end.compact
         wait_for_jobs(jobs)
       end
 
       private
+
+      def discard_job?(uri)
+        return unless module_loader.try(:persistence)
+        job = module_loader.persistence.load_job.get(uri)
+
+        if job[:status] == 'failed'
+          logger.error("Existing load job found with status 'failed'. Re-running job: #{job}")
+          false
+        else
+          logger.error("Existing load job found with status '#{job[:status]}'. Discarding... #{job}")
+          true
+        end
+      end
 
       def wait_for_jobs(jobs)
         while true
@@ -71,7 +86,7 @@ module OptimusPrime
 
       class LoadJob
         # for BigQueryTableBase
-        attr_reader :client, :logger, :id, :project_id, :dataset_id, :resource, :job_id
+        attr_reader :client, :logger, :id, :project_id, :dataset_id, :resource, :job_id, :uris
 
         def initialize(client, logger, config, table, uris)
           @client     = client

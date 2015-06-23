@@ -161,22 +161,22 @@ describe OptimusPrime::Pipeline do
 
     describe 'persistence' do
 
-      let(:listener) do
-        OptimusPrime::Modules::Persistence::Listener.new(dsn: 'sqlite:listener_test.db')
+      let(:base) do
+        OptimusPrime::Modules::Persistence::Base.new(dsn: 'sqlite:listener_test.db')
       end
 
       describe 'started' do
 
         it 'receives the pipeline started event' do
-          pipeline.subscribe(listener)
-          expect(listener).to receive(:pipeline_started).with(pipeline)
+          pipeline.subscribe(base.listener)
+          expect(base.listener).to receive(:pipeline_started).with(pipeline)
           pipeline.operate
         end
 
         it 'saves the pipeline in DB' do
-          pipeline_with_name.subscribe(listener)
+          pipeline_with_name.subscribe(base.listener)
           pipeline_with_name.start
-          operation = listener.db[:operations].where(pipeline_id: pipeline_with_name.name).first
+          operation = base.db[:operations].where(pipeline_id: pipeline_with_name.name).first
           expect(operation[:pipeline_id]).to eq pipeline_with_name.name
           expect(operation[:status]).to eq 'started'
         end
@@ -186,17 +186,17 @@ describe OptimusPrime::Pipeline do
       describe 'finished' do
 
         it 'receives the pipeline finished event' do
-          pipeline.subscribe(listener)
-          expect(listener).to receive(:pipeline_finished).with(pipeline)
+          pipeline.subscribe(base.listener)
+          expect(base.listener).to receive(:pipeline_finished).with(pipeline)
           pipeline.operate
         end
 
         it 'updates the pipeline in DB when finished' do
-          pipeline_with_name.subscribe(listener)
+          pipeline_with_name.subscribe(base.listener)
           pipeline_with_name.start
-          operation = listener.db[:operations].where(pipeline_id: pipeline_with_name.name).first
+          operation = base.db[:operations].where(pipeline_id: pipeline_with_name.name).first
           pipeline_with_name.join
-          updated = listener.db[:operations].where(id: operation[:id]).first
+          updated = base.db[:operations].where(id: operation[:id]).first
           expect(updated[:pipeline_id]).to eq pipeline_with_name.name
           expect(updated[:status]).to eq 'finished'
           expect(updated[:error]).to eq nil
@@ -207,17 +207,17 @@ describe OptimusPrime::Pipeline do
       describe 'failed' do
 
         it 'receives the pipeline failed event' do
-          pipeline.subscribe(listener)
-          expect(listener).to receive(:pipeline_failed)
+          pipeline.subscribe(base.listener)
+          expect(base.listener).to receive(:pipeline_failed)
           allow(pipeline).to receive(:join).and_raise('random exception')
           expect { pipeline.operate }.to raise_error('random exception')
         end
 
         it 'updates the pipeline in DB when failed' do
           allow(pipeline_with_name).to receive(:join).and_raise('random exception')
-          pipeline_with_name.subscribe(listener)
+          pipeline_with_name.subscribe(base.listener)
           expect { pipeline_with_name.operate }.to raise_error('random exception')
-          operation = listener.db[:operations].where(pipeline_id: pipeline_with_name.name).first
+          operation = base.db[:operations].where(pipeline_id: pipeline_with_name.name).first
           expect(operation[:pipeline_id]).to eq pipeline_with_name.name
           expect(operation[:status]).to eq 'failed'
           expect(operation[:error]).to include 'random exception'
