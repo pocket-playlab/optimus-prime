@@ -21,6 +21,7 @@ PATH
       activesupport
       aws-sdk (~> 2.0.23)
       bigbroda (= 0.0.7)
+      excon
       google-api-client (= 0.8.2)
       mail
       rake
@@ -86,6 +87,7 @@ GEM
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
     equalizer (0.0.11)
+    excon (0.45.3)
     extlib (0.9.16)
     fakefs (0.6.7)
     faraday (0.9.1)
@@ -233,3 +235,6 @@ DEPENDENCIES
   sqlite3
   vcr
   webmock
+
+BUNDLED WITH
+   1.10.4
