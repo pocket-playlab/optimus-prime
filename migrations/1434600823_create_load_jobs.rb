@@ -4,7 +4,7 @@ Sequel.migration do
       primary_key :id
       String :identifier
       String :job_id
-      String :operation_id, null: false, index: true
+      Integer :operation_id, null: false, index: true
       String :uris
       String :category
       String :status, null: false
