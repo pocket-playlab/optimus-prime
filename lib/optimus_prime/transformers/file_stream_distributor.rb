@@ -3,6 +3,29 @@ require 'pathname'
 module OptimusPrime
   module Transformers
     class FileStreamDistributor < Destination
+      # This transformer distributes input records to multiple `FileStreams` substreams,
+      # based on the records `category`. It produces pairs of category/file as its output.
+      #
+      # Input: Expected to be a stream of hashes.
+      # Output: a stream of pairs of category/file. Multiple files can have the same category.
+      #
+      # Parameters:
+      # - `path_template`: a template from which a path will be derived and assigned to each
+      #   substream to store its files in. The template is a string with optionally one or
+      #   moreembedded `%{field}`, which will be substituted with the value of the `field`
+      #   key from the record.
+      # - `base_path`: the base path that all substream pathes will be relative to. This is
+      #   useful if you want to store all of your substreams in one path, maybe to clear or
+      #   compress it later. Defaults to `/tmp`.
+      # - `category_template`: a template that will be applied to each record to specify its
+      #   category, and hence the substream it will be sent to. Similar to `path_template`,
+      #   it is a string that contains embedded fields from the record.
+      # - `stream_type`: the type of all the substreams. It can be any `FileStreams` stream.
+      # - `stream_options`: stream-specific options that will be passed down to substreams,
+      #   along with the path and the `max_per_file`. Defaults to an empty hash `{}`.
+      # - `max_per_file`: the maximum number of records to store in each file of each of the
+      #   substreams. Defaults to `1,000,000`.
+
       attr_reader :category_template, :path_template, :base_path, :max_per_file, :stream_type
 
       def initialize(path_template:, base_path: '/tmp',

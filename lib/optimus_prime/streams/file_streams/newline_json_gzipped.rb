@@ -9,6 +9,11 @@ module OptimusPrime
         # a maximum number of objects equal to the `max_per_file` parameter. Files are eagerly
         # created, which means a file is opened once the stream is created, or once a file is
         # full it's closed and a new empty file is opened immediately.
+        #
+        # Input: a stream of hashes, or any kind of objects that can be dumped as JSON.
+        # Output: a stream of strings that represent pathes to newline-json gzipped files.
+        #
+        # Parameters:
         # The stream takes the following arguments:
         # - `folder` a folde in which all files will be stored.
         # - `max_per_file` the maximum number of records a single file can contain before its
