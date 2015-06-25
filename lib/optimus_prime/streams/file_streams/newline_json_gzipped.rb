@@ -5,6 +5,22 @@ module OptimusPrime
   module Streams
     module FileStreams
       class NewlineJsonGzipped
+        # Stores a JSON stream of objects in files, each object on a line. Each file contains
+        # a maximum number of objects equal to the `max_per_file` parameter. Files are eagerly
+        # created, which means a file is opened once the stream is created, or once a file is
+        # full it's closed and a new empty file is opened immediately.
+        # The stream takes the following arguments:
+        # - `folder` a folde in which all files will be stored.
+        # - `max_per_file` the maximum number of records a single file can contain before its
+        #   closed and a new file is created.
+        # - `options`: an hash of options. It can include:
+        #   * `level`: the GZip compression level. If not specified, it defaults to `9` (best
+        #      compression). if `nil` is specified, it will fallback to the Zlib default value
+        #      value (see http://ruby-doc.org/stdlib-2.2.2/libdoc/zlib/rdoc/Zlib/Deflate.html#method-c-new).
+        #   * `strategy`: the GZip compression strategy. If not specified or `nil` is specified,
+        #     it will default to `Zlib::DEFAULT_STRATEGY`.
+        #   If additional options are supplied, a `Zlib::StreamError` will be raised.
+
         attr_accessor :logger, :record_count, :file_count, :current_file, :folder
         attr_reader :folder, :max_per_file
 
