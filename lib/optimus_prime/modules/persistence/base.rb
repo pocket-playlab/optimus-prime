@@ -10,7 +10,7 @@ module OptimusPrime
         end
 
         def run_migrations
-          Sequel::Migrator.run(@db, 'migrations')
+          Sequel::Migrator.run(@db, File.join(OptimusPrime.root, 'migrations'))
         end
 
         def operation

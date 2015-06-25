@@ -7,7 +7,6 @@ SOURCE_FORMAT = 'NEWLINE_DELIMITED_JSON'
 module OptimusPrime
   module Destinations
     class CloudstorageToBigquery < OptimusPrime::Destination
-
       def initialize(client_email:, private_key:, project:, dataset:, schema:)
         @client_email = client_email
         @private_key  = OpenSSL::PKey::RSA.new(private_key)
@@ -49,7 +48,7 @@ module OptimusPrime
       end
 
       def wait_for_jobs(jobs)
-        while true
+        loop do
           jobs = jobs.select(&method(:check_status))
           return if jobs.empty?
           sleep SLEEPING_TIME
@@ -61,7 +60,8 @@ module OptimusPrime
         broadcast(:load_job_finished, job) unless pending
         pending
       rescue LoadJobError => e
-        broadcast(:load_job_failed, job, "Error in pipeline #{e.class}, #{e.message}. Backtrace:\n\t#{e.backtrace.join("\n\t")}")
+        broadcast(:load_job_failed, job, "Error in pipeline #{e.class},
+        #{e.message}. Backtrace:\n\t#{e.backtrace.join("\n\t")}")
         logger.error("Load job in BigQuery encountered a problem: #{e}.")
         false
       end
@@ -101,7 +101,10 @@ module OptimusPrime
           @schema     = config[:schema]
           @resource   = generate_resource
           @uris = uris
+          start
+        end
 
+        def start
           # NOTE: Could be optimised to just fetch the table once
           patch_table if exists?
 
@@ -149,9 +152,7 @@ module OptimusPrime
             }
           }.stringify_nested_symbolic_keys
         end
-
       end
-
     end
   end
 end

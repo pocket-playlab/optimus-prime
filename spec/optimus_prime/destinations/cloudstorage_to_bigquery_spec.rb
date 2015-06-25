@@ -70,18 +70,15 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
   end
 
   describe 'persistence' do
-
-
-
     def create_job(persistence, status)
       persistence.load_job.create identifier: 'gs://optimus-prime-test/closeaccount-small.json.gz',
-                           job_id: 'job_id',
-                           operation_id: 1,
-                           uris: 'gs://optimus-prime-test/closeaccount-small.json.gz',
-                           category: 'table1',
-                           status: status,
-                           start_time: Time.now,
-                           end_time: Time.now + 1
+                                  job_id: 'job_id',
+                                  operation_id: 1,
+                                  uris: 'gs://optimus-prime-test/closeaccount-small.json.gz',
+                                  category: 'table1',
+                                  status: status,
+                                  start_time: Time.now,
+                                  end_time: Time.now + 1
     end
 
     let(:modules) { { persistence: { options: { dsn: 'sqlite:listener_test.db' } } } }
@@ -89,7 +86,6 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
     let(:module_loader) { pipeline.module_loader }
 
     describe 'existing job' do
-
       it 'does not re-run an existing finished job' do
         VCR.use_cassette('cloudstorage_to_bigquery/existing_started_job') do
           create_job(module_loader.persistence, 'started')
@@ -125,7 +121,6 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
           d.close
         end
       end
-
     end
 
     let(:base) do

@@ -14,7 +14,7 @@ namespace :db do
   task :version do
     version = if db.tables.include?(:schema_migrations)
                 db[:schema_migrations].to_a.last[:filename] if db[:schema_migrations].to_a.any?
-    end || 0
+              end || 0
 
     puts "Last Migration: #{version}"
   end

@@ -34,3 +34,9 @@ end
 Dir[File.dirname(__FILE__) + '/core_ext/*.rb'].each do |file|
   require file
 end
+
+module OptimusPrime
+  def self.root
+    File.dirname __dir__
+  end
+end
