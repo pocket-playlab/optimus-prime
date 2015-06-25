@@ -4,6 +4,34 @@ require 'google/api_client'
 module OptimusPrime
   module Destinations
     class GoogleCloudStorageBucket < Destination
+      # This destination represents a single bucket in Google Cloud Storage, and uploads files
+      # to that bucket.
+      #
+      # Upload Strategy:
+      # The destination uploads files in parallel using threads, which means multiple files can
+      # be uploaded at the same time.
+      # For each file, the destination will make 4 back-offs if the upload didn't complete for
+      # some reason. Besides, a `MAX_RETRIES` number of retries will be made if the upload failed
+      # due to errors related to network.
+      #
+      # Input: a stream of hashes that contains the key `file` whose value is path to the file
+      # to be uploaded in the local filesystem, and the name of the file after being uploaded.
+      #
+      # Output: a stream of hashes identical to the input stream, but with the value of `file`
+      # replaced with a Google Cloud Storage Object Data object, which is returned by Google
+      # Cloud Storage when the upload is finished.
+      #
+      # Parameters:
+      # - `client_email` and `private_key` for authenticating with Google Cloud Platform API.
+      # - `bucket`: the unique name of the bucket represented by this destination.
+      # - `options` a hash of options, it can contain the following options:
+      #   * `base_local_path`: if present, it will be prepended to file pathes when creating an
+      #     `UploadIO` locally. It won't, however, be added to the remoe file names. defaults to
+      #     `nil` (no base).
+      #   * `content_type` content type of the files to be uploaded, defaults to `application/json`.
+      #   * `upload_type`: the google cloud storage upload type to be used. Defaults to `resumable.
+      #     see https://cloud.google.com/storage/docs/json_api/v1/how-tos/upload for details.
+
       attr_reader :client_email, :private_key, :bucket,
                   :base_local_path, :upload_type, :content_type
       MAX_RETRIES = 4
