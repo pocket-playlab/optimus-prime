@@ -33,23 +33,25 @@ module OptimusPrime
         end
 
         def load_job_started(job)
-          load_job.create identifier: job.uris.first,
-                          job_id: job.job_id,
-                          operation_id: @operation_id,
-                          uris: job.uris.join(','),
-                          category: job.id.to_s,
-                          status: 'started',
-                          start_time: Time.now
+          @jobs[job.uris.first] = load_job.create identifier: job.uris.first,
+                                                  job_id: job.job_id,
+                                                  operation_id: @operation_id,
+                                                  uris: job.uris.join(','),
+                                                  category: job.id.to_s,
+                                                  status: 'started',
+                                                  start_time: Time.now
         end
 
         def load_job_finished(job)
-          load_job.update identifier: job.uris.first,
+          load_job.update id: @jobs[job.uris.first],
+                          operation_id: @operation_id,
                           status: 'finished',
                           end_time: Time.now
         end
 
         def load_job_failed(job, error)
-          load_job.update identifier: job.uris.first,
+          load_job.update id: @jobs[job.uris.first],
+                          operation_id: @operation_id,
                           status: 'failed',
                           end_time: Time.now,
                           error: error
