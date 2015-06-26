@@ -25,8 +25,8 @@ module OptimusPrime
       private
 
       def wait_for_jobs(jobs)
-        while true
-          jobs = jobs.select(&:pending?)
+        loop do
+          jobs.select!(&:pending?)
           return if jobs.empty?
           sleep SLEEPING_TIME
         end
