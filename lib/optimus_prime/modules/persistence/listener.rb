@@ -7,13 +7,11 @@ module OptimusPrime
 
         def initialize(base)
           @base = base
-          @pipeline_name = nil
           @operation_id = nil
           @jobs = {}
         end
 
         def pipeline_started(pipeline)
-          @pipeline_name = pipeline.name
           @operation_id = operation.create pipeline_id: pipeline.name.to_s,
                                            start_time: Time.now,
                                            status: 'started'

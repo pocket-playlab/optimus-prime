@@ -8,7 +8,7 @@ test_pipeline:
     exceptional:
       adapter: Sentry
       options:
-        dsn: 'test'
+        dsn: test
 
   graph:
     a:
