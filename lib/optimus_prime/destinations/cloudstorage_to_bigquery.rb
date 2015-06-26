@@ -1,12 +1,11 @@
 require_relative 'common/bigquery_table_base'
 
-SLEEPING_TIME = 10
-# For now, we just plan to use json
-SOURCE_FORMAT = 'NEWLINE_DELIMITED_JSON'
-
 module OptimusPrime
   module Destinations
     class CloudstorageToBigquery < OptimusPrime::Destination
+      SLEEPING_TIME = 10
+      # TODO: make the source format configurable
+      SOURCE_FORMAT = 'NEWLINE_DELIMITED_JSON'
 
       def initialize(client_email:, private_key:, project:, dataset:, schema:)
         @client_email = client_email
