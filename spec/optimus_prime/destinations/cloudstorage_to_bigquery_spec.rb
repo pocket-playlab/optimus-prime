@@ -2,28 +2,6 @@ require 'spec_helper'
 require 'optimus_prime/destinations/cloudstorage_to_bigquery'
 
 RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
-  let(:valid_schema) do
-    {
-      fields: [
-        { name: 'PlayerID', type: 'STRING' },
-        { name: 'Device',   type: 'STRING' },
-        { name: 'Extras',   type: 'STRING' },
-        { name: 'Event',    type: 'STRING' }
-      ]
-    }
-  end
-
-  let(:invalid_schema) do
-    {
-      fields: [
-        { name: 'SomeWrongField', type: 'STRING' },
-        { name: 'Device',   type: 'STRING' },
-        { name: 'Extras',   type: 'STRING' },
-        { name: 'Event',    type: 'STRING' }
-      ]
-    }
-  end
-
   let(:params) do
     {
       table1: [
@@ -34,38 +12,58 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
     }
   end
 
-  let(:logger) { Logger.new STDOUT }
-
-  def destination(schema)
-    d = OptimusPrime::Destinations::CloudstorageToBigquery.new(
+  let(:destination) do
+    destination = OptimusPrime::Destinations::CloudstorageToBigquery.new(
       client_email: ENV.fetch('GOOGLE_CLIENT_EMAIL', 'test@developer.gserviceaccount.com'),
       private_key: ENV.fetch('GOOGLE_PRIVATE_KEY', File.read('spec/supports/key')),
       project: 'pl-playground',
       dataset: 'json_load',
       schema: schema
     )
-    d.logger = logger
-    d
+    destination.logger = Logger.new(STDOUT)
+    destination
   end
 
   context 'when supplied schema matches data schema' do
-    it 'runs without errors' do
-      d = destination(valid_schema)
+    let(:schema) do
+      {
+        fields: [
+          { name: 'PlayerID', type: 'STRING' },
+          { name: 'Device',   type: 'STRING' },
+          { name: 'Extras',   type: 'STRING' },
+          { name: 'Event',    type: 'STRING' }
+        ]
+      }
+    end
+
+    it 'runs successfully' do
       VCR.use_cassette('cloudstorage_to_bigquery/run') do
-        d.write(params)
-        d.close
+        expect do
+          destination.write(params)
+          destination.close
+        end.to_not raise_error
       end
     end
   end
 
   context 'when supplied schema does not match data schema' do
+    let(:schema) do
+      {
+        fields: [
+          { name: 'SomeWrongField', type: 'STRING' },
+          { name: 'Device',   type: 'STRING' },
+          { name: 'Extras',   type: 'STRING' },
+          { name: 'Event',    type: 'STRING' }
+        ]
+      }
+    end
+
     it 'raises an error' do
-      d = destination(invalid_schema)
       VCR.use_cassette('cloudstorage_to_bigquery/fail') do
-        expect do
-          d.write(params)
-        end.to raise_error(OptimusPrime::Destinations::CloudstorageToBigquery::LoadJob::LoadJobError)
-        d.close
+        expect { destination.write(params) }.to raise_error(
+          OptimusPrime::Destinations::CloudstorageToBigquery::LoadJob::LoadJobError
+        )
+        destination.close
       end
     end
   end
