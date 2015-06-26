@@ -37,7 +37,7 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
     end
 
     it 'runs successfully' do
-      VCR.use_cassette('cloudstorage_to_bigquery/run') do
+      VCR.use_cassette('cloudstorage_to_bigquery/correct-schema') do
         expect do
           destination.write(params)
           destination.close
@@ -59,7 +59,7 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
     end
 
     it 'raises an error' do
-      VCR.use_cassette('cloudstorage_to_bigquery/fail') do
+      VCR.use_cassette('cloudstorage_to_bigquery/bad-schema') do
         expect { destination.write(params) }.to raise_error(
           OptimusPrime::Destinations::CloudstorageToBigquery::LoadJob::LoadJobError
         )
