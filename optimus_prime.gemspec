@@ -25,4 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'mail'
   spec.add_dependency 'thor'
   spec.add_dependency 'sentry-raven'
+  spec.add_dependency 'rake'
+  spec.add_dependency 'wisper'
 end
