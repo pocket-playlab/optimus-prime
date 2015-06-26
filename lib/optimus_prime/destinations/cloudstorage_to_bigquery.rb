@@ -3,6 +3,39 @@ require_relative 'common/bigquery_table_base'
 module OptimusPrime
   module Destinations
     class CloudstorageToBigquery < OptimusPrime::Destination
+      # This step appends a group of files located on Google Cloud Storage to one or more
+      # Google BigQuery tables, using the functionality explained in the following link:
+      # https://cloud.google.com/bigquery/loading-data-into-bigquery#loaddatagcs
+      #
+      # When a record is received, a BigQuery Load Job will be created for each of the
+      # tables, with the Google Cloud Storage files URIs associated for that table.
+      # The step will then wait and check the status of each job periodically, until all
+      # jobs are done, or raise an error if a job has finished with errors.
+      # https://cloud.google.com/bigquery/docs/reference/v2/jobs#configuration.load
+      #
+      # Input: the input of this destination are hashes of the following formats:
+      # ```
+      # {
+      #   'table-name-1' => ['gs://bucket/path/to/file', 'gs://bucket/path/to/file'],
+      #   'table-name-2' => ['gs://bucket/path/to/file', 'gs://bucket/path/to/file'],
+      #   ....
+      # }
+      # ```
+      # Notice that all tables should be in the dataset given in the initializer, and all
+      # tables will have the same schema that's supplied in the initializer. Also, the
+      # dataset and all bucket should be in the same project (we didn't try importing files
+      # from buckets in a project different from the dataset project).
+      #
+      # Output: this destination has no output, however, it has log messages.
+      #
+      # Parameters:
+      # - `client_email` and `private_key` for authentication with Google Cloud API.
+      # - `project` and `dataset`: the project and dataset where the destination tables
+      #   are located.
+      # - `schema`: the common schema of all the tables. If a table does not exist, it will
+      #   be created with this schema. If a tables exists but some fields are missing, it
+      #   will be patched to match this schema.
+
       SLEEPING_TIME = 10
       # TODO: make the source format configurable
       SOURCE_FORMAT = 'NEWLINE_DELIMITED_JSON'
