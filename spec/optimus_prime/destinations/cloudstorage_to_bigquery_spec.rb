@@ -48,21 +48,25 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
     d
   end
 
-  it 'runs without errors' do
-    d = destination(valid_schema)
-    VCR.use_cassette('cloudstorage_to_bigquery/run') do
-      d.write(params)
-      d.close
+  context 'when supplied schema matches data schema' do
+    it 'runs without errors' do
+      d = destination(valid_schema)
+      VCR.use_cassette('cloudstorage_to_bigquery/run') do
+        d.write(params)
+        d.close
+      end
     end
   end
 
-  it 'raises an exception for a wrong schema' do
-    d = destination(invalid_schema)
-    VCR.use_cassette('cloudstorage_to_bigquery/fail') do
-      expect do
-        d.write(params)
-      end.to raise_error(OptimusPrime::Destinations::CloudstorageToBigquery::LoadJob::LoadJobError)
-      d.close
+  context 'when supplied schema does not match data schema' do
+    it 'raises an error' do
+      d = destination(invalid_schema)
+      VCR.use_cassette('cloudstorage_to_bigquery/fail') do
+        expect do
+          d.write(params)
+        end.to raise_error(OptimusPrime::Destinations::CloudstorageToBigquery::LoadJob::LoadJobError)
+        d.close
+      end
     end
   end
 end
