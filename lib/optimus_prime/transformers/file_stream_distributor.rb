@@ -6,13 +6,14 @@ module OptimusPrime
       attr_reader :category_template, :path_template, :base_path, :max_per_file, :stream_type
 
       def initialize(path_template:, base_path: '/tmp',
-          category_template:, stream_type:, max_per_file: 1_000_000)
+          category_template:, stream_type:, stream_options: {}, max_per_file: 1_000_000)
         @category_template = category_template
         @path_template = path_template
         @base_path = Pathname.new(base_path)
         @max_per_file = max_per_file
         @stream_type = stream_type.is_a?(String) ? constantize(stream_type) : stream_type
         @streams = {}
+        @stream_options = stream_options
       end
 
       def write(original_record)
@@ -55,7 +56,7 @@ module OptimusPrime
         unless @streams.key? category
           folder = Pathname.new(File.join(base_path, path_for(record)))
           folder.mkpath
-          @streams[category] = stream_type.new(folder.to_path, max_per_file)
+          @streams[category] = stream_type.new(folder.to_path, max_per_file, @stream_options)
           @streams[category].logger = logger
         end
         @streams[category]

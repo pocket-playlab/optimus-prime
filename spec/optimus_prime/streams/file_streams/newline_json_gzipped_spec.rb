@@ -7,6 +7,46 @@ RSpec.describe OptimusPrime::Streams::FileStreams::NewlineJsonGzipped do
   let(:stream) { OptimusPrime::Streams::FileStreams::NewlineJsonGzipped.new('/tmp', mpf) }
   after(:each) { File.delete(*Dir['/tmp/*.jgz']) }
 
+  context '#initialize' do
+    context 'when no options given' do
+      let(:default_opts) { [Zlib::BEST_COMPRESSION, Zlib::DEFAULT_STRATEGY] }
+      it 'creates a stream with the default options' do
+        stream = OptimusPrime::Streams::FileStreams::NewlineJsonGzipped.new('/tmp', mpf)
+        stream.close
+        expect(stream.instance_variable_get :@zoptions).to match_array default_opts
+      end
+    end
+
+    context 'when options are supplied' do
+      context 'with valid values' do
+        it 'creates a stream with the supplied options' do
+          opts = { level: Zlib::BEST_SPEED, strategy: Zlib::FIXED }
+          stream = OptimusPrime::Streams::FileStreams::NewlineJsonGzipped.new('/tmp', mpf, opts)
+          stream.close
+          expect(stream.instance_variable_get :@zoptions).to match_array opts.values
+        end
+      end
+
+      context 'with invalid values' do
+        it 'raises an error' do
+          opts = { level: -2, strategy: 5 }
+          expect do
+            OptimusPrime::Streams::FileStreams::NewlineJsonGzipped.new('/tmp', mpf, opts)
+          end.to raise_error(Zlib::StreamError)
+        end
+      end
+
+      context 'with missplled or extra options' do
+        it 'raises an error' do
+          opts = { level: Zlib::BEST_SPEED, strategy: Zlib::FIXED, memory: Zlib::MAX_MEM_LEVEL }
+          expect do
+            OptimusPrime::Streams::FileStreams::NewlineJsonGzipped.new('/tmp', mpf, opts)
+          end.to raise_error(Zlib::StreamError)
+        end
+      end
+    end
+  end
+
   context 'each chunk' do
     before :each do
       @file = mpf.times.map { stream << sample }.compact.first
