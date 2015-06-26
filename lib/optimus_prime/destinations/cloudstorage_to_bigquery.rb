@@ -7,7 +7,6 @@ SOURCE_FORMAT = 'NEWLINE_DELIMITED_JSON'
 module OptimusPrime
   module Destinations
     class CloudstorageToBigquery < OptimusPrime::Destination
-
       def initialize(client_email:, private_key:, project:, dataset:, schema:)
         @client_email = client_email
         @private_key  = OpenSSL::PKey::RSA.new(private_key)
@@ -19,18 +18,53 @@ module OptimusPrime
       end
 
       def write(tasks)
-        jobs = tasks.map { |table, uris| LoadJob.new client, logger, @config, table, uris }
+        jobs = tasks.map do |table, uris|
+          if discard_job?(uris.first)
+            nil
+          else
+            job = LoadJob.new client, logger, @config, table, uris
+            broadcast(:load_job_started, job)
+            job
+          end
+        end.compact
         wait_for_jobs(jobs)
       end
 
       private
 
+      def discard_job?(uri)
+        return unless module_loader.try(:persistence)
+
+        job = module_loader.persistence.load_job.get(uri)
+        return unless job
+
+        if job[:status] == 'failed'
+          logger.error("Existing load job found with status 'failed'. Re-running job #{job[:identifier]}")
+          false
+        else
+          logger.error("Existing load job found with status '#{job[:status]}'. Discarding job #{job[:identifier]}")
+          true
+        end
+      end
+
       def wait_for_jobs(jobs)
-        while true
-          jobs = jobs.select(&:pending?)
+        loop do
+          jobs = jobs.select(&method(:check_status))
           return if jobs.empty?
           sleep SLEEPING_TIME
         end
+      end
+
+      def check_status(job)
+        pending = job.pending?
+        broadcast(:load_job_finished, job) unless pending
+        pending
+      rescue LoadJobError => e
+        broadcast(:load_job_failed, job, "Error in pipeline #{e.class},
+        #{e.message}. BigQuery Error:\n\t#{e.extra}")
+        logger.error("Load job in BigQuery encountered a problem: #{e}.")
+        logger.error("#{e.extra}\n")
+        false
       end
 
       def client
@@ -45,9 +79,19 @@ module OptimusPrime
         end
       end
 
+      class LoadJobError < StandardError
+        # This is in the section "Additional Data" in Sentry
+        attr_reader :extra
+
+        def initialize(extra = {})
+          @message = 'Load job in BigQuery encountered a problem.'
+          @extra = extra
+        end
+      end
+
       class LoadJob
         # for BigQueryTableBase
-        attr_reader :client, :logger, :id, :project_id, :dataset_id, :resource
+        attr_reader :client, :logger, :id, :project_id, :dataset_id, :resource, :job_id, :uris
 
         def initialize(client, logger, config, table, uris)
           @client     = client
@@ -57,11 +101,15 @@ module OptimusPrime
           @dataset_id = config[:dataset]
           @schema     = config[:schema]
           @resource   = generate_resource
+          @uris = uris
+          start
+        end
 
+        def start
           # NOTE: Could be optimised to just fetch the table once
           patch_table if exists?
 
-          insert_request = insert_files(uris)
+          insert_request = insert_files
           @job_id = JSON.parse(insert_request.body)['jobReference']['jobId']
           logger.info "LoadJob created #{@job_id} (table: #{id})."
         end
@@ -85,15 +133,15 @@ module OptimusPrime
           { schema: @schema }.stringify_nested_symbolic_keys
         end
 
-        def insert_files(uris)
-          execute(bigquery.jobs.insert, body: generate_job_data(uris))
+        def insert_files
+          execute(bigquery.jobs.insert, body: generate_job_data)
         end
 
-        def generate_job_data(uris)
+        def generate_job_data
           {
             configuration: {
               load: {
-                sourceUris: uris,
+                sourceUris: @uris,
                 schema: @schema,
                 sourceFormat: SOURCE_FORMAT,
                 destinationTable: {
@@ -105,19 +153,7 @@ module OptimusPrime
             }
           }.stringify_nested_symbolic_keys
         end
-
-        class LoadJobError < StandardError
-          # This is in the section "Additional Data" in Sentry
-          attr_reader :extra
-
-          def initialize(extra = {})
-            @message = 'Load job in BigQuery encountered a problem.'
-            @extra = extra
-            end
-          end
-
       end
-
     end
   end
 end

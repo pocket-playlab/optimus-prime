@@ -51,7 +51,8 @@ module OptimusPrime
       end
     end
 
-    attr_accessor :logger
+    include Wisper::Publisher
+    attr_accessor :logger, :module_loader
 
     def start
       raise 'Already started' if started?

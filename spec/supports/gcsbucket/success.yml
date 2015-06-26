@@ -1574,4 +1574,197 @@ http_interactions:
         L29zWUNFQUU9Igp9Cg==
     http_version: 
   recorded_at: Mon, 22 Jun 2015 04:48:15 GMT
+- request:
+    method: post
+    uri: https://www.googleapis.com/upload/storage/v1/b/optimus-prime-test/o?name=deeply/nested/closeaccount-small.json.gz&uploadType=resumable&upload_id=AEnB2Up_dRELk5ahkFo_tLBTOm-JEBI74Eh0j201ftXPtDYCCmWmC8OpjdUluK8-jhm-UfY7GFAPFKeaf7C_f71vlYqScFGh4w
+    body:
+      encoding: ASCII-8BIT
+      base64_string: |
+        H4sICAiZflUAA2Nsb3NlYWNjb3VudC1zbWFsbC5qc29uAHVXOZJduRH0dQza
+        OsF4Co0MeXMF7Gth3yd0d+X3mmS0x/jxCDQqK7e/f/wV2VXtv3/++OPHzVMo
+        Uew+Rycziltm9W7kbE8awcdMsvnoWrRi5Ki8FY+HMto5lZodz4zFm3U5j/XC
+        bYmMJaXcsdfeEN5uLL4f//zxp1pOKNy389PFr3txtNWWl6aXv4q8y5pJto8J
+        /aZgdt1cTOOsF9fxc/10S+c7Kj4f3tl30ipjqqrp2qNjDJMitTfcrbjvP2c0
+        1nFfG8zdt65gO0UVquMiF+sc52q1eV/uRiiVA4lEwfBG+UR1bRLBcu293LUq
+        RpL0emo2do6XVrXKapnkbJq8yvG5b6k0cN2/Y+7qX0LkmYZeXU7PcSNn00RR
+        tJn9Xu1Ss9NNYl5Os2dhZILUnfQLdLT0VfBrrVfKt92kaBsTwS+HmzwtC15H
+        4QaPJ/cefvzvH39/hdOPxURiOfK3l1j6MT90IrGSoZzlFqSWnULnLv2hm1Z0
+        OiVR62G3NXfvdDtrctfW+a4OO1M4LaVISdzNs7orfoWTW7MDa95U30rVWhgp
+        tyoixEd5hGunHtEfKdd95IVN8mz93ImT+qtX9iJY4ecZXL1TqndvrWnvOtJL
+        ikiV8b7C2R3mflOR5Gblc+9h4s1XHTe1wimsuwHEp37vbp2sA9Q+siROWU/n
+        vErnZQx7SKeYg48xMz2r10882ykrX9s3cOZhmkuWK5wfo6Qn74uxD836HEVG
+        YXfpgftZ3yLDQwpdmN1Za0m+utRTnyFfWuXeywrwvDTyeyaCdcm4V9r4Fc7Q
+        tDmMY/3GrVyEnOtN7FrGFxsitcwjr4J58sRMu51a+5yZxo7OH5c0y1Y2aWnp
+        iKVNKVslvVrjjcvydsOK+RXOfKirLStomZsoW25eL3bw5SyEZCc2czgOW7lK
+        eUYKYUTsbqtbzmJ9q5+5Z4yZ2vD1uteP7G6eWtOsLCZu6/0KpwOOh8iCuoon
+        nswa3i8aqsjVfPJntdYnadefLLHPuNVRGEeavRohqRiyclnL2HOp31jPIO0f
+        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
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      X-Upload-Content-Type:
+      - application/json
+      X-Upload-Content-Length:
+      - '2691'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+      Content-Length:
+      - '2691'
+      Content-Range:
+      - bytes 0-2690/2691
+      Authorization:
+      - Bearer ya29.mgG8MgUhJNWlo8U1plX2ELWki5wig4rVtGlL7guFb89_mg3Hpp5xL3ovNh64JrTdILGqh2FV7WUt4g
+      Cache-Control:
+      - no-store
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Etag:
+      - CNDH8Nq/osYCEAE=
+      Vary:
+      - Origin, X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Mon, 22 Jun 2015 04:48:15 GMT
+      Content-Length:
+      - '958'
+      Server:
+      - UploadServer ("Built on Jun 15 2015 18:31:41 (1434418301)")
+      Alternate-Protocol:
+      - 443:quic,p=1
+    body:
+      encoding: UTF-8
+      base64_string: |
+        ewogImtpbmQiOiAic3RvcmFnZSNvYmplY3QiLAogImlkIjogIm9wdGltdXMt
+        cHJpbWUtdGVzdC9kZWVwbHkvbmVzdGVkL2Nsb3NlYWNjb3VudC1zbWFsbC5q
+        c29uLmd6LzE0MzQ5NDg0OTU3NDYwMDAiLAogInNlbGZMaW5rIjogImh0dHBz
+        Oi8vd3d3Lmdvb2dsZWFwaXMuY29tOjQ0My9zdG9yYWdlL3YxL2Ivb3B0aW11
+        cy1wcmltZS10ZXN0L28vZGVlcGx5JTJGbmVzdGVkJTJGY2xvc2VhY2NvdW50
+        LXNtYWxsLmpzb24uZ3oiLAogIm5hbWUiOiAiZGVlcGx5L25lc3RlZC9jbG9z
+        ZWFjY291bnQtc21hbGwuanNvbi5neiIsCiAiYnVja2V0IjogIm9wdGltdXMt
+        cHJpbWUtdGVzdCIsCiAiZ2VuZXJhdGlvbiI6ICIxNDM0OTQ4NDk1NzQ2MDAw
+        IiwKICJtZXRhZ2VuZXJhdGlvbiI6ICIxIiwKICJjb250ZW50VHlwZSI6ICJh
+        cHBsaWNhdG9pbi9qc29uIiwKICJ1cGRhdGVkIjogIjIwMTUtMDYtMjJUMDQ6
+        NDg6MTUuNzQ1WiIsCiAic3RvcmFnZUNsYXNzIjogIlNUQU5EQVJEIiwKICJz
+        aXplIjogIjI2OTEiLAogIm1kNUhhc2giOiAiYTBWYS8wWTNFZDRwSjgwVzh5
+        ZDdaZz09IiwKICJtZWRpYUxpbmsiOiAiaHR0cHM6Ly93d3cuZ29vZ2xlYXBp
+        cy5jb206NDQzL2Rvd25sb2FkL3N0b3JhZ2UvdjEvYi9vcHRpbXVzLXByaW1l
+        LXRlc3Qvby9kZWVwbHklMkZuZXN0ZWQlMkZjbG9zZWFjY291bnQtc21hbGwu
+        anNvbi5nej9nZW5lcmF0aW9uPTE0MzQ5NDg0OTU3NDYwMDAmYWx0PW1lZGlh
+        IiwKICJvd25lciI6IHsKICAiZW50aXR5IjogInVzZXItMDBiNDkwM2E5N2Yw
+        ZGVlYzA5YzA1MGE3NGMyMmE4MTg2N2U1YjFmOGQwOTQ4OWVlNDE2ZjZjY2Zj
+        ZTE4M2NmYiIsCiAgImVudGl0eUlkIjogIjAwYjQ5MDNhOTdmMGRlZWMwOWMw
+        NTBhNzRjMjJhODE4NjdlNWIxZjhkMDk0ODllZTQxNmY2Y2NmY2UxODNjZmIi
+        CiB9LAogImNyYzMyYyI6ICJJa0VqRGc9PSIsCiAiZXRhZyI6ICJDTkRIOE5x
+        L29zWUNFQUU9Igp9Cg==
+    http_version: 
+  recorded_at: Thu, 25 Jun 2015 04:23:23 GMT
+- request:
+    method: post
+    uri: https://www.googleapis.com/upload/storage/v1/b/optimus-prime-test/o?name=nested/newuser-small.json.gz&uploadType=resumable
+    body:
+      encoding: UTF-8
+      base64_string: |
+        eyJjb250ZW50VHlwZSI6ImFwcGxpY2F0aW9uL2pzb24ifQ==
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      X-Upload-Content-Type:
+      - application/json
+      X-Upload-Content-Length:
+      - '2686'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+      Authorization:
+      - Bearer ya29.mgG8MgUhJNWlo8U1plX2ELWki5wig4rVtGlL7guFb89_mg3Hpp5xL3ovNh64JrTdILGqh2FV7WUt4g
+      Cache-Control:
+      - no-store
+  response:
+    status:
+      code: 401
+      message: ''
+    headers:
+      Vary:
+      - Origin, X-Origin
+      Www-Authenticate:
+      - Bearer realm="https://accounts.google.com/", error=invalid_token
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '249'
+      Date:
+      - Thu, 25 Jun 2015 04:23:23 GMT
+      Server:
+      - UploadServer ("Built on Jun 15 2015 18:31:41 (1434418301)")
+      Alternate-Protocol:
+      - 443:quic,p=1
+    body:
+      encoding: UTF-8
+      base64_string: |
+        ewogImVycm9yIjogewogICJlcnJvcnMiOiBbCiAgIHsKICAgICJkb21haW4i
+        OiAiZ2xvYmFsIiwKICAgICJyZWFzb24iOiAiYXV0aEVycm9yIiwKICAgICJt
+        ZXNzYWdlIjogIkludmFsaWQgQ3JlZGVudGlhbHMiLAogICAgImxvY2F0aW9u
+        VHlwZSI6ICJoZWFkZXIiLAogICAgImxvY2F0aW9uIjogIkF1dGhvcml6YXRp
+        b24iCiAgIH0KICBdLAogICJjb2RlIjogNDAxLAogICJtZXNzYWdlIjogIklu
+        dmFsaWQgQ3JlZGVudGlhbHMiCiB9Cn0K
+    http_version: 
+  recorded_at: Thu, 25 Jun 2015 04:23:23 GMT
 recorded_with: VCR 2.9.3

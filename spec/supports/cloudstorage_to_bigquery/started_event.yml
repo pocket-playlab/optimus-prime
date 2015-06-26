@@ -5,7 +5,7 @@ http_interactions:
     uri: https://accounts.google.com/o/oauth2/token
     body:
       encoding: ASCII-8BIT
-      string: grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiIzNDUyNjIyNzA0NzYtZG5hdXZmYjRubjlnMGoybjRhdXNmcTRhMnNocmhvOWpAZGV2ZWxvcGVyLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE0MzQ5NjE0NjUsImlhdCI6MTQzNDk2MTM0NSwic2NvcGUiOiJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2JpZ3F1ZXJ5In0.DzqJDHWdu61BqjzPfruR9PzaIRtwebF9b99ZmmCThr7QihlLV8256r8BHPrElh07OtHPN6rc2ea9ZOo--c3G87ZmOTrRGMht7WhARkX5BY_XLyxY_MPQrRdDP3ER570ncVbO_NCTOLcTNmatKORvC4MJmZ895Qp45NtnD_h_p0I
+      string: grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiIzNDUyNjIyNzA0NzYtZG5hdXZmYjRubjlnMGoybjRhdXNmcTRhMnNocmhvOWpAZGV2ZWxvcGVyLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE0MzUwMzU4NTEsImlhdCI6MTQzNTAzNTczMSwic2NvcGUiOiJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2JpZ3F1ZXJ5In0.GcubJ_I9VW4ms-m9E-UOFqlwph0fW_QoOPOzIPytiBusOt0THBEqP6XDPj30C0TqvtD6ppfAKPeP3yibiyyQ44hjlEefxwgUTly88YZ6ILS8UxFlZb25wvabJJb2CTCBjUJJi47kjrXyLvk70nfn_IQ2FbG_Yx5i5EzTG8bcddY
     headers:
       Cache-Control:
       - no-store
@@ -31,12 +31,9 @@ http_interactions:
       Expires:
       - Fri, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:25 GMT
+      - Tue, 23 Jun 2015 05:03:12 GMT
       Content-Disposition:
       - attachment; filename="json.txt"; filename*=UTF-8''json.txt
-      Set-Cookie:
-      - NID=68=bkqWj1R5Wc_7cFtf1jt9l5bnSJ2-gAc3-sIXg_OlrYISQTPX3VXLowOS_J3d-zgsengFR_x6pkUI8geLzY_6Ji4JdEwCOFsubtHmtlK4Qo7KVGDP4BRcrQ5uAXpLMKpi;Domain=.google.com;Path=/;Expires=Tue,
-        22-Dec-2015 08:23:25 GMT;HttpOnly
       P3p:
       - CP="This is not a P3P policy! See http://www.google.com/support/accounts/bin/answer.py?hl=en&answer=151657
         for more info."
@@ -48,6 +45,9 @@ http_interactions:
       - 1; mode=block
       Server:
       - GSE
+      Set-Cookie:
+      - NID=68=VnCYqClKa_RnxypOnPoLwkChYA2_3fwt-G-9DTav-NOSpYwfyz0aCLVeriOcnYDKWF4I1Yw4My2Ma3AUaPiRXTEFbWMDQ1XV9RGBTIbnveqJCVGtzFktl56_XIKO54m5;Domain=.google.com;Path=/;Expires=Wed,
+        23-Dec-2015 05:03:12 GMT;HttpOnly
       Alternate-Protocol:
       - 443:quic,p=1
       Accept-Ranges:
@@ -60,12 +60,12 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-          "access_token" : "ya29.mgFYzjC0Yj3NCPEqS4kzE45hX7hIlIVaomygqGCAYUu3SgLHWLXhzQ9rZ7Z6_cmVqITxUJ9UbG86ug",
+          "access_token" : "ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A",
           "token_type" : "Bearer",
           "expires_in" : 3600
         }
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:26 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:12 GMT
 - request:
     method: get
     uri: https://www.googleapis.com/discovery/v1/apis/bigquery/v2/rest
@@ -89,9 +89,9 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Mon, 22 Jun 2015 08:28:26 GMT
+      - Tue, 23 Jun 2015 05:08:12 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:26 GMT
+      - Tue, 23 Jun 2015 05:03:12 GMT
       Etag:
       - '"ye6orv2F-1npMW3u9suM3a7C5Bo/dfyqUMrFd-mvh1ZHmWj5OJLDhTI"'
       Vary:
@@ -400,7 +400,7 @@ http_interactions:
         YrVuXt1toWpr9NxrwZ3gYXZn0Ta82z/jYWk4dwLknXhCegDwvqyYv4Zmtqp/
         jNsw/e4Z3EbtZB40e3tkXI+My3tkXK2+aBVXegL///3J/wOReobBLT8BAA==
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:26 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:12 GMT
 - request:
     method: get
     uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/datasets/json_load/tables/table1
@@ -417,7 +417,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.mgFYzjC0Yj3NCPEqS4kzE45hX7hIlIVaomygqGCAYUu3SgLHWLXhzQ9rZ7Z6_cmVqITxUJ9UbG86ug
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
       Cache-Control:
       - no-store
       Accept:
@@ -428,13 +428,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Mon, 22 Jun 2015 08:23:27 GMT
+      - Tue, 23 Jun 2015 05:03:13 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:27 GMT
+      - Tue, 23 Jun 2015 05:03:13 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/MTQzNDY4MTM1OTQ3Mw"'
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/MTQzNTAzNDY2NTYwNg"'
       Vary:
       - Origin
       - X-Origin
@@ -457,17 +457,17 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAJVSXU/CMBR9369Y6qtS5jamvEnwg8hQYZGoGFO3yyxs7VwL
-        Ew3/3a4bBKMx4WVpz7nnozf7Mkw0pyxCbRO90vh9AfnqQJLXBNChokCSuKQm
-        6JLZVxl3x+SaZReLwHG9+0534MePnQL7wd3noPvg+IFv3QR3tl9MkJZT7Zsl
-        R1lCVnHOFyxqzwRnLwknUUPHWHpQQDLtUzYvx9+kzEQb46IoGjHncQIko6IR
-        8hRvGuLlMc5yPoNQCvzDHkdEEgEK3uZgnSPwTpw+DmEKObAQVOiXYaqelWPv
-        d+lSZKLauuK39hWnHSumzjHMtX5Z+AYp2URMKSSRULcnddOQAhlJyw7oVuVB
-        3utqx9JzlWl8FAx7g0tUguvDP3RdWNIQ9lWdf8iciL1VS2ByX9GIpzDOOYsv
-        yuf/p1af53pxbJF2VhLKZSGr5TWbqEaHvNCgUyFhDkRSzgJahVmO7bi27Tp2
-        0/P0REKE9HlE1fKj3anWiWW7p45nV/9EXSc46/TPkbE2vgHJCckpGwMAAA==
+        H4sIAAAAAAAAAJVSXU/CMBR9369Y6ivSwTZIeIPgBxEWhUWCYkzdLrOytXMt
+        zGn473bdIBiNCS9Le849H73Zl2GiNWUh6pnohUbvG8iKM0leYkANRYEkUUkt
+        0RWzr1PuzskNSy83vuN27wdDbxI9DHI88e8+Pb//6Q0Xbc9f5F60RFpOtW8a
+        n6cxKaKMb1jYexOcPcechE0d09KDAuLVmLJ1Of4qZSp6GOd53ow4j2IgKRXN
+        gCd43xBv2zjN+BsEUuAf9jgkkghQ8CEH6xyBj+L0cQoryIAFoEK/DFP1rBxH
+        v0uXIhPV1hV/sK847VgxdY5h7vTLgldIyD5iRSEOhbo9qpuGFMhIUnZAtyoP
+        stFQO5aeRarxmT8deVeoBHeNP3RD2NIATlVdfMiMiJNVW2DyVNGMJzDPOIsu
+        y+f/p1afp3pxbJMMCgnlspBrtSwL1eiU5xpstSsoyIBIyplPq7SWYzuubbuO
+        bXW7eiImQk54SNX2w6Mp17KdTsftWJ3qp6j7+P3B+AIZO+Mbp4Z7JxwDAAA=
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:27 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:13 GMT
 - request:
     method: get
     uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/datasets/json_load/tables/table1
@@ -484,7 +484,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.mgFYzjC0Yj3NCPEqS4kzE45hX7hIlIVaomygqGCAYUu3SgLHWLXhzQ9rZ7Z6_cmVqITxUJ9UbG86ug
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
       Cache-Control:
       - no-store
       Accept:
@@ -495,13 +495,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Mon, 22 Jun 2015 08:23:27 GMT
+      - Tue, 23 Jun 2015 05:03:13 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:27 GMT
+      - Tue, 23 Jun 2015 05:03:13 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/MTQzNDY4MTM1OTQ3Mw"'
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/MTQzNTAzNDY2NTYwNg"'
       Vary:
       - Origin
       - X-Origin
@@ -524,23 +524,23 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAJVSXU/CMBR9369Y6qtS5jamvEnwg8hQYZGoGFO3yyxs7VwL
-        Ew3/3a4bBKMx4WVpz7nnozf7Mkw0pyxCbRO90vh9AfnqQJLXBNChokCSuKQm
-        6JLZVxl3x+SaZReLwHG9+0534MePnQL7wd3noPvg+IFv3QR3tl9MkJZT7Zsl
-        R1lCVnHOFyxqzwRnLwknUUPHWHpQQDLtUzYvx9+kzEQb46IoGjHncQIko6IR
-        8hRvGuLlMc5yPoNQCvzDHkdEEgEK3uZgnSPwTpw+DmEKObAQVOiXYaqelWPv
-        d+lSZKLauuK39hWnHSumzjHMtX5Z+AYp2URMKSSRULcnddOQAhlJyw7oVuVB
-        3utqx9JzlWl8FAx7g0tUguvDP3RdWNIQ9lWdf8iciL1VS2ByX9GIpzDOOYsv
-        yuf/p1af53pxbJF2VhLKZSGr5TWbqEaHvNCgUyFhDkRSzgJahVmO7bi27Tp2
-        0/P0REKE9HlE1fKj3anWiWW7p45nV/9EXSc46/TPkbE2vgHJCckpGwMAAA==
+        H4sIAAAAAAAAAJVSXU/CMBR9369Y6ivSwTZIeIPgBxEWhUWCYkzdLrOytXMt
+        zGn473bdIBiNCS9Le849H73Zl2GiNWUh6pnohUbvG8iKM0leYkANRYEkUUkt
+        0RWzr1PuzskNSy83vuN27wdDbxI9DHI88e8+Pb//6Q0Xbc9f5F60RFpOtW8a
+        n6cxKaKMb1jYexOcPcechE0d09KDAuLVmLJ1Of4qZSp6GOd53ow4j2IgKRXN
+        gCd43xBv2zjN+BsEUuAf9jgkkghQ8CEH6xyBj+L0cQoryIAFoEK/DFP1rBxH
+        v0uXIhPV1hV/sK847VgxdY5h7vTLgldIyD5iRSEOhbo9qpuGFMhIUnZAtyoP
+        stFQO5aeRarxmT8deVeoBHeNP3RD2NIATlVdfMiMiJNVW2DyVNGMJzDPOIsu
+        y+f/p1afp3pxbJMMCgnlspBrtSwL1eiU5xpstSsoyIBIyplPq7SWYzuubbuO
+        bXW7eiImQk54SNX2w6Mp17KdTsftWJ3qp6j7+P3B+AIZO+Mbp4Z7JxwDAAA=
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:27 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:14 GMT
 - request:
     method: post
     uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs?datasetId=json_load
     body:
       encoding: UTF-8
-      string: '{"configuration":{"load":{"sourceUris":["gs://optimus-prime-test/closeaccount-small.json.gz","gs://optimus-prime-test/newuser-small.json.gz"],"schema":{"fields":[{"name":"SomeWrongField","type":"STRING"},{"name":"Device","type":"STRING"},{"name":"Extras","type":"STRING"},{"name":"Event","type":"STRING"}]},"sourceFormat":"NEWLINE_DELIMITED_JSON","destinationTable":{"projectId":"pl-playground","datasetId":"json_load","tableId":"table1"}}}}'
+      string: '{"configuration":{"load":{"sourceUris":["gs://optimus-prime-test/closeaccount-small.json.gz","gs://optimus-prime-test/newuser-small.json.gz"],"schema":{"fields":[{"name":"PlayerID","type":"STRING"},{"name":"Device","type":"STRING"},{"name":"Extras","type":"STRING"},{"name":"Event","type":"STRING"}]},"sourceFormat":"NEWLINE_DELIMITED_JSON","destinationTable":{"projectId":"pl-playground","datasetId":"json_load","tableId":"table1"}}}}'
     headers:
       User-Agent:
       - |-
@@ -551,7 +551,7 @@ http_interactions:
       Accept-Encoding:
       - gzip
       Authorization:
-      - Bearer ya29.mgFYzjC0Yj3NCPEqS4kzE45hX7hIlIVaomygqGCAYUu3SgLHWLXhzQ9rZ7Z6_cmVqITxUJ9UbG86ug
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
       Cache-Control:
       - no-store
       Accept:
@@ -568,9 +568,9 @@ http_interactions:
       Expires:
       - Fri, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:30 GMT
+      - Tue, 23 Jun 2015 05:03:15 GMT
       Etag:
-      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/vYixMp4Bd5QhZKEC8cgvOBVi7y8"'
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/6FCY1sga2KSwCJUWunvXeNl3eHQ"'
       Vary:
       - Origin
       - X-Origin
@@ -593,22 +593,22 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAJ1TXXPaMBB851cw6itgMAYSnjoUJ6VJSEtI0tJkGCEfQkSW
-        HEk2IRn+eyXbJP2YNp08Wb69vb07rZ4qVXTHRIT6VbRg9D4FtX23lgtUswAY
-        TB1wg45F+2MiO9f4RCRH6TTo9K4Gw/EZnQ02XvaNPZwlwSDqfFnNTsIPB4Rm
-        54Mr1tse3KC8DsvLJ7yecLylSqYi6luN+aU/b87ICa9HHQ1X7PFyEg10PFK9
-        r0HO08CXp0zcOfbKmET3PW+z2TSolJQDTphuEBl7+769zPcSJddAjPZ+UfOs
-        mvb+R9LmTGAJCgQBK/tUqdrGi5qjP6dwlJxTYK8JVKo7p0GkWDKaKmyYFHsR
-        LnFUnu3gMlUELhXTNvTdhaqIuullYlic6nqiWAx1A9p4hEsNmBDbj6nrGHPe
-        WGspGvQx7+4fTAGbVIP6jeQ4t7WiDbKCGO+7qqIlAx69tFSGLSBw7LaFLmQM
-        10oKeuQyS32Lm21S4NPJaHyMivCu9pcqQ8iY3f4b2eGDUVi/mZ2BMK+R889t
-        5bkOiuw6mcjvc4oXHF5W9op3HBcbrKHMcJcwz61QosaVK7D82EI/yRY2OZIq
-        xsZljMPr09E4nA/D09HZaBoO558uzseOsSutpw02qd57zv3l430Ox8Nivucs
-        Ziciz5lEQTEdK9bUCtrBYbcVNA963eae5sw0t4Zh3KW0g47f9f1eM+h165HA
-        abZcBEIc0ubaFwFO9fI+wL5eqZU8XL+PIAMuE1ANaqu4+y8t7V44quwqPwC6
-        9/bWqQQAAA==
+        H4sIAAAAAAAAAJ1T21LbMBB9z1dk1FcSg2MTwlMnxIGQYCiEpheYjGKvFQVZ
+        MpLslDL590q2E3qZlg5Plvfs2bO7OnpuNNED5TE6bqIFJY85yKd3K7FAewYA
+        jYkF7tAp75xlwp/hMc+G+dTzux/7g/CCfOmvncPhyecDRbA7vlmfnN/Ocl58
+        gpB14OzDHSrr0LJ8xloZw09EipzHx0ZjHheXxWWfBiTxxyKI2OP4aELzAPwr
+        VfIUsGRC+YNlL7XO1LHjrNfrNhGCMMAZVe1IpM62b6dwnUyKFURaOb+oOUZN
+        Of8jaXKuIQEJPAIj+9xomsarmqM/p7CUklNhrwk0mhurEQmeUJJLrKngWxEm
+        cFyfzeAilxHcSqpM6KsNNRGx04tM0zRXrUzSFFoalHYiJhTgKDL96JZKMWPt
+        lRK8Tb6X3f2DyWGdK5C/kSznfq9qI1pCirddNVFCgcUvLdVhA3Cc2m2hK7MZ
+        kKNBrWwQ/ZSVyM30ehSeoiq82fsLfwAFNXt/Izv4piVWb2YXwPVr5PJz39jV
+        QbFZJOXlTU7xgsHLsl5xjeVijRXUGXb989IENaptuQorjwfoJ9nKIEMhU6xt
+        RhjMJqMwmA+CyehiNA0G8/Oby9AyNrXplMY6V1u32b/qxoJwUM23y6JmomiX
+        GUmopqPVmg68jr/f8bs9z3d7W5q10dxYhTKb0jHQoet2973uYSvmOC+Shcd5
+        j+yvXO7hXCWPHnbVUi5Fb/U+hgKYyEC2iali7782s33bqLFp/ABVoppBowQA
+        AA==
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:30 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:15 GMT
 - request:
     method: get
     uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/datasets/json_load/tables/table2
@@ -625,7 +625,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.mgFYzjC0Yj3NCPEqS4kzE45hX7hIlIVaomygqGCAYUu3SgLHWLXhzQ9rZ7Z6_cmVqITxUJ9UbG86ug
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
       Cache-Control:
       - no-store
       Accept:
@@ -636,13 +636,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Mon, 22 Jun 2015 08:23:31 GMT
+      - Tue, 23 Jun 2015 05:03:16 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:31 GMT
+      - Tue, 23 Jun 2015 05:03:16 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/MTQzNDY4MjIwNzQxOQ"'
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/MTQzNTAzNDQxNDM4Mg"'
       Vary:
       - Origin
       - X-Origin
@@ -665,17 +665,17 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAJVSW0/CMBh9369Y6itSGBsobxIuEgUFF4m3mLJ9jOLWzrUw
-        B+G/23WTaDQmvCztOd+59Mt2honeKPNR20RzGryvIclOJJmHgCqKAkmCnHpG
-        A9a4jLkzI1cs7q9d22ndd7rjUfDYSfHInWzH3Qd7tBqm4+3k42byjLScat84
-        PI1DkgUJXzO/vRKcvYac+FUdY+lBAeHimrK3fHwpZSzaGKdpWg04D0IgMRVV
-        j0f4qyHeWDhO+Ao8KfAPe+wTSQQo+JCDdY7A3+L0cQoLSIB5oEJ3hql6Fo7D
-        36VzkYlK64I/2BecdiyYMscw9/pl3hIi8hWxoBD6Qt2e1E1DCmQkyjugW5UH
-        ybCrHXPPLNb4nTsdjgcoB/eVP3Rd2FAPjlX1PmRCxNGqDTB5rOiORzBLOAv6
-        +fP/U6vPS7k4to46mYR8WciqNVs1VKJTnmrQKRAvASIpZy4twup2w3YaDce2
-        zpt1PRESIUfcp2r5/vep5pll1Vp2/bz4J8o67kXnuoeMvfEJD9KokBsDAAA=
+        H4sIAAAAAAAAAJVSW2+CMBh951eQ7tVZJ+CcbzPsYiZkOjKTXbJU+GRVaBmt
+        oi7+95WCZsuWJb4APec7l37h0zDRgrII9Uw0pfHHEvLNiSTTBFBDUSBJXFIv
+        6IZZtxl3JuSOZdfLwHbOH/uu78VP/QJ7wWjrB5db3x2tfdezvfgFaTnVvlly
+        miVkE+d8yaLeXHD2lnASNXVMWw8KSGZDyhbl+LuUmehhXBRFM+Y8ToBkVDRD
+        nuJ9Q7xq4yzncwilwD/scUQkEaDgQw7WOQJ/i9OfY5hBDiwEFfppmKpn5Tj4
+        XboUmai2rviDfcVpx4qpcwxzp28WvkNK9hEzCkkk1OlZnTSkQEbSsgO6V3mQ
+        D1ztWHpuMo0/BOOBf4NKcNf4Q+fCioZwrOpqLXMijlatgMljRQ88hUnOWXxd
+        Xv8/tXq81otjy7S/kVAuC7XtbquFanTMCw12KiTMgUjKWUCrsDPbsh3Lcuz2
+        RedMTyRESI9HVC0/+jbltCzbVu9u/U/UdYLL/vAKGTvjC4hn+ZEbAwAA
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:31 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:16 GMT
 - request:
     method: get
     uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/datasets/json_load/tables/table2
@@ -692,7 +692,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.mgFYzjC0Yj3NCPEqS4kzE45hX7hIlIVaomygqGCAYUu3SgLHWLXhzQ9rZ7Z6_cmVqITxUJ9UbG86ug
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
       Cache-Control:
       - no-store
       Accept:
@@ -703,13 +703,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Mon, 22 Jun 2015 08:23:32 GMT
+      - Tue, 23 Jun 2015 05:03:17 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:32 GMT
+      - Tue, 23 Jun 2015 05:03:17 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/MTQzNDY4MjIwNzQxOQ"'
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/MTQzNTAzNDQxNDM4Mg"'
       Vary:
       - Origin
       - X-Origin
@@ -732,23 +732,23 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAJVSW0/CMBh9369Y6itSGBsobxIuEgUFF4m3mLJ9jOLWzrUw
-        B+G/23WTaDQmvCztOd+59Mt2honeKPNR20RzGryvIclOJJmHgCqKAkmCnHpG
-        A9a4jLkzI1cs7q9d22ndd7rjUfDYSfHInWzH3Qd7tBqm4+3k42byjLScat84
-        PI1DkgUJXzO/vRKcvYac+FUdY+lBAeHimrK3fHwpZSzaGKdpWg04D0IgMRVV
-        j0f4qyHeWDhO+Ao8KfAPe+wTSQQo+JCDdY7A3+L0cQoLSIB5oEJ3hql6Fo7D
-        36VzkYlK64I/2BecdiyYMscw9/pl3hIi8hWxoBD6Qt2e1E1DCmQkyjugW5UH
-        ybCrHXPPLNb4nTsdjgcoB/eVP3Rd2FAPjlX1PmRCxNGqDTB5rOiORzBLOAv6
-        +fP/U6vPS7k4to46mYR8WciqNVs1VKJTnmrQKRAvASIpZy4twup2w3YaDce2
-        zpt1PRESIUfcp2r5/vep5pll1Vp2/bz4J8o67kXnuoeMvfEJD9KokBsDAAA=
+        H4sIAAAAAAAAAJVSW2+CMBh951eQ7tVZJ+CcbzPsYiZkOjKTXbJU+GRVaBmt
+        oi7+95WCZsuWJb4APec7l37h0zDRgrII9Uw0pfHHEvLNiSTTBFBDUSBJXFIv
+        6IZZtxl3JuSOZdfLwHbOH/uu78VP/QJ7wWjrB5db3x2tfdezvfgFaTnVvlly
+        miVkE+d8yaLeXHD2lnASNXVMWw8KSGZDyhbl+LuUmehhXBRFM+Y8ToBkVDRD
+        nuJ9Q7xq4yzncwilwD/scUQkEaDgQw7WOQJ/i9OfY5hBDiwEFfppmKpn5Tj4
+        XboUmai2rviDfcVpx4qpcwxzp28WvkNK9hEzCkkk1OlZnTSkQEbSsgO6V3mQ
+        D1ztWHpuMo0/BOOBf4NKcNf4Q+fCioZwrOpqLXMijlatgMljRQ88hUnOWXxd
+        Xv8/tXq81otjy7S/kVAuC7XtbquFanTMCw12KiTMgUjKWUCrsDPbsh3Lcuz2
+        RedMTyRESI9HVC0/+jbltCzbVu9u/U/UdYLL/vAKGTvjC4hn+ZEbAwAA
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:32 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:17 GMT
 - request:
     method: post
     uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs?datasetId=json_load
     body:
       encoding: UTF-8
-      string: '{"configuration":{"load":{"sourceUris":["gs://optimus-prime-test/login-small.json.gz"],"schema":{"fields":[{"name":"SomeWrongField","type":"STRING"},{"name":"Device","type":"STRING"},{"name":"Extras","type":"STRING"},{"name":"Event","type":"STRING"}]},"sourceFormat":"NEWLINE_DELIMITED_JSON","destinationTable":{"projectId":"pl-playground","datasetId":"json_load","tableId":"table2"}}}}'
+      string: '{"configuration":{"load":{"sourceUris":["gs://optimus-prime-test/login-small.json.gz"],"schema":{"fields":[{"name":"PlayerID","type":"STRING"},{"name":"Device","type":"STRING"},{"name":"Extras","type":"STRING"},{"name":"Event","type":"STRING"}]},"sourceFormat":"NEWLINE_DELIMITED_JSON","destinationTable":{"projectId":"pl-playground","datasetId":"json_load","tableId":"table2"}}}}'
     headers:
       User-Agent:
       - |-
@@ -759,7 +759,7 @@ http_interactions:
       Accept-Encoding:
       - gzip
       Authorization:
-      - Bearer ya29.mgFYzjC0Yj3NCPEqS4kzE45hX7hIlIVaomygqGCAYUu3SgLHWLXhzQ9rZ7Z6_cmVqITxUJ9UbG86ug
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
       Cache-Control:
       - no-store
       Accept:
@@ -776,9 +776,9 @@ http_interactions:
       Expires:
       - Fri, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:34 GMT
+      - Tue, 23 Jun 2015 05:03:18 GMT
       Etag:
-      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/AXGaV7bwi9Qb8Z-p5dqynZ6lmNE"'
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/FKVVeLI3jDm-nNqgjl3tb-xMc1E"'
       Vary:
       - Origin
       - X-Origin
@@ -801,24 +801,24 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAJ1TwXLaMBS88xUe9Yox2AYCpybFpCTEbRMaWpoMI9uyEJEl
-        I8kQmuHfK9lA2ul06ORk++3bXe178kvNAk+EJaBvgYjgVYHE9t2SR6CuAaQg
-        NsADuGTex5y3p/Ca5cNi4re79xeD8AbPLjbO+bdLeN+NNqT3JTqb2Xk7WW3Z
-        rEOzMHgApQ4p5XNq5xRuseAFS/raY37d/HAe+sH3aYjdMD5b8Wcy9q4WGYzi
-        kicRTceEPRn2Qqlc9h1ns9k0MOeYIpgT2Yh55hzO7axdJxd8iWIlnT/cHO0m
-        nf+x1D23KEUCsRhp25eapQ9eaY7+TmEoJafCThnUrJ3xiDlLCS4EVISzgwnl
-        MNm/6+C8EDH6KojUpR+mZAFs0vNckayQdi5IhmyFpHIox4TZMoOUNpaSswb+
-        CQzjsV5JxQuUwYOyBVKCaPIquy9rgMHMJAZ3PENTwRkems4yYYmrbV7hk9tR
-        eAmq8q7+D5UBWhM9wTeyg2cloHwze42YOkUuH4+1ow5I9DAJK3cygRFFryM7
-        sX/DhQpKtO8wS5iX69yjyshVWPnqgt9sq1UPucigMh1hMB2PwmA+CMajm9Ek
-        GMyv7j6FhrHbXx+poCrk4d6YrzLe5yAcVPmOXUQnio+dsUBVOlKNqeV7fq/T
-        8lteq+kdaIVEYq4vDKGmxfPbbsd1u02/27ETBot1GvmM9XBz6TIfFjJd+dCV
-        C7HgveX7BK0R5TkSDaxVzP5hHOsxKfOXgtqu9gslR+8nbQQAAA==
+        H4sIAAAAAAAAAJ1TXU/bMBR976+ovFfSQD4o5WlDSSGjhA0KSAxUucmt6+DY
+        qe20dKj/fXbSwqZpYuIpyT33nONzr/PS6aInynN03EVTShY1yPWnQkzRngFA
+        Y2KBB3TK/bNKhHf4nFfDehyE/duTKL0g9ycrd3h+ewujxC+i0uHpghTM11Pn
+        +SI7iB9Qo0Mb+Yo5FcNrIkXN82PjMXlW9VE490fD9U0Gp+uz0ferev3l7l4/
+        iYangM1GlD9Z9lzrSh277mq16hEhCANcUdXLROnuzu0uPbeSooBMK/cPN9e4
+        Kfd/LE3PFcxAAs/A2L50uubgrWbydwpLaTgt9p5Bp7uxHpngM0pqiTUVfGfC
+        BM637ya4qGUGN5IqU/phS11EbHpRaVrWyqkkLcHRoLTLBKHcUSVmrFcowXvk
+        J7KMx71WKptDiXfKXTSjwPI32W3ZAByXNjH6ZtKBTKImW4PoddUg1+OrJD1F
+        bXmz9w9+BEtqZvdBdvysJVYfZi+B6/fIzeOx86qDcjNGypttjPGUwduw3tm8
+        5WKNFWw77PgnzSK3qLZyLda8eug323bJQyFLrG1HGt+NkjSeRPEouUjGcTT5
+        en2ZWsZme3GUxrpWuxtjv9qNxWnU5nvtoiZR9tqZSWjT0XZMB4Ef7vthf9A/
+        Cgc7Wq1ATsxVocy2+EHoHXpefz/oHzo5x/VyNg04H5D9wuMBrtVsEWBPzeVc
+        DIrPOSyBiQpkjxgVu3+cZWZM2v6fqLPp/AKpNvE4ZwQAAA==
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:34 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:18 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_U2_0ZcKl-d5seVizURdBsmIr7X4?datasetId=json_load
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_dvOvOBiEgf5KoEclqK8LiuEe5Ps?datasetId=json_load
     body:
       encoding: UTF-8
       string: ''
@@ -832,7 +832,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.mgFYzjC0Yj3NCPEqS4kzE45hX7hIlIVaomygqGCAYUu3SgLHWLXhzQ9rZ7Z6_cmVqITxUJ9UbG86ug
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
       Cache-Control:
       - no-store
       Accept:
@@ -843,13 +843,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Mon, 22 Jun 2015 08:23:34 GMT
+      - Tue, 23 Jun 2015 05:03:19 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:34 GMT
+      - Tue, 23 Jun 2015 05:03:19 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/vYixMp4Bd5QhZKEC8cgvOBVi7y8"'
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/6FCY1sga2KSwCJUWunvXeNl3eHQ"'
       Vary:
       - Origin
       - X-Origin
@@ -872,25 +872,25 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAJ1TXXPaMBB851cw6itgMAYSnjoUJ6VJSEtI0tJkGCEfQkSW
-        HEk2IRn+eyXbJP2YNp08Wb69vb07rZ4qVXTHRIT6VbRg9D4FtX23lgtUswAY
-        TB1wg45F+2MiO9f4RCRH6TTo9K4Gw/EZnQ02XvaNPZwlwSDqfFnNTsIPB4Rm
-        54Mr1tse3KC8DsvLJ7yecLylSqYi6luN+aU/b87ICa9HHQ1X7PFyEg10PFK9
-        r0HO08CXp0zcOfbKmET3PW+z2TSolJQDTphuEBl7+769zPcSJddAjPZ+UfOs
-        mvb+R9LmTGAJCgQBK/tUqdrGi5qjP6dwlJxTYK8JVKo7p0GkWDKaKmyYFHsR
-        LnFUnu3gMlUELhXTNvTdhaqIuullYlic6nqiWAx1A9p4hEsNmBDbj6nrGHPe
-        WGspGvQx7+4fTAGbVIP6jeQ4t7WiDbKCGO+7qqIlAx69tFSGLSBw7LaFLmQM
-        10oKeuQyS32Lm21S4NPJaHyMivCu9pcqQ8iY3f4b2eGDUVi/mZ2BMK+R889t
-        5bkOiuw6mcjvc4oXHF5W9op3HBcbrKHMcJcwz61QosaVK7D82EI/yRY2OZIq
-        xsZljMPr09E4nA/D09HZaBoO558uzseOsSutpw02qd57zv3l430Ox8Nivucs
-        Ziciz5lEQTEdK9bUCtrBYbcVNA963eae5sw0t4Zh3KW0g47f9f1eM+h165HA
-        abZcBEIc0ubaFwFO9fI+wL5eqZU8XL+PIAMuE1ANaqu4+y8t7V44quwqPwC6
-        9/bWqQQAAA==
+        H4sIAAAAAAAAAJ1T21LbMBB9z1dk1FcSg2MTwlMnxIGQYCiEpheYjGKvFQVZ
+        MpLslDL590q2E3qZlg5Plvfs2bO7OnpuNNED5TE6bqIFJY85yKd3K7FAewYA
+        jYkF7tAp75xlwp/hMc+G+dTzux/7g/CCfOmvncPhyecDRbA7vlmfnN/Ocl58
+        gpB14OzDHSrr0LJ8xloZw09EipzHx0ZjHheXxWWfBiTxxyKI2OP4aELzAPwr
+        VfIUsGRC+YNlL7XO1LHjrNfrNhGCMMAZVe1IpM62b6dwnUyKFURaOb+oOUZN
+        Of8jaXKuIQEJPAIj+9xomsarmqM/p7CUklNhrwk0mhurEQmeUJJLrKngWxEm
+        cFyfzeAilxHcSqpM6KsNNRGx04tM0zRXrUzSFFoalHYiJhTgKDL96JZKMWPt
+        lRK8Tb6X3f2DyWGdK5C/kSznfq9qI1pCirddNVFCgcUvLdVhA3Cc2m2hK7MZ
+        kKNBrWwQ/ZSVyM30ehSeoiq82fsLfwAFNXt/Izv4piVWb2YXwPVr5PJz39jV
+        QbFZJOXlTU7xgsHLsl5xjeVijRXUGXb989IENaptuQorjwfoJ9nKIEMhU6xt
+        RhjMJqMwmA+CyehiNA0G8/Oby9AyNrXplMY6V1u32b/qxoJwUM23y6JmomiX
+        GUmopqPVmg68jr/f8bs9z3d7W5q10dxYhTKb0jHQoet2973uYSvmOC+Shcd5
+        j+yvXO7hXCWPHnbVUi5Fb/U+hgKYyEC2iali7782s33bqLFp/ABVoppBowQA
+        AA==
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:34 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:19 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_K0CAN4EYWNg2Nc8qoxiL3Jhmabc?datasetId=json_load
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_xsu85h3LFyUceGyHLQRuyAWZtko?datasetId=json_load
     body:
       encoding: UTF-8
       string: ''
@@ -904,7 +904,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.mgFYzjC0Yj3NCPEqS4kzE45hX7hIlIVaomygqGCAYUu3SgLHWLXhzQ9rZ7Z6_cmVqITxUJ9UbG86ug
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
       Cache-Control:
       - no-store
       Accept:
@@ -915,13 +915,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Mon, 22 Jun 2015 08:23:35 GMT
+      - Tue, 23 Jun 2015 05:03:19 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:35 GMT
+      - Tue, 23 Jun 2015 05:03:19 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/AXGaV7bwi9Qb8Z-p5dqynZ6lmNE"'
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/FKVVeLI3jDm-nNqgjl3tb-xMc1E"'
       Vary:
       - Origin
       - X-Origin
@@ -944,24 +944,24 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAJ1TwXLaMBS88xUe9Yox2AYCpybFpCTEbRMaWpoMI9uyEJEl
-        I8kQmuHfK9lA2ul06ORk++3bXe178kvNAk+EJaBvgYjgVYHE9t2SR6CuAaQg
-        NsADuGTex5y3p/Ca5cNi4re79xeD8AbPLjbO+bdLeN+NNqT3JTqb2Xk7WW3Z
-        rEOzMHgApQ4p5XNq5xRuseAFS/raY37d/HAe+sH3aYjdMD5b8Wcy9q4WGYzi
-        kicRTceEPRn2Qqlc9h1ns9k0MOeYIpgT2Yh55hzO7axdJxd8iWIlnT/cHO0m
-        nf+x1D23KEUCsRhp25eapQ9eaY7+TmEoJafCThnUrJ3xiDlLCS4EVISzgwnl
-        MNm/6+C8EDH6KojUpR+mZAFs0vNckayQdi5IhmyFpHIox4TZMoOUNpaSswb+
-        CQzjsV5JxQuUwYOyBVKCaPIquy9rgMHMJAZ3PENTwRkems4yYYmrbV7hk9tR
-        eAmq8q7+D5UBWhM9wTeyg2cloHwze42YOkUuH4+1ow5I9DAJK3cygRFFryM7
-        sX/DhQpKtO8wS5iX69yjyshVWPnqgt9sq1UPucigMh1hMB2PwmA+CMajm9Ek
-        GMyv7j6FhrHbXx+poCrk4d6YrzLe5yAcVPmOXUQnio+dsUBVOlKNqeV7fq/T
-        8lteq+kdaIVEYq4vDKGmxfPbbsd1u02/27ETBot1GvmM9XBz6TIfFjJd+dCV
-        C7HgveX7BK0R5TkSDaxVzP5hHOsxKfOXgtqu9gslR+8nbQQAAA==
+        H4sIAAAAAAAAAJ1TXU/bMBR976+ovFfSQD4o5WlDSSGjhA0KSAxUucmt6+DY
+        qe20dKj/fXbSwqZpYuIpyT33nONzr/PS6aInynN03EVTShY1yPWnQkzRngFA
+        Y2KBB3TK/bNKhHf4nFfDehyE/duTKL0g9ycrd3h+ewujxC+i0uHpghTM11Pn
+        +SI7iB9Qo0Mb+Yo5FcNrIkXN82PjMXlW9VE490fD9U0Gp+uz0ferev3l7l4/
+        iYangM1GlD9Z9lzrSh277mq16hEhCANcUdXLROnuzu0uPbeSooBMK/cPN9e4
+        Kfd/LE3PFcxAAs/A2L50uubgrWbydwpLaTgt9p5Bp7uxHpngM0pqiTUVfGfC
+        BM637ya4qGUGN5IqU/phS11EbHpRaVrWyqkkLcHRoLTLBKHcUSVmrFcowXvk
+        J7KMx71WKptDiXfKXTSjwPI32W3ZAByXNjH6ZtKBTKImW4PoddUg1+OrJD1F
+        bXmz9w9+BEtqZvdBdvysJVYfZi+B6/fIzeOx86qDcjNGypttjPGUwduw3tm8
+        5WKNFWw77PgnzSK3qLZyLda8eug323bJQyFLrG1HGt+NkjSeRPEouUjGcTT5
+        en2ZWsZme3GUxrpWuxtjv9qNxWnU5nvtoiZR9tqZSWjT0XZMB4Ef7vthf9A/
+        Cgc7Wq1ATsxVocy2+EHoHXpefz/oHzo5x/VyNg04H5D9wuMBrtVsEWBPzeVc
+        DIrPOSyBiQpkjxgVu3+cZWZM2v6fqLPp/AKpNvE4ZwQAAA==
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:35 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:19 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_U2_0ZcKl-d5seVizURdBsmIr7X4?datasetId=json_load
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_dvOvOBiEgf5KoEclqK8LiuEe5Ps?datasetId=json_load
     body:
       encoding: UTF-8
       string: ''
@@ -975,7 +975,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.mgFYzjC0Yj3NCPEqS4kzE45hX7hIlIVaomygqGCAYUu3SgLHWLXhzQ9rZ7Z6_cmVqITxUJ9UbG86ug
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
       Cache-Control:
       - no-store
       Accept:
@@ -986,13 +986,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Mon, 22 Jun 2015 08:23:46 GMT
+      - Tue, 23 Jun 2015 05:03:30 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:46 GMT
+      - Tue, 23 Jun 2015 05:03:30 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/J3mv-yLklIoc87zAA5QLgafhh1o"'
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/banq3iJxSiyXMy40iliMW1CGucA"'
       Vary:
       - Origin
       - X-Origin
@@ -1015,25 +1015,24 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAJ1TXVPiMBR951cw2VdLoRRQn1YGdKuIuwq64+owIb0NwTSp
-        SQqLDv99k7bofsyuOz41veeee+69OXmu1dEDEzE6rKM5o485qM2HpZyjPQuA
-        wdQBd+hEtD9lsnODz0R2nE/CTu+6Pxif09v+2j9tpytvM3rgkST7vaejo86X
-        EcXJYtGSd6iow4ryGfcyjjdUyVzEh1ZjNg1mzVtyxr24o+GaPU0v475OI9X7
-        GhY8DTwZMfHg2AtjMn3o++v1ukGlpBxwxnSDyNTf9e2vAj9TcgnEaP8XNd+q
-        af9/JG3OJSSgQBCwss+1um28rBn9OYWjFJwSe0ugVt86DSJFwmiusGFS7ES4
-        xHF1toPLXBGYKqZt6JsL1RF108vMsDTXXqZYCp4BbXzCpQZMiO3HeDrFnDeW
-        WooGfSq6+wdTwDrXoH4jOc79XtkGWUCKd13VUcKAx68tVWELCJy6baErmcKN
-        koIeu8xK3+Jmk5X45DIan6AyvN37S5UBrJjd/jvZw+9GYf1u9gqEeYtcfO5r
-        L3VQbNfJRHGfEzzn8LqyN7zjuNhgDVWGu4RZYYUKNa5ciRXHFvpJtrTJsVQp
-        Ni5jPLwZRePhbDAcRefRZDiYnV5djB1jW1lPG2xyvfOc+yvG+zwcD8r5XrKY
-        nYi8ZBIF5XSsXFMrbIcH3VbY3O91mzuaM9PMGoZxl9IOO0E3CHrNsNf1YoHz
-        VTIPhTigzWUgQpzr5DHEgV6ohTxYfoxhBVxmoBrUVnH3X1navXBU29Z+AAWF
-        +nypBAAA
+        H4sIAAAAAAAAAJ1T23LaMBB95ysY9RUwATsUntoUhxJumYQ2nTYZRshrIyJL
+        RpJNaIZ/r2Qb0su0dPJkec+ePburo+dKFT1SHqBeFS1ptElB7t6sxRLVDAAa
+        Rxa4RwPe/pgI7w6PeHKZzl2v8/miP51EXy+2zhLzTZtePd3S3ZfJzm1SRid3
+        Zx8GKXl/j/I6NC+fsHrC8C6SIuVBz2gsgmyWzS6oH4XeSPiEbUZvxzT1wbtW
+        OU8BC8eUP1r2SutE9Rxnu902IiEiBjihqkFE7Bz6drKWk0ixBqKV84uaY9SU
+        8z+SJucGQpDACRjZ50rVNF7UHP45haXknAI7JVCp7q0GETykUSqxpoIfRJjA
+        QXk2g4tUEvgkqTKhbzZURZGdXiSaxqmqJ5LGUNegtEOYUIAJMf3ouooxY421
+        ErwRfc+7+weTwzZVIH8jWc5DrWiDrCDGh66qKKTAgpeWyrABOI7tttC12QzI
+        Yb9UNojeJTlyO78ZTgeoCO9rf+H3IaNm769k+09aYvVqdgZcnyLnn4fKsQ4K
+        zCIpz29yjpcMXpZ1wjWWizVWUGbY9S9yE5SotuUKLD+eoZ9kC4NcChljbTOm
+        /t14OPUXfX88nAznfn9xdTubWsa+NJ3SWKfq4Db7V9yYP+0X8x2zqJmIHDOJ
+        hGI6WqzpzG17zbbX6bpeq3ugWRstjFUosyltA523Wp2m2zmvBxynWbh0Oe9G
+        zXWLuzhV4cbFLbWSK9FdvwsgAyYSkI3IVLH3X5rZvm1U2Vd+ABhDTnejBAAA
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:46 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:30 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_K0CAN4EYWNg2Nc8qoxiL3Jhmabc?datasetId=json_load
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_xsu85h3LFyUceGyHLQRuyAWZtko?datasetId=json_load
     body:
       encoding: UTF-8
       string: ''
@@ -1047,7 +1046,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.mgFYzjC0Yj3NCPEqS4kzE45hX7hIlIVaomygqGCAYUu3SgLHWLXhzQ9rZ7Z6_cmVqITxUJ9UbG86ug
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
       Cache-Control:
       - no-store
       Accept:
@@ -1058,13 +1057,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Mon, 22 Jun 2015 08:23:46 GMT
+      - Tue, 23 Jun 2015 05:03:30 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:46 GMT
+      - Tue, 23 Jun 2015 05:03:30 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/KW3btTiLO_OSwb_LlpxqfqKgA3w"'
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/VA6kh_oGqS6WpMcyhvHzZAczx6w"'
       Vary:
       - Origin
       - X-Origin
@@ -1087,24 +1086,24 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAJ1T0W7aMBR95yuQ9woEklAGT2tH6Cg0TIUNbWsVOYljTB07
-        2A6BVfz77ATopmli6lOSe+45x+de56VWB8+ExWBQByHBmxyJ/bs1D0FDA0hB
-        bIBHcMucTxnvLuGEZaN84XZ7X2+G/j3+flNYk6UTqgWZzoLZvAiDKc12m2Qz
-        wddO8QhKHVLKZ7SZUbjHgucsHmiPYNL+eO273relj20/er/hOzJ17lYpDKOS
-        JxFNpoQ9G/ZKqUwOLKsoihbmHFMEMyJbEU+t07mtrW1lgq9RpKT1h5ul3aT1
-        P5a65wElSCAWIW37Uqvrg1ea479TGErJqbBLBrX6wXhEnCUE5wIqwtnJhHIY
-        H991cJ6LCH0RROrSD1OqA2zS80yRNJfNTJAUNRWSyqIcE9aUKaS0tZactfBP
-        YBhPjUoqWqEUnpTrICGIxq+yx7IGGExNYjDnKVoKzvDIdJYJS1ztswpfPIz9
-        W1CVD41/qAzRlugJvpHt7ZSA8s3sLWLqErl8PNXOOiDWwySs3MkChhS9juzC
-        /g0XKijRscMsISjXeUSVkauw8tUGv9lWqx5xkUJlOnxvOR37XjD0puP78cIb
-        BnfzmW8Yh+P1kQqqXJ7ujfkq4332/GGV79xFdKLo3BkJVKUj1Zg6ruP2rzpu
-        x+m0nRMtl0gE+sIQaloct2tf2Xav7faumjGD+TYJXcb6uL22mQtzmWxcaMuV
-        WPH++kOMtojyDIkW1ipm/zCK9JiU+UtB7VD7BZSeGiVtBAAA
+        H4sIAAAAAAAAAJ1TXW/aMBR951cg7xVIFxIofRoVH2WDdCu0SKwVMs4lMSR2
+        sB0grfjvsxOgm6aJqU9J7rnnHJ97nbdSGa0p89FNGS1osElBZJ9WfIEqGgCF
+        AwM8oz6r3yXcneJvLOmlE8dtPt12vFEwu91ZT+3GOpzz/mbcmCYjkoXbu9dZ
+        m7zuG7tnlOvQXD6JqkmEs0DwlPk32mO+l+m1G9aHveyRQD+7G/54SLP2dKbW
+        POdJiJZDytaGHSqVyBvL2u12tYDzIAKcUFkjPLZO57a2tpUIvgKipPWHm6Xd
+        pPU/lrrnAZYggBHQtm+lsj54oTn4O4Wh5JwCu2RQKh+MB+FsSYNUYEU5O5lE
+        HPvHdx2cp4LAo6BSl36aUhkFJj1PFI1TWU0EjaGqQCor4gFlVRnjKKqtJGe1
+        4BUZxkulkCIhxPikXEZLCpH/Lnssa4Dh2CRG33U6EINOni1HVJbkyHjyMPD6
+        qCgfKv/gd2BL9ew+yO7ulcDyw+wtMHWJnD9eSmcd5OsxUpZvY4IXEbwP68Lm
+        DRcrLOHYYcY/zxd5RJWRK7D81Ua/2RZL7nERY2U6vO50OPC68053OBgNJt3O
+        /Ov43jOMw/HiSIVVKk83xnwVG+t6nSLfuYvqROTcSQQU6Wgxps9O3b2qu81W
+        89ptnWipBDHXV4VGpqXuuHbDtptXTrNR9RlOt8uFw1gruFrZzMGpXG4cbMtQ
+        hLy1+uLDFiKegKgFWsXsHxOix6TM/4lKh9Iv/4mZCWcEAAA=
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:46 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:30 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_U2_0ZcKl-d5seVizURdBsmIr7X4?datasetId=json_load
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_dvOvOBiEgf5KoEclqK8LiuEe5Ps?datasetId=json_load
     body:
       encoding: UTF-8
       string: ''
@@ -1118,7 +1117,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.mgFYzjC0Yj3NCPEqS4kzE45hX7hIlIVaomygqGCAYUu3SgLHWLXhzQ9rZ7Z6_cmVqITxUJ9UbG86ug
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
       Cache-Control:
       - no-store
       Accept:
@@ -1129,13 +1128,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Mon, 22 Jun 2015 08:23:57 GMT
+      - Tue, 23 Jun 2015 05:03:41 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:57 GMT
+      - Tue, 23 Jun 2015 05:03:41 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/hrqz-wDJ4v191lkIultaDE85ERI"'
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/6pHapD3LPQg06riNfFJN5q1wYNA"'
       Vary:
       - Origin
       - X-Origin
@@ -1158,29 +1157,25 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        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
+        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
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:57 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:41 GMT
 - request:
     method: get
-    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_K0CAN4EYWNg2Nc8qoxiL3Jhmabc?datasetId=json_load
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_xsu85h3LFyUceGyHLQRuyAWZtko?datasetId=json_load
     body:
       encoding: UTF-8
       string: ''
@@ -1194,7 +1189,7 @@ http_interactions:
       Content-Type:
       - ''
       Authorization:
-      - Bearer ya29.mgFYzjC0Yj3NCPEqS4kzE45hX7hIlIVaomygqGCAYUu3SgLHWLXhzQ9rZ7Z6_cmVqITxUJ9UbG86ug
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
       Cache-Control:
       - no-store
       Accept:
@@ -1205,13 +1200,13 @@ http_interactions:
       message: OK
     headers:
       Expires:
-      - Mon, 22 Jun 2015 08:23:58 GMT
+      - Tue, 23 Jun 2015 05:03:42 GMT
       Date:
-      - Mon, 22 Jun 2015 08:23:58 GMT
+      - Tue, 23 Jun 2015 05:03:42 GMT
       Cache-Control:
       - private, max-age=0, must-revalidate, no-transform
       Etag:
-      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/N4_YrTYoLzFTc66oeMAAnnxkP7I"'
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/6aPLrJUJoJgouWPRQsU1YlYuo28"'
       Vary:
       - Origin
       - X-Origin
@@ -1234,24 +1229,238 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAAM1VW1PiMBR+51d0uq9C6YUCfVoVcFGsDrLLuKvDhDYtwTap
-        SQqi43/fJG3xsuPiui8+NT3fuXznkpOHmqbfIBzqnqbPUXybQ7r5siRzfU8A
-        kINYAlf6Eba/ZaQ1BSc4G+QTp9X+cdDzT+OfB2vDd2aXdHJJRveDSeC6BJ7u
-        72N8d3PeHl7pyg9S7rOkniVgE1OS49ATMWYnzcN93+lfTv3Y8oPOLblDI/t4
-        kYJ5oOwYTKIRwjfSesF5xjzDWK/XjZiQOIEgQ6wRkNSoeBsry8goWcKAM+NF
-        NENEY8Z7QgqdMYwghTiAIuxDTRPEC5/DP7OQJsqmwHYFqGmPMkZAcITinAKO
-        CK6CJASE5VkkTnIawO8UMSH6JUWaHsvsScZRmrN6RlEK6xwybiQkRrjOUpAk
-        jSUjuBHf69Lieq9wFSxgCirPmh4hmIRPbkuxADBIZcb6BUnhlBIcD6SmylDh
-        fJMV+GQ89I/0Qvy494aXHlwhUcEPWvfvOAXsw9YriPkuY/W5rm396KEoJsKq
-        JxMwT+BTyXb0X9oCDhgsNWQTZqqdJcqluwJTR0t/FrZo9YDQFHCp4feno6Hf
-        n/X6o+HpcNLvzY4vznxp8ViOD+OA56yaG/lXVPzM7xfzCCkldAxZnvDtRFEI
-        mBo2HeEVSFBJToxdUI2hPkAJ9LSmZmhnUSTS8cyO5Yg/cQWh1xKHQ5LkKfZM
-        U5zVdHjnohSQDnultxQyBmJFBxON5cFCU/Om6D9x245fWeA3yO1g16yome+g
-        9nduZTP+i47TcitC1qcg1DWtipD9KQiZttupGDmfg9E/DvguRjW1Ura3FImN
-        EmxvaiA4qu2CijVlOrbTdU3HtM2mXdxcYUT5a9zqWB2zvNk4fI3aVtd2C/TF
-        E4JwlnOZMFPa5QXdSg82vEAst90pQZJzgY7JWgHNF9KtfvP5KsoZpDPxvKBE
-        QrbTslzLajedtlsPMchX0dzBuBs3lxZ2QM6iWwdYbEEXpLv8GsIVTEgGaSMW
-        XuRrAYJALFUu33S99lj7DXZ0AQabCAAA
+        H4sIAAAAAAAAAJ1U23LaMBR85ysY9TXgYGwueWozQAIlDiFQJmkyjLCFEZEl
+        RxeIm+Hfqwvk0k4nnTzZPnt2V3t0xs+lMnjANAEnZbDA6aNCvPiyZgtwpAEk
+        YWqAO3BG6+c5C2fwO817ahKEzR+nnegivT3deg04GvLBdMAGKVOz0fhKTGs3
+        5EYxv3UHrA628jmp5AQWKWeKJifaY/4kVCtc1Ye9Yhqjs+J8eDVWxbfZrXxg
+        licQWQ4xfTDslZS5OPG87XZbTRlLCYI5FtWYZd7h3N7G93LO1iiWwnvn5mk3
+        4f2Ppe4ZoyXiiMZI2z6XyvrgTrP/dwpDsRyHfWRQKu+MR8zoEqeKQ4kZPZgQ
+        BpP9uw7OFI/RlGOhSz9NqQxSk57lEmdKVHKOM1SRSEiPsBTTisggIdW1YLSa
+        /gKGcX/kpOIVyuBBuQyWGJHkVXZf1gCFmUkMRjod4v2OzWYRWeQWuZ6M+9EZ
+        cOXd0T/4HbTBenafZHefJIfi0+wNovIjsn3cl150QKLHiKm9jQlcEPQ6rA9u
+        3nChhALtO8z45/Yi96g0cg6zrz54Y+suucd4BqXpiLqzYT/qzjvdYf+iP+l2
+        5oPry8gwdvvFERJKJQ4bY75svPE0ily+ly6sE8UvnTFHLh12Y6oF9fC4Hjbb
+        zVbYdjusSVz+gbdqfiOoOfzdemKaK9nDBAnb7dK+Vk8L6RC/0Wy9Pb8SiM/1
+        NmJi0HoQ+g3fbx4HzUYloVBtlouA0nZ6vPZpAJVYPgbQFyu+Yu311wRtEGE5
+        4tVUq5gVg3Gsb0KaXwAo7Uq/ATK3VKfKBAAA
     http_version: 
-  recorded_at: Mon, 22 Jun 2015 08:23:58 GMT
+  recorded_at: Tue, 23 Jun 2015 05:03:42 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_dvOvOBiEgf5KoEclqK8LiuEe5Ps?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:52 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:52 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/sBLooucDTw9ez-WXx1IR2r2T5G4"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1UXXPaMBB851cw6mvAwdgl5KnD4KRuiJMhpOm0yTDCPhsR
+        WXIk2YRk+O+VLJOvTptOnjC3t7d7x+LHVhvdEpagwzZakOyuBLH5tOILtKcB
+        UDgzwDU6Zv2vBfev8AkrjsqZ5w++j8bRafZztHbkaMJ5GY9n6yE8dK5+3PfC
+        qSvcmX/sXaN6DqnHF7RTULzJBC9Zcqg15kl1Vp2NSJCl/gkPYnp3cjAhZQD+
+        uax5Emg6IezWsJdKFfLQcdbrdTfjPKOACyK7Mc+dnW+ncp1C8BXESjqv1Byt
+        Jp3/kdQ9U0hBAItByz622tq4nRn+uYWh1ByLvSfQam+NRsxZSrJSYEU424lQ
+        jpPmWS/OSxHDpSBSl36ZUhtlZnteKJKXslMIkkNHgVROTLkEHMfaj+rIHFPa
+        XUnOutlD7e4fTAbrUoJ4QzKcmz1rI15Cjneu2iglQJNnS01ZAwzn5lroXF8G
+        RDhulDWiNkWNXMymYXSMbHm79xf+GCqi7/5BdnCvBJYfZlfA1Hvk+uOm9TQH
+        JfqQhNW/5AwvKDwf653UGC5WWELTYc4/r0PQoMqMs1j92EMvZG1AjrjIsTId
+        UXA1CaNgPg4m4Wk4C8bzbxdnkWFsm9BJhVUpd2kz3+r1ppdRZPd76iJ6o/ip
+        MxZgtyP2TD2v7+/3/cHQ892hzb8mCfUGP+h5Pf/A4q+iTVhRqiNCwSgg1277
+        XB1tlEX8/mDw0r9J6lynkVCD9rX6Z9cd7HuDz52E4bJKFx5jw2x/5TIPlzK9
+        87Arl2LJh6svCVRAeQGim+kpJmLN/8W8PlBr2/oN7r0v0wYFAAA=
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:52 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_xsu85h3LFyUceGyHLQRuyAWZtko?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:03:53 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:03:53 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/3Y6kuGW155dbdnD07TavRI1-KMQ"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1U23LaMBR85ysY9TVg8AVDntoMl7ghJCGkTNNkGGELI5Al
+        RxeIm+HfK1mQW6eTTp4wZ8/u+uw546dKFawxTcBxFcxx+qAQL76s2BwcaQBJ
+        mBrgDgyod5qzYArPaN5XEz8If5x0R+fp7cnW8X621mowbQZBMk9otxFO4GYc
+        NWtn51d3oNTBpXxOajmBRcqZosmx9pg9CtUOlt6wX9zEaFCcDq/Gqvg2vZVr
+        VvIEIoshpmvDXkqZi2PH2W639ZSxlCCYY1GPWeYc3tvZuE7O2QrFUjhv3Bzt
+        Jpz/sdQ9Y7RAHNEYadunSlW/uNWM/p7CUEqOxT4yqFR3xiNmdIFTxaHEjB5M
+        CIPJ/lkPzhSP0Q3HQpd+mVIVpGZ6lkucKVHLOc5QTSIhHcJSTGsig4TUV4LR
+        evobGMb9kZWKlyiDB+UqWGBEkhfZfVkDFGZmYnCpp0M86pazlYgs8hK5noyj
+        0QDY8u7oH/wu2mCd3SfZvUfJofg0e4Oo/Ihc/txXnnVAomPEtNzGBM4Jegnr
+        g80bLpRQoH2HiX9WLnKPSiNnsfLRBa9s7ZL7jGdQmo5RbzqMRr1ZtzeMzqNJ
+        rzv7fn0xMozd/nCEhFKJw8WYfzbxi1EPvGrBepz4uS3myI6GbUZN3wsaXhB2
+        wnbQsQesSVy+w9tNt+U3LY5o8h51/dANLfrmcjHNlexjgkTZbYN4qZ4U0iJu
+        K2zvQaakRsdsaymNN+Vngt/0Gq+zUALxmb5sTAzq+YHbct2w4YetWkKh2izm
+        PqWdtLFyqQ+VWDz40BVLvmSd1dcEbRBhOeL1VKuYc4VxrLcqzecEVHaVP2uJ
+        vKUWBQAA
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:03:53 GMT
+- request:
+    method: get
+    uri: https://www.googleapis.com/bigquery/v2/projects/pl-playground/jobs/job_dvOvOBiEgf5KoEclqK8LiuEe5Ps?datasetId=json_load
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - |-
+        Optimus Prime/0.0.2 google-api-ruby-client/0.8.2 Linux/3.18.11-tinycore64
+         (gzip)
+      Accept-Encoding:
+      - gzip
+      Content-Type:
+      - ''
+      Authorization:
+      - Bearer ya29.mwH0W0GI-woIytxmrbslxcWQmjv96uFluLT3sdBIS2La9gIUN9NK0sER1Y0samHU2IsUMlbKYIWQ5A
+      Cache-Control:
+      - no-store
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Tue, 23 Jun 2015 05:04:03 GMT
+      Date:
+      - Tue, 23 Jun 2015 05:04:03 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate, no-transform
+      Etag:
+      - '"Gn3Hpo5WaKnpFuT457VBDNMgZBw/-OGiTtLe0np9zHN64hVMtEu4myw"'
+      Vary:
+      - Origin
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Encoding:
+      - gzip
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      Server:
+      - GSE
+      Alternate-Protocol:
+      - 443:quic,p=1
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAAJ1UXW/aQBB851eg62vAYGw+8lQhnISGmIjQRGoTocNemyP2
+        nXN3tksi/nvvfCZfVZsqT5idnZ3dYfBTo4nuCQ3RcROtSfyQA9992bI1OlIA
+        SBxr4Bad0t5ZxtwbfE6zk3zpuIPr8cS/iH+MS6s1PyVLOYMOzUaPZ37f2Vxf
+        SC930l15i6o5pBqfJa0swbuYs5yGx0pjFRbzYj4mXhy558wLkofz4YzkHriX
+        ouIJSKIZofeavZEyE8eWVZZlO2YsTgBnRLQDllqHva3CtjLOthBIYb1Rs5Sa
+        sP5HUvUsIAIONAAl+9RoqsXNzOmfV2hKxTHYRwKN5l5rBIxGJM45loTRg0jC
+        cFg/q8NZzgP4zolQpZ+61ESxvp5lkqS5aGWcpNCSIKQVJEwADgK1j2yJFCdJ
+        eysYbceP1Xb/YFIocwH8HUlz7o7MGsEGUnzYqokiAkn4slJdVgDFqXYLXSpn
+        gE8ntbJC5C6rkKvlYuqfIlPeH/2FP4GCKN8/yfZ+SY7Fp9kFUPkRufq4azzP
+        QaEyktDql1zidQIvZn2QGs3FEguoO7T9qyoENSr1OINVj130StYE5ITxFEvd
+        4Xs3s6nvrSbebHoxXXqT1berua8Z+zp0QmKZi0Pa9Dfj+Nz30KsWos4JntsC
+        DuY0YjzqOj2303MHI8e1Ryb8isTlO3zYdbru0OBAw/dor9cfdQ36JvWEZrk8
+        IQlofWQbI16q4500iNsbDGqQ5VKhC1YaSudN+ZkwVLqvvdCpX6lkk0SjPXVM
+        37YHHWfQb4UU50W0digdxZ2tTR2ci+jBwbbY8A0bbb+GUEDCMuDtWE3Rca3/
+        e/pVhBr7xm8v/IYJUgUAAA==
+    http_version: 
+  recorded_at: Tue, 23 Jun 2015 05:04:03 GMT
 recorded_with: VCR 2.9.3
