@@ -95,11 +95,7 @@ module OptimusPrime
                 sourceUris: uris,
                 schema: @schema,
                 sourceFormat: SOURCE_FORMAT,
-                destinationTable: {
-                  projectId: project_id,
-                  datasetId: dataset_id,
-                  tableId: id
-                }
+                destinationTable: { projectId: project_id, datasetId: dataset_id, tableId: id }
               }
             }
           }.stringify_nested_symbolic_keys
@@ -112,11 +108,9 @@ module OptimusPrime
           def initialize(extra = {})
             @message = 'Load job in BigQuery encountered a problem.'
             @extra = extra
-            end
           end
-
+        end
       end
-
     end
   end
 end

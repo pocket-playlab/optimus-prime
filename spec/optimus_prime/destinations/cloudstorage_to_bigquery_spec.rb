@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'optimus_prime/destinations/cloudstorage_to_bigquery'
 
 RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
-
   let(:valid_schema) do
     {
       fields: [
@@ -27,7 +26,10 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
 
   let(:params) do
     {
-      table1: ['gs://optimus-prime-test/closeaccount-small.json.gz', 'gs://optimus-prime-test/newuser-small.json.gz'],
+      table1: [
+        'gs://optimus-prime-test/closeaccount-small.json.gz',
+        'gs://optimus-prime-test/newuser-small.json.gz'
+      ],
       table2: ['gs://optimus-prime-test/login-small.json.gz']
     }
   end
@@ -57,10 +59,10 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
   it 'raises an exception for a wrong schema' do
     d = destination(invalid_schema)
     VCR.use_cassette('cloudstorage_to_bigquery/fail') do
-      expect{d.write(params)}.to raise_error(OptimusPrime::Destinations::CloudstorageToBigquery::LoadJob::LoadJobError)
+      expect do
+        d.write(params)
+      end.to raise_error(OptimusPrime::Destinations::CloudstorageToBigquery::LoadJob::LoadJobError)
       d.close
     end
   end
-
-
 end
