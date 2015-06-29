@@ -1,9 +1,5 @@
 require_relative 'common/bigquery_table_base'
 
-SLEEPING_TIME = 10
-# For now, we just plan to use json
-SOURCE_FORMAT = 'NEWLINE_DELIMITED_JSON'
-
 module OptimusPrime
   module Destinations
     class CloudstorageToBigquery < OptimusPrime::Destination
@@ -42,6 +38,10 @@ module OptimusPrime
       # - `schema`: the common schema of all the tables. If a table does not exist, it will
       #   be created with this schema. If a tables exists but some fields are missing, it
       #   will be patched to match this schema.
+
+      SLEEPING_TIME = 10
+      # TODO: make the source format configurable
+      SOURCE_FORMAT = 'NEWLINE_DELIMITED_JSON'
 
       def initialize(client_email:, private_key:, project:, dataset:, schema:)
         @client_email = client_email
@@ -85,7 +85,7 @@ module OptimusPrime
 
       def wait_for_jobs(jobs)
         loop do
-          jobs = jobs.select(&method(:check_status))
+          jobs.select!(&method(:check_status))
           return if jobs.empty?
           sleep SLEEPING_TIME
         end
@@ -180,11 +180,7 @@ module OptimusPrime
                 sourceUris: @uris,
                 schema: @schema,
                 sourceFormat: SOURCE_FORMAT,
-                destinationTable: {
-                  projectId: project_id,
-                  datasetId: dataset_id,
-                  tableId: id
-                }
+                destinationTable: { projectId: project_id, datasetId: dataset_id, tableId: id }
               }
             }
           }.stringify_nested_symbolic_keys
