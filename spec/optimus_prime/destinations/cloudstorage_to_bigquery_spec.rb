@@ -26,10 +26,7 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
 
   let(:params) do
     {
-      table1: [
-        'gs://optimus-prime-test/closeaccount-small.json.gz',
-        'gs://optimus-prime-test/newuser-small.json.gz'
-      ],
+      table1: ['gs://optimus-prime-test/closeaccount-small.json.gz', 'gs://optimus-prime-test/newuser-small.json.gz'],
       table2: ['gs://optimus-prime-test/login-small.json.gz']
     }
   end
@@ -49,21 +46,17 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
       dataset: 'json_load',
       schema: schema
     )
-    destination.logger = Logger.new(STDOUT)
-    destination
+    d.logger = logger
+    d
   end
 
-  context 'when supplied schema matches data schema' do
-    let(:schema) do
-      {
-        fields: [
-          { name: 'PlayerID', type: 'STRING' },
-          { name: 'Device',   type: 'STRING' },
-          { name: 'Extras',   type: 'STRING' },
-          { name: 'Event',    type: 'STRING' }
-        ]
-      }
+  it 'runs without errors' do
+    d = destination(valid_schema)
+    VCR.use_cassette('cloudstorage_to_bigquery/run') do
+      d.write(params)
+      d.close
     end
+  end
 
   it 'raises an exception for a wrong schema' do
     d = destination(invalid_schema)

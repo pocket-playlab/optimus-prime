@@ -1,5 +1,9 @@
 require_relative 'common/bigquery_table_base'
 
+SLEEPING_TIME = 10
+# For now, we just plan to use json
+SOURCE_FORMAT = 'NEWLINE_DELIMITED_JSON'
+
 module OptimusPrime
   module Destinations
     class CloudstorageToBigquery < OptimusPrime::Destination
@@ -140,7 +144,11 @@ module OptimusPrime
                 sourceUris: @uris,
                 schema: @schema,
                 sourceFormat: SOURCE_FORMAT,
-                destinationTable: { projectId: project_id, datasetId: dataset_id, tableId: id }
+                destinationTable: {
+                  projectId: project_id,
+                  datasetId: dataset_id,
+                  tableId: id
+                }
               }
             }
           }.stringify_nested_symbolic_keys
