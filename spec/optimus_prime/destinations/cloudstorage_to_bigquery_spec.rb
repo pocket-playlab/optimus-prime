@@ -50,6 +50,11 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
     d
   end
 
+  before(:each) do
+    # Remove this when re-generating VCR cassettes
+    allow_any_instance_of(Object).to receive(:sleep)
+  end
+
   it 'runs without errors' do
     d = destination(valid_schema)
     VCR.use_cassette('cloudstorage_to_bigquery/run') do
