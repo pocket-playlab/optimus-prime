@@ -12,8 +12,8 @@ module OptimusPrime
           gz.each do |line|
             begin
               yield JSON.parse line
-            rescue Exception => exception
-              logger.error "Cannot parse line : #{line}"
+            rescue => e
+              logger.error "Skip #{line} because #{e.message}"
               next
             end
           end
