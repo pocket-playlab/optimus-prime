@@ -10,13 +10,17 @@ module OptimusPrime
         objects.each do |object|
           gz = Zlib::GzipReader.new object.body
           gz.each do |line|
-            begin
-              yield JSON.parse line
-            rescue => e
-              logger.error "Skip #{line} because #{e.message}"
-              next
-            end
+            parse(line)
           end
+        end
+      end
+
+      def parse(line)
+        begin
+          yield JSON.parse line
+        rescue => e
+          logger.error "#{e.class} #{e.message} : Cannot parse the line #{line}"
+          next
         end
       end
     end
