@@ -18,14 +18,9 @@ RSpec.describe OptimusPrime::Transformers::Annotate do
     ]
   end
 
-  let(:step) do
-    OptimusPrime::Transformers::Annotate.new(extra)
-  end
+  let(:step) { OptimusPrime::Transformers::Annotate.new(extra) }
 
   it 'should annotate each record with the given keys and values' do
-    output = []
-    step.output << output
-    input.each { |record| step.write(record) }
-    expect(output).to match_array expected
+    expect(step.run_with(input)).to match_array expected
   end
 end
