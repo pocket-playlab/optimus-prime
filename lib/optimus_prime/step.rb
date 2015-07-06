@@ -60,11 +60,13 @@ module OptimusPrime
       input.freeze
       output.freeze
       listen unless input.empty?
+      self
     end
 
     def join
       raise 'Not yet started' unless started?
       threads.each(&:join)
+      self
     end
     alias_method :wait, :join
 
@@ -74,6 +76,7 @@ module OptimusPrime
       @closed = true
       finish
       push nil
+      self
     end
 
     def started?
