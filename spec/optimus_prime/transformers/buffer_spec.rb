@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'step_helpers'
 require 'optimus_prime/transformers/buffer'
 
 RSpec.describe OptimusPrime::Transformers::Buffer do
