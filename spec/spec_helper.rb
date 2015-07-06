@@ -2,6 +2,7 @@ require 'webmock/rspec'
 require 'vcr'
 require 'optimus_prime'
 require 'pry-byebug'
+require 'step_helpers'
 
 WebMock.disable_net_connect! allow_localhost: true
 ENV['AWS_ACCESS_KEY_ID'] = SecureRandom.hex
