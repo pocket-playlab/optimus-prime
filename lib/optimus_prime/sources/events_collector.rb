@@ -17,12 +17,10 @@ module OptimusPrime
       end
 
       def parse(line)
-        begin
-          JSON.parse line
-        rescue => e
-          logger.error "#{e.class} #{e.message} : Cannot parse the line #{line}"
-          nil
-        end
+        JSON.parse line
+      rescue => e
+        logger.error "#{e.class} #{e.message} : Cannot parse the line #{line}"
+        nil
       end
     end
   end
