@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe OptimusPrime::Transformers::ExtractAppAnnieProductSales do
-  let(:basepath) { 'spec/supports/app_annie' }
+  let(:basepath) { 'app_annie' }
   let(:step) { OptimusPrime::Transformers::ExtractAppAnnieProductSales.new }
 
   context 'input contains both sales_list and iap_sales_list from multiple pages' do
