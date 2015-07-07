@@ -73,6 +73,7 @@ module OptimusPrime
     # Call the `finish` callback and push `nil` to the output queues to signal
     # the end of the data stream.
     def close
+      raise 'Already closed' if closed?
       @closed = true
       finish
       push nil
