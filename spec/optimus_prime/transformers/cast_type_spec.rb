@@ -27,29 +27,29 @@ RSpec.describe OptimusPrime::Transformers::CastType do
   let(:input_valid) do
     [
       {
-        event: 'buymeat',
-        amount: '23',
-        price: '299.23',
-        timestamp: 1429660574,
-        is_available: 'False',
-        notes: 'lorem ipsum',
-        field: 'not affected'
+        'event' => 'buymeat',
+        'amount' => '23',
+        'price' => '299.23',
+        'timestamp' => 1429660574,
+        'is_available' => 'False',
+        'notes' => 'lorem ipsum',
+        'field' => 'not affected'
       },
       {
-        event: 'buybeans',
-        amount: '125',
-        price: '412.5',
-        due: '2015-04-01',
-        is_available: 'true',
-        notes: 5,
-        a: 'false',
-        b: 'yes',
-        c: 'no',
-        d: 'something',
-        e: 10.33
+        'event' => 'buybeans',
+        'amount' => '125',
+        'price' => '412.5',
+        'due' => '2015-04-01',
+        'is_available' => 'true',
+        'notes' => 5,
+        'a' => 'false',
+        'b' => 'yes',
+        'c' => 'no',
+        'd' => 'something',
+        'e' => 10.33
       },
       {
-        price: nil
+        'price' => nil
       }
     ]
   end
@@ -57,76 +57,67 @@ RSpec.describe OptimusPrime::Transformers::CastType do
   let(:output_valid) do
     [
       {
-        event: 'buymeat',
-        amount: 23,
-        price: 299.23,
-        timestamp: Time.at(1429660574).to_datetime,
-        is_available: false,
-        notes: 'lorem ipsum',
-        field: 'not affected'
+        'event' => 'buymeat',
+        'amount' => 23,
+        'price' => 299.23,
+        'timestamp' => Time.at(1429660574).to_datetime,
+        'is_available' => false,
+        'notes' => 'lorem ipsum',
+        'field' => 'not affected'
       },
       {
-        event: 'buybeans',
-        amount: 125,
-        price: 412.5,
-        due: Date.parse('2015-04-01'),
-        is_available: true,
-        notes: '5',
-        a: false,
-        b: true,
-        c: false,
-        d: false,
-        e: 10
+        'event' => 'buybeans',
+        'amount' => 125,
+        'price' => 412.5,
+        'due' => Date.parse('2015-04-01'),
+        'is_available' => true,
+        'notes' => '5',
+        'a' => false,
+        'b' => true,
+        'c' => false,
+        'd' => false,
+        'e' => 10
       },
       {
-        price: nil
+        'price' => nil
       }
     ]
   end
 
   let(:input_invalid) do
     [
-      { event: 'buymeat',  amount: '23',      price: '299.23' },
-      { event: 'buybeans', amount: 'nothing', price: '412.5'  },
-      { event: 'buybeans', amount: '35',      price: '333.5'  }
+      { 'event' => 'buymeat',  'amount' => '23',      'price' => '299.23' },
+      { 'event' => 'buybeans', 'amount' => 'nothing', 'price' => '412.5'  },
+      { 'event' => 'buybeans', 'amount' => '35',      'price' => '333.5'  }
     ]
   end
 
   let(:output_invalid) do
     [
-      { event: 'buymeat',  amount: 23, price: 299.23 },
-      { event: 'buybeans', amount: 35, price: 333.5  }
+      { 'event' => 'buymeat',  'amount' => 23, 'price' => 299.23 },
+      { 'event' => 'buybeans', 'amount' => 35, 'price' => 333.5  }
     ]
   end
 
   context 'valid input and correct type map' do
     it 'should successfully convert each value to it\'s real type' do
-      caster = OptimusPrime::Transformers::CastType.new(type_map: type_map_correct)
-      caster.logger = logger
-      output = []
-      caster.output << output
-      input_valid.each { |record| caster.write(record) }
-      expect(output).to match_array output_valid
+      step = OptimusPrime::Transformers::CastType.new(type_map: type_map_correct).log_to(logger)
+      expect(step.run_with(input_valid)).to match_array output_valid
     end
   end
 
   context 'valid input and incorrect type map' do
     it 'should raise a TypeError exception' do
-      caster = OptimusPrime::Transformers::CastType.new(type_map: type_map_erroneous)
-      caster.logger = logger
-      expect { input_valid.each { |record| caster.write(record) } }.to raise_error(TypeError)
+      step = OptimusPrime::Transformers::CastType.new(type_map: type_map_erroneous).log_to(logger)
+      expect{ step.run_and_raise(input_valid) }.to raise_error(TypeError)
     end
   end
 
   context 'invalid input and correct type map' do
     before { File.delete(logfile) }
     it 'should log an exception and skip the record' do
-      caster = OptimusPrime::Transformers::CastType.new(type_map: type_map_correct)
-      caster.logger = logger
-      output = []
-      caster.output << output
-      input_invalid.each { |record| caster.write(record) }
-      expect(output).to match_array output_invalid
+      caster = OptimusPrime::Transformers::CastType.new(type_map: type_map_correct).log_to(logger)
+      expect(caster.run_with(input_invalid)).to match_array output_invalid
       expect(File.read(logfile).lines.count).to be > 1
     end
   end
