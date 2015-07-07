@@ -17,13 +17,15 @@ RSpec.describe OptimusPrime::Transformers::FileStreamDistributor do
       cat_ver.each.map { |key, value| sample.merge('Version' => value) }
     end.flatten.shuffle
   end
-  let(:transformer) do
+
+  let(:step) do
     OptimusPrime::Transformers::FileStreamDistributor.new(
       path_template: path_template, base_path: base_path,
       category_template: category_template,  max_per_file: max_per_file,
       stream_type: 'OptimusPrime::Streams::FileStreams::NewlineJsonGzipped'
     )
   end
+
   after(:each) do
     p = Pathname.new(File.join(base_path, 'optimuspec'))
     p.rmtree if p.exist?
@@ -31,43 +33,24 @@ RSpec.describe OptimusPrime::Transformers::FileStreamDistributor do
 
   context 'with invalid data' do
     it 'raises an error' do
-      output = []
-      transformer.output << output
       input.sample.delete('Version')
-      expect { input.each { |record| transformer.write(record) } }.to raise_error(KeyError)
-      transformer.close
+      expect { step.run_and_raise(input) }.to raise_error(KeyError)
     end
   end
 
   context 'with valid data' do
     it 'creates the expected number of files' do
-      output = []
-      transformer.output << output
-      input.each { |record| transformer.write(record) }
-      transformer.close
-      expect(output.compact.length).to eq 18
+      expect(step.run_with(input).length).to eq 18
     end
 
     it 'creates the expected number of files per category' do
-      output = []
-      transformer.output << output
-      input.each { |record| transformer.write(record) }
-      transformer.close
       results = cat_ver.each.map { |k, v| [k, []] }.to_h
-      output.compact.each do |pair|
-        results[pair[:category]] << pair[:file]
-      end
-      results.each do |category, files|
-        expect(files.length).to eq 6
-      end
+      step.run_with(input).each { |pair| results[pair[:category]] << pair[:file] }
+      results.each { |category, files| expect(files.length).to eq 6 }
     end
 
     it 'directs records to the correct categories' do
-      output = []
-      transformer.output << output
-      input.each { |record| transformer.write(record) }
-      transformer.close
-      output.compact.each do |pair|
+      step.run_with(input).each do |pair|
         category = pair[:category]
         file = pair[:file]
         gz = Zlib::GzipReader.open(File.join(base_path, file))
