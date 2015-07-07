@@ -10,7 +10,7 @@ RSpec.describe OptimusPrime::Transformers::RecordFilter do
     }
   end
 
-  let(:filter) do
+  let(:step) do
     OptimusPrime::Transformers::RecordFilter.new(constraints: constraints)
   end
 
@@ -41,21 +41,12 @@ RSpec.describe OptimusPrime::Transformers::RecordFilter do
     ]
   end
 
-  def write_records(destination, input)
-    output = []
-    destination.output << output
-    input.each { |record| destination.write(record) }
-    output
+  it 'allows valid records to pass' do
+    expect(step.run_with(input_valid.dup)).to match_array input_valid
   end
 
-  it 'should allow all the records to pass through' do
-    output = write_records(filter, input_valid)
-    expect(output).to match_array input_valid
-  end
-
-  it 'should filter the invalid records' do
-    output = write_records(filter, input_invalid)
-    expect(output).to match_array output_invalid
+  it 'filters out invalid records' do
+    expect(step.run_with(input_invalid)).to match_array output_invalid
   end
 
   describe '#contained, #not_contained' do
@@ -85,13 +76,11 @@ RSpec.describe OptimusPrime::Transformers::RecordFilter do
     let(:b_filter) { OptimusPrime::Transformers::RecordFilter.new(constraints: start_with_b) }
 
     it 'filters b from the output' do
-      output = write_records(ac_filter, records)
-      expect(output).to match_array records_without_b
+      expect(ac_filter.run_with(records)).to match_array records_without_b
     end
 
     it 'lists only b record' do
-      output = write_records(b_filter, records)
-      expect(output).to match_array [{ 'code' => 'B-222-3CB' }]
+      expect(b_filter.run_with(records)).to match_array [{ 'code' => 'B-222-3CB' }]
     end
   end
 end
