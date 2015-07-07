@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'optimus_prime/transformers/constant_camel_key'
 
 RSpec.describe OptimusPrime::Transformers::ConstantCamelKey do
-  let(:transformer) { OptimusPrime::Transformers::ConstantCamelKey.new }
+  let(:step) { OptimusPrime::Transformers::ConstantCamelKey.new }
 
   context 'Multiple Hashes with different combinations of characters' do
     let(:input) do
@@ -15,7 +15,7 @@ RSpec.describe OptimusPrime::Transformers::ConstantCamelKey do
       ]
     end
 
-    let(:result) do
+    let(:output) do
       [
         { 'Name' => 'John', 'ThisIsMySize' => 192.3, 'MeMe' => 83.5 },
         { 'UnderCheckScore' => 'Jack', '3A' => 24, 'NumberUniqueUsers' => 1 },
@@ -27,10 +27,7 @@ RSpec.describe OptimusPrime::Transformers::ConstantCamelKey do
     end
 
     it 'should return correct formatted versions' do
-      output = []
-      transformer.output << output
-      input.each { |record| transformer.write(record) }
-      expect(output).to match_array result
+      expect(step.run_with(input)).to match_array output
     end
   end
 end
