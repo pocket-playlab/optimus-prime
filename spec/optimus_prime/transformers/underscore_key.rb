@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/transformers/underscore_key'
 
 RSpec.describe OptimusPrime::Transformers::UnderscoreKey do
   let(:input) do
@@ -18,8 +17,8 @@ RSpec.describe OptimusPrime::Transformers::UnderscoreKey do
 
   let(:step) { OptimusPrime::Transformers::UnderscoreKey.new }
 
-  context 'Multiple Hashes with different combinations of characters' do
-    it 'should return correct formatted versions' do
+  context 'with multiple hashes with different combinations of characters' do
+    it 'returns correctly formatted versions' do
       expect(step.run_with(input)).to match_array output
     end
   end

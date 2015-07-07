@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/transformers/constant_camel_key'
 
 RSpec.describe OptimusPrime::Transformers::ConstantCamelKey do
   let(:step) { OptimusPrime::Transformers::ConstantCamelKey.new }
@@ -26,7 +25,7 @@ RSpec.describe OptimusPrime::Transformers::ConstantCamelKey do
       ]
     end
 
-    it 'should return correct formatted versions' do
+    it 'return correct formatted versions' do
       expect(step.run_with(input)).to match_array output
     end
   end

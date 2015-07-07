@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/transformers/key_filter'
 
 RSpec.describe OptimusPrime::Transformers::KeyFilter do
   let(:input) do
@@ -29,7 +28,7 @@ RSpec.describe OptimusPrime::Transformers::KeyFilter do
     OptimusPrime::Transformers::KeyFilter.new(fields: fields)
   end
 
-  it 'should only allow specified fields in the output' do
+  it 'allows only specified fields in the output' do
     expect(step.run_with(input)).to match_array output
   end
 end

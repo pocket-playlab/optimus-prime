@@ -1,6 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/transformers/file_stream_distributor'
-require 'optimus_prime/streams/file_streams/newline_json_gzipped'
 
 RSpec.describe OptimusPrime::Transformers::FileStreamDistributor do
   let(:max_per_file) { 10 }

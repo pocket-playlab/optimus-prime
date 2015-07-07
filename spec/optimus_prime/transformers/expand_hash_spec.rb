@@ -10,41 +10,41 @@ RSpec.describe OptimusPrime::Transformers::ExpandHash do
   before(:each) { File.delete(logfile) if File.exist?(logfile) }
 
   context 'when input contains no nested hash' do
-    let(:invalid_input) { [{ 'a' => 'b', 'c' => 'd' }, { 'e' => 'f', 'g' => 'h' }] }
+    let(:input) { [{ 'a' => 'b', 'c' => 'd' }, { 'e' => 'f', 'g' => 'h' }] }
 
     context 'with empty fields array' do
       it 'pushes the same exact hash' do
         step = step_type.new(fields: [])
-        expect(step.run_with(invalid_input.dup)).to match_array invalid_input
+        expect(step.run_with(input.dup)).to match_array input
       end
     end
 
     context 'with non-empty fields array' do
       it 'pushes nothing and logs an error' do
         step = step_type.new(fields: ['a', 'e']).log_to(logger)
-        expect(step.run_with(invalid_input)).to match_array []
+        expect(step.run_with(input)).to match_array []
         expect(logs).to include('Cannot expand invalid Hash field')
       end
     end
   end
 
   context 'with valid hash and fields' do
-    let(:simple_input) do
+    let(:input) do
       [{ 'a' => 'b', 'c' => { 'foo' => 'bar', 'baz' => 'quux' } }, { 'e' => 'f', 'g' => 'h' }]
     end
 
-    let(:simple_output) do
+    let(:output) do
       [{ 'a' => 'b', 'foo' => 'bar', 'baz' => 'quux' }, { 'e' => 'f', 'g' => 'h' }]
     end
 
     it 'expands hash fields correctly' do
       step = step_type.new(fields: ['c'])
-      expect(step.run_with(simple_input)).to match_array simple_output
+      expect(step.run_with(input)).to match_array output
     end
   end
 
   context 'with duplicate fields in the record and the hash field' do
-    let(:duplicates) do
+    let(:input) do
       [
         { 'first' => 'second', 'third' => { 'first' => 'fourth' } },
         { 'first' => 'second', 'third' => { 'fourth' => 'fifth' } }
@@ -52,24 +52,24 @@ RSpec.describe OptimusPrime::Transformers::ExpandHash do
     end
 
     context 'when overwrite is enabled' do
-      let(:output_with_overwrite) do
+      let(:output) do
         [{ 'first' => 'fourth' }, { 'first' => 'second', 'fourth' => 'fifth' }]
       end
 
       it 'overwrites the original values with the expanded ones' do
         step = step_type.new(fields: ['third'], overwrite: true)
-        expect(step.run_with(duplicates)).to match_array output_with_overwrite
+        expect(step.run_with(input)).to match_array output
       end
     end
 
     context 'when overwrite is disabled' do
-      let(:output_without_overwrite) do
+      let(:output) do
         [{ 'first' => 'second' }, { 'first' => 'second', 'fourth' => 'fifth' }]
       end
 
       it 'keeps the original values and ignores the expanded ones' do
         step = step_type.new(fields: ['third'], overwrite: false)
-        expect(step.run_with(duplicates)).to match_array output_without_overwrite
+        expect(step.run_with(input)).to match_array output
       end
     end
   end

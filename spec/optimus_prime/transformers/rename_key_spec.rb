@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/transformers/rename_key'
 
 RSpec.describe OptimusPrime::Transformers::RenameKey do
   let(:mapper) { { 'aeg' => 'age', 'weitgh' => 'weight' } }
@@ -7,7 +6,7 @@ RSpec.describe OptimusPrime::Transformers::RenameKey do
     OptimusPrime::Transformers::RenameKey.new(mapper: mapper)
   end
 
-  context 'input does not contain the replacement name' do
+  context 'when input does not contain the replacement name' do
     let(:input) do
       [
         { 'name' => 'John', 'aeg' => 23, 'height' => 192.3, 'weitgh' => 83.5 },
@@ -21,12 +20,12 @@ RSpec.describe OptimusPrime::Transformers::RenameKey do
       ]
     end
 
-    it 'should replace the field name and keep the value' do
+    it 'replaces the field name and keep the value' do
       expect(step.run_with(input)).to match_array output
     end
   end
 
-  context 'input contains the replacement name' do
+  context 'when input contains the replacement name' do
     let(:input) do
       [
         { 'name' => 'John', 'aeg' => 32, 'age' => 35, 'height' => 192.3, 'weitgh' => 83.5 },
@@ -40,7 +39,7 @@ RSpec.describe OptimusPrime::Transformers::RenameKey do
       ]
     end
 
-    it 'should delete the field and keep the correct field\'s value' do
+    it 'deletes the field and keep the correct field\'s value' do
       expect(step.run_with(input)).to match_array output
     end
   end

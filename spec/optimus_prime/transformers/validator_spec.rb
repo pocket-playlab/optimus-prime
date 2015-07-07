@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/transformers/validator'
 
 RSpec.describe OptimusPrime::Transformers::Validator do
   let(:constraints) do
@@ -20,7 +19,7 @@ RSpec.describe OptimusPrime::Transformers::Validator do
 
   before { File.delete(logfile) }
 
-  context 'legal input' do
+  context 'with legal input' do
     let(:input) do
       [
         { 'character' => 'tom',   'level' => 92, 'score' => 220.5, 'altitude' => 5612 },
@@ -29,12 +28,12 @@ RSpec.describe OptimusPrime::Transformers::Validator do
       ]
     end
 
-    it 'should allow all the records to pass away' do
+    it 'passes away all records' do
       expect(step.run_with(input.dup)).to match_array input
     end
   end
 
-  context 'illegal input' do
+  context 'with illegal input' do
     let(:input) do
       [
         { 'character' => 'tom',   'level' => 92, 'score' => 220.5, 'altitude' => 5612 },
@@ -50,7 +49,7 @@ RSpec.describe OptimusPrime::Transformers::Validator do
       ]
     end
 
-    it 'should raise an error' do
+    it 'raises an error' do
       expect(step.run_with(input)).to match_array output
       expect(File.read(logfile).lines.count).to be > 1
     end

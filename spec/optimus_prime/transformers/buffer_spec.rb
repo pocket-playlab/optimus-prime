@@ -1,11 +1,10 @@
 require 'spec_helper'
-require 'optimus_prime/transformers/buffer'
 
 RSpec.describe OptimusPrime::Transformers::Buffer do
-  let(:buffer) { OptimusPrime::Transformers::Buffer.new }
+  let(:step) { OptimusPrime::Transformers::Buffer.new }
 
   context 'when records have the same keys' do
-    let(:sample) do
+    let(:input) do
       [
         { id: 1, name: 'Alice' },
         { id: 2, name: 'Bob' }
@@ -13,12 +12,12 @@ RSpec.describe OptimusPrime::Transformers::Buffer do
     end
 
     it 'buffers everything' do
-      expect(buffer.run_with(sample.dup)).to match_array sample
+      expect(step.run_with(input.dup)).to match_array input
     end
   end
 
   context 'when records have different keys' do
-    let(:sample) do
+    let(:input) do
       [
         { id: 1, name: 'Alice' },
         { id: 3, pet: 'cat', age: 4 }
@@ -26,7 +25,7 @@ RSpec.describe OptimusPrime::Transformers::Buffer do
     end
 
     it 'buffers everything' do
-      expect(buffer.run_with(sample.dup)).to match_array sample
+      expect(step.run_with(input.dup)).to match_array input
     end
   end
 end

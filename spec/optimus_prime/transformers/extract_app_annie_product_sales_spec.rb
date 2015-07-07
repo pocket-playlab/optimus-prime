@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/transformers/extract_app_annie_product_sales'
 
 describe OptimusPrime::Transformers::ExtractAppAnnieProductSales do
   let(:basepath) { 'spec/supports/app_annie' }

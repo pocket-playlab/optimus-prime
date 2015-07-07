@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'date'
-require 'optimus_prime/transformers/change_value'
 
 RSpec.describe OptimusPrime::Transformers::ChangeValue do
   let(:value_map) do

@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/transformers/bigquery_nested_fields_string_converter'
 
 module OptimusPrime
   module Sources
