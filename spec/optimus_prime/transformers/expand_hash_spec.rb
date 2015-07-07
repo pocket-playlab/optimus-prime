@@ -2,54 +2,44 @@ require 'spec_helper'
 
 RSpec.describe OptimusPrime::Transformers::ExpandHash do
   let(:logfile) { '/tmp/expand_hash.log' }
-  let(:invalid_input) { [{ 'a' => 'b', 'c' => 'd' }, { 'e' => 'f', 'g' => 'h' }] }
+  let(:logger) { Logger.new(logfile) }
+  let(:logs) { File.read(logfile) }
+  let(:step_type) { OptimusPrime::Transformers::ExpandHash }
 
-  def output_of(input)
-    output = []
-    transformer.output << output
-    input.each { |record| transformer.write(record) }
-    output
-  end
 
-  def logs
-    File.read(logfile)
-  end
+  before(:each) { File.delete(logfile) if File.exist?(logfile) }
 
-  before do
-    File.delete(logfile) if File.exist?(logfile)
-    transformer.logger = Logger.new(logfile)
-  end
+  context 'when input contains no nested hash' do
+    let(:invalid_input) { [{ 'a' => 'b', 'c' => 'd' }, { 'e' => 'f', 'g' => 'h' }] }
 
-  context 'with empty fields array' do
-    let(:transformer) { OptimusPrime::Transformers::ExpandHash.new(fields: []) }
-
-    it 'pushes the same exact hash' do
-      expect(output_of(invalid_input)).to match_array(invalid_input)
+    context 'with empty fields array' do
+      it 'pushes the same exact hash' do
+        step = step_type.new(fields: [])
+        expect(step.run_with(invalid_input.dup)).to match_array invalid_input
+      end
     end
-  end
 
-  context 'with invalid hash in record fields' do
-    let(:transformer) { OptimusPrime::Transformers::ExpandHash.new(fields: ['a', 'e']) }
-
-    it 'pushes nothing and logs an error' do
-      expect(output_of(invalid_input)).to match_array([])
-      expect(logs).to include('Cannot expand invalid Hash field')
+    context 'with non-empty fields array' do
+      it 'pushes nothing and logs an error' do
+        step = step_type.new(fields: ['a', 'e']).log_to(logger)
+        expect(step.run_with(invalid_input)).to match_array []
+        expect(logs).to include('Cannot expand invalid Hash field')
+      end
     end
   end
 
   context 'with valid hash and fields' do
     let(:simple_input) do
-      [{ 'a' => 'b', 'c' => { 'foo' => 'bar', 'baz' => 'quux' } },
-       { 'e' => 'f', 'g' => 'h' }]
+      [{ 'a' => 'b', 'c' => { 'foo' => 'bar', 'baz' => 'quux' } }, { 'e' => 'f', 'g' => 'h' }]
     end
 
     let(:simple_output) do
       [{ 'a' => 'b', 'foo' => 'bar', 'baz' => 'quux' }, { 'e' => 'f', 'g' => 'h' }]
     end
-    let(:transformer) { OptimusPrime::Transformers::ExpandHash.new(fields: ['c']) }
 
     it 'expands hash fields correctly' do
-      expect(output_of(simple_input)).to match_array(simple_output)
+      step = step_type.new(fields: ['c'])
+      expect(step.run_with(simple_input)).to match_array simple_output
     end
   end
 
@@ -62,27 +52,24 @@ RSpec.describe OptimusPrime::Transformers::ExpandHash do
     end
 
     context 'when overwrite is enabled' do
-      let(:transformer) do
-        OptimusPrime::Transformers::ExpandHash.new(fields: ['third'], overwrite: true)
-      end
       let(:output_with_overwrite) do
         [{ 'first' => 'fourth' }, { 'first' => 'second', 'fourth' => 'fifth' }]
       end
 
       it 'overwrites the original values with the expanded ones' do
-        expect(output_of(duplicates)).to match_array(output_with_overwrite)
+        step = step_type.new(fields: ['third'], overwrite: true)
+        expect(step.run_with(duplicates)).to match_array output_with_overwrite
       end
     end
 
     context 'when overwrite is disabled' do
-      let(:transformer) do
-        OptimusPrime::Transformers::ExpandHash.new(fields: ['third'], overwrite: false)
-      end
       let(:output_without_overwrite) do
         [{ 'first' => 'second' }, { 'first' => 'second', 'fourth' => 'fifth' }]
       end
+
       it 'keeps the original values and ignores the expanded ones' do
-        expect(output_of(duplicates)).to match_array(output_without_overwrite)
+        step = step_type.new(fields: ['third'], overwrite: false)
+        expect(step.run_with(duplicates)).to match_array output_without_overwrite
       end
     end
   end
