@@ -17,7 +17,7 @@ RSpec.describe OptimusPrime::Transformers::Validator do
     OptimusPrime::Transformers::Validator.new(constraints: constraints).log_to(Logger.new(logfile))
   end
 
-  before { File.delete(logfile) }
+  before(:each) { File.delete(logfile) if File.exist?(logfile) }
 
   context 'with legal input' do
     let(:input) do
