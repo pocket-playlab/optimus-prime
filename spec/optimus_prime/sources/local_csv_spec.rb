@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/sources/local_csv'
 
 RSpec.describe OptimusPrime::Sources::LocalCsv do
   let(:step) { OptimusPrime::Sources::LocalCsv.new file_path: @file_path, col_sep: col_sep }

@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'flurry_helpers'
-require 'optimus_prime/sources/flurry'
 
 describe OptimusPrime::Sources::Flurry do
   let(:not_existing) { File.read 'spec/supports/flurry/not_existing.json' }

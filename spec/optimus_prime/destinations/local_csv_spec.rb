@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/destinations/local_csv'
 require 'fakefs/safe'
 
 RSpec.describe OptimusPrime::Destinations::LocalCsv do

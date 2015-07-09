@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/destinations/cloudstorage_to_bigquery'
 
 RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
   let(:schema) do

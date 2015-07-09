@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/destinations/rdbms_dynamic'
 
 RSpec.describe OptimusPrime::Destinations::RdbmsDynamic do
   let(:input) do

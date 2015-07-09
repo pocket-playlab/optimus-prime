@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/destinations/bigquery_dynamic'
 
 RSpec.describe OptimusPrime::Destinations::BigqueryDynamic do
   let(:sample_base) { 'spec/supports/bigquery_dynamic/sample_data/' }

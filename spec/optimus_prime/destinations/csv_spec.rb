@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/destinations/csv'
 
 RSpec.describe OptimusPrime::Destinations::Csv do
   let(:params) do

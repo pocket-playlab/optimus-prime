@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/destinations/bigquery'
 
 RSpec.describe OptimusPrime::Destinations::Bigquery do
   let(:resource) do

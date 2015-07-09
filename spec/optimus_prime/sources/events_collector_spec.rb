@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/sources/events_collector'
 
 RSpec.describe OptimusPrime::Sources::EventsCollector do
   bucket = 'ppl-events'

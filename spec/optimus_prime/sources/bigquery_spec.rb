@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/sources/bigquery'
 
 describe OptimusPrime::Sources::Bigquery do
   let(:response_rows) { JSON.parse(File.read('spec/supports/bigquery/src-response-rows.json')) }

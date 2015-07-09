@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/destinations/local_json'
 require 'fakefs/safe'
 
 RSpec.describe OptimusPrime::Destinations::LocalJson do

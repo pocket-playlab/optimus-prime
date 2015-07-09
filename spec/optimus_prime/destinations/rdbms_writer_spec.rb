@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/destinations/rdbms_writer'
 
 RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
   let(:input) do
