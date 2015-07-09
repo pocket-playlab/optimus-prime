@@ -11,7 +11,7 @@ RSpec.describe OptimusPrime::Destinations::Csv do
   end
   let(:options) { { endpoint: 'http://localhost:10001/', force_path_style: true } }
   let(:s3) { Aws::S3::Client.new options }
-  let(:step) { OptimusPrime::Destinations::Csv.new(**params.merge(options))}
+  let(:step) { OptimusPrime::Destinations::Csv.new(**params.merge(options)) }
 
   let(:input) do
     [
@@ -19,7 +19,7 @@ RSpec.describe OptimusPrime::Destinations::Csv do
       { 'name' => 'Alice', 'age' => 34, 'likes' => 'durian' },
     ]
   end
-  let(:output) { [{ "name" => "Bob", "age" => 28 }, { "name" => "Alice", "age" => 34 }] }
+  let(:output) { [{ 'name' => 'Bob', 'age' => 28 }, { 'name' => 'Alice', 'age' => 34 }] }
 
   before(:each) { s3.create_bucket bucket: params[:bucket] }
 

@@ -29,7 +29,7 @@ RSpec.describe OptimusPrime::Transformers::CastType do
         'event' => 'buymeat',
         'amount' => '23',
         'price' => '299.23',
-        'timestamp' => 1429660574,
+        'timestamp' => 1_429_660_574,
         'is_available' => 'False',
         'notes' => 'lorem ipsum',
         'field' => 'not affected'
@@ -59,7 +59,7 @@ RSpec.describe OptimusPrime::Transformers::CastType do
         'event' => 'buymeat',
         'amount' => 23,
         'price' => 299.23,
-        'timestamp' => Time.at(1429660574).to_datetime,
+        'timestamp' => Time.at(1_429_660_574).to_datetime,
         'is_available' => false,
         'notes' => 'lorem ipsum',
         'field' => 'not affected'
@@ -93,7 +93,7 @@ RSpec.describe OptimusPrime::Transformers::CastType do
   context 'valid input and incorrect type map' do
     it 'raises a TypeError exception' do
       step = OptimusPrime::Transformers::CastType.new(type_map: type_map_erroneous)
-      expect{ step.run_and_raise(input_valid) }.to raise_error(TypeError)
+      expect { step.run_and_raise(input_valid) }.to raise_error(TypeError)
     end
   end
 

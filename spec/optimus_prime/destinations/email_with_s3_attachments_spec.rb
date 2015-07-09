@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe OptimusPrime::Destinations::EmailWithS3Attachments do
   include Mail::Matchers
 
-  let(:s3) { Aws::S3::Client.new({ endpoint: 'http://localhost:10001/', force_path_style: true }) }
+  let(:s3) { Aws::S3::Client.new(endpoint: 'http://localhost:10001/', force_path_style: true) }
   let(:bucket) { 'test-bucket' }
   let(:obj_key) { 'test-file' }
   let(:step) do
