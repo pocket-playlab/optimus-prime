@@ -28,15 +28,15 @@ describe OptimusPrime::Sources::Rdbms do
 
   context '#each' do
     it 'matches the same keys of input' do
-      rows = OptimusPrime::Sources::Rdbms.new dsn: dsn, query: 'select * from events'
-      rows.each do |row|
-        expect(row.keys).to match_array [:platform, :version]
+      step = OptimusPrime::Sources::Rdbms.new dsn: dsn, query: 'select * from events'
+      step.run_with.each do |row|
+        expect(row.keys).to match_array ['platform', 'version']
       end
     end
 
     it 'errors when table not exist' do
-      rows = OptimusPrime::Sources::Rdbms.new dsn: dsn, query: 'select * from empty_table'
-      expect { rows.each }.to raise_error
+      step = OptimusPrime::Sources::Rdbms.new dsn: dsn, query: 'select * from empty_table'
+      expect { step.run_with }.to raise_error
     end
   end
 end
