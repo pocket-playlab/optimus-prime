@@ -19,7 +19,7 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
   let(:step) do
     OptimusPrime::Destinations::RdbmsWriter.new(dsn: dsn, table: table, max_retries: 4,
                                                 chunk_size: 10, sql_trace: false)
-      .log_to(Logger.new(STDERR))
+      .suppress_log
   end
 
   def stub_run_block(attemps)

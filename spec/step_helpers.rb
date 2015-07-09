@@ -37,7 +37,11 @@ module StepHelpers
   end
 
   def log_to_stdout
-    with_logger(STDOUT)
+    log_to(Logger.new(STDOUT))
+  end
+
+  def suppress_log
+    log_to(Logger.new('/dev/null'))
   end
 
   class << self

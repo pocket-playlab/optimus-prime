@@ -19,7 +19,7 @@ RSpec.describe OptimusPrime::Destinations::GoogleCloudStorageBucket do
       private_key: ENV.fetch('GOOGLE_PRIVATE_KEY', File.read('spec/supports/key')),
       bucket: bucket,
       options: options
-    ).log_to(Logger.new(STDOUT))
+    ).suppress_log
   end
 
   context 'when network is stable' do

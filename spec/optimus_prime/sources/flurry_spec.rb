@@ -9,7 +9,7 @@ describe OptimusPrime::Sources::Flurry do
     OptimusPrime::Sources::Flurry.new(
       api_access_code: api_access_code, api_key: api_key, start_time: '2015-01-31', end_time: '2015-02-01',
       poll_interval: 0.5, report_uri: report_uri, retry_interval: 1)
-    .log_to(Logger.new('/dev/null'))
+    .suppress_log
   end
 
   before :each do

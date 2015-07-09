@@ -24,7 +24,7 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
   let(:destination_with_hash_condition) do
     OptimusPrime::Destinations::Rdbms.new(dsn: dsn, table: table_name, retry_interval: 0.1,
                                           delete_conditions: { version: '1.0.1' },
-                                          sql_trace: false).log_to(Logger.new(STDERR))
+                                          sql_trace: false).suppress_log
   end
 
   before do

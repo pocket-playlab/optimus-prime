@@ -38,7 +38,7 @@ describe OptimusPrime::Sources::Bigquery do
     OptimusPrime::Sources::Bigquery.new(
       email: 'test@developer.gserviceaccount.com', key_file: 'test-privatekey.p12',
       project_id: project_id, sql: sql, pass_phrase: 'notasecret'
-    ).log_to(Logger.new('/dev/null'))
+    ).suppress_log
   end
 
   def stub_get_query_results(rows, request_page_token, next_page_token)
