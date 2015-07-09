@@ -20,7 +20,8 @@ RSpec.describe OptimusPrime::Sources::EventsCollector do
 
   let(:step) do
     OptimusPrime::Sources::EventsCollector.new(
-      bucket: bucket, from: Time.utc(2015, 2, 1), to: Time.utc(2015, 2, 2), **aws_params)
+      bucket: bucket, from: Time.utc(2015, 2, 1), to: Time.utc(2015, 2, 2), **aws_params
+    ).suppress_log
   end
 
   before :each do
@@ -41,5 +42,13 @@ RSpec.describe OptimusPrime::Sources::EventsCollector do
 
   it 'should exclude files outside the given date range' do
     expect(step.run_with.to_a).to match_array events[1..2].flatten
+  end
+
+  context 'invalid parse' do
+    let(:invalid_json) { 'test' }
+    it 'should skip the record' do
+      expect(step.logger).to receive(:error).once
+      step.parse(invalid_json)
+    end
   end
 end
