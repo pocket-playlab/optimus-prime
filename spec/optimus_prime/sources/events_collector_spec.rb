@@ -23,10 +23,12 @@ RSpec.describe OptimusPrime::Sources::EventsCollector do
   aws_params = { endpoint: 'http://localhost:10001/', force_path_style: true }
 
   let(:source) do
-    OptimusPrime::Sources::EventsCollector.new bucket: bucket,
+    src = OptimusPrime::Sources::EventsCollector.new bucket: bucket,
                                                from: Time.utc(2015, 2, 1),
                                                to:   Time.utc(2015, 2, 2),
                                                **aws_params
+    src.logger = Logger.new(STDERR)
+    src
   end
 
   before :all do
@@ -49,5 +51,13 @@ RSpec.describe OptimusPrime::Sources::EventsCollector do
 
   it 'should exclude files outside the given date range' do
     expect(source.to_a).to match_array events[1..2].flatten
+  end
+
+  context 'invalid parse' do
+    let(:invalid_json) { 'test' }
+    it 'should skip the record' do
+      expect(source.logger).to receive(:error).once
+      source.parse(invalid_json)
+    end
   end
 end
