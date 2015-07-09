@@ -49,11 +49,6 @@ RSpec.describe OptimusPrime::Destinations::Bigquery do
     destination.send :create_table
   end
 
-  def upload
-    input.each { |obj| destination.write obj }
-    destination.close
-  end
-
   def download
     response = destination.send :execute, bigquery.tabledata.list, params: { 'tableId' => 'test' }
     json = JSON.parse response.body
@@ -69,7 +64,7 @@ RSpec.describe OptimusPrime::Destinations::Bigquery do
   end
 
   def test
-    upload
+    destination.run_with(input.dup)
     # sleep 60  # Needed when running on the real bigquery
     rows = download
     expect(rows).to match_array expected
