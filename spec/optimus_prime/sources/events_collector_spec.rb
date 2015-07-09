@@ -24,7 +24,7 @@ RSpec.describe OptimusPrime::Sources::EventsCollector do
       bucket: bucket, from: Time.utc(2015, 2, 1), to: Time.utc(2015, 2, 2), **aws_params)
   end
 
-  before(:each) do
+  before :each do
     client = Aws::S3::Client.new aws_params
     client.create_bucket bucket: bucket
     files.zip(events).each do |key, evts|
