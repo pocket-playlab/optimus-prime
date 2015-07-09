@@ -31,12 +31,12 @@ describe OptimusPrime::Sources::RdbmsPaginate do
 
   context '#each' do
     it 'matches the same keys of input' do
-      rows = OptimusPrime::Sources::RdbmsPaginate.new dsn: dsn,
+      step = OptimusPrime::Sources::RdbmsPaginate.new dsn: dsn,
                                                       query: 'select * from devices',
                                                       rows_per_fetch: 2,
                                                       order_field: :id
-      rows.each do |row|
-        expect(row.keys).to match_array [:id, :platform, :version]
+      step.run_with.each do |row|
+        expect(row.keys).to match_array ['id', 'platform', 'version']
       end
     end
   end
