@@ -33,7 +33,7 @@ describe OptimusPrime::Sources::FlurryHelpers::FlurryReportDownloader do
     context 'unknown json message' do
       before do
         stub_flurry_request('GetReport', flurry_report(1_114_397),
-          body: '{"code":"200","message":"Something went wrong."}')
+                            body: '{"code":"200","message":"Something went wrong."}')
       end
 
       it 'should raise an exception' do
@@ -45,7 +45,7 @@ describe OptimusPrime::Sources::FlurryHelpers::FlurryReportDownloader do
     context 'report not ready' do
       before do
         stub_flurry_request('GetReport', flurry_report(1_114_397), { body: processing_report },
-          { body: processing_report }, body: events_file, content_type: 'application/octet-stream')
+                            { body: processing_report }, body: events_file, content_type: 'application/octet-stream')
       end
 
       it 'should keep polling until the report is ready' do
@@ -58,7 +58,7 @@ describe OptimusPrime::Sources::FlurryHelpers::FlurryReportDownloader do
     context 'report ready' do
       before do
         stub_flurry_request('GetReport', flurry_report(1_114_397),
-          body: events_file, content_type: 'application/octet-stream')
+                            body: events_file, content_type: 'application/octet-stream')
       end
 
       it 'should receive an octet-stream response' do

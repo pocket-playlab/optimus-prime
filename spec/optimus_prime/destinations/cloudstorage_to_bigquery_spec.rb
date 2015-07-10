@@ -66,7 +66,6 @@ RSpec.describe OptimusPrime::Destinations::CloudstorageToBigquery do
     end
   end
 
-
   describe 'persistence' do
     def create_job(persistence, status)
       persistence.load_job.create identifier: 'gs://optimus-prime-test/closeaccount-small.json.gz',

@@ -14,7 +14,7 @@ describe OptimusPrime::Sources::FlurryHelpers::FlurryReportDownloader do
     context 'Too Many Requests' do
       before do
         stub_flurry_request('Events', flurry_params,
-          { body: '', status: 429 }, { body: '', status: 429 }, body: request_report_response)
+                            { body: '', status: 429 }, { body: '', status: 429 }, body: request_report_response)
       end
 
       it 'should sleep and retry' do
@@ -28,8 +28,8 @@ describe OptimusPrime::Sources::FlurryHelpers::FlurryReportDownloader do
       context 'json' do
         context 'report being generated' do
           before do
-            stub_flurry_request 'Events', flurry_params,
-              { body: generating_report, status: 500 }, body: request_report_response
+            stub_flurry_request('Events', flurry_params,
+                                { body: generating_report, status: 500 }, body: request_report_response)
           end
 
           it 'should sleep and retry' do

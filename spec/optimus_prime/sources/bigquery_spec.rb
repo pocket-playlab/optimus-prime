@@ -30,7 +30,7 @@ describe OptimusPrime::Sources::Bigquery do
      { Game: 'b', Platform: 'android', PercentComplete: nil, MinScore: 47_325, IsTester: true },
      { Game: 'b', Platform: 'android', PercentComplete: 2.15, MinScore: nil, IsTester: false },
      { Game: 'b', Platform: 'android', PercentComplete: 42.9, MinScore: 128_175, IsTester: nil }]
-    .map { |hash| hash.stringify_nested_symbolic_keys }
+      .map(&:stringify_nested_symbolic_keys)
   end
 
   let(:step) do

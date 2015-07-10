@@ -6,7 +6,7 @@ RSpec.describe OptimusPrime::Sources::Csv do
 
   let(:files) do
     ['2015-01-30T04:46:03.232Z.gz', '2015-02-01T00:00:00.000Z.gz',
-    '2015-02-01T13:21:46.143Z.gz', '2015-02-02T01:32:01.312Z.gz',]
+     '2015-02-01T13:21:46.143Z.gz', '2015-02-02T01:32:01.312Z.gz',]
   end
 
   let(:events) do
@@ -20,7 +20,7 @@ RSpec.describe OptimusPrime::Sources::Csv do
 
   let(:step) do
     OptimusPrime::Sources::Csv.new(
-      bucket: bucket,from: Time.utc(2015, 2, 1), to: Time.utc(2015, 2, 2), **aws_params)
+      bucket: bucket, from: Time.utc(2015, 2, 1), to: Time.utc(2015, 2, 2), **aws_params)
   end
 
   before :each do
