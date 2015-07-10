@@ -9,9 +9,9 @@ module OptimusPrime
       @logger = logger || Logger.new(STDOUT)
     end
 
-    def step_closed(step, step_class, consumed, produced)
+    def step_closed(step, consumed, produced)
       logger.info(
-        "#{step_class.name}:#{step.object_id} closed, consumed #{consumed} records, produced = #{produced} records")
+        "#{step.class.name}:#{step.object_id} closed, consumed #{consumed} records, produced = #{produced} records")
     end
   end
 end

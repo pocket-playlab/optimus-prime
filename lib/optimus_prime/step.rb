@@ -80,7 +80,7 @@ module OptimusPrime
       @closed = true
       finish
       push nil
-      broadcast(:step_closed, self, self.class, consumed, produced)
+      broadcast(:step_closed, self, consumed, produced)
       self
     end
 

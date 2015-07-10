@@ -7,8 +7,7 @@ class TestStep < OptimusPrime::Destination
 end
 
 class Listener
-  def step_closed(step, step_class, consumed, produced)
-  end
+  def step_closed(step, consumed, produced) end
 end
 
 RSpec.describe OptimusPrime::Step do
@@ -17,7 +16,7 @@ RSpec.describe OptimusPrime::Step do
 
   it 'publishes a step_closed event when closed' do
     l = Listener.new
-    expect(l).to receive(:step_closed).with(step, TestStep, input.size, input.size)
+    expect(l).to receive(:step_closed).with(step, input.size, input.size)
     step.subscribe(l)
     step.run_with(input)
   end
