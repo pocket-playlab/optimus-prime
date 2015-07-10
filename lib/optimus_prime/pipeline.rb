@@ -31,13 +31,17 @@ module OptimusPrime
     #       next: ['name of next step', ...]
     #     }
     #
-    def initialize(graph, name = nil, modules = {})
+    def initialize(graph, name = nil, modules = {}, logger = nil)
       @name = name
-      @logger = Logger.new(STDERR)
+      @logger = logger || Logger.new(STDERR)
+      @observer = PipelineObserver.new(logger: @logger)
       @graph = graph
       @module_loader = Modules::ModuleLoader.new(self, modules)
       subscribe_all
+      connect_steps
+    end
 
+    def connect_steps
       edges.each do |from, to|
         queue = SizedQueue.new QUEUE_SIZE
         from.output << queue
@@ -88,6 +92,7 @@ module OptimusPrime
         step.logger = @logger
         step.module_loader = @module_loader
         subscribe_all(step)
+        step.subscribe(@observer)
       end.to_h
     end
 
