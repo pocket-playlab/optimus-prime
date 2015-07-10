@@ -19,18 +19,21 @@ describe OptimusPrime::Sources::AppAnnieProductSales do
   describe '#each' do
     let(:pipeline) do
       OptimusPrime::Pipeline.new(
-        src: {
-          class: 'OptimusPrime::Sources::AppAnnieProductSales',
-          params: {
-            api_key: 'api_key',
-            account_id: 'acc_id',
-            product_id: 'prod_id',
-            start_date: '2015-01-01',
-            end_date: '2015-01-01',
-            options: { break_down: 'date+country+iap' }
-          }, next: ['dest']
+        {
+          src: {
+            class: 'OptimusPrime::Sources::AppAnnieProductSales',
+            params: {
+              api_key: 'api_key',
+              account_id: 'acc_id',
+              product_id: 'prod_id',
+              start_date: '2015-01-01',
+              end_date: '2015-01-01',
+              options: { break_down: 'date+country+iap' }
+            }, next: ['dest']
+          },
+          dest: { class: 'OptimusPrime::Destinations::MyTestDestination' }
         },
-        dest: { class: 'OptimusPrime::Destinations::MyTestDestination' }
+        nil, {}, Logger.new('/dev/null')
       )
     end
 

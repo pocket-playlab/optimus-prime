@@ -105,17 +105,10 @@ describe OptimusPrime::Pipeline do
     }
   end
 
-  let(:pipeline) do
-    OptimusPrime::Pipeline.new(steps)
-  end
-
-  let(:pipeline_with_name) do
-    OptimusPrime::Pipeline.new(steps, 'super_pipeline')
-  end
-
-  let(:pipeline_with_modules) do
-    OptimusPrime::Pipeline.new(steps, :my_pipeline, modules)
-  end
+  let(:suppress) { Logger.new('/dev/null') }
+  let(:pipeline) { OptimusPrime::Pipeline.new(steps, nil, {}, suppress) }
+  let(:pipeline_with_name) { OptimusPrime::Pipeline.new(steps, 'super_pipeline', {}, suppress) }
+  let(:pipeline_with_modules) { OptimusPrime::Pipeline.new(steps, :my_pipeline, modules, suppress) }
 
   describe '#start' do
     it 'should run the pipeline' do

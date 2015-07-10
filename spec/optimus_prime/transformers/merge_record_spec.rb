@@ -58,14 +58,17 @@ describe OptimusPrime::Transformers::MergeRecord do
   end
 
   let(:pipeline) do
-    OptimusPrime::Pipeline.new(**{
-      trans_c: {
-        class: 'OptimusPrime::Transformers::MergeRecord',
-        params: { join_keys: [:Platform, :Level] },
-        next: ['dest_d']
-      },
-      dest_d: { class: 'OptimusPrime::Destinations::MyDestination' }
-    }.merge(sources))
+    OptimusPrime::Pipeline.new(
+      {
+        trans_c: {
+          class: 'OptimusPrime::Transformers::MergeRecord',
+          params: { join_keys: [:Platform, :Level] },
+          next: ['dest_d']
+        },
+        dest_d: { class: 'OptimusPrime::Destinations::MyDestination' }
+      }.merge(sources),
+      nil, {}, Logger.new('/dev/null')
+    )
   end
 
   it 'merges a record to an array of hash' do
