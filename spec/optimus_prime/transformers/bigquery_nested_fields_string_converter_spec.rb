@@ -30,13 +30,14 @@ end
 describe OptimusPrime::Transformers::BigqueryNestedFieldsStringConverter do
   def init_pipeline(keys:)
     OptimusPrime::Pipeline.new(
-      **{
+      {
         src: { class: 'OptimusPrime::Sources::MyTestSource',
                params: { records: input }, next: ['trans'] },
         trans: { class: 'OptimusPrime::Transformers::BigqueryNestedFieldsStringConverter',
                  params: { keys: keys }, next: ['dest'] },
         dest: { class: 'OptimusPrime::Destinations::MyTestDestination' }
-      }
+      },
+      nil, {}, Logger.new('/dev/null')
     )
   end
 

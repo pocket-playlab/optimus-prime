@@ -53,10 +53,13 @@ module OptimusPrime
 
     include Wisper::Publisher
     attr_accessor :logger, :module_loader
+    attr_reader :consumed, :produced
 
     def start
       raise 'Already started' if started?
       raise 'No input or output' if input.empty? and output.empty?
+      @produced = 0
+      @consumed = 0
       input.freeze
       output.freeze
       listen unless input.empty?
@@ -77,6 +80,7 @@ module OptimusPrime
       @closed = true
       finish
       push nil
+      broadcast(:step_closed, self, consumed, produced)
       self
     end
 
@@ -127,6 +131,7 @@ module OptimusPrime
           message = queue.pop
           break unless message
           process message
+          @consumed += 1
         end
       end
     end
@@ -144,6 +149,7 @@ module OptimusPrime
 
     def push(message)
       output.each { |queue| queue << message }
+      @produced += 1 if message
     end
 
     def threads
