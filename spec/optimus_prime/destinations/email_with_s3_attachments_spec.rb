@@ -3,64 +3,28 @@ require 'spec_helper'
 RSpec.describe OptimusPrime::Destinations::EmailWithS3Attachments do
   include Mail::Matchers
 
-  let(:options) { { endpoint: 'http://localhost:10001/', force_path_style: true } }
-
-  let(:s3) { Aws::S3::Client.new options }
-
-  let(:bucket) { 'ppl-csv-test' }
-
-  let(:destination) do
-    OptimusPrime::Destinations::Csv.new fields: ['name', 'age'],
-                                        bucket: bucket,
-                                        key: 'people.csv',
-                                        **options
-  end
-
-  let(:input) do
-    [
-      { 'name' => 'Bob',   'age' => 28, 'likes' => 'cheese' },
-      { 'name' => 'Alice', 'age' => 34, 'likes' => 'durian' },
-    ]
-  end
-
-  let(:email_config) { { method: :test } }
-
-  def upload
-    input.each { |obj| destination.write obj }
-    destination.close
-  end
-
-  def s3_object
-    s3.get_object(bucket: bucket, key: destination.key)
-  end
-
-  def s3_mockup_step
-    upload
-    csv = CSV.new s3_object.body, converters: :all
-    header = csv.first
-    expect(header).to eq destination.fields
+  let(:s3) { Aws::S3::Client.new(endpoint: 'http://localhost:10001/', force_path_style: true) }
+  let(:bucket) { 'test-bucket' }
+  let(:obj_key) { 'test-file' }
+  let(:step) do
+    OptimusPrime::Destinations::EmailWithS3Attachments.new(
+      sender: 'test@example.com', recipients: 'a@example.com, b@example.com',
+      title: 'Pipeline Report', body: 'Report Details', email_config: { method: :test }
+    )
   end
 
   before :each do
-    s3.create_bucket bucket: bucket
-    s3_mockup_step
+    s3.create_bucket(bucket: bucket)
+    s3.put_object(bucket: bucket, key: obj_key, body: 'Lorem Ipsum Dolor Sit Amet')
     Mail::TestMailer.deliveries.clear
   end
 
-  it 'should attach file from s3' do
+  it 'attaches file from s3' do
     expect(Mail::TestMailer.deliveries.length).to eq(0)
-
-    @email = OptimusPrime::Destinations::EmailWithS3Attachments.new(
-      sender: 'analytics@playlab.com',
-      recipients: 'a@playlab.com, b@playlab.com',
-      title: 'analytics report',
-      body: 'report detail',
-      email_config: email_config)
-    @email.stub(:download).with(bucket: bucket, key: destination.key) { s3_object }
-    @email.write(bucket: bucket, key: destination.key)
-    @email.finish
-
+    allow(step).to receive(:download).with(bucket: bucket, key: obj_key)
+      .and_return(s3.get_object(bucket: bucket, key: obj_key))
+    step.run_with([{ bucket: bucket, key: obj_key }])
     expect(Mail::TestMailer.deliveries.length).to eq(1)
-    expect(Mail::TestMailer.deliveries.first.attachments.first.filename).to eq(destination.key)
+    expect(Mail::TestMailer.deliveries.first.attachments.first.filename).to eq(obj_key)
   end
 end

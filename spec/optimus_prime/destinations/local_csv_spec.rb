@@ -1,16 +1,7 @@
 require 'spec_helper'
-require 'optimus_prime/destinations/local_csv'
 require 'fakefs/safe'
 
 RSpec.describe OptimusPrime::Destinations::LocalCsv do
-  before(:all) do
-    FakeFS.activate!
-  end
-
-  after(:all) do
-    FakeFS.deactivate!
-  end
-
   let(:input) do
     [
       { 'userid' => 'rick', 'game' => 'juice cubes', 'version' => 1.03 },
@@ -22,50 +13,33 @@ RSpec.describe OptimusPrime::Destinations::LocalCsv do
       { 'userid' => 'santa', 'game' => 'juice cubes', 'version' => 1.03 },
     ]
   end
-
-  let(:append_data) do
-    [
-      { 'userid' => 'batman', 'game' => 'jungle cubes', 'version' => 2.00 }
-    ]
-  end
-
+  let(:extra_record) { { 'userid' => 'batman', 'game' => 'jungle cubes', 'version' => 2.00 } }
   let(:fields) { input.first.keys }
+  let(:path) { 'test.csv' }
+  let(:step) { OptimusPrime::Destinations::LocalCsv.new(fields: fields, file_path: path) }
 
-  def write_out_csv_file(path)
-    dest = OptimusPrime::Destinations::LocalCsv.new fields: fields,
-                                                    file_path: path
-
-    input.each { |record| dest.write record }
-    dest.close
+  def run_test(with_extra: false)
+    data = CSV.read(path, converters: :all)
+    header = data.shift
+    expect(header).to match_array fields
+    input.push(extra_record) if with_extra
+    expect(data.map { |row| header.zip(row).to_h })
+      .to match_array input.map { |row| row.select { |k, v| header.include? k } }
   end
 
-  def append_csv_file(path)
-    dest = OptimusPrime::Destinations::LocalCsv.new fields: fields,
-                                                    file_path: path
-
-    append_data.each { |record| dest.write record }
-    dest.close
+  around(:each) do |example|
+    FakeFS::FileSystem.clear
+    FakeFS { example.run }
   end
 
   it 'should write out a csv file' do
-    path = 'test.csv'
-    write_out_csv_file path
-    data = CSV.read path, converters: :all
-    header = data.shift
-    expect(header).to eq fields
-    expect(data.map { |row| header.zip(row).to_h })
-      .to eq input.map { |row| row.select { |k, v| header.include? k } }
+    step.run_with(input.dup)
+    run_test
   end
 
   it 'should not write header when appending to existing file' do
-    path = 'test-append.csv'
-    write_out_csv_file path
-    append_csv_file path
-    data = CSV.read path, converters: :all
-    header = data.shift
-    expect(header).to eq fields
-
-    expect(data.map { |row| header.zip(row).to_h })
-      .to eq input.push(append_data).flatten.map { |row| row.select { |k, v| header.include? k } }
+    step.run_with(input.dup)
+    OptimusPrime::Destinations::LocalCsv.new(fields: fields, file_path: path).run_with([extra_record])
+    run_test(with_extra: true)
   end
 end

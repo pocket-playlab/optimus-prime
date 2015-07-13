@@ -25,6 +25,9 @@ Style/TrailingComma:
 Style/WordArray:
   Enabled: false
 
+Style/RedundantSelf:
+  Enabled: false
+
 Metrics/AbcSize:
   Max: 20
 

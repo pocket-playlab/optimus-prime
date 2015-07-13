@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/sources/app_annie_product_sales'
 
 module OptimusPrime
   module Destinations

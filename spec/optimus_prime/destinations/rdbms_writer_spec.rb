@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/destinations/rdbms_writer'
 
 RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
   let(:input) do
@@ -13,17 +12,31 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
       { name: 'Tamer',    car: 'Mercedes SLK',       horsepower: 350 },
     ]
   end
-
-  let(:output) do
-    input.uniq { |record| record[:name] }
-  end
-
+  let!(:output) { input.uniq { |record| record[:name] } }
   let(:dsn) { 'sqlite://test.db' }
   let(:table) { :developer_cars }
+  let(:step) do
+    OptimusPrime::Destinations::RdbmsWriter.new(dsn: dsn, table: table, max_retries: 4,
+                                                chunk_size: 10, sql_trace: false)
+      .suppress_log
+  end
 
-  let(:destination) { init_rdbms_writer(max_retries: 4) }
+  def stub_run_block(attemps)
+    i = 0
+    allow(step).to receive(:run_block) do
+      allow(step).to receive(:run_block).and_call_original if i == attemps
+      i += 1
+      raise Sequel::DatabaseConnectionError
+    end
+  end
 
-  before do
+  def run_test
+    step.run_with(input)
+    db = Sequel.connect(dsn)
+    expect(db[table].all).to match_array output
+  end
+
+  before :each do
     db = Sequel.connect(dsn)
     # if you need to debug or trace sql, uncomment following lines
     # db.loggers << Logger.new($stdout)
@@ -36,72 +49,37 @@ RSpec.describe OptimusPrime::Destinations::RdbmsWriter do
     end
   end
 
-  def init_rdbms_writer(max_retries: 4, chunk_size: 10)
-    OptimusPrime::Destinations::RdbmsWriter.new(dsn: dsn, table: table, max_retries: max_retries,
-                                                chunk_size: chunk_size, sql_trace: false).tap do |d|
-      d.logger = Logger.new(STDERR)
-    end
-  end
-
-  def insert_records(dest)
-    input.each { |record| dest.write record }
-    dest.close
-  end
-
-  def records_from_db
-    db = Sequel.connect(dsn)
-    db[table].all
-  end
-
-  def stub_run_block(dest, attemps)
-    i = 0
-    allow(dest).to receive(:run_block) do
-      allow(dest).to receive(:run_block).and_call_original if i == attemps
-      i += 1
-      raise Sequel::DatabaseConnectionError
-    end
-  end
-
-  def shared_expect_results(dest)
-    insert_records(dest)
-    expect(records_from_db).to eq(output)
-  end
-
-  context 'exception raised' do
-    before do
-      @dest = destination
-      allow(@dest).to receive(:sleep) {}
-    end
+  context 'exception handling' do
+    before(:each) { allow(step).to receive(:sleep) {} }
 
     it 'retries when sequel raises a database connection error' do
-      stub_run_block(@dest, 2)
-      insert_records(@dest)
-      expect(records_from_db).to eq(output)
+      stub_run_block(2)
+      run_test
     end
 
     it 'fails if the number of attempts is over max_retries' do
-      stub_run_block(@dest, 3)
-      expect { insert_records(@dest) }.to raise_error Sequel::DatabaseConnectionError
+      stub_run_block(3)
+      expect { step.run_with(input) }.to raise_error Sequel::DatabaseConnectionError
     end
   end
 
-  context 'the number of records is less than the default chunk size' do
+  context 'when records.count < chunk_size' do
     it 'inserts records into database' do
-      shared_expect_results(destination)
+      run_test
     end
   end
 
-  context 'the number of records is equal to chunk size' do
+  context 'when records.count = chunk_size' do
     it 'inserts records into database' do
-      rdbms = init_rdbms_writer(chunk_size: input.count)
-      shared_expect_results(rdbms)
+      step.instance_variable_set('@chunk_size', input.count)
+      run_test
     end
   end
 
-  context 'the number of records is greater than chunk size' do
+  context 'when records.count > chunk.size' do
     it 'inserts records into database' do
-      rdbms = init_rdbms_writer(chunk_size: 4)
-      shared_expect_results(rdbms)
+      step.instance_variable_set('@chunk_size', 4)
+      run_test
     end
   end
 end

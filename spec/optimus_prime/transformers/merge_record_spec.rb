@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/transformers/merge_record'
 
 module OptimusPrime
   module Sources
@@ -69,7 +68,7 @@ describe OptimusPrime::Transformers::MergeRecord do
     }.merge(sources))
   end
 
-  it 'should merge a record to an array of hash' do
+  it 'merges a record to an array of hash' do
     results = pipeline.start.wait.steps[:dest_d].written
     expect(results).to match_array output
   end

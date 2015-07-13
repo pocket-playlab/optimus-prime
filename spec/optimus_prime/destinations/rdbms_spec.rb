@@ -16,19 +16,15 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
   let(:table) { db[table_name.to_sym] }
 
   let(:destination_with_string_condition) do
-    dest = OptimusPrime::Destinations::Rdbms.new dsn: dsn, table: table_name, retry_interval: 0.1,
-                                                 delete_conditions: "platform = 'ios'",
-                                                 sql_trace: false
-    dest.logger = Logger.new(STDERR)
-    dest
+    OptimusPrime::Destinations::Rdbms.new(dsn: dsn, table: table_name, retry_interval: 0.1,
+                                          delete_conditions: "platform = 'ios'",
+                                          sql_trace: false).log_to(Logger.new(STDERR))
   end
 
   let(:destination_with_hash_condition) do
-    dest = OptimusPrime::Destinations::Rdbms.new dsn: dsn, table: table_name, retry_interval: 0.1,
-                                                 delete_conditions: { version: '1.0.1' },
-                                                 sql_trace: false
-    dest.logger = Logger.new(STDERR)
-    dest
+    OptimusPrime::Destinations::Rdbms.new(dsn: dsn, table: table_name, retry_interval: 0.1,
+                                          delete_conditions: { version: '1.0.1' },
+                                          sql_trace: false).suppress_log
   end
 
   before do
@@ -47,11 +43,6 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
     input.each { |record| table.insert record }
   end
 
-  def insert_records_with_destination(destination)
-    input.each { |record| destination.write record }
-    destination.close
-  end
-
   def records_from_db
     table.all
   end
@@ -59,30 +50,28 @@ RSpec.describe OptimusPrime::Destinations::Rdbms do
   context 'string condition' do
     it 'should delete all the records with ios platform' do
       insert_records
-      destination = destination_with_string_condition
       expect(table.where(platform: 'ios').count).to eq 1
-      insert_records_with_destination(destination)
+      destination_with_string_condition.run_with(input.dup)
       expect(records_from_db.count).to eq 7
     end
 
     it 'should insert records into database' do
-      insert_records_with_destination(destination_with_string_condition)
-      expect(records_from_db).to eq(input)
+      destination_with_string_condition.run_with(input.dup)
+      expect(records_from_db).to match_array input
     end
   end
 
   context 'hash condition' do
     it 'should delete all the records with version 1.0.1' do
       insert_records
-      destination = destination_with_hash_condition
       expect(table.where(version: '1.0.1').count).to eq 3
-      insert_records_with_destination(destination)
+      destination_with_hash_condition.run_with(input)
       expect(records_from_db.count).to eq 5
     end
 
     it 'should upload insert records into database' do
-      insert_records_with_destination(destination_with_hash_condition)
-      expect(records_from_db).to eq(input)
+      destination_with_string_condition.run_with(input.dup)
+      expect(records_from_db).to match_array input
     end
   end
 end

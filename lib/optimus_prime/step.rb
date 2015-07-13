@@ -60,20 +60,24 @@ module OptimusPrime
       input.freeze
       output.freeze
       listen unless input.empty?
+      self
     end
 
     def join
       raise 'Not yet started' unless started?
       threads.each(&:join)
+      self
     end
     alias_method :wait, :join
 
     # Call the `finish` callback and push `nil` to the output queues to signal
     # the end of the data stream.
     def close
+      raise 'Already closed' if closed?
       @closed = true
       finish
       push nil
+      self
     end
 
     def started?

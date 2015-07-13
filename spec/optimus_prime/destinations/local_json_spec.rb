@@ -1,16 +1,7 @@
 require 'spec_helper'
-require 'optimus_prime/destinations/local_json'
 require 'fakefs/safe'
 
 RSpec.describe OptimusPrime::Destinations::LocalJson do
-  before(:all) do
-    FakeFS.activate!
-  end
-
-  after(:all) do
-    FakeFS.deactivate!
-  end
-
   let(:input) do
     [
       { 'userid' => 'rick', 'game' => 'juice cubes', 'version' => 1.03 },
@@ -22,43 +13,30 @@ RSpec.describe OptimusPrime::Destinations::LocalJson do
       { 'userid' => 'santa', 'game' => 'juice cubes', 'version' => 1.03 },
     ]
   end
-
-  let(:append_data) do
-    [
-      { 'userid' => 'batman', 'game' => 'jungle cubes', 'version' => 2.00 }
-    ]
-  end
-
+  let(:extra_record) { { 'userid' => 'batman', 'game' => 'jungle cubes', 'version' => 2.00 } }
   let(:fields) { input.first.keys }
+  let(:path) { 'test.json' }
+  let(:step) { OptimusPrime::Destinations::LocalJson.new(file_path: path) }
 
-  def write_out_json_file(path)
-    dest = OptimusPrime::Destinations::LocalJson.new file_path: path
-    input.each { |record| dest.write record }
-    dest.close
+  around(:each) do |example|
+    FakeFS::FileSystem.clear
+    FakeFS { example.run }
   end
 
-  def append_json_file(path)
-    dest = OptimusPrime::Destinations::LocalJson.new file_path: path
-    append_data.each { |record| dest.write record }
-    dest.close
+  def run_test(with_extra: false)
+    data = File.open(path) { |f| f.map { |line| JSON.parse line } }
+    input.push(extra_record) if with_extra
+    expect(data).to match_array input
   end
 
   it 'should write out a json file' do
-    path = 'test.json'
-    write_out_json_file path
-    data = File.open(path) do |f|
-      f.map { |line| JSON.parse line }
-    end
-    expect(data).to eq input
+    step.run_with(input.dup)
+    run_test
   end
 
   it 'should append to an existing file' do
-    path = 'test-append.json'
-    write_out_json_file path
-    append_json_file path
-    data = File.open(path) do |f|
-      f.map { |line| JSON.parse line }
-    end
-    expect(data).to eq(input + append_data)
+    step.run_with(input.dup)
+    OptimusPrime::Destinations::LocalJson.new(file_path: path).run_with([extra_record])
+    run_test(with_extra: true)
   end
 end

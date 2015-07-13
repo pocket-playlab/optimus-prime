@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'optimus_prime/transformers/key_filter'
 
 RSpec.describe OptimusPrime::Transformers::KeyFilter do
   let(:input) do
@@ -12,7 +11,7 @@ RSpec.describe OptimusPrime::Transformers::KeyFilter do
     ]
   end
 
-  let(:correct_output) do
+  let(:output) do
     [
       { 'name' => 'John', 'age' => 25, 'gender' => :male   },
       { 'name' => 'Rita', 'age' => 21, 'gender' => :female },
@@ -25,14 +24,11 @@ RSpec.describe OptimusPrime::Transformers::KeyFilter do
     ['name', 'age', 'gender']
   end
 
-  let(:filter) do
+  let(:step) do
     OptimusPrime::Transformers::KeyFilter.new(fields: fields)
   end
 
-  it 'should only allow specified fields in the output' do
-    output = []
-    filter.output << output
-    input.each { |record| filter.write(record) }
-    expect(output).to match_array correct_output
+  it 'allows only specified fields in the output' do
+    expect(step.run_with(input)).to match_array output
   end
 end

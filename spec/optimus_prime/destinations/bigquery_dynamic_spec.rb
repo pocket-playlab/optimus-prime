@@ -1,6 +1,4 @@
-require 'yaml'
 require 'spec_helper'
-require 'optimus_prime/destinations/bigquery_dynamic'
 
 RSpec.describe OptimusPrime::Destinations::BigqueryDynamic do
   let(:sample_base) { 'spec/supports/bigquery_dynamic/sample_data/' }
@@ -67,6 +65,7 @@ RSpec.describe OptimusPrime::Destinations::BigqueryDynamic do
   end
 
   def reset
+    destination.run_with(input.dup)
     tables.each { |name, schema| delete_table name }
     create_table('joisecubes_1_1') { |body| body['schema']['fields'] = tables['joisecubes_1_1'] }
     create_table('gunjlecubes_1_1')
@@ -106,12 +105,8 @@ RSpec.describe OptimusPrime::Destinations::BigqueryDynamic do
 
   context 'not exceeding rate limits' do
     before :each do
-      VCR.use_cassette('bigquery_dynamic/reset-and-run') do
-        reset
-        input.each { |record| destination.write record }
-        destination.close
-        # sleep 60 # Needed when running on the real bigquery
-      end
+      VCR.use_cassette('bigquery_dynamic/reset-and-run') { reset }
+      # sleep 60 # Needed when running on the real bigquery
     end
 
     context 'table exists with complete schema' do
@@ -161,13 +156,9 @@ RSpec.describe OptimusPrime::Destinations::BigqueryDynamic do
     it 'should insert all rows correctly' do
       VCR.use_cassette('bigquery_dynamic/limit-exceeded') do
         sample = { 'game' => 'fat_cubes_limits', 'version' => '1.1', 'event' => 'nothing' }
-        3.times do |count|
-          print "#{count * 10_000} "
-          10_000.times { destination.write sample }
-        end
-        puts "30000\nNow Sleeping"
+        input = 30_000.times.map { sample }
+        destination.run_with(input)
         # sleep 120 # Needed when running on the real bigquery
-        puts 'Waking Up!'
         data = download_data('fat_cubes_limits_1_1')
         data.each do |event|
           expect(event).to include('game', 'version', 'event')
@@ -209,14 +200,13 @@ RSpec.describe OptimusPrime::Destinations::BigqueryDynamic do
     end
 
     let(:sample_data) do
-      { 'game' => 'joisecubes', 'version' => 1.1, 'event' => 'addgold', 'amount' => 28 }
+      [{ 'game' => 'joisecubes', 'version' => 1.1, 'event' => 'addgold', 'amount' => 28 }]
     end
 
     around(:each) do |example|
       VCR.use_cassette('bigquery_dynamic/error-handling') do
         delete_table('joisecubes_1_1')
         create_table('joisecubes_1_1')
-        destination.write(sample_data)
         example.run
       end
     end
@@ -225,12 +215,12 @@ RSpec.describe OptimusPrime::Destinations::BigqueryDynamic do
       let(:res50x) { { status: 502, body: { 'kind' => 'foo', 'insertErrors' => [] }.to_json } }
       it 'succeeds within 5 retries' do
         stub_insert_all([res50x, res50x, res50x, res50x, full_success])
-        expect { destination.close }.to_not raise_error
+        expect { destination.run_with(sample_data) }.to_not raise_error
       end
 
       it 'fails after 5 retries' do
         stub_insert_all([res50x])
-        expect { destination.close }.to raise_error
+        expect { destination.run_and_raise(sample_data) }.to raise_error
       end
     end
 
@@ -238,19 +228,19 @@ RSpec.describe OptimusPrime::Destinations::BigqueryDynamic do
       let(:res40x) { { status: 403, body: { stub: 'stub' }.to_json } }
       it 'fails immediately' do
         stub_insert_all([res40x])
-        expect { destination.close }.to raise_error
+        expect { destination.run_and_raise(sample_data) }.to raise_error
       end
     end
 
     context 'partial insertion success' do
       it 'retries once and continues on success' do
         stub_insert_all([partial_success, full_success])
-        expect { destination.close }.to_not raise_error
+        expect { destination.run_with(sample_data) }.to_not raise_error
       end
 
       it 'continues after one retry with invalid records logged' do
         stub_insert_all([partial_success])
-        destination.close
+        destination.run_with(sample_data)
         expect(File.read(logfile)).to include('Insertion Error')
       end
     end
