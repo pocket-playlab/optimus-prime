@@ -1,0 +1,29 @@
+{
+  "sales_list": [
+    {
+      "product_id": "all",
+      "country": "all",
+      "metric": {
+        "fill_rate": null,
+        "ecpm": 1,
+        "revenue": 1,
+        "impressions": 1000,
+        "requests": 0,
+        "ecpc": 0.01,
+        "clicks": 10
+      },
+      "ad_item_type": "site",
+      "ad_account": 1,
+      "ad_item_id": "all",
+      "date": "2014-01-01",
+      "market": "all"
+    }
+  ],
+  "next_page": "/v1.2/ads/sales?break_down=ad_account+date&page_index=1",
+  "code": 200,
+  "user_id": 1,
+  "prev_page": null,
+  "page_num": 2,
+  "currency": "USD",
+  "page_index": 0
+}
