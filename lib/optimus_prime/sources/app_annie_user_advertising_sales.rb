@@ -40,7 +40,7 @@ module OptimusPrime
       end
 
       def parameterize(params)
-        URI.escape(params.collect{|k,v| "#{k}=#{v}"}.join('&'))
+        URI.escape(params.collect { |k, v| "#{k}=#{v}" }.join('&'))
       end
     end
   end
