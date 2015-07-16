@@ -53,7 +53,7 @@ describe OptimusPrime::Sources::AppAnnieUserAdvertisingSales do
       it 'returns reponse body' do
         stub_request_app_annie(
           response_body,
-          'break_down=ad_account%2Bdate'
+          'break_down=ad_account+date'
         )
 
         results = pipeline.start.wait.steps[:dest].written
@@ -65,11 +65,11 @@ describe OptimusPrime::Sources::AppAnnieUserAdvertisingSales do
       it 'returns response body' do
         stub_request_app_annie(
           response_body_p1,
-          'break_down=ad_account%2Bdate'
+          'break_down=ad_account+date'
         )
         stub_request_app_annie(
           response_body_p2,
-          'break_down=ad_account%20date&page_index=1'
+          'break_down=ad_account+date&page_index=1'
         )
         results = pipeline.start.wait.steps[:dest].written
         expect(results).to match_array [JSON.parse(response_body_p1), JSON.parse(response_body_p2)]

@@ -8,7 +8,7 @@ module OptimusPrime
         url = "https://api.appannie.com#{path}"
         begin
           JSON.parse(
-            RestClient.send(method, url, ({ authorization: "Bearer #{api_key}" }).merge(options))
+            RestClient.send(method, url, { authorization: "Bearer #{api_key}" }.merge(options))
           )
         rescue => e
           raise e.response
