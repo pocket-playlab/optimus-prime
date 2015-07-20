@@ -2,8 +2,8 @@ module OptimusPrime
   module Transformers
     # This class create for flatten nested json from AppAnnie to single hash.
     # This class rewrite from ExtractAppAnnieProductSales to make more flexible for "default_fields" and "extract_keys" variables
-      # default_fields: specify whatever fields that you need the data.
-      # extract_keys: specify the nested key to drill down and flatten data into the single hash
+      # default_fields: chosen key to assign in each hash after flatten.
+      # extract_keys: flatten data inside these key into single hash.
     # See example in spec and PR
 
     class ExtractAppAnnieData < OptimusPrime::Destination
