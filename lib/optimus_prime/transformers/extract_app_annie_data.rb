@@ -34,7 +34,7 @@ module OptimusPrime
         if data.is_a? Hash
           data.each { |key, value| set_new_key(new_row, value, "#{prefix}_#{key}") }
         else
-          new_row["#{prefix}"] = data
+          new_row[prefix] = data
         end
         new_row
       end
