@@ -14,7 +14,6 @@ module OptimusPrime
     #   'key2' => false
     # }
     class ChangeValueWithKey < Destination
-      # format_data = [ { key: value } ]
       def initialize(mapper:)
         @mapper = mapper.with_indifferent_access
       end
