@@ -1,0 +1,39 @@
+{
+  "page_index": 0,
+  "code": 200,
+  "accounts": [
+    {
+      "account_id": 1,
+      "vertical": "apps",
+      "last_sales_date": "2015-02-01",
+      "account_status": "OK",
+      "first_sales_date": "2015-02-01",
+      "publisher_name": "PublisherA",
+      "account_name": "A",
+      "market": "ios"
+    },
+    {
+      "account_id": 2,
+      "vertical": "apps",
+      "last_sales_date": "2015-02-01",
+      "account_status": "OK",
+      "first_sales_date": "2015-02-01",
+      "publisher_name": "PublisherB",
+      "account_name": "B",
+      "market": "google-play"
+    },
+    {
+      "account_id": 3,
+      "vertical": "apps",
+      "last_sales_date": "2015-02-01",
+      "account_status": "OK",
+      "first_sales_date": "2015-02-01",
+      "publisher_name": "PublisherC",
+      "account_name": "C",
+      "market": "amazon-appstore"
+    }
+  ],
+  "prev_page": null,
+  "page_num": 1,
+  "next_page": null
+}
