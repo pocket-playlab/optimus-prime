@@ -26,7 +26,7 @@ module OptimusPrime
 
       def change_value(record)
         record.each do |key, value|
-          record[key] = @mapper[key] if @mapper.has_key? key
+          record[key] = @mapper[key] if @mapper.key? key
         end
         record
       end
