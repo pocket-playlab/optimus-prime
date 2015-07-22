@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe OptimusPrime::Transformers::GeoIP do
   let(:ip_field) { 'ip_addr' }
-  let(:api_url) { 'https://freegeoip-prod.pocketplaylab.com/json/' }
+  let(:api_url) { 'https://freegeoip.net/json/' }
 
   let(:response_1) { File.read 'spec/supports/geoip/response_1.json' }
 
