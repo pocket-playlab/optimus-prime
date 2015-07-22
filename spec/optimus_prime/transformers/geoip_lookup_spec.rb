@@ -2,6 +2,8 @@ require 'spec_helper'
 
 RSpec.describe OptimusPrime::Transformers::GeoIP do
   let(:ip_field) { 'ip_addr' }
+  let(:api_url) { 'https://freegeoip-prod.pocketplaylab.com/json/' }
+
   let(:response_1) { File.read 'spec/supports/geoip/response_1.json' }
 
   let(:input) do
@@ -18,6 +20,7 @@ RSpec.describe OptimusPrime::Transformers::GeoIP do
       {
         'name' => 'test',
         'ip_addr' => '188.32.194.21',
+        'geo_ip' => '188.32.194.21',
         'geo_country_code' => 'RU',
         'geo_country_name' => 'Russia',
         'geo_region_code' => 'MOW',
@@ -33,13 +36,13 @@ RSpec.describe OptimusPrime::Transformers::GeoIP do
   end
 
   before do
-    stub_request(:get, "https://freegeoip.net/json/188.32.194.21")
+    stub_request(:get, api_url + "188.32.194.21")
       .to_return(status: 200, body: response_1)
   end
 
   context 'lookup geoip information' do
     it 'adds geo_* fields with lookup values' do
-      step = OptimusPrime::Transformers::GeoIP.new(ip_field: ip_field)
+      step = OptimusPrime::Transformers::GeoIP.new(ip_field: ip_field, api_url: api_url)
       expect(step.run_with(input)).to match_array output
     end
   end
