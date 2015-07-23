@@ -74,6 +74,10 @@ RSpec.describe OptimusPrime::Transformers::GeoIP do
     it 'does not add geo_ fields' do
       expect(step.run_with(input)).to match_array failed_output
     end
+
+    it 'adds a log entry' do
+      expect(File.read(logfile).lines.count).to be > 1
+    end
   end
 
   context 'geoip lookup unavailable' do
@@ -82,9 +86,9 @@ RSpec.describe OptimusPrime::Transformers::GeoIP do
         .to_return(status: 503)
     end
 
-    it 'raises an exception' do
-      expect { step.run_with(input) }.to raise_error(IOError)
+    it 'raises an exception and logs it' do
+      expect { step.run_and_raise(input) }.to raise_error(IOError)
+      expect(File.read(logfile).lines.count).to be > 1
     end
-
   end
 end

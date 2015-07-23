@@ -62,6 +62,7 @@ module OptimusPrime
             when 503, 500
               retry_count += 1
               if retry_count == @num_retry
+                logger.error("Geoip lookup failed - code: #{response.code} - retries: #{retry_count} - record: #{record}")
                 raise IOError, "Geoip service unavailable - code: #{response.code} - record: #{record}"
               end
             else
