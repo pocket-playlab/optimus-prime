@@ -15,8 +15,8 @@ RSpec.describe OptimusPrime::Transformers::GeoIP do
   let(:input) do
     [
       {
-          'name' => 'test',
-          'ip_addr' => '188.32.194.21'
+        'name' => 'test',
+        'ip_addr' => '188.32.194.21'
       }
     ]
   end
@@ -56,8 +56,7 @@ RSpec.describe OptimusPrime::Transformers::GeoIP do
 
   context 'valid geoip lookup' do
     before do
-      stub_request(:get, stub_url)
-        .to_return(status: 200, body: response_success)
+      stub_request(:get, stub_url).to_return(status: 200, body: response_success)
     end
 
     it 'adds geo_* fields with lookup values' do
@@ -67,8 +66,7 @@ RSpec.describe OptimusPrime::Transformers::GeoIP do
 
   context 'geoip lookup 404' do
     before do
-      stub_request(:get, stub_url)
-        .to_return(status: 404, body: response_404)
+      stub_request(:get, stub_url).to_return(status: 404, body: response_404)
     end
 
     it 'does not add geo_ fields' do
@@ -82,8 +80,7 @@ RSpec.describe OptimusPrime::Transformers::GeoIP do
 
   context 'geoip lookup unavailable' do
     before do
-      stub_request(:get, stub_url)
-        .to_return(status: 503)
+      stub_request(:get, stub_url).to_return(status: 503)
     end
 
     it 'raises an exception and logs it' do

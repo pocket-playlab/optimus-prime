@@ -26,7 +26,7 @@
 #   'geo_metro_code' => 0
 # }
 #
-# If there was a non 503 or 500 error then the record will be returned with
+# If there was a non-503,500 error then the record will be returned with
 # the geo_ fields ommitted and the error will be logged
 
 require 'rest_client'
@@ -40,6 +40,7 @@ module OptimusPrime
         @ip_field = ip_field
         @api_url = api_url
         @num_retry = num_retry
+        @retry_count = 0
       end
 
       def write(record)
@@ -49,29 +50,46 @@ module OptimusPrime
       private
 
       def get_geoip(record)
-        retry_count = 0
-
-        while retry_count < @num_retry
+        @retry_count = 0
+        while @retry_count < @num_retry
           RestClient.get(@api_url + record[@ip_field]) do |response, request, result|
-            case response.code
-            when 200
-              JSON.parse(response.body).each do |key, value|
-                record["geo_#{key}"] = value
-              end
-              return record
-            when 503, 500
-              retry_count += 1
-              if retry_count == @num_retry
-                logger.error("Geoip lookup failed - code: #{response.code} - retries: #{retry_count} - record: #{record}")
-                raise IOError, "Geoip service unavailable - code: #{response.code} - record: #{record}"
-              end
-            else
-              logger.error("Geoip lookup failed - code: #{response.code} - record: #{record}")
-              return record
-            end
+            return handle_response response, record
           end
         end
         record
+      end
+
+      def handle_response(response, record)
+        case response.code
+        when 200
+          return handle_200 response.body, record
+        when 503, 500
+          raise IOError.new("Geoip service unavailable - code: #{response.code} - record: #{record}") unless
+            handle_500_503 response.code, record
+        else
+          log_error response.code, record
+          return record
+        end
+      end
+
+      def handle_200(body, record)
+        JSON.parse(body).each do |key, value|
+          record["geo_#{key}"] = value
+        end
+        record
+      end
+
+      def handle_500_503(code, record)
+        @retry_count += 1
+        log_error code, record
+        if @retry_count == @num_retry
+          return true
+        end
+        false
+      end
+
+      def log_error(code, record)
+        logger.error("Geoip lookup failed - code: #{code} - record: #{record}")
       end
     end
   end
