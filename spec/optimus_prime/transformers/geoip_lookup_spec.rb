@@ -78,9 +78,20 @@ RSpec.describe OptimusPrime::Transformers::GeoIP do
     end
   end
 
-  context 'geoip lookup unavailable' do
+  context 'geoip lookup temporaraly unavailable' do
     before do
       stub_request(:get, stub_url).to_return(status: 503)
+    end
+
+    it 'raises an exception and logs it' do
+      expect { step.run_and_raise(input) }.to raise_error(IOError)
+      expect(File.read(logfile).lines.count).to be > 1
+    end
+  end
+
+  context 'geoip lookup service failed' do
+    before do
+      stub_request(:get, stub_url).to_return(status: 500)
     end
 
     it 'raises an exception and logs it' do

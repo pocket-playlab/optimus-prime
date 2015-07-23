@@ -63,12 +63,12 @@ module OptimusPrime
         case response.code
         when 200
           return handle_200 response.body, record
-        when 503, 500
-          raise IOError.new("Geoip service unavailable - code: #{response.code} - record: #{record}") unless
-            handle_500_503 response.code, record
-        else
+        when 404
           log_error response.code, record
           return record
+        else
+          raise IOError.new("Geoip service unavailable - code: #{response.code} - record: #{record}") unless
+            handle_failed_response response.code, record
         end
       end
 
@@ -79,10 +79,13 @@ module OptimusPrime
         record
       end
 
-      def handle_500_503(code, record)
+      def handle_failed_response(code, record)
         @retry_count += 1
         log_error code, record
-        true if @retry_count == @num_retry
+        # Only retry on 503 and 504 responses
+        if code == 503 || code == 504
+          true if @retry_count == @num_retry
+        end
         false
       end
 
