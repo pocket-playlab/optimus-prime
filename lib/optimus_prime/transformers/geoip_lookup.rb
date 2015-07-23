@@ -82,9 +82,7 @@ module OptimusPrime
       def handle_500_503(code, record)
         @retry_count += 1
         log_error code, record
-        if @retry_count == @num_retry
-          return true
-        end
+        true if @retry_count == @num_retry
         false
       end
 
