@@ -25,9 +25,6 @@
 #   'geo_longitude' => 37.616,
 #   'geo_metro_code' => 0
 # }
-#
-# If there was a non-503,500 error then the record will be returned with
-# the geo_ fields ommitted and the error will be logged
 
 require 'rest_client'
 require 'json'
@@ -35,12 +32,12 @@ require 'json'
 module OptimusPrime
   module Transformers
     class GeoIP < Destination
-
       def initialize(ip_field:, api_url:, num_retry: 3)
         @ip_field = ip_field
         @api_url = api_url
         @num_retry = num_retry
         @retry_count = 0
+        @finished = false
       end
 
       def write(record)
@@ -51,9 +48,10 @@ module OptimusPrime
 
       def get_geoip(record)
         @retry_count = 0
-        while @retry_count < @num_retry
+        @finished = false
+        until @finished
           RestClient.get(@api_url + record[@ip_field]) do |response, request, result|
-            return handle_response response, record
+            record = handle_response response, record
           end
         end
         record
@@ -62,13 +60,11 @@ module OptimusPrime
       def handle_response(response, record)
         case response.code
         when 200
-          return handle_200 response.body, record
+          handle_200 response.body, record
         when 404
-          log_error response.code, record
-          return record
+          handle_404 response.code, record
         else
-          raise IOError.new("Geoip service unavailable - code: #{response.code} - record: #{record}") unless
-            handle_failed_response response.code, record
+          handle_failed_response response.code, record
         end
       end
 
@@ -76,6 +72,13 @@ module OptimusPrime
         JSON.parse(body).each do |key, value|
           record["geo_#{key}"] = value
         end
+        @finished = true
+        record
+      end
+
+      def handle_404(code, record)
+        log_error code, record
+        @finished = true
         record
       end
 
@@ -83,10 +86,11 @@ module OptimusPrime
         @retry_count += 1
         log_error code, record
         # Only retry on 503 and 504 responses
-        if code == 503 || code == 504
-          true if @retry_count == @num_retry
+        if (code == 503 || code == 504) && @retry_count == @num_retry
+          raise IOError.new("Geoip service unavailable - code: #{code} - record: #{record}")
+        else
+          raise IOError.new("Geoip service unhandled exception - code: #{code} - record: #{record}")
         end
-        false
       end
 
       def log_error(code, record)

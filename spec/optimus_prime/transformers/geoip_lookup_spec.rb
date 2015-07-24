@@ -51,7 +51,7 @@ RSpec.describe OptimusPrime::Transformers::GeoIP do
   end
 
   let(:step) do
-      OptimusPrime::Transformers::GeoIP.new(ip_field: ip_field, api_url: api_url, num_retry: 3).log_to(logger)
+    OptimusPrime::Transformers::GeoIP.new(ip_field: ip_field, api_url: api_url, num_retry: 3).log_to(logger)
   end
 
   context 'valid geoip lookup' do
@@ -89,9 +89,9 @@ RSpec.describe OptimusPrime::Transformers::GeoIP do
     end
   end
 
-  context 'geoip lookup service failed' do
+  context 'geoip lookup unhandled status code' do
     before do
-      stub_request(:get, stub_url).to_return(status: 500)
+      stub_request(:get, stub_url).to_return(status: 400)
     end
 
     it 'raises an exception and logs it' do
