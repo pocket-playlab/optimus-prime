@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'sentry-raven'
   spec.add_dependency 'rake'
   spec.add_dependency 'wisper'
+  spec.add_dependency 'maxminddb'
 end
