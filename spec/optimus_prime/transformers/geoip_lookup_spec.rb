@@ -28,6 +28,36 @@ RSpec.describe OptimusPrime::Transformers::GeoIP do
     ]
   end
 
+  let(:invalid_ip_address_output) do
+    [
+      {
+        'name' => 'test',
+        'ip_addr' => 'iamnotanipaddress',
+        'geographic_info' => {}
+      }
+    ]
+  end
+
+  let(:private_ip_address_input) do
+    [
+      {
+        'name' => 'test',
+        'ip_addr' => '192.168.0.1'
+      }
+    ]
+  end
+
+  let(:private_ip_address_output) do
+    [
+      {
+        'name' => 'test',
+        'ip_addr' => '192.168.0.1',
+        'geographic_info' => {}
+      }
+    ]
+  end
+
+
   let(:success_output) do
     [
       {
@@ -69,15 +99,17 @@ RSpec.describe OptimusPrime::Transformers::GeoIP do
     end
   end
 
-  context 'valid geoip lookup' do
-    it 'adds geographic_info field with lookup values' do
+  context 'geoip lookup' do
+    it 'valid ip adds geographic_info field with lookup values' do
       expect(step.run_with(valid_input)).to match_array success_output
     end
-  end
-
-  context 'invalid ip address geoip lookup' do
-    it 'raises an exception' do
-      expect { step.run_and_raise(invalid_ip_address_input) }.to raise_error IPAddr::InvalidAddressError
+    it 'invalid ip adds an empty geographic_info field and logs error' do
+      expect(step.run_with(invalid_ip_address_input)).to match_array invalid_ip_address_output
+      expect(File.read(logfile).lines.count).to be > 1
+    end
+    it 'private ip adds an empty geographic_info field and logs error' do
+      expect(step.run_with(private_ip_address_input)).to match_array private_ip_address_output
+      expect(File.read(logfile).lines.count).to be > 1
     end
   end
 end
