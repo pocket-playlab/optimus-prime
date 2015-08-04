@@ -47,6 +47,7 @@ module OptimusPrime
         @db_file = maxmind_db_file
         @gz_db_file = '/tmp/GeoLite2-City.mmdb.gz'
         @geo_field_name = 'geographic_info'
+        @ip_regex = Regexp.new('\d+{1,3}\.\d+{1,3}\.\d+{1,3}\.\d+{1,3}')
 
         download_database maxmind_db_url unless File.exist?(@db_file)
 
@@ -54,10 +55,21 @@ module OptimusPrime
       end
 
       def write(record)
-        push get_geoip record
+        record[@geo_field_name] = {}
+        record = get_geoip record if ip_valid? record[@ip_field]
+        push record
       end
 
       private
+
+      def ip_valid?(ip)
+        if @ip_regex.match(ip)
+          true
+        else
+          logger.error("Invalid IP Address [#{ip}]")
+          false
+        end
+      end
 
       def get_geoip(record)
         result = @db.lookup(record[@ip_field])
@@ -70,7 +82,6 @@ module OptimusPrime
       end
 
       def add_fields(result, record)
-        record[@geo_field_name] = {}
         record = add_city result, record
         record = add_postal result, record
         record = add_location result, record
