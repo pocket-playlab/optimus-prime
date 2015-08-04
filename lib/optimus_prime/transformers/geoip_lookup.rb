@@ -56,13 +56,13 @@ module OptimusPrime
 
       def write(record)
         record[@geo_field_name] = {}
-        record = get_geoip record if check_valid_ip record[@ip_field]
+        record = get_geoip record if ip_valid? record[@ip_field]
         push record
       end
 
       private
 
-      def check_valid_ip(ip)
+      def ip_valid?(ip)
         if @ip_regex.match(ip)
           true
         else
