@@ -76,7 +76,7 @@ module OptimusPrime
         if result.found?
           record = add_fields result, record
         else
-          logger.error("No GeoIP result found - #{record}")
+          logger.error("No GeoIP result found [#{record[@ip_field]}]")
         end
         record
       end
