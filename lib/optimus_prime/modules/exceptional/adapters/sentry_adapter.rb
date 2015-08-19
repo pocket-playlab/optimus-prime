@@ -15,6 +15,9 @@ module OptimusPrime
 
           def configure_errors_adapter(&block)
             ::Raven.configure do |config|
+              config.tags = {
+                environment: ENV.fetch('SENTRY_ENVIRONMENT', 'unknown')
+              }
               block.call(config)
             end
           end
