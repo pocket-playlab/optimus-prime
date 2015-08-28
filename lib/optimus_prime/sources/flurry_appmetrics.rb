@@ -44,7 +44,7 @@ module OptimusPrime
       end
 
       def handle_response(response)
-        return JSON.parse(response) unless response.code != 200
+        return JSON.parse(response) if response.code == 200
         msg = "An invalid response was received from Flurry - #{response}"
         logger.error msg
         raise Exception.new(msg)
