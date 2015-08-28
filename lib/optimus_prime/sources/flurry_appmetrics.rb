@@ -8,9 +8,9 @@
 #   start_date: Start date for the report in '%Y-%m-%d' format
 #   end_date: End date for the report in '%Y-%m-%d' format
 #   metric_name: Name of metric to gather report for as documented in API documentation linked above.
-#   version: Version of app to filter report on. Called versionName in documentation
-#   country: Country to filter report on.
-#   group_by: Change the grouping of report into DAYS, WEEKS, or MONTHS
+#   version (optional): Version of app to filter report on. Called versionName in documentation
+#   country (optional): Country to filter report on.
+#   group_by (optional): Change the grouping of report into DAYS, WEEKS, or MONTHS
 #
 # If any non-200 response is received an exception will be raised and the error
 # logged.
