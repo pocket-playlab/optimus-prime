@@ -349,7 +349,7 @@ describe OptimusPrime::Sources::FlurryAppMetrics do
 
     let(:response_body) { File.read 'spec/supports/flurry/appmetrics_invalid_version.json' }
 
-    it 'should return a valid json response' do
+    it 'should raise an exception' do
       stub_flurry_request(response_body, 107, versionName: version)
       expect { step.run_with.each }.to raise_error(Exception)
     end
