@@ -20,6 +20,7 @@ require 'optimus_prime/destination'
 
 require 'optimus_prime/sources/s3_source'
 require 'optimus_prime/destinations/rdbms_writer'
+require 'optimus_prime/destinations/s3_destination'
 require 'optimus_prime/sources/flurry_helpers/flurry_connector'
 require 'optimus_prime/transformers/expand_json'
 require 'optimus_prime/sources/app_annie'
