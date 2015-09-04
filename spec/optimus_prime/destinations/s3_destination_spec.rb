@@ -11,18 +11,24 @@ RSpec.describe OptimusPrime::Destinations::S3Destination do
   let(:s3) { Aws::S3::Client.new options }
   let(:step) { OptimusPrime::Destinations::S3Destination.new(**params.merge(options)) }
 
-  let(:input) { ['This file for upload to S3'] }
+  let(:input) { ['s1', 's2', 's3'] }
 
   before(:each) { s3.create_bucket bucket: params[:bucket] }
 
   def test
-    step.run_with(input.dup)
+    step.run_with(input.reverse)
+    expect(s3.get_object(bucket: params[:bucket], key: params[:key]).body.read).to eq(input.join)
   end
 
-  it('uploads csv to s3') { test }
+  it('uploads string to s3') { test }
 
-  it 'uploads csv to s3 in chunks' do
-    options[:chunk_size] = 5
+  it 'uploads string to s3 if the chunks is less than the file size' do
+    options[:chunk_size] = 1
+    test
+  end
+
+  it 'uploads string to s3 if the chunks is larger than the file size' do
+    options[:chunk_size] = 10000
     test
   end
 

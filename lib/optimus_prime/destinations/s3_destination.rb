@@ -15,13 +15,13 @@ module OptimusPrime
       end
 
       def write(record)
-        @buffer = record
-        upload_chunk if @buffer.bytesize > chunk_size
+        @buffer << record
+        upload_chunk if @buffer.join.bytesize > chunk_size
       end
 
       def finish
         if @upload
-          upload_chunk if @buffer.bytesize > 0
+          upload_chunk if @buffer.join.bytesize > 0
           complete_upload
         else
           upload_buffer
@@ -32,7 +32,7 @@ module OptimusPrime
       private
 
       def reset
-        @buffer = ''
+        @buffer = []
       end
 
       def upload_chunk
@@ -41,7 +41,7 @@ module OptimusPrime
         @parts ||= []
         @parts.push @s3.upload_part bucket: bucket,
                                     key: key,
-                                    body: @buffer,
+                                    body: @buffer.join,
                                     upload_id: @upload.upload_id,
                                     part_number: @parts.length + 1
         reset
@@ -63,7 +63,7 @@ module OptimusPrime
       def upload_buffer
         @s3.put_object bucket: bucket,
                        key: key,
-                       body: @buffer
+                       body: @buffer.join
       end
     end
   end
