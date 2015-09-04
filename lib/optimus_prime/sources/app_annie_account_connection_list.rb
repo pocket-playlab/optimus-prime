@@ -1,4 +1,4 @@
-# The AppAnnieProductSales source retrieves the sales data for a single product.
+# The AppAnnieAccountConnectionList source retrieves the ad_platform data .
 #
 # You can pass optional parameters via "options".
 # For more details see https://support.appannie.com/hc/en-us/articles/204208994-1-Account-Connections-List.
