@@ -1,14 +1,14 @@
-# The AppAnnieAccountConnectionList source retrieves the ad_platform data .
+# The AppAnnieCampaignList source retrieves AppSite and Campaign data from AppAnnie.
 #
 # You can pass optional parameters via "options".
-# For more details see https://support.appannie.com/hc/en-us/articles/204208994-1-Account-Connections-List.
+# For more details see https://support.appannie.com/hc/en-us/articles/204209014-6-App-Site-Campaign-List-
 
 module OptimusPrime
   module Sources
-    class AppAnnieAccountConnectionList < AppAnnie
-      def initialize(api_key:)
+    class AppAnnieCampaignList < AppAnnie
+      def initialize(api_key:, market:, product_id:)
         @api_key = api_key
-        @path = "/v1.2/accounts?page_index=0"
+        @path = "/v1.2/apps/#{market}/app/#{product_id}/ad_items"
         @params = {}
       end
 
