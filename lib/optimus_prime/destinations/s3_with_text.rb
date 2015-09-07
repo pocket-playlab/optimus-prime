@@ -3,7 +3,7 @@ require 'stringio'
 
 module OptimusPrime
   module Destinations
-    class S3Destination < OptimusPrime::Destination
+    class S3WithText < OptimusPrime::Destination
       attr_reader :bucket, :key, :chunk_size
 
       def initialize(bucket:, key:, chunk_size: 1024 * 1024 * 10, **options)

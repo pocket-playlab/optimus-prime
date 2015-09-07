@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe OptimusPrime::Destinations::S3Destination do
+RSpec.describe OptimusPrime::Destinations::S3WithText do
   let(:params) do
     {
       bucket: 'ppl-test',
@@ -9,7 +9,7 @@ RSpec.describe OptimusPrime::Destinations::S3Destination do
   end
   let(:options) { { endpoint: 'http://localhost:10001/', force_path_style: true } }
   let(:s3) { Aws::S3::Client.new options }
-  let(:step) { OptimusPrime::Destinations::S3Destination.new(**params.merge(options)) }
+  let(:step) { OptimusPrime::Destinations::S3WithText.new(**params.merge(options)) }
 
   let(:input) { ['s1', 's2', 's3'] }
 
