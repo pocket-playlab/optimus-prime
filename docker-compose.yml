@@ -18,3 +18,5 @@ data:
   command: 'true'
   volumes:
     - /home/playlab/ruby
+  entrypoint: bin/run
+  command: data
