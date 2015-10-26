@@ -1,9 +1,12 @@
 #!/bin/bash
 # Install gems and run the given command using bundle exec
-set -ex
+set -e
 
-bundle config --delete frozen
-bundle config --delete without
-bundle install --quiet
-
-exec bundle exec "$@"
+if [[ "$1" == 'data' ]]; then
+  exit 0
+else
+  bundle config --delete frozen
+  bundle config --delete without
+  bundle install --quiet
+  exec bundle exec "$@"
+fi
